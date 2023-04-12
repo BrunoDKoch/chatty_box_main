@@ -1,0 +1,131 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlserver"
+  url      = env("DATABASE_URL")
+}
+
+model RoleClaim {
+  id         Int     @id(map: "PK_RoleClaims") @default(autoincrement())
+  roleId     String  @db.NVarChar(450)
+  claimType  String? @db.NVarChar(Max)
+  claimValue String? @db.NVarChar(Max)
+  role       Role    @relation(fields: [roleId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "FK_RoleClaims_Roles_RoleId")
+
+  @@map("RoleClaims")
+}
+
+model Role {
+  id               String      @id(map: "PK_Roles") @db.NVarChar(450)
+  name             String?     @db.NVarChar(256)
+  normalizedName   String?     @db.NVarChar(256)
+  concurrencyStamp String?     @db.NVarChar(Max)
+  roleClaims       RoleClaim[]
+  userRoles        UserRole[]
+
+  @@map("Roles")
+}
+
+model UserClaim {
+  id         Int     @id(map: "PK_UserClaims") @default(autoincrement())
+  userId     String  @db.NVarChar(450)
+  claimType  String? @db.NVarChar(Max)
+  claimValue String? @db.NVarChar(Max)
+  user       User    @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "FK_UserClaims_Users_UserId")
+
+  @@map("UserClaims")
+}
+
+model UserLogin {
+  loginProvider       String  @db.NVarChar(450)
+  providerKey         String  @db.NVarChar(450)
+  providerDisplayName String? @db.NVarChar(Max)
+  userId              String  @db.NVarChar(450)
+  user                User    @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "FK_UserLogins_Users_UserId")
+
+  @@id([loginProvider, providerKey], map: "PK_UserLogins")
+  @@map("UserLogins")
+}
+
+model UserRole {
+  userId String @db.NVarChar(450)
+  roleId String @db.NVarChar(450)
+  role   Role   @relation(fields: [roleId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "FK_UserRoles_Roles_RoleId")
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "FK_UserRoles_Users_UserId")
+
+  @@id([userId, roleId], map: "PK_UserRoles")
+  @@map("UserRole")
+}
+
+model User {
+  id                   String      @id(map: "PK_Users") @unique(map: "IX_Users_Id") @db.NVarChar(450)
+  userName             String?     @db.NVarChar(256)
+  normalizedUserName   String?     @db.NVarChar(256)
+  email                String?     @unique @db.NVarChar(256)
+  normalizedEmail      String?     @unique @db.NVarChar(256)
+  emailConfirmed       Boolean
+  passwordHash         String?     @db.NVarChar(Max)
+  securityStamp        String?     @db.NVarChar(Max)
+  concurrencyStamp     String?     @db.NVarChar(Max)
+  phoneNumber          String?     @db.NVarChar(Max)
+  phoneNumberConfirmed Boolean
+  twoFactorEnabled     Boolean
+  lockoutEnd           DateTime?   @db.DateTimeOffset
+  lockoutEnabled       Boolean
+  accessFailedCount    Int
+  userClaim            UserClaim[]
+  userLogin            UserLogin[]
+  userRole             UserRole[]
+  userToken            UserToken[]
+  // Non ASP.NET additions
+  friends              User[]      @relation("friends")
+  isFriendsWith        User[]      @relation("friends")
+  blocking             User[]      @relation("blocked")
+  blockedBy            User[]      @relation("blocked")
+  chats                Chat[]
+  messages             Message[]
+
+  @@index([normalizedEmail], map: "EmailIndex")
+  @@index([normalizedUserName], map: "UserNameIndex")
+  @@map("Users")
+}
+
+model UserToken {
+  userId        String  @db.NVarChar(450)
+  loginProvider String  @db.NVarChar(450)
+  name          String  @db.NVarChar(450)
+  value         String? @db.NVarChar(Max)
+  user          User    @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "FK_UserTokens_Users_UserId")
+
+  @@id([userId, loginProvider, name], map: "PK_UserTokens")
+  @@map("UserTokens")
+}
+
+model Chat {
+  id          String    @id @default(uuid())
+  isGroupChat Boolean   @default(false)
+  maxUsers    Int       @default(2)
+  users       User[]
+  createdAt   DateTime  @default(now())
+  messages    Message[]
+}
+
+model Message {
+  id        String    @id @default(uuid())
+  sentAt    DateTime  @default(now())
+  editedAt  DateTime  @updatedAt
+  from      User      @relation(fields: [fromId], references: [id])
+  fromId    String    @db.NVarChar(450)
+  chat      Chat      @relation(fields: [chatId], references: [id])
+  chatId    String
+  read      Boolean   @default(false)
+  text      String
+  replyTo   Message?  @relation(name: "replies", fields: [replyToId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  replyToId String
+  replies   Message[] @relation("replies")
+}
