@@ -6,7 +6,7 @@
   import { createEventDispatcher } from 'svelte';
   import QrCodeModal from '../QrCodeModal.svelte';
   import EmailOtpModal from './EmailOTPModal.svelte';
-  import { t } from '$lib/locales/translations';
+  import { _ } from 'svelte-i18n';
   export let pending = false;
   const dispatch = createEventDispatcher();
   let qrCode: { content: string; height: number; width: number } | null = null;
@@ -114,7 +114,7 @@
   <TextInput
     name="email"
     type="email"
-    labelText="{$t('common.your.m')} {$t('auth.email')}"
+    labelText="{$_('common.your.m')} {$_('auth.email')}"
     required
     rules={rules.emailRules}
     bind:value={email}
@@ -122,7 +122,7 @@
   <TextInput
     name="confirmEmail"
     type="email"
-    labelText="{$t('auth.confirm')} {$t('common.your.m')} {$t('auth.email')}"
+    labelText="{$_('auth.confirm')} {$_('common.your.m')} {$_('auth.email')}"
     required
     rules={rules.confirmEmailRules}
     bind:value={confirmEmail}
@@ -130,7 +130,7 @@
   <TextInput
     name="password"
     type="password"
-    labelText="{$t('common.your.f')} {$t('auth.password')}"
+    labelText="{$_('common.your.f')} {$_('auth.password')}"
     required
     rules={rules.passwordRules}
     bind:value={password}
@@ -138,7 +138,7 @@
   <TextInput
     name="confirmPassword"
     type="password"
-    labelText="{$t('auth.confirm')} {$t('common.your.f')} {$t('auth.password')}"
+    labelText="{$_('auth.confirm')} {$_('common.your.f')} {$_('auth.password')}"
     required
     rules={rules.confirmPasswordRules}
     bind:value={confirmPassword}
@@ -146,17 +146,17 @@
   <div class="col-span-2">
     <TextInput
       name="username"
-      labelText="{$t('common.your.m')} {$t('auth.userName')}"
+      labelText="{$_('common.your.m')} {$_('auth.userName')}"
       required
       rules={rules.userNameRules}
       bind:value={userName}
     />
   </div>
   <div class="col-span-2 row-span-2 flex flex-col items-center justify-center">
-    <button class="btn">{$t('common.submit')}</button>
+    <button class="btn">{$_('common.submit')}</button>
     <a class="link first-letter:uppercase" href="/auth/login">
-      <span>{$t('common.already')} {$t('auth.have')} {$t('auth.anAccount')}?</span>
-      <span class="capitalize">{$t('common.clickHere')}!</span>
+      <span>{$_('common.already')} {$_('auth.have')} {$_('auth.anAccount')}?</span>
+      <span class="capitalize">{$_('common.clickHere')}!</span>
     </a>
   </div>
 </form>

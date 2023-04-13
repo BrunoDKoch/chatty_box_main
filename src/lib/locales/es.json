@@ -1,0 +1,34 @@
+{
+  "auth": {
+    "email": "e-mail",
+    "password": "contraseña",
+    "confirm": "confirmar",
+    "anAccount": "una cuenta",
+    "have": "tienes",
+    "signup": "inscríbete",
+    "login": "entre",
+    "userName": "nombre de usuário",
+    "required": {
+      "m": "obligatorio",
+      "f": "obligatoria"
+    },
+    "address": "dirección"
+  },
+  "common": {
+    "user": "usuário(a)",
+    "hello": "hola",
+    "your": {
+      "m": "su",
+      "f": "su"
+    },
+    "submit": "enviar",
+    "clickHere": "clica aquí",
+    "already": "ya",
+    "negatory": "no",
+    "please": "por favor",
+    "the": {
+      "m": "el",
+      "f": "la"
+    }
+  }
+}

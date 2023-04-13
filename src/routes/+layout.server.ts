@@ -1,5 +1,6 @@
 import type { Cookies } from '@sveltejs/kit';
 import type { LayoutServerLoad } from './$types';
+import { waitLocale } from 'svelte-i18n';
 
 function getTheme(cookies: Cookies) {
   let theme = cookies.get('theme') as 'light' | 'dark';
@@ -18,8 +19,9 @@ function getLanguage(data: { cookies: Cookies; request: Request }) {
   return lang;
 }
 
-export const load = (({ cookies, request }) => {
+export const load = (async ({ cookies, request }) => {
   const theme = getTheme(cookies);
   const lang = getLanguage({ cookies, request });
+  await waitLocale();
   return { theme, lang };
 }) satisfies LayoutServerLoad;

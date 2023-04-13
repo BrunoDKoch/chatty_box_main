@@ -1,0 +1,39 @@
+{
+  "auth": {
+    "email": "email",
+    "password": "password",
+    "confirm": "confirm",
+    "anAccount": "an account",
+    "have": "have",
+    "signup": "sign up",
+    "login": "log in",
+    "userName": "username",
+    "required": {
+      "m": "required",
+      "f": "required"
+    },
+    "invalid": {
+      "m": "invalid",
+      "f": "invalid"
+    },
+    "address": "address"
+  },
+  "common": {
+    "user": "user",
+    "hello": "hello",
+    "your": {
+      "m": "your",
+      "f": "your"
+    },
+    "submit": "submit",
+    "clickHere": "click here",
+    "already": "already",
+    "negatory": "don't",
+    "please": "please",
+    "the": {
+      "m": "the",
+      "f": "the"
+    }
+  }
+  
+}

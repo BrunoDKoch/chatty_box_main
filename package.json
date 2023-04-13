@@ -40,6 +40,6 @@
     "@prisma/client": "^4.12.0",
     "dropzone": "^6.0.0-beta.2",
     "iconify-icon": "^1.0.7",
-    "sveltekit-i18n": "^2.2.2"
+    "svelte-i18n": "^3.6.0"
   }
 }

@@ -12,6 +12,7 @@ async function logIn(body: LogInInfo) {
     baseURL,
     credentials: 'include',
     async onResponse({ response }) {
+      console.log(response)
       if (response.status > 200) {
         throw {
           code: response.status,

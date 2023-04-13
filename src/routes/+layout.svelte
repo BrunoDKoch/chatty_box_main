@@ -3,7 +3,7 @@
   import 'iconify-icon';
   import { onMount } from 'svelte';
   import type { LayoutServerData } from './$types';
-  import { page } from '$app/stores';
+  import { locale } from 'svelte-i18n';
   import { theme } from '$lib/theme';
   import { ofetch } from 'ofetch';
   export let data: LayoutServerData;
@@ -22,7 +22,7 @@
         theme,
       },
     });
-    const body = document.getElementsByTagName('body')[0];
+    const body = document.getElementsByTagName('html')[0];
     handleThemeClass(body, theme);
   }
 
@@ -36,6 +36,7 @@
 
   onMount(async () => {
     theme.subscribe(async (t) => await changeThemeCookie(t));
+    locale.subscribe((l) => document ? document.getElementsByTagName('html')[0].setAttribute('lang', l ? l : 'en') : null)
   });
 </script>
 
