@@ -6,7 +6,7 @@
   import { createEventDispatcher } from 'svelte';
   import QrCodeModal from '../QrCodeModal.svelte';
   import EmailOtpModal from './EmailOTPModal.svelte';
-  import { t } from '$lib/translations';
+  import { t } from '$lib/locales/translations';
   export let pending = false;
   const dispatch = createEventDispatcher();
   let qrCode: { content: string; height: number; width: number } | null = null;

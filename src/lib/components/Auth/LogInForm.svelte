@@ -6,7 +6,7 @@
   import ErrorModal from '../ErrorModal.svelte';
   import { createEventDispatcher } from 'svelte';
   import { goto } from '$app/navigation';
-  import { t } from '$lib/translations';
+  import { t } from '$lib/locales/translations';
   export let pending = false;
   const dispatch = createEventDispatcher();
   let email = '';

@@ -2,7 +2,7 @@
   import { page } from '$app/stores';
   import LogInForm from './LogInForm.svelte';
   import SignUpForm from './SignUpForm.svelte';
-  import { t } from '$lib/translations';
+  import { t } from '$lib/locales/translations';
   $: pending = false;
   $: showSpinner = false;
 </script>

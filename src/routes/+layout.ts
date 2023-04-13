@@ -1,4 +1,4 @@
-import { locale, loadTranslations } from '$lib/translations';
+import { locale, loadTranslations } from '$lib/locales/translations';
 import type { LayoutLoad } from './$types';
 
 export const load = (async ({ url }) => {

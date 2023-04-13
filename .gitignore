@@ -11,3 +11,4 @@ vite.config.ts.timestamp-*
 planning.txt
 vite.config.ts
 svelte.config.js
+.vscode/

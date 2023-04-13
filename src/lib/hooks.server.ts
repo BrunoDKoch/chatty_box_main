@@ -1,4 +1,4 @@
-import { locale } from '$lib/translations';
+import { locale } from '$lib/locales/translations';
 import type { Handle, Cookies } from '@sveltejs/kit';
 
 function getLanguage(data: { cookies: Cookies; request: Request }) {

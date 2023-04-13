@@ -9,5 +9,9 @@
   "clickHere": "clique aqui",
   "already": "já",
   "negatory": "não",
-  "please": "por favor"
+  "please": "por favor",
+  "the": {
+    "m": "o",
+    "f": "a"
+  }
 }
