@@ -52,7 +52,7 @@
 
 <div class="form-control">
   <label for="{name}" class="label">
-    <span class="label-text">{required ? labelText + '*' : labelText}</span>
+    <span class="label-text first-letter:uppercase">{required ? labelText + '*' : labelText}</span>
   </label>
   {#if type !== 'area'}
     <input

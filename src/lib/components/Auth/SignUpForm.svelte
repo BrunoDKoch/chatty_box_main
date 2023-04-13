@@ -6,6 +6,7 @@
   import { createEventDispatcher } from 'svelte';
   import QrCodeModal from '../QrCodeModal.svelte';
   import EmailOtpModal from './EmailOTPModal.svelte';
+  import { t } from '$lib/translations';
   export let pending = false;
   const dispatch = createEventDispatcher();
   let qrCode: { content: string; height: number; width: number } | null = null;
@@ -113,7 +114,7 @@
   <TextInput
     name="email"
     type="email"
-    labelText="Seu e-mail"
+    labelText="{$t('common.your.m')} {$t('auth.email')}"
     required
     rules={rules.emailRules}
     bind:value={email}
@@ -121,7 +122,7 @@
   <TextInput
     name="confirmEmail"
     type="email"
-    labelText="Confirme seu e-mail"
+    labelText="{$t('auth.confirm')} {$t('common.your.m')} {$t('auth.email')}"
     required
     rules={rules.confirmEmailRules}
     bind:value={confirmEmail}
@@ -129,7 +130,7 @@
   <TextInput
     name="password"
     type="password"
-    labelText="Sua senha"
+    labelText="{$t('common.your.f')} {$t('auth.password')}"
     required
     rules={rules.passwordRules}
     bind:value={password}
@@ -137,7 +138,7 @@
   <TextInput
     name="confirmPassword"
     type="password"
-    labelText="Confirme sua senha"
+    labelText="{$t('auth.confirm')} {$t('common.your.f')} {$t('auth.password')}"
     required
     rules={rules.confirmPasswordRules}
     bind:value={confirmPassword}
@@ -145,15 +146,18 @@
   <div class="col-span-2">
     <TextInput
       name="username"
-      labelText="Seu nome completo"
+      labelText="{$t('common.your.m')} {$t('auth.userName')}"
       required
       rules={rules.userNameRules}
       bind:value={userName}
     />
   </div>
   <div class="col-span-2 row-span-2 flex flex-col items-center justify-center">
-    <button class="btn">Enviar</button>
-    <a class="link" href="/auth/login">Já possui uma conta? Clique aqui</a>
+    <button class="btn">{$t('common.submit')}</button>
+    <a class="link first-letter:uppercase" href="/auth/login">
+      <span>{$t('common.already')} {$t('auth.have')} {$t('auth.anAccount')}?</span>
+      <span class="capitalize">{$t('common.clickHere')}!</span>
+    </a>
   </div>
 </form>
 

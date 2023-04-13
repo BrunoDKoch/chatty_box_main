@@ -7,7 +7,6 @@
   import { theme } from '$lib/theme';
   import { ofetch } from 'ofetch';
   export let data: LayoutServerData;
-
   $theme = data.theme;
 
   function handleThemeClass(node: HTMLElement, theme: 'light' | 'dark') {

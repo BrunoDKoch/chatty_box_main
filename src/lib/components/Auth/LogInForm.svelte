@@ -6,6 +6,7 @@
   import ErrorModal from '../ErrorModal.svelte';
   import { createEventDispatcher } from 'svelte';
   import { goto } from '$app/navigation';
+  import { t } from '$lib/translations';
   export let pending = false;
   const dispatch = createEventDispatcher();
   let email = '';
@@ -77,7 +78,7 @@
   <TextInput
     name="email"
     type="email"
-    labelText="E-mail"
+    labelText={$t('auth.email')}
     required
     rules={rules.emailRules}
     disabled={pending}
@@ -86,15 +87,18 @@
   <TextInput
     name="password"
     type="password"
-    labelText="Senha"
+    labelText={$t('auth.password')}
     required
     rules={rules.passwordRules}
     disabled={pending}
     bind:value={password}
   />
   <Checkbox bind:checked={remember} name="remember" labelText="Lembrar minhas credenciais" />
-  <button disabled={pending} class="btn">Submit</button>
-  <a class="link" href="/auth/signup">Don't have an account? Click here!</a>
+  <button disabled={pending} class="btn">{$t('common.submit')}</button>
+  <a class="link first-letter:uppercase" href="/auth/signup">
+    <span>{$t('common.negatory')} {$t('auth.have')} {$t('auth.anAccount')}?</span>
+    <span class="capitalize">{$t('common.clickHere')}!</span>
+  </a>
 </form>
 
 {#if errorMsg}
