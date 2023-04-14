@@ -3,6 +3,7 @@ import type { LogInInfo, SignUpInfo } from '$lib/types/authTypes';
 import { ofetch } from 'ofetch';
 import { writable, get } from 'svelte/store';
 import { goto } from '$app/navigation';
+import { PUBLIC_IDENTITY_COOKIE } from '$env/static/public';
 
 async function logIn(body: LogInInfo) {
   return await ofetch(`/User/login`, {
@@ -12,14 +13,14 @@ async function logIn(body: LogInInfo) {
     baseURL,
     credentials: 'include',
     async onResponse({ response }) {
-      console.log(response)
+      console.log(response);
       if (response.status > 200) {
         throw {
           code: response.status,
           error: { message: response.status, cause: 'Credenciais inválidas' },
         };
       }
-      await getCurrentUser();
+      await getCurrentUser(response.headers.get('set-cookie')!);
       response._data = { code: response.status };
     },
     onResponseError({ response }) {
@@ -50,18 +51,18 @@ async function signUp(body: SignUpInfo) {
   });
 }
 
-async function getCurrentUser(): Promise<{
+async function getCurrentUser(idCookie: string): Promise<{
   email: string;
+  userName: string;
 }> {
   return await ofetch<{
     email: string;
     userName: string;
-    id: string;
-    roles: string[];
   }>('/User/current', {
     mode: 'cors',
     baseURL,
     credentials: 'include',
+    headers: { cookie: `${PUBLIC_IDENTITY_COOKIE}=${idCookie}` },
     onResponse({ response }) {
       if (!response.ok) return;
       const user = response._data;
@@ -88,20 +89,6 @@ async function logOut() {
     },
   });
   return { data, error };
-}
-
-async function getNewToken() {
-  await ofetch(`/User/new`, {
-    baseURL,
-    method: 'GET',
-    mode: 'cors',
-    credentials: 'include',
-    retry: 3,
-    onResponse({ response }) {
-      if (!response.ok) return;
-      setTimeout(async () => await getCurrentUser(), 500);
-    },
-  });
 }
 
 async function suspendUser(body: { reason: string; until?: Date; id: string }) {
@@ -142,7 +129,6 @@ export {
   logOut,
   signUp,
   getCurrentUser,
-  getNewToken,
   suspendUser,
   validateEmail,
   currentUser,
