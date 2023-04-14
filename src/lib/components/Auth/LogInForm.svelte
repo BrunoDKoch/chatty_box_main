@@ -93,7 +93,7 @@
     disabled={pending}
     bind:value={password}
   />
-  <Checkbox bind:checked={remember} name="remember" labelText="Lembrar minhas credenciais" />
+  <Checkbox bind:checked={remember} name="remember" labelText={$_('auth.remember')} />
   <button disabled={pending} class="btn">{$_('common.submit')}</button>
   <a class="link first-letter:uppercase" href="/auth/signup">
     <span>{$_('common.negatory')} {$_('auth.have')} {$_('auth.anAccount')}?</span>

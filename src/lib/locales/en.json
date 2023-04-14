@@ -16,7 +16,8 @@
       "m": "invalid",
       "f": "invalid"
     },
-    "address": "address"
+    "address": "address",
+    "remember": "remember me"
   },
   "common": {
     "user": "user",

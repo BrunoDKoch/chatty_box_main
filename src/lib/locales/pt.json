@@ -12,7 +12,8 @@
       "m": "obrigatório",
       "f": "obrigatória"
     },
-    "address": "endereço"
+    "address": "endereço",
+    "remember": "lembrar"
   },
   "common": {
     "user": "usuário(a)",
