@@ -34,7 +34,10 @@
     "the": {
       "m": "the",
       "f": "the"
-    }
+    },
+    "search": "search"
+  },
+  "aside": {
+    "searchChats": "{search} chats"
   }
-  
 }

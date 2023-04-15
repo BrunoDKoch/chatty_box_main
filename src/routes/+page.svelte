@@ -10,11 +10,11 @@
   });
 </script>
 
-<div class="grid grid-cols-5">
-  <aside class="w-[20vw] bg-base-200 min-h-screen">
+<div class="grid grid-cols-4">
+  <aside class="col-span-1 bg-base-200 min-h-screen">
     <Aside messages={$previews} />
   </aside>
-  <section class="col-span-4">
+  <section class="col-span-3">
     <h1>Welcome to SvelteKit</h1>
     <p>Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation</p>
   </section>

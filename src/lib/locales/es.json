@@ -30,6 +30,10 @@
     "the": {
       "m": "el",
       "f": "la"
-    }
+    },
+    "search": "buscar"
+  },
+  "aside": {
+    "searchChats": "{search} chats"
   }
 }
