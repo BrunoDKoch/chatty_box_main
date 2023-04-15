@@ -3,6 +3,7 @@
   import { HubConnectionState } from '@microsoft/signalr';
   import { connection, previews } from '$lib/useSignalR';
   import { onMount } from 'svelte';
+  import FriendsTabs from '$lib/components/FriendsTabs/FriendsTabs.svelte';
 
   onMount(async () => {
     if (connection.state !== HubConnectionState.Connected) await connection.start();
@@ -15,6 +16,7 @@
     <Aside messages={$previews} />
   </aside>
   <section class="col-span-3">
+    <FriendsTabs />
     <h1>Welcome to SvelteKit</h1>
     <p>Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation</p>
   </section>

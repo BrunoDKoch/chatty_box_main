@@ -35,5 +35,11 @@
   },
   "aside": {
     "searchChats": "{search} chats"
+  },
+  "friends": {
+    "available": "disponível",
+    "pending": "pendente",
+    "blocked": "bloqueado",
+    "add": "adicionar amigo"
   }
 }

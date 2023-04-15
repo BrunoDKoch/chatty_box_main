@@ -35,9 +35,16 @@
       "m": "the",
       "f": "the"
     },
-    "search": "search"
+    "search": "search",
+    "friend": "friend"
   },
   "aside": {
     "searchChats": "{search} chats"
+  },
+  "friends": {
+    "available": "available",
+    "pending": "pending",
+    "blocked": "blocked",
+    "add": "add friend"
   }
 }
