@@ -63,19 +63,19 @@ model UserRole {
 }
 
 model User {
-  id                   String      @id(map: "PK_Users") @unique(map: "IX_Users_Id") @db.NVarChar(450)
-  userName             String?     @db.NVarChar(256)
-  normalizedUserName   String?     @db.NVarChar(256)
-  email                String?     @unique @db.NVarChar(256)
-  normalizedEmail      String?     @unique @db.NVarChar(256)
+  id                   String            @id(map: "PK_Users") @unique(map: "IX_Users_Id") @db.NVarChar(450)
+  userName             String?           @db.NVarChar(256)
+  normalizedUserName   String?           @db.NVarChar(256)
+  email                String?           @unique @db.NVarChar(256)
+  normalizedEmail      String?           @unique @db.NVarChar(256)
   emailConfirmed       Boolean
-  passwordHash         String?     @db.NVarChar(Max)
-  securityStamp        String?     @db.NVarChar(Max)
-  concurrencyStamp     String?     @db.NVarChar(Max)
-  phoneNumber          String?     @db.NVarChar(Max)
+  passwordHash         String?           @db.NVarChar(Max)
+  securityStamp        String?           @db.NVarChar(Max)
+  concurrencyStamp     String?           @db.NVarChar(Max)
+  phoneNumber          String?           @db.NVarChar(Max)
   phoneNumberConfirmed Boolean
   twoFactorEnabled     Boolean
-  lockoutEnd           DateTime?   @db.DateTimeOffset
+  lockoutEnd           DateTime?         @db.DateTimeOffset
   lockoutEnabled       Boolean
   accessFailedCount    Int
   userClaim            UserClaim[]
@@ -83,12 +83,15 @@ model User {
   userRole             UserRole[]
   userToken            UserToken[]
   // Non ASP.NET additions
-  friends              User[]      @relation("friends")
-  isFriendsWith        User[]      @relation("friends")
-  blocking             User[]      @relation("blocked")
-  blockedBy            User[]      @relation("blocked")
+  friends              User[]            @relation("friends")
+  isFriendsWith        User[]            @relation("friends")
+  blocking             User[]            @relation("blocked")
+  blockedBy            User[]            @relation("blocked")
   chats                Chat[]
   messages             Message[]
+  isAdminIn            ChatAdmin[]
+  clientConnection     ClientConnection?
+  readMessages         ReadMessage[]
 
   @@index([normalizedEmail], map: "EmailIndex")
   @@index([normalizedUserName], map: "UserNameIndex")
@@ -107,25 +110,52 @@ model UserToken {
 }
 
 model Chat {
-  id          String    @id @default(uuid())
-  isGroupChat Boolean   @default(false)
-  maxUsers    Int       @default(2)
+  id          String      @id @default(uuid())
+  isGroupChat Boolean     @default(false)
+  maxUsers    Int         @default(2)
+  chatName    String?
   users       User[]
-  createdAt   DateTime  @default(now())
+  admins      ChatAdmin[]
+  createdAt   DateTime    @default(now())
   messages    Message[]
 }
 
+model ChatAdmin {
+  user   User   @relation(fields: [userId], references: [id])
+  userId String @db.NVarChar(450)
+  chat   Chat   @relation(fields: [chatId], references: [id])
+  chatId String
+
+  @@id([userId, chatId])
+}
+
 model Message {
-  id        String    @id @default(uuid())
-  sentAt    DateTime  @default(now())
-  editedAt  DateTime  @updatedAt
-  from      User      @relation(fields: [fromId], references: [id])
-  fromId    String    @db.NVarChar(450)
-  chat      Chat      @relation(fields: [chatId], references: [id])
-  chatId    String
-  read      Boolean   @default(false)
-  text      String
-  replyTo   Message?  @relation(name: "replies", fields: [replyToId], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  replyToId String
-  replies   Message[] @relation("replies")
+  id          String        @id @default(uuid())
+  sentAt      DateTime      @default(now())
+  editedAt    DateTime      @updatedAt
+  from        User          @relation(fields: [fromId], references: [id])
+  fromId      String        @db.NVarChar(450)
+  chat        Chat          @relation(fields: [chatId], references: [id])
+  chatId      String
+  text        String
+  replyTo     Message?      @relation(name: "replies", fields: [replyToId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  replyToId   String
+  replies     Message[]     @relation("replies")
+  readByUsers ReadMessage[]
+}
+
+model ClientConnection {
+  user         User   @relation(fields: [userId], references: [id])
+  userId       String @id @db.NVarChar(450)
+  connectionId String
+}
+
+model ReadMessage {
+  message   Message  @relation(fields: [messageId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  messageId String
+  user      User     @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  userId    String   @db.NVarChar(450)
+  readAt    DateTime @default(now())
+
+  @@id([messageId, userId])
 }

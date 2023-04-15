@@ -37,6 +37,7 @@
   },
   "type": "module",
   "dependencies": {
+    "@microsoft/signalr": "^7.0.5",
     "@prisma/client": "^4.12.0",
     "dropzone": "^6.0.0-beta.2",
     "iconify-icon": "^1.0.7",

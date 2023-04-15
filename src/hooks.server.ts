@@ -14,8 +14,13 @@ async function getUser(event: RequestEvent) {
   if (!PUBLIC_IDENTITY_COOKIE) return;
   const idCookie = cookies.get(PUBLIC_IDENTITY_COOKIE);
   if (!idCookie) return;
-  const user = await getCurrentUser(idCookie);
-  if (!user && !url.pathname.startsWith('/auth')) throw redirect(303, '/auth/login');
+  try {
+    const user = await getCurrentUser(idCookie);
+    if (!user && !url.pathname.startsWith('/auth')) throw redirect(303, '/auth/login');
+  } catch {
+    if (idCookie) cookies.delete(PUBLIC_IDENTITY_COOKIE)
+    throw redirect(303, '/auth/login');
+  }
 }
 
 export const handle: Handle = async ({ event, resolve }) => {
