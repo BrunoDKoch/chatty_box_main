@@ -40,6 +40,7 @@
     "available": "disponible",
     "pending": "pendiente",
     "blocked": "bloqueado",
-    "add": "añadir amigo"
+    "add": "añadir amigo",
+    "noFriends": "no tienes amigos agregados"
   }
 }

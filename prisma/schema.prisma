@@ -63,35 +63,37 @@ model UserRole {
 }
 
 model User {
-  id                   String            @id(map: "PK_Users") @unique(map: "IX_Users_Id") @db.NVarChar(450)
-  userName             String?           @db.NVarChar(256)
-  normalizedUserName   String?           @db.NVarChar(256)
-  email                String?           @unique @db.NVarChar(256)
-  normalizedEmail      String?           @unique @db.NVarChar(256)
-  emailConfirmed       Boolean
-  passwordHash         String?           @db.NVarChar(Max)
-  securityStamp        String?           @db.NVarChar(Max)
-  concurrencyStamp     String?           @db.NVarChar(Max)
-  phoneNumber          String?           @db.NVarChar(Max)
-  phoneNumberConfirmed Boolean
-  twoFactorEnabled     Boolean
-  lockoutEnd           DateTime?         @db.DateTimeOffset
-  lockoutEnabled       Boolean
-  accessFailedCount    Int
-  userClaim            UserClaim[]
-  userLogin            UserLogin[]
-  userRole             UserRole[]
-  userToken            UserToken[]
+  id                     String            @id(map: "PK_Users") @unique(map: "IX_Users_Id") @db.NVarChar(450)
+  userName               String?           @db.NVarChar(256)
+  normalizedUserName     String?           @db.NVarChar(256)
+  email                  String?           @unique @db.NVarChar(256)
+  normalizedEmail        String?           @unique @db.NVarChar(256)
+  emailConfirmed         Boolean
+  passwordHash           String?           @db.NVarChar(Max)
+  securityStamp          String?           @db.NVarChar(Max)
+  concurrencyStamp       String?           @db.NVarChar(Max)
+  phoneNumber            String?           @db.NVarChar(Max)
+  phoneNumberConfirmed   Boolean
+  twoFactorEnabled       Boolean
+  lockoutEnd             DateTime?         @db.DateTimeOffset
+  lockoutEnabled         Boolean
+  accessFailedCount      Int
+  userClaim              UserClaim[]
+  userLogin              UserLogin[]
+  userRole               UserRole[]
+  userToken              UserToken[]
   // Non ASP.NET additions
-  friends              User[]            @relation("friends")
-  isFriendsWith        User[]            @relation("friends")
-  blocking             User[]            @relation("blocked")
-  blockedBy            User[]            @relation("blocked")
-  chats                Chat[]
-  messages             Message[]
-  isAdminIn            ChatAdmin[]
-  clientConnection     ClientConnection?
-  readMessages         ReadMessage[]
+  friendRequestsSent     FriendRequest[]   @relation("adding")
+  friendRequestsReceived FriendRequest[]   @relation("added")
+  friends                User[]            @relation("friends")
+  isFriendsWith          User[]            @relation("friends")
+  blocking               User[]            @relation("blocked")
+  blockedBy              User[]            @relation("blocked")
+  chats                  Chat[]
+  messages               Message[]
+  isAdminIn              ChatAdmin[]
+  clientConnection       ClientConnection?
+  readMessages           ReadMessage[]
 
   @@index([normalizedEmail], map: "EmailIndex")
   @@index([normalizedUserName], map: "UserNameIndex")
@@ -158,4 +160,14 @@ model ReadMessage {
   readAt    DateTime @default(now())
 
   @@id([messageId, userId])
+}
+
+model FriendRequest {
+  userAdding       User     @relation(name: "adding", fields: [userAddingId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  userAddingId     String   @db.NVarChar(450)
+  userBeingAdded   User     @relation(name: "added", fields: [userBeingAddedId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  userBeingAddedId String   @db.NVarChar(450)
+  sentAt           DateTime @default(now())
+
+  @@id([userAddingId, userBeingAddedId])
 }

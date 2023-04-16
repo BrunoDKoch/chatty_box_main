@@ -12,3 +12,4 @@ planning.txt
 vite.config.ts
 svelte.config.js
 .vscode/
+*.sql

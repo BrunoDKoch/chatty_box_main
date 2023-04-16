@@ -45,6 +45,7 @@
     "available": "available",
     "pending": "pending",
     "blocked": "blocked",
-    "add": "add friend"
+    "add": "add friend",
+    "noFriends": "you don't have any friends added"
   }
 }
