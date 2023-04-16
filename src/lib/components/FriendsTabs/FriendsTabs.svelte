@@ -1,7 +1,7 @@
 <script lang="ts">
   import { t } from 'svelte-i18n';
   import SingleTab from './SingleTab.svelte';
-  const tabs = [$t('friends.available'), $t('friends.pending'), $t('friends.blocked')];
+  import { tabs } from '$lib/friendsTab';
 </script>
 
 <div class="flex justify-between bg-base-200 p-2">

@@ -2,7 +2,7 @@
   import { page } from '$app/stores';
   import LogInForm from './LogInForm.svelte';
   import SignUpForm from './SignUpForm.svelte';
-  import { _ } from 'svelte-i18n';
+  import { t } from 'svelte-i18n';
   $: pending = false;
   $: showSpinner = false;
 </script>
@@ -17,10 +17,10 @@
       style="text-shadow: 2px 0 black, -2px 0 black, 0 2px black, 0 -2px black,
     1px 1px black, -1px -1px black, 1px -1px black, -1px 1px black;"
     >
-      <h1 class="text-3xl font-bold first-letter:capitalize">{$_('common.hello')}, chatter</h1>
+      <h1 class="text-3xl font-bold first-letter:capitalize">{$t('common.hello')}, chatter</h1>
       <p class="first-letter:uppercase">
-        {$_('common.please')}
-        {$_($page.url.pathname.endsWith('signup') ? 'auth.signup' : 'auth.login')}
+        {$t('common.please')}
+        {$t($page.url.pathname.endsWith('signup') ? 'auth.signup' : 'auth.login')}
       </p>
     </div>
     <div class="card shadow-2xl bg-base-100">

@@ -6,7 +6,7 @@
   import ErrorModal from '../ErrorModal.svelte';
   import { createEventDispatcher } from 'svelte';
   import { goto } from '$app/navigation';
-  import { _ } from 'svelte-i18n';
+  import { t } from 'svelte-i18n';
   export let pending = false;
   const dispatch = createEventDispatcher();
   let email = '';
@@ -78,7 +78,7 @@
   <TextInput
     name="email"
     type="email"
-    labelText={$_('auth.email')}
+    labelText={$t('auth.email')}
     required
     rules={rules.emailRules}
     disabled={pending}
@@ -87,17 +87,17 @@
   <TextInput
     name="password"
     type="password"
-    labelText={$_('auth.password')}
+    labelText={$t('auth.password')}
     required
     rules={rules.passwordRules}
     disabled={pending}
     bind:value={password}
   />
-  <Checkbox bind:checked={remember} name="remember" labelText={$_('auth.remember')} />
-  <button disabled={pending} class="btn">{$_('common.submit')}</button>
+  <Checkbox bind:checked={remember} name="remember" labelText={$t('auth.remember')} />
+  <button disabled={pending} class="btn">{$t('common.submit')}</button>
   <a class="link first-letter:uppercase" href="/auth/signup">
-    <span>{$_('common.negatory')} {$_('auth.have')} {$_('auth.anAccount')}?</span>
-    <span class="capitalize">{$_('common.clickHere')}!</span>
+    <span>{$t('common.negatory')} {$t('auth.have')} {$t('auth.anAccount')}?</span>
+    <span class="capitalize">{$t('common.clickHere')}!</span>
   </a>
 </form>
 
