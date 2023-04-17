@@ -31,7 +31,9 @@
       "m": "el",
       "f": "la"
     },
-    "search": "buscar"
+    "search": "buscar",
+    "friend": "amigo",
+    "clear": "limpiar"
   },
   "aside": {
     "searchChats": "{search} chats"

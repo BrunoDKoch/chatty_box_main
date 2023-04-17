@@ -36,7 +36,8 @@
       "f": "the"
     },
     "search": "search",
-    "friend": "friend"
+    "friend": "friend",
+    "clear": "clear"
   },
   "aside": {
     "searchChats": "{search} chats"

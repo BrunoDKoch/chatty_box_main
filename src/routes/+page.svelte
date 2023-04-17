@@ -9,6 +9,7 @@
   onMount(async () => {
     if (connection.state !== HubConnectionState.Connected) await connection.start();
     await connection.invoke('GetMessagePreviews');
+    await connection.invoke('GetFriends');
   });
 </script>
 

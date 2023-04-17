@@ -8,7 +8,6 @@
   connection.on('friends', (data: typeof friends) => {
     friends.push(...data);
   });
-  onMount(async () => await connection.invoke('GetFriends'));
 </script>
 
 {#if $useActiveScreen === 'friends'}
