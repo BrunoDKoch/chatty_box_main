@@ -4,12 +4,9 @@
   import type { User } from '@prisma/client';
   import { onMount } from 'svelte';
   import FriendsScreen from './FriendsScreen/FriendsScreen.svelte';
-  const friends: { userName: string; isOnline: boolean }[] = [];
-  connection.on('friends', (data: typeof friends) => {
-    friends.push(...data);
-  });
+  import { friends } from '$lib/useSignalR';
 </script>
 
 {#if $useActiveScreen === 'friends'}
-  <FriendsScreen {friends} />
+  <FriendsScreen friends={$friends} />
 {/if}

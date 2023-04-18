@@ -83,6 +83,7 @@ model User {
   userRole               UserRole[]
   userToken              UserToken[]
   // Non ASP.NET additions
+  avatar                 String?
   friendRequestsSent     FriendRequest[]   @relation("adding")
   friendRequestsReceived FriendRequest[]   @relation("added")
   friends                User[]            @relation("friends")

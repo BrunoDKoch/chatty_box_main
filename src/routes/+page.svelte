@@ -10,6 +10,7 @@
     if (connection.state !== HubConnectionState.Connected) await connection.start();
     await connection.invoke('GetMessagePreviews');
     await connection.invoke('GetFriends');
+    await connection.invoke('GetFriendRequests')
   });
 </script>
 
