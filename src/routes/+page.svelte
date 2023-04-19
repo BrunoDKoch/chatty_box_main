@@ -2,7 +2,7 @@
   import Aside from '$lib/components/Aside/Aside.svelte';
   import { HubConnectionState } from '@microsoft/signalr';
   import { connection, previews } from '$lib/useSignalR';
-  import { onMount } from 'svelte';
+  import { onDestroy, onMount } from 'svelte';
   import FriendsTabs from '$lib/components/FriendsTabs/FriendsTabs.svelte';
   import ActiveScreen from '$lib/components/MainScreen/ActiveScreen.svelte';
 
@@ -10,7 +10,10 @@
     if (connection.state !== HubConnectionState.Connected) await connection.start();
     await connection.invoke('GetMessagePreviews');
     await connection.invoke('GetFriends');
-    await connection.invoke('GetFriendRequests')
+    await connection.invoke('GetFriendRequests');
+  });
+  onDestroy(async () => {
+    await connection.stop();
   });
 </script>
 

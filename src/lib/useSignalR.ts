@@ -9,6 +9,9 @@ export const messagesCount = writable(0);
 export const previews = writable([]) as Writable<MessagePreview[]>;
 export const friendRequests = writable([]) as Writable<(FriendRequest & { userAdding: User })[]>;
 export const friends = writable([]) as Writable<{ userName: string; isOnline: boolean }[]>;
+export const chatMessages = writable([]) as Writable<
+  { message: Message; user: User; isFromCaller: boolean }[]
+>;
 
 export let connection = new HubConnectionBuilder()
   .withUrl(`${baseURL}/hub/messages`)
@@ -19,7 +22,9 @@ connection.on('unread', (data) => {
 });
 connection.on('newMessage', () => get(messagesCount) + 1);
 connection.on('read', () => get(messagesCount) - 1);
-connection.on('chatMessages', (data: Message[]) => data);
+connection.on('chatMessages', (data: { message: Message; user: User; isFromCaller: boolean }[]) =>
+  chatMessages.set(data),
+);
 connection.on('previews', (data: MessagePreview[]) => previews.set(data));
 connection.on('pendingRequests', (data: (FriendRequest & { userAdding: User })[]) =>
   friendRequests.set(data),

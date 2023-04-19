@@ -33,7 +33,8 @@
     },
     "search": "buscar",
     "friend": "amigo",
-    "clear": "limpiar"
+    "clear": "limpiar",
+    "remove": "remover"
   },
   "aside": {
     "searchChats": "{search} chats"
@@ -43,6 +44,7 @@
     "pending": "pendiente",
     "blocked": "bloqueado",
     "add": "añadir amigo",
-    "noFriends": "no tienes amigos agregados"
+    "noFriends": "no tienes amigos agregados",
+    "newChat": "nuevo chat"
   }
 }

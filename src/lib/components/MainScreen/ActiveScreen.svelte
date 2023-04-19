@@ -8,5 +8,5 @@
 </script>
 
 {#if $useActiveScreen === 'friends'}
-  <FriendsScreen friends={$friends} />
+  <FriendsScreen friends={$friends.sort((a, b) => Number(b.isOnline) - Number(a.isOnline))} />
 {/if}

@@ -37,7 +37,8 @@
     },
     "search": "search",
     "friend": "friend",
-    "clear": "clear"
+    "clear": "clear",
+    "remove": "remove"
   },
   "aside": {
     "searchChats": "{search} chats"
@@ -47,6 +48,7 @@
     "pending": "pending",
     "blocked": "blocked",
     "add": "add friend",
-    "noFriends": "you don't have any friends added"
+    "noFriends": "you don't have any friends added",
+    "newChat": "new chat"
   }
 }
