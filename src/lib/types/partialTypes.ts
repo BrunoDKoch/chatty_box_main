@@ -7,4 +7,6 @@ type MessagePreview = {
   chat: Chat;
 };
 
-export type { MessagePreview };
+type FriendResponse = { userName: string; isOnline: boolean; avatar?: string; userId: string };
+
+export type { MessagePreview, FriendResponse };

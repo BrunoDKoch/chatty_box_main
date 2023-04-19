@@ -7,7 +7,7 @@
   import ActiveScreen from '$lib/components/MainScreen/ActiveScreen.svelte';
 
   onMount(async () => {
-    if (connection.state !== HubConnectionState.Connected) await connection.start();
+    if (connection.state === HubConnectionState.Disconnected) await connection.start();
     await connection.invoke('GetMessagePreviews');
     await connection.invoke('GetFriends');
     await connection.invoke('GetFriendRequests');

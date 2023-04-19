@@ -3,12 +3,12 @@ import { PUBLIC_AUTH_URL_DEV as baseURL } from '$env/static/public';
 import { currentUser } from '$lib/useAuth';
 import type { FriendRequest, Message, User } from '@prisma/client';
 import { get, writable, type Writable } from 'svelte/store';
-import type { MessagePreview } from '$lib/types/partialTypes';
+import type { MessagePreview, FriendResponse } from '$lib/types/partialTypes';
 
 export const messagesCount = writable(0);
 export const previews = writable([]) as Writable<MessagePreview[]>;
 export const friendRequests = writable([]) as Writable<(FriendRequest & { userAdding: User })[]>;
-export const friends = writable([]) as Writable<{ userName: string; isOnline: boolean }[]>;
+export const friends = writable([]) as Writable<FriendResponse[]>;
 export const chatMessages = writable([]) as Writable<
   { message: Message; user: User; isFromCaller: boolean }[]
 >;
@@ -29,7 +29,7 @@ connection.on('previews', (data: MessagePreview[]) => previews.set(data));
 connection.on('pendingRequests', (data: (FriendRequest & { userAdding: User })[]) =>
   friendRequests.set(data),
 );
-connection.on('friends', (data: { userName: string; isOnline: boolean }[]) => {
+connection.on('friends', (data: FriendResponse[]) => {
   console.log({ data });
   friends.update((f) => {
     data.forEach((user) => {
@@ -39,4 +39,13 @@ connection.on('friends', (data: { userName: string; isOnline: boolean }[]) => {
     return f;
   });
 });
+connection.on('updateStatus', (data: string) => {
+  friends.update((f) => {
+    f.map((u) => {
+      if (u.userId === data) u.isOnline = !u.isOnline;
+    });
+    return f;
+  });
+});
+
 connection.onclose(() => console.log('Hub closed'));
