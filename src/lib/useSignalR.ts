@@ -3,15 +3,14 @@ import { PUBLIC_AUTH_URL_DEV as baseURL } from '$env/static/public';
 import { currentUser } from '$lib/useAuth';
 import type { FriendRequest, Message, User } from '@prisma/client';
 import { get, writable, type Writable } from 'svelte/store';
-import type { MessagePreview, FriendResponse } from '$lib/types/partialTypes';
+import type { MessagePreview, FriendResponse, ChatPreview } from '$lib/types/partialTypes';
+import { chat } from './useActiveChat';
+import type { CompleteChat, MessageResponse } from './types/combinationTypes';
 
 export const messagesCount = writable(0);
-export const previews = writable([]) as Writable<MessagePreview[]>;
+export const previews = writable([]) as Writable<ChatPreview[]>;
 export const friendRequests = writable([]) as Writable<(FriendRequest & { userAdding: User })[]>;
 export const friends = writable([]) as Writable<FriendResponse[]>;
-export const chatMessages = writable([]) as Writable<
-  { message: Message; user: User; isFromCaller: boolean }[]
->;
 
 export let connection = new HubConnectionBuilder()
   .withUrl(`${baseURL}/hub/messages`)
@@ -22,10 +21,8 @@ connection.on('unread', (data) => {
 });
 connection.on('newMessage', () => get(messagesCount) + 1);
 connection.on('read', () => get(messagesCount) - 1);
-connection.on('chatMessages', (data: { message: Message; user: User; isFromCaller: boolean }[]) =>
-  chatMessages.set(data),
-);
-connection.on('previews', (data: MessagePreview[]) => previews.set(data));
+connection.on('chat', (data: CompleteChat) => chat.set(data));
+connection.on('previews', (data: ChatPreview[]) => previews.set(data));
 connection.on('pendingRequests', (data: (FriendRequest & { userAdding: User })[]) =>
   friendRequests.set(data),
 );
@@ -47,5 +44,6 @@ connection.on('updateStatus', (data: string) => {
     return f;
   });
 });
+connection.on('newChat', (data: CompleteChat) => chat.set(data));
 
 connection.onclose(() => console.log('Hub closed'));

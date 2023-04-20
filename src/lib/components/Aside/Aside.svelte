@@ -1,9 +1,11 @@
 <script lang="ts">
-  import AsideMsg from './AsideMsg.svelte';
-  import type { MessagePreview } from '$lib/types/partialTypes';
+  import AsideMsg from './AsidePreview.svelte';
+  import type { ChatPreview, MessagePreview } from '$lib/types/partialTypes';
   import AsideSearch from './AsideSearch.svelte';
-
-  export let messages: MessagePreview[];
+  import { chat } from '$lib/useActiveChat';
+  import { onMount } from 'svelte';
+  $chat.users[0]
+  export let chats: ChatPreview[];
 </script>
 
 <div class="flex flex-col gap-3">
@@ -13,7 +15,9 @@
     </button>
     <AsideSearch />
   </div>
-  {#each messages as message}
-    <AsideMsg {message} />
-  {/each}
+  <div class="flex flex-col even:bg-base-300">
+    {#each chats as chat}
+      <AsideMsg {chat} />
+    {/each}
+  </div>
 </div>

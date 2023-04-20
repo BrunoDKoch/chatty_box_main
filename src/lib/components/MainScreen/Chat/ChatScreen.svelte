@@ -1,9 +1,10 @@
 <script lang="ts">
+  import type { CompleteChat, MessageResponse } from '$lib/types/combinationTypes';
   import { connection } from '$lib/useSignalR';
   import type { Chat, Message, User } from '@prisma/client';
 
-  export let chat: Chat & { users: User[] };
-  let messages: { message: Message; user: User; isFromCaller: boolean }[] = [];
+  export let chat: CompleteChat;
+  let messages: MessageResponse[] = [];
   connection.on('chatMessages', (data: typeof messages) => {
     for (const msg of data) {
       if (messages.includes(msg)) continue;

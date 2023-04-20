@@ -8,7 +8,7 @@
 
   onMount(async () => {
     if (connection.state === HubConnectionState.Disconnected) await connection.start();
-    await connection.invoke('GetMessagePreviews');
+    await connection.invoke('GetChatPreviews');
     await connection.invoke('GetFriends');
     await connection.invoke('GetFriendRequests');
   });
@@ -20,7 +20,7 @@
 <title>ChattyBox</title>
 <div class="grid grid-cols-4">
   <aside class="col-span-1 bg-base-200 min-h-screen">
-    <Aside messages={$previews} />
+    <Aside chats={$previews} />
   </aside>
   <section class="col-span-3">
     <FriendsTabs />

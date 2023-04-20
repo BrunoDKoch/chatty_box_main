@@ -1,16 +1,20 @@
 <script lang="ts">
   import type { FriendResponse } from '$lib/types/partialTypes';
   import { t } from 'svelte-i18n';
+  import { connection } from '$lib/useSignalR';
+  import useActiveScreen from '$lib/useActiveScreen';
+  import { chat, chatId } from '$lib/useActiveChat';
   export let friend: FriendResponse;
+  async function handleNewChat() {
+    await connection.invoke('CreateNewChat', [friend.userId], undefined, undefined);
+    $useActiveScreen = 'chat';
+    $chatId = $chat.id;
+  }
 </script>
 
 <div class="py-3 {friend.isOnline ? 'opacity-100' : 'opacity-50'} ">
   <div class="grid grid-cols-5 indicator gap-3">
-    <span
-      class="indicator-item indicator-start badge {friend.isOnline
-        ? 'badge-success'
-        : 'badge-outline'}"
-    />
+    <span class="indicator-item indicator-start {friend.isOnline ? 'badge badge-success' : ''}" />
     <figure class="avatar mask mask-squircle w-[50px] h-[50px]">
       {#if friend.avatar}
         <img src={friend.avatar} alt="" />
@@ -27,7 +31,11 @@
       <p>{friend.isOnline ? 'Online' : 'Offline'}</p>
     </div>
     <div class="btn-group">
-      <button aria-label={$t('friends.newChat')} class="btn text-3xl">
+      <button
+        on:click={async () => await handleNewChat()}
+        aria-label={$t('friends.newChat')}
+        class="btn text-3xl"
+      >
         <iconify-icon icon="mdi:message-plus" />
       </button>
       <button

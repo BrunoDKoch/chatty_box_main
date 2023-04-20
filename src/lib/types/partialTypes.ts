@@ -4,9 +4,15 @@ type MessagePreview = {
   from: User;
   sentAt: Date;
   text: string;
-  chat: Chat;
 };
 
 type FriendResponse = { userName: string; isOnline: boolean; avatar?: string; userId: string };
 
-export type { MessagePreview, FriendResponse };
+type ChatPreview = {
+  id: string,
+  chatName?: string,
+  lastMessage?: MessagePreview,
+  users: User[]
+}
+
+export type { MessagePreview, FriendResponse, ChatPreview };
