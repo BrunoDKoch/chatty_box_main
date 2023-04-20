@@ -17,6 +17,11 @@
       <AsideMsg {chat} />
     {/each}
   </div>
+  <div class="flex flex-col even:bg-base-300">
+    {#each chats as chat}
+      <AsideMsg {chat} />
+    {/each}
+  </div>
 </div>
   <div class="flex flex-col even:bg-base-300">
     {#each chats as chat}
