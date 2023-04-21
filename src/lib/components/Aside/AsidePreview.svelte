@@ -38,7 +38,7 @@
         <p>{chat.lastMessage.text.slice(0, 140)}</p>
       </div>
       <p class="col-span-full">
-        {$date(new Date(chat.lastMessage.sentAt))} - {$time(new Date(chat.lastMessage.sentAt))}
+        {$date(new Date(`${chat.lastMessage.sentAt}z`))} - {$time(new Date(`${chat.lastMessage.sentAt}z`))}
       </p>
     {:else}
       <p>No messages yet</p>

@@ -52,8 +52,8 @@
     {message.text}
   </div>
   <div class="chat-footer opacity-50">
-    {$date(new Date(message.sentAt))}
-    {$time(new Date(message.sentAt))}
+    {$date(new Date(`${message.sentAt}z`), { format: 'medium' })}
+    {$time(new Date(`${message.sentAt}z`))}
     {#if isFromCaller}
       <div
         class="tooltip first-letter:capitalize"
