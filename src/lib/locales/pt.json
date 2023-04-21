@@ -34,7 +34,8 @@
     "search": "pesquisar",
     "friend": "amigo",
     "clear": "limpar",
-    "remove": "remover"
+    "remove": "remover",
+    "at": "em"
   },
   "aside": {
     "searchChats": "{search} chats"
@@ -46,5 +47,8 @@
     "add": "adicionar amigo",
     "noFriends": "você não tem amigos adicionados",
     "newChat": "novo chat"
+  },
+  "message": {
+    "readBy": "lida por"
   }
 }

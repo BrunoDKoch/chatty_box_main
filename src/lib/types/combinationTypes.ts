@@ -1,7 +1,12 @@
-import type { Chat, Message, User } from '@prisma/client';
+import type { Chat, Message, ReadMessage, User } from '@prisma/client';
 
 type MessageResponse = {
-  message: Message;
+  id: string,
+  sentAt: Date,
+  editedAt: Date,
+  text: string,
+  replyToId?: string,
+  readBy: { userName: string; avatar?: string; id: string; readAt: Date }[];
   user: User;
   isFromCaller: boolean;
 };

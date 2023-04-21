@@ -38,7 +38,8 @@
     "search": "search",
     "friend": "friend",
     "clear": "clear",
-    "remove": "remove"
+    "remove": "remove",
+    "at": "at"
   },
   "aside": {
     "searchChats": "{search} chats"
@@ -50,5 +51,8 @@
     "add": "add friend",
     "noFriends": "you don't have any friends added",
     "newChat": "new chat"
+  },
+  "message": {
+    "readBy": "read by"
   }
 }

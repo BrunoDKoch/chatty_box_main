@@ -4,6 +4,7 @@
   import { connection } from '$lib/useSignalR';
   import { onMount } from 'svelte';
   import { date, time } from 'svelte-i18n';
+  import MessageComponent from './MessageComponent.svelte';
   export let chatId: string;
 
   let newMessage = '';
@@ -12,7 +13,6 @@
   $: currentUserIsTyping = false;
 
   $: userNamesJoined = $chat.users.map((u) => u.userName).join(', ');
-  $: messages = $chat.messages;
   connection.on('typing', (data: { from: string; isTyping: boolean }) => {
     otherUserIsTyping = data.isTyping;
     otherUserName = data.from;
@@ -20,9 +20,8 @@
   connection.on('chat', (data: CompleteChat) => chat.set(data));
 
   connection.on('newMessage', (data: MessageResponse) => {
-    messages.push(data);
+    $chat.messages.push(data);
   });
-
   async function compareInput() {
     const initialInput = newMessage;
     const newInput = newMessage;
@@ -43,6 +42,7 @@
   }
   async function setup() {
     await connection.invoke('GetChat', chatId);
+    console.log($chat)
   }
   onMount(async () => await setup());
 </script>
@@ -61,31 +61,9 @@
   </div>
 
   <div>
-    {#if messages.length}
-      {#each messages as message}
-        <div class="chat {message.isFromCaller ? 'chat-end' : 'chat-start'}">
-          <figure class="chat-image avatar">
-            <div class="w-10 flex rounded-full">
-              {#if message.user.avatar}
-                <img src={message.user.avatar} alt="" />
-              {:else}
-                <p
-                  class="justify-self-center h-full w-full pt-2 font-bold text-white text-center place-self-center bg-blue-700"
-                >
-                  {message.user.userName ? message.user.userName[0] : ''}
-                </p>
-              {/if}
-            </div>
-          </figure>
-          <div class="chat-header">
-            {message.user.userName}
-          </div>
-          <div class="chat-bubble {message.isFromCaller ? 'chat-bubble-success' : 'chat-bubble-primary'}">{message.message.text}</div>
-          <div class="chat-footer opacity-50">
-            {$date(new Date(message.message.sentAt))}
-            {$time(new Date(message.message.sentAt))}
-          </div>
-        </div>
+    {#if $chat.messages.length}
+      {#each $chat.messages as message}
+        <MessageComponent {message} />
       {/each}
     {:else}
       <p>No messages yet</p>
