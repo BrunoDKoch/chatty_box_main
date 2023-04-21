@@ -21,6 +21,8 @@
 
   connection.on('newMessage', (data: MessageResponse) => {
     $chat.messages.push(data);
+    $chat.messages = $chat.messages;
+    $chat = $chat;
   });
   async function compareInput() {
     const initialInput = newMessage;
@@ -37,7 +39,7 @@
   }
   async function sendMessage() {
     await connection.invoke('StopTyping', $chat.id);
-    await connection.invoke<'saved' | 'msgError'>('SendMessage', $chat.id, newMessage);
+    await connection.invoke<'saved' | 'msgError'>('SendMessage', $chat.id, newMessage, undefined);
     newMessage = '';
   }
   async function setup() {
@@ -60,10 +62,10 @@
     {/if}
   </div>
 
-  <div>
+  <div class="mt-5">
     {#if $chat.messages.length}
       {#each $chat.messages as message}
-        <MessageComponent {message} />
+        <MessageComponent bind:message />
       {/each}
     {:else}
       <p>No messages yet</p>

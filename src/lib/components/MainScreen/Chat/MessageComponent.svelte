@@ -32,18 +32,18 @@
 </script>
 
 <div bind:this={thisElement} class="chat {isFromCaller ? 'chat-end' : 'chat-start'}">
-  <figure class="chat-image avatar">
-    <div class="w-10 flex rounded-full">
-      {#if user.avatar}
-        <img src={user.avatar} alt="" />
-      {:else}
-        <p
-          class="justify-self-center h-full w-full pt-2 font-bold text-white text-center place-self-center bg-blue-700"
-        >
+  <figure class="chat-image avatar w-[50px] h-[50px] mask mask-squircle">
+    {#if user.avatar}
+      <img src={user.avatar} alt="" />
+    {:else}
+      <div
+        class="flex items-center justify-center bg-blue-600 text-white dark:bg-blue-800 min-w-max min-h-max"
+      >
+        <p class="text-center pt-2 font-bold text-xl min-w-max min-h-max">
           {user.userName ? user.userName[0] : ''}
         </p>
-      {/if}
-    </div>
+      </div>
+    {/if}
   </figure>
   <div class="chat-header">
     {user.userName}
