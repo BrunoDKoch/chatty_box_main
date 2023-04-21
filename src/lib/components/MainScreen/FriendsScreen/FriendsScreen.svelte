@@ -5,13 +5,15 @@
   import { friendRequests } from '$lib/useSignalR';
   import FriendComponent from './FriendComponent.svelte';
   import type { FriendResponse } from '$lib/types/partialTypes';
-  export let friends: FriendResponse[];
+  import FriendsTabs from '$lib/components/FriendsTabs/FriendsTabs.svelte';
+  import { friends } from '$lib/useSignalR';
 </script>
 
+<FriendsTabs />
 <div class="px-10 my-4 even:bg-base-200">
   {#if $friendsTab === 'friends.available'}
-    {#if friends.length}
-      {#each friends as friend}
+    {#if $friends.length}
+      {#each $friends as friend}
         <FriendComponent {friend} />
       {/each}
     {:else}

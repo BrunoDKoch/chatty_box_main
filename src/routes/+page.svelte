@@ -18,12 +18,11 @@
 </script>
 
 <title>ChattyBox</title>
-<div class="grid grid-cols-4">
+<div class="grid grid-cols-4 w-screen">
   <aside class="col-span-1 bg-base-200 min-h-screen">
     <Aside chats={$previews} />
   </aside>
   <section class="col-span-3">
-    <FriendsTabs />
     <ActiveScreen />
   </section>
 </div>

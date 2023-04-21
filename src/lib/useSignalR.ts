@@ -21,13 +21,11 @@ connection.on('unread', (data) => {
 });
 connection.on('newMessage', () => get(messagesCount) + 1);
 connection.on('read', () => get(messagesCount) - 1);
-connection.on('chat', (data: CompleteChat) => chat.set(data));
 connection.on('previews', (data: ChatPreview[]) => previews.set(data));
 connection.on('pendingRequests', (data: (FriendRequest & { userAdding: User })[]) =>
   friendRequests.set(data),
 );
 connection.on('friends', (data: FriendResponse[]) => {
-  console.log({ data });
   friends.update((f) => {
     data.forEach((user) => {
       if (!f.find((u) => u.userName === user.userName)) f.push(user);

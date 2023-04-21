@@ -1,6 +1,7 @@
 import type { Message, User } from '@prisma/client';
 import { writable, type Writable } from 'svelte/store';
 import type { CompleteChat, MessageResponse } from './types/combinationTypes';
+import { connection } from './useSignalR';
 
 export const chatId = writable('');
 

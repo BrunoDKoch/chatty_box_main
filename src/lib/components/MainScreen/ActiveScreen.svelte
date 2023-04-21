@@ -1,7 +1,7 @@
 <script lang="ts">
   import useActiveScreen from '$lib/useActiveScreen';
   import FriendsScreen from './FriendsScreen/FriendsScreen.svelte';
-  import { connection, friends } from '$lib/useSignalR';
+  import { connection } from '$lib/useSignalR';
   import ChatScreen from './Chat/ChatScreen.svelte';
   import { chat, chatId } from '$lib/useActiveChat';
   $: $useActiveScreen, getChat($chatId).then((data) => data);
@@ -12,7 +12,7 @@
 </script>
 
 {#if $useActiveScreen === 'friends'}
-  <FriendsScreen friends={$friends.sort((a, b) => Number(b.isOnline) - Number(a.isOnline))} />
+  <FriendsScreen />
 {:else if $useActiveScreen === 'chat'}
-  <ChatScreen chat={$chat} />
+  <ChatScreen bind:chatId={$chatId} />
 {/if}

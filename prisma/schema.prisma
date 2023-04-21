@@ -142,7 +142,7 @@ model Message {
   chatId      String
   text        String
   replyTo     Message?      @relation(name: "replies", fields: [replyToId], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  replyToId   String
+  replyToId   String?
   replies     Message[]     @relation("replies")
   readByUsers ReadMessage[]
 }
