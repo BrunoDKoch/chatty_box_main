@@ -12,8 +12,8 @@
     .map((r) => {
       if (r.id === message.user.id) return;
       return `${r.userName} ${$t('common.at')} ${$date(
-        new Date(r.readAt ?? message.sentAt),
-      )} - ${$time(new Date(r.readAt ?? message.sentAt))}`;
+        new Date(`${r.readAt ?? message.sentAt}z`),
+      )} - ${$time(new Date(`${r.readAt ?? message.sentAt}z`))}`;
     })
     .filter((a) => a)
     .join(', ');
@@ -54,7 +54,7 @@
   <div class="chat-footer opacity-50">
     {$date(new Date(`${message.sentAt}z`), { format: 'medium' })}
     {$time(new Date(`${message.sentAt}z`))}
-    {#if isFromCaller}
+    {#if isFromCaller && message.readBy.length}
       <div
         class="tooltip first-letter:capitalize"
         data-tip="{$t('message.readBy')} {readByTooltip}"
