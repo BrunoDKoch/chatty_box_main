@@ -34,9 +34,6 @@
       },
     ],
   };
-  $: {
-    if (submitted && !pending) goto('/');
-  }
   function checkIfValid() {
     let totalConditions = 0;
     let totalValid = 0;
@@ -52,7 +49,7 @@
   async function handleSubmit() {
     const valid = checkIfValid();
     if (!valid) return;
-    dispatch('success');
+    dispatch('showSpinner');
     pending = true;
     submitted = true;
     console.log({ pending });
@@ -67,6 +64,7 @@
       };
     } finally {
       pending = false;
+      dispatch('hideSpinner');
     }
   }
 </script>

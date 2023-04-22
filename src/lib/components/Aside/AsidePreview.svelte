@@ -7,7 +7,7 @@
 </script>
 
 <div
-  class="hover:bg-gray-300 hover:dark:bg-gray-700 cursor-pointer"
+  class="hover:bg-gray-300 hover:dark:bg-gray-700 cursor-pointer pl-2"
   on:keydown={() => {
     $chatId = chat.id;
     $useActiveScreen = 'chat';

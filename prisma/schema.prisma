@@ -63,19 +63,19 @@ model UserRole {
 }
 
 model User {
-  id                     String            @id(map: "PK_Users") @unique(map: "IX_Users_Id") @db.NVarChar(450)
-  userName               String?           @db.NVarChar(256)
-  normalizedUserName     String?           @db.NVarChar(256)
-  email                  String?           @unique @db.NVarChar(256)
-  normalizedEmail        String?           @unique @db.NVarChar(256)
+  id                     String             @id(map: "PK_Users") @unique(map: "IX_Users_Id") @db.NVarChar(450)
+  userName               String?            @db.NVarChar(256)
+  normalizedUserName     String?            @db.NVarChar(256)
+  email                  String?            @unique @db.NVarChar(256)
+  normalizedEmail        String?            @unique @db.NVarChar(256)
   emailConfirmed         Boolean
-  passwordHash           String?           @db.NVarChar(Max)
-  securityStamp          String?           @db.NVarChar(Max)
-  concurrencyStamp       String?           @db.NVarChar(Max)
-  phoneNumber            String?           @db.NVarChar(Max)
+  passwordHash           String?            @db.NVarChar(Max)
+  securityStamp          String?            @db.NVarChar(Max)
+  concurrencyStamp       String?            @db.NVarChar(Max)
+  phoneNumber            String?            @db.NVarChar(Max)
   phoneNumberConfirmed   Boolean
   twoFactorEnabled       Boolean
-  lockoutEnd             DateTime?         @db.DateTimeOffset
+  lockoutEnd             DateTime?          @db.DateTimeOffset
   lockoutEnabled         Boolean
   accessFailedCount      Int
   userClaim              UserClaim[]
@@ -84,12 +84,13 @@ model User {
   userToken              UserToken[]
   // Non ASP.NET additions
   avatar                 String?
-  friendRequestsSent     FriendRequest[]   @relation("adding")
-  friendRequestsReceived FriendRequest[]   @relation("added")
-  friends                User[]            @relation("friends")
-  isFriendsWith          User[]            @relation("friends")
-  blocking               User[]            @relation("blocked")
-  blockedBy              User[]            @relation("blocked")
+  loginAttempts          UserLoginAttempt[]
+  friendRequestsSent     FriendRequest[]    @relation("adding")
+  friendRequestsReceived FriendRequest[]    @relation("added")
+  friends                User[]             @relation("friends")
+  isFriendsWith          User[]             @relation("friends")
+  blocking               User[]             @relation("blocked")
+  blockedBy              User[]             @relation("blocked")
   chats                  Chat[]
   messages               Message[]
   isAdminIn              ChatAdmin[]
@@ -112,6 +113,23 @@ model UserToken {
   @@map("UserTokens")
 }
 
+// Saving login history
+model UserLoginAttempt {
+  id             String   @id @default(uuid())
+  userId         String   @db.NVarChar(450)
+  user           User     @relation(fields: [userId], references: [id])
+  attemptedAt    DateTime @default(now())
+  ipAddress      String
+  geoNameId      String
+  cityName       String
+  countryIsoCode String
+  countryName    String
+  latitude       Float
+  longitude      Float
+  success        Boolean
+}
+
+// Chat and messages
 model Chat {
   id          String      @id @default(uuid())
   isGroupChat Boolean     @default(false)

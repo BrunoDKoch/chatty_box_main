@@ -33,7 +33,11 @@
             on:showQR={() => (showSpinner = false)}
           />
         {:else}
-          <LogInForm bind:pending on:success={() => (showSpinner = true)} />
+          <LogInForm
+            bind:pending
+            on:showSpinner={() => (showSpinner = true)}
+            on:hideSpinner={() => (showSpinner = false)}
+          />
         {/if}
       </div>
     </div>

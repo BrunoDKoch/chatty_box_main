@@ -90,7 +90,7 @@
     pending = true;
     console.log({ pending });
     const body = { email, password, userName };
-    dispatch('success');
+    dispatch('showSpinner');
     try {
       const res = await signUp(body);
       console.log(res);

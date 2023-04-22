@@ -13,15 +13,9 @@ async function logIn(body: LogInInfo) {
     baseURL,
     credentials: 'include',
     async onResponse({ response }) {
-      console.log(response);
-      if (response.status > 200) {
-        throw {
-          code: response.status,
-          error: { message: response.status, cause: 'Credenciais inválidas' },
-        };
+      if (response.ok) {
+        await getCurrentUser(response.headers.get('set-cookie')!);
       }
-      await getCurrentUser(response.headers.get('set-cookie')!);
-      response._data = { code: response.status };
     },
     onResponseError({ response }) {
       throw {

@@ -16,19 +16,23 @@ async function getUser(event: RequestEvent) {
     if (idCookie) cookies.delete(PUBLIC_IDENTITY_COOKIE);
     return;
   }
-  if (!PUBLIC_IDENTITY_COOKIE) return;
   if (!idCookie) throw redirect(303, '/auth/login');
   try {
     const user = await getCurrentUser(idCookie);
     if (!user && !url.pathname.startsWith('/auth')) throw redirect(303, '/auth/login');
   } catch {
-    if (idCookie) cookies.delete(PUBLIC_IDENTITY_COOKIE)
+    if (idCookie) cookies.delete(PUBLIC_IDENTITY_COOKIE);
+    else throw redirect(303, '/auth/login');
   }
 }
 
 export const handle: Handle = async ({ event, resolve }) => {
   const lang = event.request.headers.get('accept-language')?.split(',')[0];
   setLanguage(lang);
-  await getUser(event);
-  return resolve(event);
+  try {
+    await getUser(event);
+    return resolve(event);
+  } catch {
+    throw redirect(303, '/auth/login');
+  }
 };
