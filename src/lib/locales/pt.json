@@ -35,7 +35,8 @@
     "friend": "amigo",
     "clear": "limpar",
     "remove": "remover",
-    "at": "em"
+    "at": "em",
+    "settings": "configurações"
   },
   "aside": {
     "searchChats": "{search} chats"
@@ -50,5 +51,13 @@
   },
   "message": {
     "readBy": "lida por"
+  },
+  "settings": {
+    "theme": "tema",
+    "darkTheme": "tema escuro",
+    "privacy": "privacidade",
+    "security": "segurança",
+    "language": "idioma",
+    "notifications": "notificações"
   }
 }
