@@ -9,9 +9,6 @@
   import { onMount } from 'svelte';
   export let chats: ChatPreview[];
   let settingsMenuActive = false;
-  let userInfo: { userName: string; avatar?: string };
-  connection.on('userInfo', (data: typeof userInfo) => (userInfo = data));
-  onMount(async () => await connection.invoke('GetCallerInfo'));
 </script>
 
 <div class="flex flex-col gap-3">
@@ -26,7 +23,7 @@
     {/if}
   </div>
   {#if settingsMenuActive}
-    <SettingsComponent user={userInfo} />
+    <SettingsComponent />
   {:else}
     <div
       on:keydown={() => ($useActiveScreen = 'friends')}

@@ -22,7 +22,7 @@
         theme,
       },
     });
-    const body = document.getElementsByTagName('html')[0];
+    const body = document.getElementsByTagName('body')[0];
     handleThemeClass(body, theme);
   }
 
