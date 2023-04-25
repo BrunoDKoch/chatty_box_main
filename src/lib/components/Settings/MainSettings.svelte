@@ -7,7 +7,7 @@
   const dispatch = createEventDispatcher();
 </script>
 
-<div class="flex">
+<div class="flex pl-2 gap-2 items-center">
   {#if user}
     <figure class="avatar mask w-24 h-24 mask-squircle">
       {#if user.avatar}
@@ -22,13 +22,17 @@
     </figure>
     <p class="font-bold text-3xl">{user.userName}</p>
   {:else}
-    <iconify-icon icon="svg-spinners:6-dots-scale" class="text-9xl" />
+  <figure class="avatar mask w-24 h-24 mask-squircle">
+    <div class="flex animate-pulse items-center bg-gray-300 dark:bg-gray-700 h-full"></div>
+  </figure>
+  <div class="w-36 h-6 rounded-md animate-pulse bg-gray-300 dark:bg-gray-700"></div>
   {/if}
 </div>
 <menu class="menu">
   {#each settingsItems as item}
-    <li class="uppercase">
+    <li class="uppercase {user ? '' : 'disabled'}">
       <a
+        aria-disabled={!user}
         href="/"
         on:click|preventDefault={() =>
           item === $t('settings.darkTheme') ? null : dispatch('changeActive', item)}
@@ -42,6 +46,7 @@
             name="theme"
             id="theme"
             class="toggle"
+            disabled={!user}
             on:click|stopPropagation={() => ($theme = $theme === 'dark' ? 'light' : 'dark')}
             checked={$theme === 'dark'}
           />

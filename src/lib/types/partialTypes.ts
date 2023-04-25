@@ -4,6 +4,7 @@ type MessagePreview = {
   from: User;
   sentAt: Date;
   text: string;
+  read: boolean;
 };
 
 type FriendResponse = { userName: string; isOnline: boolean; avatar?: string; userId: string };

@@ -54,7 +54,7 @@
     <iconify-icon icon="svg-spinners:6-dots-scale" />
   </div>
 {:then data}
-  <div class="fixed bg-base-200 w-[75vw]">
+  <div class="fixed bg-base-200 w-[75vw] z-30">
     {#if data.chatName}
       <h1>{data.chatName}</h1>
     {:else}
@@ -62,7 +62,7 @@
     {/if}
   </div>
 
-  <div class="mt-5">
+  <div class="my-10 overflow-y-auto overflow-x-hidden max-h-[89vh]">
     {#if $chat.messages.length}
       {#each $chat.messages as message}
         <MessageComponent bind:message />

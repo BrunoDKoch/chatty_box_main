@@ -40,7 +40,12 @@
     "clear": "clear",
     "remove": "remove",
     "at": "at",
-    "settings": "settings"
+    "settings": "settings",
+    "new": {
+      "m": "new",
+      "f": "new"
+    },
+    "message": "message"
   },
   "aside": {
     "searchChats": "{search} chats"

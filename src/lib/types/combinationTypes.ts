@@ -2,6 +2,7 @@ import type { Chat, Message, ReadMessage, User } from '@prisma/client';
 
 type MessageResponse = {
   id: string,
+  chatId: string,
   sentAt: Date,
   editedAt: Date,
   text: string,

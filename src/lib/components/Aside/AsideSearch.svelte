@@ -7,11 +7,11 @@
   let searching = false;
 </script>
 
-<div class="form-control w-fit">
-  <div class="input-group input-group-sm">
+<div class="form-control w-fit overflow-hidden">
+  <div class="input-group input-group-sm overflow-hidden">
     <input
       type="search"
-      class="input input-sm capitalize"
+      class="input input-sm capitalize w-48"
       bind:value={search}
       placeholder={$t('aside.searchChats', { values: { search: ($t('common.search')) } })}
     />

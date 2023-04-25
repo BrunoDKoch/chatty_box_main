@@ -3,6 +3,8 @@
   import { date, time } from 'svelte-i18n';
   import { chatId } from '$lib/useActiveChat';
   import useActiveScreen from '$lib/useActiveScreen';
+  import { scale } from 'svelte/transition';
+  import { quintInOut } from 'svelte/easing';
   export let chat: ChatPreview;
 </script>
 
@@ -18,7 +20,13 @@
   }}
 >
   <p>{chat.chatName ?? chat.users.map((u) => u.userName).join(', ')}</p>
-  <div class="grid grid-cols-8">
+  <div class="grid grid-cols-8 gap-2 indicator">
+    {#if chat.lastMessage && !chat.lastMessage.read}
+      <span
+        transition:scale={{ start: 0, easing: quintInOut }}
+        class="indicator-item badge badge-warning">!</span
+      >
+    {/if}
     <figure class="avatar mask mask-squircle w-[25px] h-[25px] col-span-1">
       {#if chat.lastMessage && chat.lastMessage.from.avatar}
         <img src={chat.lastMessage?.from.avatar} alt="" />

@@ -6,6 +6,7 @@ import { get, writable, type Writable } from 'svelte/store';
 import type { MessagePreview, FriendResponse, ChatPreview } from '$lib/types/partialTypes';
 import { chat } from './useActiveChat';
 import type { CompleteChat, MessageResponse } from './types/combinationTypes';
+import { t } from 'svelte-i18n';
 
 export const messagesCount = writable(0);
 export const previews = writable([]) as Writable<ChatPreview[]>;
@@ -19,8 +20,13 @@ export let connection = new HubConnectionBuilder()
 connection.on('unread', (data) => {
   data.forEach((n: Message) => messagesCount.set(get(messagesCount) + 1));
 });
-connection.on('newMessage', () => get(messagesCount) + 1);
-connection.on('read', () => get(messagesCount) - 1);
+
+connection.on('read', () =>
+  messagesCount.update((m) => {
+    if (!m) return m;
+    return m - 1;
+  }),
+);
 connection.on('previews', (data: ChatPreview[]) => previews.set(data));
 connection.on('pendingRequests', (data: (FriendRequest & { userAdding: User })[]) =>
   friendRequests.set(data),
@@ -43,5 +49,7 @@ connection.on('updateStatus', (data: string) => {
   });
 });
 connection.on('newChat', (data: CompleteChat) => chat.set(data));
+
+// Handle new messages and notify user
 
 connection.onclose(() => console.log('Hub closed'));

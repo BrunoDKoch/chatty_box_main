@@ -36,7 +36,12 @@
     "clear": "limpar",
     "remove": "remover",
     "at": "em",
-    "settings": "configurações"
+    "settings": "configurações",
+    "new": {
+      "m": "novo",
+      "f": "nova"
+    },
+    "message": "mensagem"
   },
   "aside": {
     "searchChats": "{search} chats"

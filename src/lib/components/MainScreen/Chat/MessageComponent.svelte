@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { MessageResponse } from '$lib/types/combinationTypes';
   import { chat } from '$lib/useActiveChat';
-  import { connection } from '$lib/useSignalR';
+  import { connection, previews } from '$lib/useSignalR';
   import { onDestroy, onMount } from 'svelte';
   import { date, t, time } from 'svelte-i18n';
   export let message: MessageResponse;
@@ -23,8 +23,11 @@
         entry.isIntersecting &&
         ((isFromCaller && !readBy.filter((r) => r.id === user.id).length) ||
           readBy.length < $chat.users.length)
-      )
+      ) {
         await connection.invoke('MarkAsRead', message.id);
+        $previews.find((c) => c.id === message.chatId)!.lastMessage!.read = true;
+        $previews = $previews;
+      }
     });
   });
   onMount(() => observer.observe(thisElement));
