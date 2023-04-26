@@ -6,6 +6,8 @@
   import { locale } from 'svelte-i18n';
   import { theme } from '$lib/theme';
   import { ofetch } from 'ofetch';
+  import { connection } from '$lib/useSignalR';
+  import { HubConnectionState } from '@microsoft/signalr';
   export let data: LayoutServerData;
   $theme = data.theme;
 
@@ -36,12 +38,13 @@
 
   onMount(async () => {
     theme.subscribe(async (t) => await changeThemeCookie(t));
-    locale.subscribe((l) => document ? document.getElementsByTagName('html')[0].setAttribute('lang', l ? l : 'en') : null)
+    locale.subscribe((l) =>
+      document ? document.getElementsByTagName('html')[0].setAttribute('lang', l ? l : 'en') : null,
+    );
   });
 </script>
 
 <svelte:body use:setTheme />
-
 
 <main class="dark:bg-black min-h-screen w-screen overflow-hidden">
   <slot />

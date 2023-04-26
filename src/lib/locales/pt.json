@@ -43,7 +43,9 @@
     },
     "message": "mensagem",
     "sound": "som",
-    "osNotification": "notificação do sistema"
+    "osNotification": "notificação do sistema",
+    "connecting": "conectando",
+    "pleaseWait": "por favor aguarde"
   },
   "aside": {
     "searchChats": "{search} chats"

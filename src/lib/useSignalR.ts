@@ -1,4 +1,4 @@
-import { HubConnectionBuilder } from '@microsoft/signalr';
+import { HubConnectionBuilder, HubConnectionState } from '@microsoft/signalr';
 import { PUBLIC_AUTH_URL_DEV as baseURL } from '$env/static/public';
 import { currentUser } from '$lib/useAuth';
 import type {
@@ -24,6 +24,7 @@ export let connection = new HubConnectionBuilder()
   .withUrl(`${baseURL}/hub/messages`)
   .withAutomaticReconnect()
   .build();
+
 connection.on('unread', (data) => {
   data.forEach((n: Message) => messagesCount.set(get(messagesCount) + 1));
 });
@@ -47,6 +48,7 @@ connection.on('pendingRequests', (data: (FriendRequest & { userAdding: User })[]
   friendRequests.set(data),
 );
 connection.on('friends', (data: FriendResponse[]) => {
+  online.set(true);
   friends.update((f) => {
     data.forEach((user) => {
       if (!f.find((u) => u.userName === user.userName)) f.push(user);
@@ -73,4 +75,8 @@ connection.on('notificationSettings', (data: UserNotificationSettings) => {
   });
 });
 
-connection.onclose(() => console.log('Hub closed'));
+export const online = writable(connection.state === HubConnectionState.Connected);
+connection.onreconnected(() => online.set(true));
+connection.onreconnecting(() => online.set(false));
+
+connection.onclose(() => online.set(false));
