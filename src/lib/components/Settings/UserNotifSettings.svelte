@@ -4,7 +4,6 @@
   import { connection } from '$lib/useSignalR';
   async function handleChange(change: 'playSound' | 'showOSNotification') {
     if (!$notificationSettings) return;
-    console.log($notificationSettings);
     $notificationSettings[change] = !$notificationSettings[change];
     $notificationSettings = $notificationSettings;
     await connection.invoke(
@@ -12,7 +11,6 @@
       $notificationSettings.playSound,
       $notificationSettings.showOSNotification,
     );
-    console.log($notificationSettings);
   }
 </script>
 

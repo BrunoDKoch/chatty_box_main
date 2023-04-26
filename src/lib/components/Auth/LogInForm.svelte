@@ -52,7 +52,6 @@
     dispatch('showSpinner');
     pending = true;
     submitted = true;
-    console.log({ pending });
     let body: LogInInfo = { email, password, remember };
     try {
       await logIn(body);

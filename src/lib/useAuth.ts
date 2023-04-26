@@ -92,9 +92,6 @@ async function suspendUser(body: { reason: string; until?: Date; id: string }) {
     mode: 'cors',
     credentials: 'include',
     body,
-    onResponse(ctx) {
-      console.log(ctx);
-    },
   });
 }
 

@@ -23,5 +23,5 @@
 </div>
 
 {#if showModal}
-  <FriendsModal />
+  <FriendsModal on:close={() => (showModal = !showModal)} />
 {/if}

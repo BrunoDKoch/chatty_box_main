@@ -40,7 +40,6 @@
   }
 
   async function handleSubmit() {
-    console.log({ selection });
     if (!selection) return;
     await connection.invoke('SendFriendRequest', selection.id);
     dispatch('close');
@@ -50,6 +49,11 @@
 <dialog class="modal w-screen h-screen modal-open">
   {#if show}
     <div transition:scale class="modal-box">
+      <div class="flex justify-end">
+        <button on:click={() => dispatch('close')} class="btn btn-circle btn-sm">
+          <iconify-icon icon="mdi:close" />
+        </button>
+      </div>
       <div class="grid grid-cols-[1fr_3fr]">
         <iconify-icon
           class="row-span-2 self-center justify-self-center"

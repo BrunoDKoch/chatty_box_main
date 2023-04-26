@@ -88,7 +88,6 @@
     const valid = checkIfValid();
     if (!valid) return;
     pending = true;
-    console.log({ pending });
     const body = { email, password, userName };
     dispatch('showSpinner');
     try {
