@@ -41,7 +41,9 @@
       "m": "nuevo",
       "f": "nueva"
     },
-    "message": "mensaje"
+    "message": "mensaje",
+    "sound": "sonido",
+    "osNotification": "notificación del sistema"
   },
   "aside": {
     "searchChats": "{search} chats"

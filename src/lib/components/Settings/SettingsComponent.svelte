@@ -5,6 +5,7 @@
   import MainSettings from './MainSettings.svelte';
   import LanguageSettings from './LanguageSettings.svelte';
   import { fly, slide } from 'svelte/transition';
+  import UserNotifSettings from './UserNotifSettings.svelte';
   let user: { userName: string; avatar?: string };
   let show = false;
   show = true;
@@ -38,6 +39,8 @@
       />
     {:else if activeScreen === $t('settings.language')}
       <LanguageSettings />
+    {:else if activeScreen === $t('settings.notifications')}
+      <UserNotifSettings />
     {/if}
   </div>
 {/if}

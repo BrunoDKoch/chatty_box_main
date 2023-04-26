@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { createEventDispatcher } from 'svelte';
+  import { createEventDispatcher, onDestroy } from 'svelte';
 
   export let notificationType: 'message' | 'friend request';
   export let text: string;
@@ -15,6 +15,9 @@
       dispatch('close');
     } else radialProgress.style.setProperty('--value', `${(5 - elapsedSeconds) * 20}`);
   }, 1000);
+  onDestroy(() => {
+    if (interval) clearInterval(interval);
+  });
 </script>
 
 <div class="alert {notificationType === 'message' ? 'alert-info' : 'alert-success'}">

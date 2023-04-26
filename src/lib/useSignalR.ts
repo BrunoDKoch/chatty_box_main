@@ -1,12 +1,19 @@
 import { HubConnectionBuilder } from '@microsoft/signalr';
 import { PUBLIC_AUTH_URL_DEV as baseURL } from '$env/static/public';
 import { currentUser } from '$lib/useAuth';
-import type { FriendRequest, Message, User } from '@prisma/client';
+import type {
+  FriendRequest,
+  Message,
+  ReadMessage,
+  User,
+  UserNotificationSettings,
+} from '@prisma/client';
 import { get, writable, type Writable } from 'svelte/store';
 import type { MessagePreview, FriendResponse, ChatPreview } from '$lib/types/partialTypes';
 import { chat } from './useActiveChat';
 import type { CompleteChat, MessageResponse } from './types/combinationTypes';
 import { t } from 'svelte-i18n';
+import useUserNotificationSettings from './useUserNotificationSettings';
 
 export const messagesCount = writable(0);
 export const previews = writable([]) as Writable<ChatPreview[]>;
@@ -21,12 +28,20 @@ connection.on('unread', (data) => {
   data.forEach((n: Message) => messagesCount.set(get(messagesCount) + 1));
 });
 
-connection.on('read', () =>
+connection.on('read', (data: ReadMessage & { user: User }) => {
   messagesCount.update((m) => {
     if (!m) return m;
     return m - 1;
-  }),
-);
+  });
+  chat.update((c) => {
+    const { readAt, user, messageId: id } = data;
+    c.messages = c.messages.map((m) => {
+      m.readBy.push({ readAt, userName: user.userName!, id });
+      return m;
+    });
+    return c;
+  });
+});
 connection.on('previews', (data: ChatPreview[]) => previews.set(data));
 connection.on('pendingRequests', (data: (FriendRequest & { userAdding: User })[]) =>
   friendRequests.set(data),
@@ -42,14 +57,20 @@ connection.on('friends', (data: FriendResponse[]) => {
 });
 connection.on('updateStatus', (data: string) => {
   friends.update((f) => {
-    f.map((u) => {
+    f = f.map((u) => {
       if (u.userId === data) u.isOnline = !u.isOnline;
+      return u;
     });
     return f;
   });
 });
 connection.on('newChat', (data: CompleteChat) => chat.set(data));
 
-// Handle new messages and notify user
+connection.on('notificationSettings', (data: UserNotificationSettings) => {
+  useUserNotificationSettings.update((un) => {
+    un = data;
+    return un;
+  });
+});
 
 connection.onclose(() => console.log('Hub closed'));

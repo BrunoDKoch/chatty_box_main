@@ -8,6 +8,7 @@
   import type { MessageResponse } from '$lib/types/combinationTypes';
   import { locale, t } from 'svelte-i18n';
   import NotificationToast from '$lib/components/Notification/NotificationToast.svelte';
+    import useUserNotificationSettings from '$lib/useUserNotificationSettings';
   $: notifications = [] as { notificationType: 'message' | 'friend request'; text: string }[];
   connection.on('newMessage', async (data: MessageResponse) => {
     previews.update((p) => {
@@ -21,8 +22,8 @@
     if (data.isFromCaller) return;
     $messagesCount++;
     var audio = new Audio('/sounds/newMessage.mp3');
-    await audio.play();
-    if (document.hidden)
+    if ($useUserNotificationSettings?.playSound) await audio.play();
+    if (document.hidden && $useUserNotificationSettings?.showOSNotification)
       new Notification(`ChattyBox: ${$t('common.new.f')} ${$t('common.message')}`, {
         body: `${data.user.userName}: ${data.text.slice(0, 240)}`,
         lang: $locale!,
@@ -42,6 +43,7 @@
     await connection.invoke('GetChatPreviews');
     await connection.invoke('GetFriends');
     await connection.invoke('GetFriendRequests');
+    await connection.invoke('GetNotificationSettings');
   });
   onDestroy(async () => {
     await connection.stop();
@@ -61,10 +63,13 @@
 <div>
   {#each notifications as notification}
     <div class="toast toast-top toast-center">
-      <NotificationToast on:close={() => {
-        notifications = notifications.filter((n) => n !== notification);
-        notifications = notifications;
-      }} {...notification} />
+      <NotificationToast
+        on:close={() => {
+          notifications = notifications.filter((n) => n !== notification);
+          notifications = notifications;
+        }}
+        {...notification}
+      />
     </div>
   {/each}
 </div>

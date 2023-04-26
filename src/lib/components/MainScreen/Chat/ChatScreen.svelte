@@ -3,7 +3,6 @@
   import { chat } from '$lib/useActiveChat';
   import { connection } from '$lib/useSignalR';
   import { onMount } from 'svelte';
-  import { date, time } from 'svelte-i18n';
   import MessageComponent from './MessageComponent.svelte';
   export let chatId: string;
 
@@ -44,7 +43,6 @@
   }
   async function setup() {
     await connection.invoke('GetChat', chatId);
-    console.log($chat)
   }
   onMount(async () => await setup());
 </script>
@@ -65,7 +63,7 @@
   <div class="my-10 overflow-y-auto overflow-x-hidden max-h-[89vh]">
     {#if $chat.messages.length}
       {#each $chat.messages as message}
-        <MessageComponent bind:message />
+        <MessageComponent bind:message focusOn={$chat.messages.indexOf(message) === $chat.messages.length - 1} />
       {/each}
     {:else}
       <p>No messages yet</p>

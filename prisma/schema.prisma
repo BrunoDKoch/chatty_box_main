@@ -63,39 +63,41 @@ model UserRole {
 }
 
 model User {
-  id                     String             @id(map: "PK_Users") @unique(map: "IX_Users_Id") @db.NVarChar(450)
-  userName               String?            @db.NVarChar(256)
-  normalizedUserName     String?            @db.NVarChar(256)
-  email                  String?            @unique @db.NVarChar(256)
-  normalizedEmail        String?            @unique @db.NVarChar(256)
-  emailConfirmed         Boolean
-  passwordHash           String?            @db.NVarChar(Max)
-  securityStamp          String?            @db.NVarChar(Max)
-  concurrencyStamp       String?            @db.NVarChar(Max)
-  phoneNumber            String?            @db.NVarChar(Max)
-  phoneNumberConfirmed   Boolean
-  twoFactorEnabled       Boolean
-  lockoutEnd             DateTime?          @db.DateTimeOffset
-  lockoutEnabled         Boolean
-  accessFailedCount      Int
-  userClaim              UserClaim[]
-  userLogin              UserLogin[]
-  userRole               UserRole[]
-  userToken              UserToken[]
+  id                       String                     @id(map: "PK_Users") @unique(map: "IX_Users_Id") @db.NVarChar(450)
+  userName                 String?                    @db.NVarChar(256)
+  normalizedUserName       String?                    @db.NVarChar(256)
+  email                    String?                    @unique @db.NVarChar(256)
+  normalizedEmail          String?                    @unique @db.NVarChar(256)
+  emailConfirmed           Boolean
+  passwordHash             String?                    @db.NVarChar(Max)
+  securityStamp            String?                    @db.NVarChar(Max)
+  concurrencyStamp         String?                    @db.NVarChar(Max)
+  phoneNumber              String?                    @db.NVarChar(Max)
+  phoneNumberConfirmed     Boolean
+  twoFactorEnabled         Boolean
+  lockoutEnd               DateTime?                  @db.DateTimeOffset
+  lockoutEnabled           Boolean
+  accessFailedCount        Int
+  userClaim                UserClaim[]
+  userLogin                UserLogin[]
+  userRole                 UserRole[]
+  userToken                UserToken[]
   // Non ASP.NET additions
-  avatar                 String?
-  loginAttempts          UserLoginAttempt[]
-  friendRequestsSent     FriendRequest[]    @relation("adding")
-  friendRequestsReceived FriendRequest[]    @relation("added")
-  friends                User[]             @relation("friends")
-  isFriendsWith          User[]             @relation("friends")
-  blocking               User[]             @relation("blocked")
-  blockedBy              User[]             @relation("blocked")
-  chats                  Chat[]
-  messages               Message[]
-  isAdminIn              ChatAdmin[]
-  clientConnection       ClientConnection?
-  readMessages           ReadMessage[]
+  avatar                   String?
+  loginAttempts            UserLoginAttempt[]
+  friendRequestsSent       FriendRequest[]            @relation("adding")
+  friendRequestsReceived   FriendRequest[]            @relation("added")
+  friends                  User[]                     @relation("friends")
+  isFriendsWith            User[]                     @relation("friends")
+  blocking                 User[]                     @relation("blocked")
+  blockedBy                User[]                     @relation("blocked")
+  chats                    Chat[]
+  messages                 Message[]
+  isAdminIn                ChatAdmin[]
+  clientConnection         ClientConnection?
+  readMessages             ReadMessage[]
+  userNotificationSettings UserNotificationSettings?
+  chatNotificationSettings ChatNotificationSettings[]
 
   @@index([normalizedEmail], map: "EmailIndex")
   @@index([normalizedUserName], map: "UserNameIndex")
@@ -131,14 +133,15 @@ model UserLoginAttempt {
 
 // Chat and messages
 model Chat {
-  id          String      @id @default(uuid())
-  isGroupChat Boolean     @default(false)
-  maxUsers    Int         @default(2)
-  chatName    String?
-  users       User[]
-  admins      ChatAdmin[]
-  createdAt   DateTime    @default(now())
-  messages    Message[]
+  id                       String                     @id @default(uuid())
+  isGroupChat              Boolean                    @default(false)
+  maxUsers                 Int                        @default(2)
+  chatName                 String?
+  users                    User[]
+  admins                   ChatAdmin[]
+  createdAt                DateTime                   @default(now())
+  messages                 Message[]
+  chatNotificationSettings ChatNotificationSettings[]
 }
 
 model ChatAdmin {
@@ -189,4 +192,23 @@ model FriendRequest {
   sentAt           DateTime @default(now())
 
   @@id([userAddingId, userBeingAddedId])
+}
+
+// Notifications
+model UserNotificationSettings {
+  userId             String  @id @unique @db.NVarChar(450)
+  user               User    @relation(fields: [userId], references: [id])
+  playSound          Boolean @default(true)
+  showOSNotification Boolean @default(true)
+}
+
+model ChatNotificationSettings {
+  userId             String  @unique @db.NVarChar(450)
+  user               User    @relation(fields: [userId], references: [id])
+  chatId             String  @unique
+  chat               Chat    @relation(fields: [chatId], references: [id])
+  playSound          Boolean @default(true)
+  showOSNotification Boolean @default(true)
+
+  @@id([userId, chatId])
 }

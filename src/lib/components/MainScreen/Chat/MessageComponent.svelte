@@ -5,6 +5,7 @@
   import { onDestroy, onMount } from 'svelte';
   import { date, t, time } from 'svelte-i18n';
   export let message: MessageResponse;
+  export let focusOn: boolean;
   const { user, isFromCaller } = message;
   let thisElement: HTMLElement;
   $: readBy = message.readBy;
@@ -30,7 +31,10 @@
       }
     });
   });
-  onMount(() => observer.observe(thisElement));
+  onMount(() => {
+    observer.observe(thisElement);
+    if (focusOn) thisElement.scrollIntoView();
+  });
   onDestroy(() => observer.disconnect());
 </script>
 
