@@ -22,7 +22,7 @@
 </script>
 
 {#if show}
-  <div transition:slide>
+  <div transition:fly={{ duration: 500, x: -150 }}>
     {#if activeScreen !== 'main'}
       <div class="flex items-center">
         <button class="btn btn-ghost btn-xl text-3xl" on:click={() => (activeScreen = 'main')}>
