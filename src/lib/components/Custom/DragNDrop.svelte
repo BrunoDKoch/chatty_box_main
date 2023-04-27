@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { PUBLIC_AUTH_URL_DEV } from '$env/static/public';
   import Dropzone, { type DropzoneFile } from 'dropzone';
   import { ofetch } from 'ofetch';
   import { createEventDispatcher, onMount } from 'svelte';
@@ -18,8 +19,8 @@
 
   let previewIcon: HTMLElement;
 
-  // Use new variable to show complete hammer and sickle, and then hide loading contents
-  let showHammerAndSickle = false;
+  // Use new variable to show checkmark, and then hide loading contents
+  let showCheck = false;
 
   $: icon = 'mdi:upload';
   $: showPreview, setPreviewIconHidden();
@@ -49,7 +50,8 @@
 
   onMount(() => {
     dropzone = new Dropzone('form#file-drop', {
-      url: '/api/temp',
+      // NOTE: might need to change url
+      url: `${PUBLIC_AUTH_URL_DEV}/User/Avatar`,
       clickable: true,
       previewTemplate: document.getElementById('preview-template')!.innerHTML,
       parallelUploads: 1,
@@ -78,7 +80,7 @@
         fileName.innerText = file.name;
         if (progress < 100) {
           uploading = true;
-          showHammerAndSickle = true;
+          showCheck = true;
         }
         uploadPercentage = Math.round(progress);
         progressElement.value = uploadPercentage;
@@ -112,7 +114,7 @@
         this.on('error', (file, message) => {
           console.log(message);
           if (!file.accepted) this.removeFile(file);
-          showHammerAndSickle = false;
+          showCheck = false;
           uploading = false;
           showPreview = false;
           document.getElementById('img-container')!.classList.replace('flex', 'hidden');
@@ -127,11 +129,11 @@
         });
         this.on('success', (file) => {
           uploading = false;
-          if (!showHammerAndSickle) showHammerAndSickle = true;
+          if (!showCheck) showCheck = true;
           dispatch('updateFile', file.name);
           setTimeout(() => {
             console.log('triggered on success');
-            showHammerAndSickle = false;
+            showCheck = false;
             if (preview.classList.contains('opacity-10')) preview.classList.remove('opacity-10');
           }, 2000);
         });
@@ -158,7 +160,7 @@
       <figure id="img-container" class="hidden items-center m-auto justify-center">
         <div
           bind:this={loadingContainer}
-          class="flex-col gap-3 opacity-100 {showHammerAndSickle
+          class="flex-col gap-3 opacity-100 {uploading
             ? 'flex'
             : 'hidden'} absolute w-[800px] h-[800px] items-center justify-center"
         >

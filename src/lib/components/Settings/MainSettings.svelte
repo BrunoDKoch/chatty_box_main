@@ -2,32 +2,13 @@
   import { t } from 'svelte-i18n';
   import { theme } from '$lib/theme';
   import { createEventDispatcher } from 'svelte';
+  import UserGeneralSettings from './UserGeneralSettings.svelte';
   export let user: { userName: string; avatar?: string };
   export let settingsItems: string[];
   const dispatch = createEventDispatcher();
 </script>
 
-<div class="flex pl-2 gap-2 items-center">
-  {#if user}
-    <figure class="avatar mask w-24 h-24 mask-squircle">
-      {#if user.avatar}
-        <img src={user.avatar} alt="" />
-      {:else}
-        <div
-          class="flex items-center justify-center bg-blue-600 text-white dark:bg-blue-800 h-full"
-        >
-          <p class="text-center font-bold py-2 text-7xl">{user.userName[0]}</p>
-        </div>
-      {/if}
-    </figure>
-    <p class="font-bold text-3xl">{user.userName}</p>
-  {:else}
-  <figure class="avatar mask w-24 h-24 mask-squircle">
-    <div class="flex animate-pulse items-center bg-gray-300 dark:bg-gray-700 h-full"></div>
-  </figure>
-  <div class="w-36 h-6 rounded-md animate-pulse bg-gray-300 dark:bg-gray-700"></div>
-  {/if}
-</div>
+<UserGeneralSettings {user} />
 <menu class="menu">
   {#each settingsItems as item}
     <li class="uppercase {user ? '' : 'disabled'}">

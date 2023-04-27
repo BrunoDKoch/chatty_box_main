@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { PUBLIC_IMAGES_URL } from '$env/static/public';
   import type { MessageResponse } from '$lib/types/combinationTypes';
   import { chat } from '$lib/useActiveChat';
   import { connection, previews } from '$lib/useSignalR';
@@ -41,7 +42,7 @@
 <div bind:this={thisElement} class="chat {isFromCaller ? 'chat-end' : 'chat-start'}">
   <figure class="chat-image avatar w-[50px] h-[50px] mask mask-squircle">
     {#if user.avatar}
-      <img src={user.avatar} alt="" />
+      <img src="{PUBLIC_IMAGES_URL}/{user.avatar}?width=50" alt="" />
     {:else}
       <div
         class="flex items-center justify-center bg-blue-600 text-white dark:bg-blue-800 min-w-max min-h-max"

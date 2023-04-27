@@ -5,6 +5,7 @@
   import useActiveScreen from '$lib/useActiveScreen';
   import { scale } from 'svelte/transition';
   import { quintInOut } from 'svelte/easing';
+  import { PUBLIC_IMAGES_URL } from '$env/static/public';
   export let chat: ChatPreview;
 </script>
 
@@ -29,7 +30,7 @@
     {/if}
     <figure class="avatar mask mask-squircle w-[25px] h-[25px] col-span-1">
       {#if chat.lastMessage && chat.lastMessage.from.avatar}
-        <img src={chat.lastMessage?.from.avatar} alt="" />
+        <img src="{PUBLIC_IMAGES_URL}/{chat.lastMessage?.from.avatar}?width=25" alt="" />
       {:else}
         <div
           class="flex items-center justify-center bg-blue-600 text-white dark:bg-blue-800 w-full h-full"
