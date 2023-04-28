@@ -26,7 +26,6 @@
   export let required: boolean = false;
   export let disabled: boolean = false;
   export let name: string | undefined;
-  export let tags: boolean = false;
   $: errorClass = '';
   $: ruleText = '';
   function checkRules() {

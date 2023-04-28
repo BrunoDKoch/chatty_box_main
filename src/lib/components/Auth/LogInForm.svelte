@@ -24,13 +24,21 @@
     emailRules: [
       {
         condition: !!email,
-        text: $t('auth.somethingWrong.m', { values: { thing: $t('auth.email'), complement: $t('auth.address') } }),
+        text: $t('auth.somethingWrong.m', {
+          values: {
+            thing: $t('auth.email'),
+            complement: $t('auth.address'),
+            condition: $t('auth.required.m'),
+          },
+        }),
       },
     ],
     passwordRules: [
       {
         condition: !!password,
-        text: 'A senha é obrigatória',
+        text: $t('auth.somethingWrong.f', {
+          values: { thing: $t('auth.password'), complement: '', condition: $t('auth.required.f') },
+        }),
       },
     ],
   };
