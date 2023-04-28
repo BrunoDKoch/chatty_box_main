@@ -1,5 +1,6 @@
 <script lang="ts">
   import { validateEmail } from '$lib/useAuth';
+    import { t } from 'svelte-i18n';
   import TextInput from '../Custom/TextInput.svelte';
 
   let otp = '';
@@ -7,7 +8,7 @@
     otpRules: [
       {
         condition: !!Number(otp) && otp.length === 6,
-        text: 'Código inválido',
+        text: `${$t('common.invalid')} ${$t('auth.email')}`,
       },
     ],
   };
@@ -26,9 +27,9 @@
         bind:value={otp}
         required
         name="otp"
-        labelText="Digite o código enviado ao seu e-mail"
+        labelText={$t('auth.typeCode')}
       />
-      <button class="btn">Enviar</button>
+      <button class="btn">{$t('common.submit')}</button>
     </form>
   </div>
 </dialog>

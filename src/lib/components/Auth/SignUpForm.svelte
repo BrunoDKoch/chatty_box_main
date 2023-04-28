@@ -25,7 +25,13 @@
     emailRules: [
       {
         condition: !!email,
-        text: 'O e-mail é obrigatório',
+        text: $t('auth.somethingWrong.m', {
+          values: {
+            thing: $t('auth.email'),
+            complement: $t('auth.address'),
+            condition: $t('auth.required.m'),
+          },
+        }),
       },
       {
         condition:
@@ -35,39 +41,75 @@
               "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$",
             ),
           ),
-        text: 'Endereço de e-mail inválido',
+          text: $t('auth.somethingWrong.m', {
+          values: {
+            thing: $t('auth.email'),
+            complement: $t('auth.address'),
+            condition: $t('auth.invalid.m'),
+          },
+        }),
       },
     ],
     passwordRules: [
       {
         condition: !!password,
-        text: 'A senha é obrigatória',
+        text: $t('auth.somethingWrong.f', {
+          values: {
+            thing: $t('auth.password'),
+            complement: '',
+            condition: $t('auth.required.f'),
+          },
+        }),
       },
     ],
     userNameRules: [
       {
         condition: !!userName,
-        text: 'O nome completo é obrigatório',
+        text: $t('auth.somethingWrong.m', {
+          values: {
+            thing: $t('auth.userName'),
+            complement: '',
+            condition: $t('auth.required.m'),
+          },
+        }),
       },
     ],
     confirmPasswordRules: [
       {
         condition: !!confirmPassword,
-        text: 'Você precisa confirmar a senha',
+        text: $t('auth.youMustConfirm', {
+          values: {
+            your: $t('common.your.f'),
+            thing: $t('auth.password'),
+          },
+        }),
       },
       {
         condition: password === confirmPassword,
-        text: 'Dados divergentes',
+        text: $t('auth.noMatch.f', {
+          values: {
+            thing: `${$t('auth.password')}s`,
+          },
+        }),
       },
     ],
     confirmEmailRules: [
       {
         condition: !!confirmEmail,
-        text: 'Você precisa confirmar o e-mail',
+        text: $t('auth.youMustConfirm', {
+          values: {
+            your: $t('common.your.m'),
+            thing: $t('auth.email'),
+          },
+        }),
       },
       {
         condition: email === confirmEmail,
-        text: 'Dados divergentes',
+        text: $t('auth.noMatch.m', {
+          values: {
+            thing: `${$t('auth.email')}s`,
+          },
+        }),
       },
     ],
   };

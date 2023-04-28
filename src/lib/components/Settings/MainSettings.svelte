@@ -3,24 +3,24 @@
   import { theme } from '$lib/theme';
   import { createEventDispatcher } from 'svelte';
   import UserGeneralSettings from './UserGeneralSettings.svelte';
+  import { type SettingOptions, settingOptions } from '$lib/types/otherTypes';
   export let user: { userName: string; avatar?: string };
-  export let settingsItems: string[];
   const dispatch = createEventDispatcher();
 </script>
 
 <UserGeneralSettings {user} />
 <menu class="menu">
-  {#each settingsItems as item}
+  {#each settingOptions as item}
     <li class="uppercase {user ? '' : 'disabled'}">
       <a
         aria-disabled={!user}
         href="/"
         on:click|preventDefault={() =>
-          item === $t('settings.darkTheme') ? null : dispatch('changeActive', item)}
+          item === 'settings.darkTheme' ? null : dispatch('changeActive', item)}
       >
-        {#if item === $t('settings.darkTheme')}
+        {#if item === 'settings.darkTheme'}
           <span>
-            {item}
+            {$t(item)}
           </span>
           <input
             type="checkbox"
@@ -32,7 +32,7 @@
             checked={$theme === 'dark'}
           />
         {:else}
-          {item}
+          {$t(item)}
         {/if}
       </a>
     </li>

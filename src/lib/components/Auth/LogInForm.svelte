@@ -4,7 +4,7 @@
   import Checkbox from '../Custom/Checkbox.svelte';
   import TextInput from '../Custom/TextInput.svelte';
   import ErrorModal from '../ErrorModal.svelte';
-  import { createEventDispatcher } from 'svelte';
+  import { createEventDispatcher, onMount } from 'svelte';
   import { goto } from '$app/navigation';
   import { t } from 'svelte-i18n';
   export let pending = false;
@@ -24,7 +24,7 @@
     emailRules: [
       {
         condition: !!email,
-        text: 'O e-mail é obrigatório',
+        text: $t('auth.somethingWrong.m', { values: { thing: $t('auth.email'), complement: $t('auth.address') } }),
       },
     ],
     passwordRules: [

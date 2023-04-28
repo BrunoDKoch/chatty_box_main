@@ -13,7 +13,17 @@
       "f": "obrigatória"
     },
     "address": "endereço",
-    "remember": "lembrar"
+    "remember": "lembrar",
+    "typeCode": "Digite o código enviado ao seu e-mail",
+    "somethingWrong": {
+      "m": "o {thing} é {condition}",
+      "f": "a {thing} é {condition}"
+    },
+    "noMatch": {
+      "m": "os {thing} não coincidem",
+      "f": "as {thing} não coincidem"
+    },
+    "youMustConfirm": "confirme {your} {thing}"
   },
   "common": {
     "user": "usuário(a)",
@@ -45,7 +55,11 @@
     "sound": "som",
     "osNotification": "notificação do sistema",
     "connecting": "conectando",
-    "pleaseWait": "por favor aguarde"
+    "pleaseWait": "por favor aguarde",
+    "invalid": {
+      "m": "inválido",
+      "f": "inválida"
+    }
   },
   "aside": {
     "searchChats": "{search} chats"

@@ -1,5 +1,4 @@
 <script lang="ts">
-  // TODO: fix glitch that's making select disappear when changing lang to or from English
   import { ofetch } from 'ofetch';
   import { locale, locales } from 'svelte-i18n';
   $: languageNameParser = new Intl.DisplayNames([$locale!], { type: 'language' });
@@ -16,8 +15,12 @@
     }).then((data) => data);
 </script>
 
-<select bind:value={$locale} class="select capitalize" name="lang" id="lang">
-  {#each languageNames as lang}
-    <option value={lang.value}>{lang.name}</option>
-  {/each}
-</select>
+<div class="flex items-center justify-center">
+  <select bind:value={$locale} class="select capitalize" name="lang" id="lang">
+    {#each languageNames as lang}
+      <option value={lang.value}>
+        <span>{lang.name}</span>
+      </option>
+    {/each}
+  </select>
+</div>

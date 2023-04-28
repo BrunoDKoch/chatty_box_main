@@ -88,7 +88,7 @@
   {/if}
   <p class="label">
     {#if ruleText}
-      <span class="label-text text-error">{ruleText}</span>
+      <span class="label-text text-error first-letter:capitalize">{ruleText}</span>
     {:else}
       <span class="label-text w-full"> &#160;&#160;&#160; </span>
     {/if}
