@@ -82,5 +82,14 @@
     "security": "segurança",
     "language": "idioma",
     "notifications": "notificações"
+  },
+  "security": {
+    "loginAttempt": {
+      "loginAttempts": "tentativas de login",
+      "attemptedAt": "tentativa em",
+      "successful": "êxito",
+      "city": "cidade",
+      "country": "país"
+    }
   }
 }

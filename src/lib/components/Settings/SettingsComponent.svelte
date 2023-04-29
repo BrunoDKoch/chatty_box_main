@@ -7,6 +7,7 @@
   import { fly, slide } from 'svelte/transition';
   import UserNotifSettings from './UserNotifSettings.svelte';
   import type { SettingOptions } from '$lib/types/otherTypes';
+  import SecuritySettings from './SecuritySettings.svelte';
   let user: { userName: string; avatar?: string };
   let show = false;
   show = true;
@@ -26,14 +27,13 @@
       </div>
     {/if}
     {#if activeScreen === 'main'}
-      <MainSettings
-        on:changeActive={({ detail }) => (activeScreen = detail)}
-        {user}
-      />
+      <MainSettings on:changeActive={({ detail }) => (activeScreen = detail)} {user} />
     {:else if activeScreen === 'settings.language'}
       <LanguageSettings />
     {:else if activeScreen === 'settings.notifications'}
       <UserNotifSettings />
+    {:else if activeScreen === 'settings.security'}
+      <SecuritySettings />
     {/if}
   </div>
 {/if}

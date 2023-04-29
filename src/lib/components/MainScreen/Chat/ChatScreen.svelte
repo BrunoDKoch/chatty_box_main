@@ -47,29 +47,27 @@
   onMount(async () => await setup());
 </script>
 
-{#await $chat}
-  <div class="text-9xl w-full h-full items-center justify-center">
-    <iconify-icon icon="svg-spinners:6-dots-scale" />
-  </div>
-{:then data}
+{#if $chat && $chat.id === chatId}
   <div class="fixed bg-base-200 w-[75vw] z-30">
-    {#if data.chatName}
-      <h1>{data.chatName}</h1>
+    {#if $chat.chatName}
+      <h1>{$chat.chatName}</h1>
     {:else}
       <h1>{userNamesJoined}</h1>
     {/if}
   </div>
-
   <div class="my-10 overflow-y-auto overflow-x-hidden max-h-[89vh]">
     {#if $chat.messages.length}
       {#each $chat.messages as message}
-        <MessageComponent bind:message focusOn={$chat.messages.indexOf(message) === $chat.messages.length - 1} />
+        <MessageComponent
+          bind:message
+          focusOn={$chat.messages.indexOf(message) === $chat.messages.length - 1}
+        />
       {/each}
     {:else}
       <p>No messages yet</p>
     {/if}
   </div>
-
+  
   <form
     on:keydown={async () => await handleTyping()}
     on:submit|preventDefault={async () => await sendMessage()}
@@ -91,4 +89,9 @@
       </button>
     </div>
   </form>
-{/await}
+{:else}
+  <div class="text-9xl flex w-full h-full items-center justify-center">
+    <iconify-icon icon="svg-spinners:6-dots-scale" />
+  </div>
+{/if}
+

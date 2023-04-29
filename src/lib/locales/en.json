@@ -86,5 +86,14 @@
     "security": "security",
     "language": "language",
     "notifications": "notifications"
+  },
+  "security": {
+    "loginAttempt": {
+      "loginAttempts": "login attempts",
+      "attemptedAt": "attempted at",
+      "successful": "successful",
+      "city": "city",
+      "country": "country"
+    }
   }
 }

@@ -17,7 +17,7 @@
 {#if $notificationSettings}
   <form action="">
     <div class="form-control">
-      <label for="sound" class="label">
+      <label for="sound" class="label uppercase">
         <span class="label-text">{$t('common.sound')}</span>
         <input
           on:change={async () => await handleChange('playSound')}
@@ -28,7 +28,7 @@
           id=""
         />
       </label>
-      <label for="osNotification" class="label">
+      <label for="osNotification" class="label uppercase">
         <span class="label-text">{$t('common.osNotification')}</span>
         <input
           on:change={async () => await handleChange('showOSNotification')}
