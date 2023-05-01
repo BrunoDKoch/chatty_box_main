@@ -26,6 +26,10 @@
     "youMustConfirm": "debes confirmar {your} {thing}"
   },
   "common": {
+    "is": {
+      "perm": "es",
+      "temp": "está"
+    },
     "user": "usuário(a)",
     "hello": "hola",
     "your": {
@@ -59,7 +63,17 @@
     "invalid": {
       "m": "inválido",
       "f": "inválido"
-    }
+    },
+    "enabled": {
+      "m": "activado",
+      "f": "activada"
+    },
+    "disabled": {
+      "m": "desactivado",
+      "f": "desactivada"
+    },
+    "enable": "activar",
+    "disable": "desactivar"
   },
   "aside": {
     "searchChats": "{search} chats"
@@ -90,6 +104,10 @@
       "successful": "éxito",
       "city": "cuidad",
       "country": "país"
+    },
+    "mfa": {
+      "mfa": "autenticación multifactor",
+      "authenticator": "aplicación de autenticación"
     }
   }
 }

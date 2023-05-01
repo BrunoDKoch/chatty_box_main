@@ -30,6 +30,10 @@
     "youMustConfirm": "you must confirm {your} {thing}"
   },
   "common": {
+    "is": {
+      "perm": "is",
+      "temp": "is"
+    },
     "user": "user",
     "hello": "hello",
     "your": {
@@ -63,7 +67,17 @@
     "invalid": {
       "m": "invalid",
       "f": "invalid"
-    }
+    },
+    "enabled": {
+      "m": "enabled",
+      "f": "enabled"
+    },
+    "disabled": {
+      "m": "disabled",
+      "f": "disabled"
+    },
+    "enable": "enable",
+    "disable": "disable"
   },
   "aside": {
     "searchChats": "{search} chats"
@@ -94,6 +108,10 @@
       "successful": "successful",
       "city": "city",
       "country": "country"
+    },
+    "mfa": {
+      "mfa": "multi-factor authentication",
+      "authenticator": "authenticator app"
     }
   }
 }

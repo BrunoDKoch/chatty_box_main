@@ -1,11 +1,9 @@
 <script lang="ts">
   import { createEventDispatcher } from 'svelte';
-    import { scale } from 'svelte/transition';
+  import Modal from './Modal.svelte';
 
   export let status: number;
   export let error: { message: string; cause: string };
-  let show = false;
-  show = true;
   $: icon = getIcon(status);
   const dispatch = createEventDispatcher();
   function getIcon(status: number) {
@@ -41,19 +39,15 @@
   }
 </script>
 
-<dialog class="modal w-screen h-screen modal-open">
-  {#if show}  
-  <div transition:scale class="modal-box bg-error dark:bg-error-content">
-    <div class="grid grid-cols-[1fr_3fr]">
-      <iconify-icon class="row-span-2 self-center justify-self-center" {icon} height="5rem" />
-      <h1 class="font-bold text-2xl">{status} - {error.message}</h1>
-      {#if error.cause}
-        <p>{error.cause}</p>
-      {/if}
-    </div>
-    <div class="modal-action">
-      <button class="btn" on:click={() => dispatch('close')}>Entendido</button>
-    </div>
+<Modal isErrorModal={true}>
+  <div class="grid grid-cols-[1fr_3fr]">
+    <iconify-icon class="row-span-2 self-center justify-self-center" {icon} height="5rem" />
+    <h1 class="font-bold text-2xl">{status} - {error.message}</h1>
+    {#if error.cause}
+      <p>{error.cause}</p>
+    {/if}
   </div>
-  {/if}
-</dialog>
+  <div class="modal-action">
+    <button class="btn" on:click={() => dispatch('close')}>Entendido</button>
+  </div>
+</Modal>

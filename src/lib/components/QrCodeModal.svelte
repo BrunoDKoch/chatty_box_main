@@ -1,17 +1,17 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
-  import { scale } from 'svelte/transition';
+  import { createEventDispatcher, onMount } from 'svelte';
+  import QRCode from 'qrcode';
+  import Modal from './Modal.svelte';
   export let token: string;
-  let show = false;
-  onMount(() => {
-    show = true;
-  });
+  const dispatch = createEventDispatcher();
+  let codeElement: HTMLImageElement;
+  QRCode.toDataURL(token).then((url) => (codeElement.src = url));
 </script>
 
-<dialog class="modal w-screen h-screen modal-open">
-  {#if show}
-    <div transition:scale class="modal-box bg-error dark:bg-error-content">
-      {@html token}
-    </div>
-  {/if}
-</dialog>
+<Modal>
+  <div class="flex flex-col items-center justify-center">
+    <img bind:this={codeElement} alt="QR Code" />
+    <h3 class="text-lg font-semibold text-center">Scan the code above</h3>
+    <button on:click={() => dispatch('close')} class="btn">Done</button>
+  </div>
+</Modal>

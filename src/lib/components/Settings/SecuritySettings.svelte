@@ -1,19 +1,26 @@
 <script lang="ts">
-  import { connection } from '$lib/useSignalR';
-  import type { UserLoginAttempt } from '@prisma/client';
-  import { onMount } from 'svelte';
-  import { date, locale, t, time } from 'svelte-i18n';
+  import { t } from 'svelte-i18n';
   import LoginAttemptsModal from './Modals/LoginAttemptsModal.svelte';
-  let attempts: UserLoginAttempt[] = [];
-  let showModal = false;
+  import MfaModal from './Modals/MFAModal.svelte';
+  let showLoginAttempts = false;
+  let showMFAModal = false;
 </script>
 
-<menu class="menu">
+<menu class="menu uppercase">
   <li>
-    <button class="uppercase" on:click={() => (showModal = !showModal)}>Login attempts</button>
+    <a href="/" on:click|preventDefault={() => (showLoginAttempts = !showLoginAttempts)}>
+      {$t('security.loginAttempt.loginAttempts')}
+    </a>
+  </li>
+  <li>
+    <a href="/" on:click|preventDefault={() => (showMFAModal = !showMFAModal)}>
+      {$t('security.mfa.mfa')}
+    </a>
   </li>
 </menu>
 
-{#if showModal}
-  <LoginAttemptsModal on:close={() => (showModal = !showModal)} />
+{#if showLoginAttempts}
+  <LoginAttemptsModal on:close={() => (showLoginAttempts = !showLoginAttempts)} />
+{:else if showMFAModal}
+  <MfaModal on:close={() => (showMFAModal = !showMFAModal)} />
 {/if}

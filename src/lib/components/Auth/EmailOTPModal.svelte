@@ -1,7 +1,8 @@
 <script lang="ts">
   import { validateEmail } from '$lib/useAuth';
-    import { t } from 'svelte-i18n';
+  import { t } from 'svelte-i18n';
   import TextInput from '../Custom/TextInput.svelte';
+  import Modal from '../Modal.svelte';
 
   let otp = '';
   $: rules = {
@@ -14,22 +15,20 @@
   };
   async function handleSubmit() {
     const res = await validateEmail({ code: otp });
-    console.log(res)
+    console.log(res);
   }
 </script>
 
-<dialog class="modal h-screen w-screen modal-open">
-  <div class="modal-box">
-    <form on:submit|preventDefault={async () => await handleSubmit()} action="">
-      <TextInput
-        rules={rules.otpRules}
-        type="text"
-        bind:value={otp}
-        required
-        name="otp"
-        labelText={$t('auth.typeCode')}
-      />
-      <button class="btn">{$t('common.submit')}</button>
-    </form>
-  </div>
-</dialog>
+<Modal>
+  <form on:submit|preventDefault={async () => await handleSubmit()} action="">
+    <TextInput
+      rules={rules.otpRules}
+      type="text"
+      bind:value={otp}
+      required
+      name="otp"
+      labelText={$t('auth.typeCode')}
+    />
+    <button class="btn">{$t('common.submit')}</button>
+  </form>
+</Modal>

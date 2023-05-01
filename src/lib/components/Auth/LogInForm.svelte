@@ -7,10 +7,13 @@
   import { createEventDispatcher, onMount } from 'svelte';
   import { goto } from '$app/navigation';
   import { t } from 'svelte-i18n';
+  import MfaCodeModal from './MFACodeModal.svelte';
   export let pending = false;
   const dispatch = createEventDispatcher();
+  let showMFACodeModal = false;
   let email = '';
   let password = '';
+  let MFACode: string;
   let remember = false;
   let submitted = false;
   let errorMsg: {
@@ -60,11 +63,15 @@
     dispatch('showSpinner');
     pending = true;
     submitted = true;
-    let body: LogInInfo = { email, password, remember };
+    let body: LogInInfo = { email, password, remember, MFACode };
     try {
       await logIn(body);
       await goto('/');
     } catch (err) {
+      if ((err as { code: number; error?: any }).code === 400) {
+        showMFACodeModal = !showMFACodeModal;
+        return;
+      }
       errorMsg = {
         status: (err as { code: number; error?: any }).code,
         error: (err as { code: number; error?: any }).error,
@@ -116,4 +123,8 @@
       errorMsg = null;
     }}
   />
+{/if}
+
+{#if showMFACodeModal}
+  <MfaCodeModal on:submit={({detail}) => MFACode = detail} />
 {/if}
