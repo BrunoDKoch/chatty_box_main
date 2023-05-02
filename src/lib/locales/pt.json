@@ -58,7 +58,7 @@
       "m": "novo",
       "f": "nova"
     },
-    "message": "mensagem",
+    "message": "{count, plural, zero {nenhuma mensagem} one {mensagem} other {mensagens}}",
     "sound": "som",
     "osNotification": "notificação do sistema",
     "connecting": "conectando",
@@ -77,7 +77,8 @@
     },
     "enable": "ativar",
     "disable": "desativar",
-    "code": "{codeCount, plural, one {código} other {códigos}} de {item}"
+    "code": "{codeCount, plural, one {código} other {códigos}} de {item}",
+    "more": "mais"
   },
   "aside": {
     "searchChats": "{search} chats"

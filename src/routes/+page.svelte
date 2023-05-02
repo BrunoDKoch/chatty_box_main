@@ -25,10 +25,13 @@
     var audio = new Audio('/sounds/newMessage.mp3');
     if ($useUserNotificationSettings?.playSound) await audio.play();
     if (document.hidden && $useUserNotificationSettings?.showOSNotification)
-      new Notification(`ChattyBox: ${$t('common.new.f')} ${$t('common.message')}`, {
-        body: `${data.user.userName}: ${data.text.slice(0, 240)}`,
-        lang: $locale!,
-      });
+      new Notification(
+        `ChattyBox: ${$t('common.new.f')} ${$t('common.message', { values: { count: 1 } })}`,
+        {
+          body: `${data.user.userName}: ${data.text.slice(0, 240)}`,
+          lang: $locale!,
+        },
+      );
     else {
       notifications.push({
         notificationType: 'message',

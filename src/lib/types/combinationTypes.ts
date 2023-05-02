@@ -15,6 +15,7 @@ type MessageResponse = {
 interface CompleteChat extends Chat {
   users: User[];
   messages: MessageResponse[];
+  messageCount: number;
 }
 
 export type { CompleteChat, MessageResponse };

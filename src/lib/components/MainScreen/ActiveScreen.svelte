@@ -7,7 +7,7 @@
   $: $useActiveScreen, getChat($chatId).then((data) => data);
   async function getChat(chatId: string) {
     if ($useActiveScreen !== 'chat') return;
-    await connection.invoke('GetChat', chatId);
+    await connection.invoke('GetChat', chatId, 0);
   }
 </script>
 

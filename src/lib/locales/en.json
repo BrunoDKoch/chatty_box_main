@@ -62,7 +62,7 @@
       "m": "new",
       "f": "new"
     },
-    "message": "message",
+    "message": "{count, plural, zero {no messages} one {message} other {messages}}",
     "sound": "sound",
     "osNotification": "system notification",
     "connecting": "connecting",
@@ -81,7 +81,8 @@
     },
     "enable": "enable",
     "disable": "disable",
-    "code": "{item} {codeCount, plural, one {code} other {codes}}"
+    "code": "{item} {codeCount, plural, one {code} other {codes}}",
+    "more": "more"
   },
   "aside": {
     "searchChats": "{search} chats"

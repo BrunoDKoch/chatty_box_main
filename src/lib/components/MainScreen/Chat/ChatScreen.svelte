@@ -4,7 +4,17 @@
   import { connection } from '$lib/useSignalR';
   import { onMount } from 'svelte';
   import MessageComponent from './MessageComponent.svelte';
+  import AutoScroller from './AutoScroller.svelte';
+  import { date, t } from 'svelte-i18n';
   export let chatId: string;
+
+  let loading = true;
+  let hasFetched = false;
+  $: hasMore = false;
+  $: {
+    if ($chat.id === chatId) loading = false;
+    else loading = true;
+  }
 
   let newMessage = '';
   $: otherUserName = '';
@@ -16,13 +26,38 @@
     otherUserIsTyping = data.isTyping;
     otherUserName = data.from;
   });
-  connection.on('chat', (data: CompleteChat) => chat.set(data));
+  connection.on('chat', (data: CompleteChat) => {
+    // If chat isn't loaded, fetch full data. Else, grab messages
+    if (!$chat.messages || !$chat.messages.length) chat.set(data);
+    else {
+      $chat.messages.push(...data.messages);
+      $chat.messages = $chat.messages;
+      $chat = $chat;
+      hasFetched = true;
+    }
+
+    if ($chat.messageCount > $chat.messages.length) hasMore = true;
+    else hasMore = false;
+
+    // Sort messages properly
+    $chat.messages = $chat.messages.sort(
+      (a, b) => Number(new Date(a.sentAt)) - Number(new Date(b.sentAt)),
+    );
+    $chat.messages = $chat.messages;
+    $chat = $chat;
+  });
 
   connection.on('newMessage', (data: MessageResponse) => {
     $chat.messages.push(data);
     $chat.messages = $chat.messages;
     $chat = $chat;
   });
+  function isFromPreviousDate(message1: MessageResponse, message2: MessageResponse) {
+    if (!message2) {
+      console.log(`The following message has no `)
+    }
+    return new Date(`${message1.sentAt}z`).getDate() !== new Date(`${message2.sentAt}z`).getDate();
+  }
   async function compareInput() {
     const initialInput = newMessage;
     const newInput = newMessage;
@@ -41,11 +76,13 @@
     await connection.invoke<'saved' | 'msgError'>('SendMessage', $chat.id, newMessage, undefined);
     newMessage = '';
   }
-  async function setup() {
-    await connection.invoke('GetChat', chatId);
-  }
-  onMount(async () => await setup());
 </script>
+
+{#if loading}
+  <div class="w-full h-full flex items-center justify-center text-8xl">
+    <iconify-icon icon="svg-spinners:6-dots-scale" />
+  </div>
+{/if}
 
 {#if $chat && $chat.id === chatId}
   <div class="fixed bg-base-200 w-[75vw] z-30">
@@ -56,18 +93,27 @@
     {/if}
   </div>
   <div class="my-10 overflow-y-auto overflow-x-hidden max-h-[89vh]">
+    {#if hasMore}
+      <AutoScroller bind:hasFetched skip={$chat.messages.length} />
+    {/if}
     {#if $chat.messages.length}
       {#each $chat.messages as message}
+        {#if $chat.messages.indexOf(message) !== 0 && isFromPreviousDate(message, $chat.messages[$chat.messages.indexOf(message) - 1])}
+          <div class="divider">
+            <p class="first-letter:uppercase">{$date(new Date(`${message.sentAt}z`), { format: 'full' })}</p>
+          </div>
+        {/if}
         <MessageComponent
           bind:message
-          focusOn={$chat.messages.indexOf(message) === $chat.messages.length - 1}
+          focusOn={$chat.messages.indexOf(message) === $chat.messages.length - 1 &&
+            $chat.messages.length <= 15}
         />
       {/each}
     {:else}
-      <p>No messages yet</p>
+      <p>{$t('common.message', { values: { count: 0 } })}</p>
     {/if}
   </div>
-  
+
   <form
     on:keydown={async () => await handleTyping()}
     on:submit|preventDefault={async () => await sendMessage()}
@@ -94,4 +140,3 @@
     <iconify-icon icon="svg-spinners:6-dots-scale" />
   </div>
 {/if}
-

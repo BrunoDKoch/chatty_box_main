@@ -34,7 +34,7 @@
   });
   onMount(() => {
     observer.observe(thisElement);
-    if (focusOn) thisElement.scrollIntoView();
+    if (focusOn) thisElement.scrollIntoView({ behavior: 'smooth' });
   });
   onDestroy(() => observer.disconnect());
 </script>
