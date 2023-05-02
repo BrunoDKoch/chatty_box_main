@@ -16,6 +16,7 @@
   let MFACode: string;
   let remember = false;
   let submitted = false;
+  let rememberMultiFactor = false;
   let errorMsg: {
     status: number;
     error: { message: string; cause: string };
@@ -63,7 +64,7 @@
     dispatch('showSpinner');
     pending = true;
     submitted = true;
-    let body: LogInInfo = { email, password, remember, MFACode };
+    let body: LogInInfo = { email, password, remember, MFACode, rememberMultiFactor };
     try {
       await logIn(body);
       await goto('/');
@@ -126,5 +127,11 @@
 {/if}
 
 {#if showMFACodeModal}
-  <MfaCodeModal on:submit={({detail}) => MFACode = detail} />
+  <MfaCodeModal
+    bind:MFACode
+    bind:rememberMultiFactor
+    on:submit={async () => {
+      await handleSubmit();
+    }}
+  />
 {/if}

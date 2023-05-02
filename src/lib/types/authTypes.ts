@@ -3,6 +3,7 @@ type LogInInfo = {
   password: string;
   remember: boolean;
   MFACode?: string;
+  rememberMultiFactor: boolean;
 };
 
 type SignUpInfo = {

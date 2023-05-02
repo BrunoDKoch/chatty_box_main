@@ -7,6 +7,7 @@
     "have": "tienes",
     "signup": "inscríbete",
     "login": "entre",
+    "logout": "cerrar sesión",
     "userName": "nombre de usuário",
     "required": {
       "m": "obligatorio",
@@ -23,7 +24,9 @@
       "m": "los {thing} no coinciden",
       "f": "las {thing} no coinciden"
     },
-    "youMustConfirm": "debes confirmar {your} {thing}"
+    "youMustConfirm": "debes confirmar {your} {thing}",
+    "rememberMultiFactor": "no solicitar el código en este dispositivo",
+    "recovery": "recuperación"
   },
   "common": {
     "is": {
@@ -73,7 +76,8 @@
       "f": "desactivada"
     },
     "enable": "activar",
-    "disable": "desactivar"
+    "disable": "desactivar",
+    "code": "{codeCount, plural, one {código} other {códigos}} de {item}"
   },
   "aside": {
     "searchChats": "{search} chats"

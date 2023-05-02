@@ -39,7 +39,7 @@
   }
 </script>
 
-<Modal isErrorModal={true}>
+<Modal modalType="error">
   <div class="grid grid-cols-[1fr_3fr]">
     <iconify-icon class="row-span-2 self-center justify-self-center" {icon} height="5rem" />
     <h1 class="font-bold text-2xl">{status} - {error.message}</h1>

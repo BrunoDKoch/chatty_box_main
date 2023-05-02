@@ -73,13 +73,11 @@ async function logOut() {
     mode: 'cors',
     credentials: 'include',
     async onResponse() {
-      currentUser.set({
-        id: '',
-        email: '',
-        userName: '',
-        roles: [],
+      await goto('/auth/login', {
+        invalidateAll: true,
+        replaceState: true,
+
       });
-      await goto('/');
     },
   });
   return { data, error };
@@ -115,12 +113,4 @@ const currentUser = writable({
   roles: [] as string[],
 });
 
-export {
-  logIn,
-  logOut,
-  signUp,
-  getCurrentUser,
-  suspendUser,
-  validateEmail,
-  currentUser,
-};
+export { logIn, logOut, signUp, getCurrentUser, suspendUser, validateEmail, currentUser };

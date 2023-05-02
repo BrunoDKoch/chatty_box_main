@@ -7,6 +7,7 @@
     "have": "tem",
     "signup": "cadastre-se",
     "login": "entre",
+    "logout": "encerrar sessão",
     "userName": "nome de usuário",
     "required": {
       "m": "obrigatório",
@@ -23,7 +24,9 @@
       "m": "os {thing} não coincidem",
       "f": "as {thing} não coincidem"
     },
-    "youMustConfirm": "confirme {your} {thing}"
+    "youMustConfirm": "confirme {your} {thing}",
+    "rememberMultiFactor": "não solicitar o código neste dispositivo",
+    "recovery": "recuperação"
   },
   "common": {
     "is": {
@@ -73,7 +76,8 @@
       "f": "desativada"
     },
     "enable": "ativar",
-    "disable": "desativar"
+    "disable": "desativar",
+    "code": "{codeCount, plural, one {código} other {códigos}} de {item}"
   },
   "aside": {
     "searchChats": "{search} chats"

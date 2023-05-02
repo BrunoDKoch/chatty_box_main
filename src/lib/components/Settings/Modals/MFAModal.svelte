@@ -6,33 +6,27 @@
   import { t } from 'svelte-i18n';
   import { scale } from 'svelte/transition';
   $: enabled = false;
-  const mfaMethods = ['sms', 'email', 'authenticator', null] as const;
-  $: activeMethod = null as (typeof mfaMethods)[number];
   const dispatch = createEventDispatcher();
   let token = '';
+  $: recoveryCodes = [] as string[];
   let showQRCode = false;
 
   connection.on('currentMFAOptions', (data: { isEnabled: boolean; providers: string[] }) => {
     enabled = data.isEnabled;
     console.log(data);
   });
-  connection.on('mfaToken', (data) => {
-    token = data;
+  connection.on('mfaToken', (data: { token: string; recoveryCodes: string[] }) => {
+    token = data.token;
+    recoveryCodes = data.recoveryCodes;
+    recoveryCodes = recoveryCodes;
     console.log(token);
     setTimeout(() => {
-      if (activeMethod === 'authenticator') {
-        showQRCode = true;
-      }
+      showQRCode = true;
     }),
       500;
   });
-  async function handleChange(method: (typeof mfaMethods)[number]) {
-    activeMethod = method;
-    if (!method) {
-      await connection.invoke('SetMFASettings', false, undefined);
-      return;
-    }
-    await connection.invoke('SetMFASettings', true, method);
+  async function handleChange(enable: boolean) {
+    await connection.invoke('SetMFASettings', enable);
   }
   onMount(async () => {
     await connection.invoke('GetMFASettings');
@@ -50,35 +44,11 @@
     {$t('common.is.temp')}
     {enabled ? $t('common.enabled.f') : $t('common.disabled.f')}
   </h1>
-  {#each mfaMethods as mfaMethod}
-    {#if mfaMethod}
-      <div class="form-control">
-        <label class="label" for="">
-          <span class="label-text first-letter:uppercase">
-            {mfaMethod === 'sms'
-              ? 'SMS'
-              : mfaMethod === 'email'
-              ? $t('auth.email')
-              : $t('security.mfa.authenticator')}
-          </span>
-          <input
-            class="radio"
-            on:change={async () => await handleChange(mfaMethod)}
-            checked={activeMethod === mfaMethod}
-            type="radio"
-            name=""
-            id=""
-          />
-        </label>
-      </div>
-    {:else if enabled}
-      <button on:click={async () => await handleChange(null)} class="btn"
-        >{$t('common.disable')}</button
-      >
-    {/if}
-  {/each}
+  <button on:click={async () => await handleChange(!enabled)} class="btn">
+    {enabled ? $t('common.disable') : $t('common.enable')}
+  </button>
 </Modal>
 
 {#if showQRCode}
-  <QrCodeModal {token} />
+  <QrCodeModal on:close={() => (showQRCode = false)} {token} {recoveryCodes} />
 {/if}

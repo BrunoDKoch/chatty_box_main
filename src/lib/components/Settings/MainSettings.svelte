@@ -4,6 +4,7 @@
   import { createEventDispatcher } from 'svelte';
   import UserGeneralSettings from './UserGeneralSettings.svelte';
   import { type SettingOptions, settingOptions } from '$lib/types/otherTypes';
+  import LogOut from './LogOut.svelte';
   export let user: { userName: string; avatar?: string };
   const dispatch = createEventDispatcher();
 </script>
@@ -37,4 +38,7 @@
       </a>
     </li>
   {/each}
+  <li class="uppercase">
+    <LogOut />
+  </li>
 </menu>

@@ -1,7 +1,7 @@
 <script lang="ts">
   import { scale } from 'svelte/transition';
 
-  export let isErrorModal = false;
+  export let modalType: 'base' | 'error' | 'warning' = 'base';
   let show = false;
   show = true;
 </script>
@@ -11,9 +11,7 @@
     {#if show}
       <div
         transition:scale
-        class="modal-box min-w-max overflow-x-hidden {isErrorModal
-          ? 'bg-error dark:bg-error-content'
-          : ''}"
+        class="modal-box min-w-max overflow-x-hidden bg-{modalType} dark:bg-{modalType}-content"
       >
         <slot />
       </div>
