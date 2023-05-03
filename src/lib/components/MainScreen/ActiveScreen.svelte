@@ -4,15 +4,16 @@
   import { connection } from '$lib/useSignalR';
   import ChatScreen from './Chat/ChatScreen.svelte';
   import { chat, chatId } from '$lib/useActiveChat';
-  $: $useActiveScreen, getChat($chatId).then((data) => data);
-  async function getChat(chatId: string) {
+  $: $chatId, getChat().then((data) => data);
+  async function getChat() {
     if ($useActiveScreen !== 'chat') return;
-    await connection.invoke('GetChat', chatId, 0);
+    console.log($chatId)
+    await connection.invoke('GetChat', $chatId, 0);
   }
 </script>
 
 {#if $useActiveScreen === 'friends'}
   <FriendsScreen />
 {:else if $useActiveScreen === 'chat'}
-  <ChatScreen bind:chatId={$chatId} />
+  <ChatScreen />
 {/if}

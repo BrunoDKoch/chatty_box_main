@@ -10,20 +10,26 @@
   import NotificationToast from '$lib/components/Notification/NotificationToast.svelte';
   import useUserNotificationSettings from '$lib/useUserNotificationSettings';
   import ConnectingComponent from '$lib/components/ConnectingComponent.svelte';
-  $: notifications = [] as { notificationType: 'message' | 'friend request'; text: string }[];
+  $: notifications = [] as { notificationType: 'message' | 'friend request'; text: string, userName: string }[];
+
+  // Handle a new message
   connection.on('newMessage', async (data: MessageResponse) => {
     previews.update((p) => {
       const existingChat = p.find((c) => c.id === data.chatId);
+      // Change latest msg in existing chat
       if (existingChat) {
         const { sentAt, text } = data;
         existingChat.lastMessage = { from: data.user, sentAt, text, read: data.isFromCaller };
       }
       return p;
     });
+    // Stop here if it's from the user
     if (data.isFromCaller) return;
+    // Add to unread messages count
     $messagesCount++;
     var audio = new Audio('/sounds/newMessage.mp3');
     if ($useUserNotificationSettings?.playSound) await audio.play();
+    // Show OS notification if window is unfocused
     if (document.hidden && $useUserNotificationSettings?.showOSNotification)
       new Notification(
         `ChattyBox: ${$t('common.new.f')} ${$t('common.message', { values: { count: 1 } })}`,
@@ -32,10 +38,12 @@
           lang: $locale!,
         },
       );
+    // Else, show notification toast
     else {
       notifications.push({
         notificationType: 'message',
-        text: `${data.user.userName}: ${data.text.slice(0, 240)}`,
+        userName: data.user.userName,
+        text: data.text.slice(0, 240),
       });
       notifications = notifications;
     }
@@ -67,7 +75,7 @@
 
   <div>
     {#each notifications as notification}
-      <div class="toast toast-top toast-center">
+      <div class="toast toast-top toast-center w-[50vw]">
         <NotificationToast
           on:close={() => {
             notifications = notifications.filter((n) => n !== notification);

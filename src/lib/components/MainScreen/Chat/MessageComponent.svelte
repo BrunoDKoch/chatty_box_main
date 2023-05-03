@@ -1,5 +1,6 @@
 <script lang="ts">
   import { PUBLIC_IMAGES_URL } from '$env/static/public';
+  import UserAvatarAndName from '$lib/components/UserAvatarAndName.svelte';
   import type { MessageResponse } from '$lib/types/combinationTypes';
   import { chat } from '$lib/useActiveChat';
   import { connection, previews } from '$lib/useSignalR';
@@ -19,40 +20,28 @@
     })
     .filter((a) => a)
     .join(', ');
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(async (entry) => {
-      if (
-        entry.isIntersecting &&
-        ((isFromCaller && !readBy.filter((r) => r.id === user.id).length) ||
-          readBy.length < $chat.users.length)
-      ) {
-        await connection.invoke('MarkAsRead', message.id);
-        $previews.find((c) => c.id === message.chatId)!.lastMessage!.read = true;
-        $previews = $previews;
-      }
-    });
+  const observer = new IntersectionObserver(async (entries) => {
+    const entry = entries[0];
+    if (
+      entry.isIntersecting &&
+      ((isFromCaller && !readBy.filter((r) => r.id === user.id).length) ||
+        readBy.length < $chat.users.length)
+    ) {
+      await connection.invoke('MarkAsRead', message.id);
+      $previews.find((c) => c.id === message.chatId)!.lastMessage!.read = true;
+      $previews = $previews;
+      $chat.messages = $chat.messages;
+    }
   });
   onMount(() => {
     observer.observe(thisElement);
     if (focusOn) thisElement.scrollIntoView({ behavior: 'smooth' });
   });
-  onDestroy(() => observer.disconnect());
+  onDestroy(() => observer.unobserve(thisElement));
 </script>
 
 <div bind:this={thisElement} class="chat {isFromCaller ? 'chat-end' : 'chat-start'}">
-  <figure class="chat-image avatar w-[50px] h-[50px] mask mask-squircle">
-    {#if user.avatar}
-      <img src="{PUBLIC_IMAGES_URL}/{user.avatar}?width=50" alt="" />
-    {:else}
-      <div
-        class="flex items-center justify-center bg-blue-600 text-white dark:bg-blue-800 min-w-max min-h-max"
-      >
-        <p class="text-center pt-2 font-bold text-xl min-w-max min-h-max">
-          {user.userName ? user.userName[0] : ''}
-        </p>
-      </div>
-    {/if}
-  </figure>
+  <UserAvatarAndName {user} size={50} isChatImage />
   <div class="chat-header">
     {user.userName}
   </div>

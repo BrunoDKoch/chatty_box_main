@@ -27,7 +27,7 @@
     <p class="first-letter:capitalize">{$t('common.new.m')} chat</p>
   </button>
   <div class="divider" />
-  <div class="flex flex-col even:bg-base-300">
+  <div class="flex flex-col gap-4 even:bg-base-300">
     {#each chats as chat}
       <AsideMsg {chat} />
     {/each}

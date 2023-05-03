@@ -4,6 +4,7 @@
   import { connection } from '$lib/useSignalR';
   import useActiveScreen from '$lib/useActiveScreen';
   import { chat, chatId } from '$lib/useActiveChat';
+  import UserAvatarAndName from '$lib/components/UserAvatarAndName.svelte';
   export let friend: FriendResponse;
   async function handleNewChat() {
     await connection.invoke('CreateNewChat', [friend.id], undefined, undefined);
@@ -15,17 +16,7 @@
 <div class="py-3 {friend.isOnline ? 'opacity-100' : 'opacity-50'} ">
   <div class="grid grid-cols-5 indicator gap-3">
     <span class="indicator-item indicator-start {friend.isOnline ? 'badge badge-success' : ''}" />
-    <figure class="avatar mask mask-squircle w-[50px] h-[50px]">
-      {#if friend.avatar}
-        <img src={friend.avatar} alt="" />
-      {:else}
-        <div
-          class="flex items-center justify-center bg-blue-600 text-white dark:bg-blue-800 w-full h-full"
-        >
-          <p class="text-center font-bold py-2 text-3xl">{friend.userName[0]}</p>
-        </div>
-      {/if}
-    </figure>
+    <UserAvatarAndName user={friend} size={50} />
     <div class="col-span-3 flex flex-col">
       <p>{friend.userName}</p>
       <p>{friend.isOnline ? 'Online' : 'Offline'}</p>

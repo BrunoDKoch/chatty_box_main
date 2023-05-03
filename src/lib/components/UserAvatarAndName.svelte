@@ -5,6 +5,7 @@
   export let user: UserPartialResponse;
   export let size: number | 'half' | 'full';
   export let showName = false;
+  export let isChatImage = false;
   const { className, rawSize, textSize } = getWidthAndHeight();
   function getWidthAndHeight() {
     switch (size) {
@@ -16,21 +17,25 @@
         return {
           className: `w-[${size}px] h-[${size}px]`,
           rawSize: size,
-          textSize: size <= 25 ? 'xl' : '3xl',
+          textSize: size <= 25 ? 'base' : '3xl',
         };
     }
   }
 </script>
 
-<div class="{showName ? 'grid grid-cols-4' : 'flex'} gap-3 items-center">
+<div
+  class="{showName ? 'grid grid-cols-4' : 'flex'} gap-3 items-center {isChatImage
+    ? 'chat-image'
+    : ''}"
+>
   <figure class="avatar mask mask-squircle {className}">
     {#if user.avatar}
       <img src="{PUBLIC_IMAGES_URL}/{user.avatar}?width={rawSize}" alt="{user.userName} avatar" />
     {:else}
-      <div
-        class="flex h-full"
-      >
-        <div class="flex items-center justify-center h-full text-{textSize} bg-blue-600 text-white dark:bg-blue-800">
+      <div class="flex h-full">
+        <div
+          class="flex items-center justify-center h-full text-{textSize} bg-blue-600 text-white dark:bg-blue-800"
+        >
           <p class="font-bold text-white text-center m-auto">
             {user.userName[0]}
           </p>

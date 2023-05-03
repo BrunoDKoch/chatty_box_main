@@ -2,6 +2,7 @@
   import { createEventDispatcher, onDestroy } from 'svelte';
 
   export let notificationType: 'message' | 'friend request';
+  export let userName: string;
   export let text: string;
   const dispatch = createEventDispatcher();
   let radialProgress: HTMLElement;
@@ -21,7 +22,8 @@
 </script>
 
 <div class="alert {notificationType === 'message' ? 'alert-info' : 'alert-success'}">
-  <div>
+  <div class="flex gap-1">
+    <p class="font-bold">{userName}:</p>
     <span>{text}</span>
   </div>
   <div class="close-button-container">

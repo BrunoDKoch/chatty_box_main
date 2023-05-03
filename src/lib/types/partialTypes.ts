@@ -1,7 +1,7 @@
 import type { Chat, User } from '@prisma/client';
 
 type MessagePreview = {
-  from: FriendResponse;
+  from: UserPartialResponse;
   sentAt: Date;
   text: string;
   read: boolean;
@@ -21,7 +21,7 @@ type ChatPreview = {
   id: string;
   chatName?: string;
   lastMessage?: MessagePreview;
-  users: FriendResponse[];
+  users: UserPartialResponse[];
   createdAt: Date;
 };
 

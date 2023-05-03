@@ -9,7 +9,7 @@ type MessageResponse = {
   text: string,
   replyToId?: string,
   readBy: { userName: string; avatar?: string; id: string; readAt: Date }[];
-  user: User;
+  user: UserPartialResponse;
   isFromCaller: boolean;
 };
 

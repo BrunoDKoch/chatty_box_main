@@ -1,20 +1,16 @@
 <script lang="ts">
   import type { CompleteChat, MessageResponse } from '$lib/types/combinationTypes';
-  import { chat } from '$lib/useActiveChat';
+  import { chat, chatId } from '$lib/useActiveChat';
   import { connection } from '$lib/useSignalR';
   import { onMount } from 'svelte';
   import MessageComponent from './MessageComponent.svelte';
   import AutoScroller from './AutoScroller.svelte';
   import { date, t } from 'svelte-i18n';
-  export let chatId: string;
 
   let loading = true;
   let hasFetched = false;
   $: hasMore = false;
-  $: {
-    if ($chat.id === chatId) loading = false;
-    else loading = true;
-  }
+  $: $chatId, (loading = $chat.id !== $chatId);
 
   let newMessage = '';
   $: otherUserName = '';
@@ -29,6 +25,11 @@
   connection.on('chat', (data: CompleteChat) => {
     // If chat isn't loaded, fetch full data. Else, grab messages
     if (!$chat.messages || !$chat.messages.length) chat.set(data);
+    else if ($chat.id !== data.id) {
+      console.log(data)
+      $chatId = data.id;
+      chat.set(data);
+    }
     else {
       $chat.messages.push(...data.messages);
       $chat.messages = $chat.messages;
@@ -53,9 +54,6 @@
     $chat = $chat;
   });
   function isFromPreviousDate(message1: MessageResponse, message2: MessageResponse) {
-    if (!message2) {
-      console.log(`The following message has no `)
-    }
     return new Date(`${message1.sentAt}z`).getDate() !== new Date(`${message2.sentAt}z`).getDate();
   }
   async function compareInput() {
@@ -84,7 +82,7 @@
   </div>
 {/if}
 
-{#if $chat && $chat.id === chatId}
+{#if $chat && $chat.id === $chatId}
   <div class="fixed bg-base-200 w-[75vw] z-30">
     {#if $chat.chatName}
       <h1>{$chat.chatName}</h1>
@@ -100,7 +98,9 @@
       {#each $chat.messages as message}
         {#if $chat.messages.indexOf(message) !== 0 && isFromPreviousDate(message, $chat.messages[$chat.messages.indexOf(message) - 1])}
           <div class="divider">
-            <p class="first-letter:uppercase">{$date(new Date(`${message.sentAt}z`), { format: 'full' })}</p>
+            <p class="first-letter:uppercase">
+              {$date(new Date(`${message.sentAt}z`), { format: 'full' })}
+            </p>
           </div>
         {/if}
         <MessageComponent

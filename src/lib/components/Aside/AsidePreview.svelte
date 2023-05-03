@@ -21,7 +21,7 @@
     $useActiveScreen = 'chat';
   }}
 >
-  <p>{chat.chatName ?? chat.users.map((u) => u.userName).join(', ')}</p>
+  <p class="font-semibold">{chat.chatName ?? chat.users.map((u) => u.userName).join(', ')}</p>
   <div class="grid grid-cols-8 gap-2 indicator">
     {#if chat.lastMessage && !chat.lastMessage.read}
       <span

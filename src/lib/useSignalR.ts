@@ -60,7 +60,7 @@ connection.on('friends', (data: FriendResponse[]) => {
 connection.on('updateStatus', (data: string) => {
   friends.update((f) => {
     f = f.map((u) => {
-      if (u.userId === data) u.isOnline = !u.isOnline;
+      if (u.id === data) u.isOnline = !u.isOnline;
       return u;
     });
     return f;
