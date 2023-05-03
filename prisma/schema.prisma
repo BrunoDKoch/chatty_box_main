@@ -98,6 +98,7 @@ model User {
   readMessages             ReadMessage[]
   userNotificationSettings UserNotificationSettings?
   chatNotificationSettings ChatNotificationSettings[]
+  privacyLevel             Int                        @default(1)
 
   @@index([normalizedEmail], map: "EmailIndex")
   @@index([normalizedUserName], map: "UserNameIndex")

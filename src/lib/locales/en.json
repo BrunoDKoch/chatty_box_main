@@ -68,8 +68,8 @@
     "connecting": "connecting",
     "pleaseWait": "please wait",
     "invalid": {
-      "m": "invalid",
-      "f": "invalid"
+      "m": "{item} invalid",
+      "f": "{item} invalid"
     },
     "enabled": {
       "m": "enabled",
@@ -82,7 +82,9 @@
     "enable": "enable",
     "disable": "disable",
     "code": "{item} {codeCount, plural, one {code} other {codes}}",
-    "more": "more"
+    "more": "more",
+    "cancel": "cancel",
+    "proceed": "proceed"
   },
   "aside": {
     "searchChats": "{search} chats"
@@ -118,5 +120,10 @@
       "mfa": "multi-factor authentication",
       "authenticator": "authenticator app"
     }
+  },
+  "privacyLevel": {
+    "1": "Anyone can add me as a friend or to chats",
+    "2": "Only people in my chats can add me as a friend or to other chats",
+    "3": "Only my friends can add me to chats"
   }
 }

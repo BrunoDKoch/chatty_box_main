@@ -8,6 +8,7 @@
   import UserNotifSettings from './UserNotifSettings.svelte';
   import type { SettingOptions } from '$lib/types/otherTypes';
   import SecuritySettings from './SecuritySettings.svelte';
+  import PrivacySettings from './PrivacySettings.svelte';
   let user: { userName: string; avatar?: string };
   let show = false;
   show = true;
@@ -34,6 +35,8 @@
       <UserNotifSettings />
     {:else if activeScreen === 'settings.security'}
       <SecuritySettings />
+    {:else if activeScreen === 'settings.privacy'}
+      <PrivacySettings />
     {/if}
   </div>
 {/if}

@@ -13,9 +13,7 @@
   <div class="hero-overlay bg-opacity-60" />
   <div class="hero-content min-w-full flex-col lg:flex-row-reverse">
     <div
-      class="text-center lg:text-left"
-      style="text-shadow: 2px 0 black, -2px 0 black, 0 2px black, 0 -2px black,
-    1px 1px black, -1px -1px black, 1px -1px black, -1px 1px black;"
+      class="text-center lg:text-left custom-shadow text-white"
     >
       <h1 class="text-3xl font-bold first-letter:capitalize">{$t('common.hello')}, chatter</h1>
       <p class="first-letter:uppercase">
@@ -46,3 +44,10 @@
     <iconify-icon class="text-7xl" icon="svg-spinners:6-dots-scale-middle" />
   {/if}
 </div>
+
+<style>
+  .custom-shadow {
+    text-shadow: 2px 0 black, -2px 0 black, 0 2px black, 0 -2px black,
+    1px 1px black, -1px -1px black, 1px -1px black, -1px 1px black;
+  }
+</style>

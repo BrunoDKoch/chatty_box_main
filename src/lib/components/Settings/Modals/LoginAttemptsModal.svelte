@@ -5,6 +5,7 @@
   import { connection } from '$lib/useSignalR';
   import Pagination from '$lib/components/Pagination.svelte';
   import Modal from '$lib/components/Modal.svelte';
+  import CloseButton from '$lib/components/Custom/CloseButton.svelte';
 
   $: attempts = [] as UserLoginAttempt[];
   $: activePage = 1;
@@ -26,11 +27,7 @@
 </script>
 
 <Modal>
-  <div class="flex items-end justify-end">
-    <button on:click={() => dispatch('close')} class="btn btn-circle btn-sm">
-      <iconify-icon icon="mdi:close" />
-    </button>
-  </div>
+  <CloseButton on:close />
   <div class="flex flex-col justify-center">
     {#if attempts && attempts.length && total}
       <table class="table table-compact">

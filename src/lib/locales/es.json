@@ -64,8 +64,8 @@
     "connecting": "conectando",
     "pleaseWait": "por favor espere",
     "invalid": {
-      "m": "inválido",
-      "f": "inválido"
+      "m": "{item} inválido",
+      "f": "{item} inválido"
     },
     "enabled": {
       "m": "activado",
@@ -78,7 +78,9 @@
     "enable": "activar",
     "disable": "desactivar",
     "code": "{codeCount, plural, one {código} other {códigos}} de {item}",
-    "more": "más"
+    "more": "más",
+    "cancel": "cancelar",
+    "proceed": "proceder"
   },
   "aside": {
     "searchChats": "{search} chats"
@@ -114,5 +116,10 @@
       "mfa": "autenticación multifactor",
       "authenticator": "aplicación de autenticación"
     }
+  },
+  "privacyLevel": {
+    "1": "Cualquiera puede agregarme como amigo o a un chat",
+    "2": "Solo las personas en mis chats pueden agregarme como amigos, y solo ellos y mis amigos pueden agregarme a un chat",
+    "3": "Solo mis amigos pueden agregarme a un chat"
   }
 }

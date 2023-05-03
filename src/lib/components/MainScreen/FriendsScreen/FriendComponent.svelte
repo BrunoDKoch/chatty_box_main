@@ -6,7 +6,7 @@
   import { chat, chatId } from '$lib/useActiveChat';
   export let friend: FriendResponse;
   async function handleNewChat() {
-    await connection.invoke('CreateNewChat', [friend.userId], undefined, undefined);
+    await connection.invoke('CreateNewChat', [friend.id], undefined, undefined);
     $useActiveScreen = 'chat';
     $chatId = $chat.id;
   }

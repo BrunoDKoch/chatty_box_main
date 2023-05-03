@@ -5,38 +5,12 @@
   import { connection } from '$lib/useSignalR';
   import type { User } from '@prisma/client';
   import Modal from './Modal.svelte';
+  import CloseButton from './Custom/CloseButton.svelte';
+  import type { FriendResponse } from '$lib/types/partialTypes';
+  import UserSearch from './UserSearch.svelte';
   const dispatch = createEventDispatcher();
-  
-  // These handle the search
-  let search = '';
-  let results: User[] = [];
-  let selection: User | null = null;
 
-  // Ensures we're not firing requests constantly
-  let timerHasStarted = false;
-
-  // Shows a spinner if fetching
-  let fetching = false;
-
-  connection.on('searchResults', (data: User[]) => {
-    results = data;
-    fetching = false;
-  });
-
-  $: search, startTimer(search);
-  $: timerHasStarted, handleTimer(timerHasStarted).then((data) => data);
-
-  function startTimer(search: string) {
-    if (!search || search == selection?.userName) return;
-    if (!timerHasStarted) timerHasStarted = true;
-  }
-
-  async function handleTimer(timerHasStarted: boolean) {
-    if (!timerHasStarted) return;
-    if (results.length) results.length = 0;
-    fetching = true;
-    setTimeout(async () => await connection.invoke('SearchUser', search), 500);
-  }
+  let selection: FriendResponse | null = null;
 
   async function handleSubmit() {
     if (!selection) return;
@@ -46,11 +20,7 @@
 </script>
 
 <Modal>
-  <div class="flex justify-end">
-    <button on:click={() => dispatch('close')} class="btn btn-circle btn-sm">
-      <iconify-icon icon="mdi:close" />
-    </button>
-  </div>
+  <CloseButton on:close />
   <div class="grid grid-cols-[1fr_3fr]">
     <iconify-icon
       class="row-span-2 self-center justify-self-center"
@@ -59,35 +29,7 @@
     />
     <h1 class="font-bold text-2xl first-letter:uppercase">{$t('friends.add')}</h1>
     {#if !selection}
-      <div class="form-control">
-        <label for="" class="label capitalize">
-          <span class="label-text">
-            {$t('auth.userName')}
-          </span>
-        </label>
-        <input type="text" class="input input-bordered" bind:value={search} />
-        {#if fetching || results.length}
-          <div class="dropdown dropdown-open">
-            <ul class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-full">
-              {#if fetching}
-                <iconify-icon icon="svg-spinners:6-dots-scale" height="3rem" />
-              {:else if results.length}
-                {#each results as result}
-                  <li
-                    on:click={() => {
-                      selection = result;
-                      search = String(result.userName);
-                    }}
-                    on:keypress
-                  >
-                    {result.userName}
-                  </li>
-                {/each}
-              {/if}
-            </ul>
-          </div>
-        {/if}
-      </div>
+      <UserSearch bind:selection />
     {:else}
       <div class="grid grid-cols-3">
         <figure>

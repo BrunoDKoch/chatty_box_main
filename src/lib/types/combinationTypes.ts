@@ -1,4 +1,5 @@
 import type { Chat, Message, ReadMessage, User } from '@prisma/client';
+import type { UserPartialResponse } from './partialTypes';
 
 type MessageResponse = {
   id: string,
@@ -13,7 +14,7 @@ type MessageResponse = {
 };
 
 interface CompleteChat extends Chat {
-  users: User[];
+  users: UserPartialResponse[];
   messages: MessageResponse[];
   messageCount: number;
 }

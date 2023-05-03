@@ -9,7 +9,9 @@
     otpRules: [
       {
         condition: !!Number(otp) && otp.length === 6,
-        text: `${$t('common.invalid')} ${$t('auth.email')}`,
+        text: $t('common.invalid.m', {
+          values: { item: $t('common.code', { values: { item: $t('auth.email') } }) },
+        }),
       },
     ],
   };

@@ -6,6 +6,7 @@
   import { scale } from 'svelte/transition';
   import { quintInOut } from 'svelte/easing';
   import { PUBLIC_IMAGES_URL } from '$env/static/public';
+  import UserAvatarAndName from '../UserAvatarAndName.svelte';
   export let chat: ChatPreview;
 </script>
 
@@ -28,22 +29,8 @@
         class="indicator-item badge badge-warning">!</span
       >
     {/if}
-    <figure class="avatar mask mask-squircle w-[25px] h-[25px] col-span-1">
-      {#if chat.lastMessage && chat.lastMessage.from.avatar}
-        <img src="{PUBLIC_IMAGES_URL}/{chat.lastMessage?.from.avatar}?width=25" alt="" />
-      {:else}
-        <div
-          class="flex items-center justify-center bg-blue-600 text-white dark:bg-blue-800 w-full h-full"
-        >
-          <p class="font-bold bg-blue-600 dark:bg-blue-800 text-white text-center">
-            {chat.lastMessage?.from && chat.lastMessage?.from.userName
-              ? chat.lastMessage?.from.userName[0]
-              : ''}
-          </p>
-        </div>
-      {/if}
-    </figure>
     {#if chat.lastMessage}
+      <UserAvatarAndName user={chat.lastMessage.from} size={25} />
       <div class=" col-span-4">
         <p>{chat.lastMessage.text.slice(0, 140)}</p>
       </div>

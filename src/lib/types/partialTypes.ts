@@ -1,20 +1,28 @@
 import type { Chat, User } from '@prisma/client';
 
 type MessagePreview = {
-  from: User;
+  from: FriendResponse;
   sentAt: Date;
   text: string;
   read: boolean;
 };
 
-type FriendResponse = { userName: string; isOnline: boolean; avatar?: string; userId: string };
+interface UserPartialResponse {
+  userName: string;
+  avatar?: string;
+  id: string;
+}
+
+interface FriendResponse extends UserPartialResponse {
+  isOnline: boolean
+};
 
 type ChatPreview = {
   id: string;
   chatName?: string;
   lastMessage?: MessagePreview;
-  users: User[];
+  users: FriendResponse[];
   createdAt: Date;
 };
 
-export type { MessagePreview, FriendResponse, ChatPreview };
+export type { MessagePreview, UserPartialResponse, FriendResponse, ChatPreview };

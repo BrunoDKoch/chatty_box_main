@@ -214,10 +214,6 @@
   />
 {/if}
 
-{#if qrCode}
-  <QrCodeModal token={qrCode.content} />
-{/if}
-
 {#if openOtpModal}
   <EmailOtpModal />
 {/if}
