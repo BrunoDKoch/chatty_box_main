@@ -55,6 +55,7 @@
   </label>
   {#if type !== 'area'}
     <input
+      id={name}
       use:getType
       class={!disabled
         ? `input input-bordered ${errorClass}`

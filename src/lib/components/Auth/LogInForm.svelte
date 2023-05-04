@@ -114,10 +114,20 @@
       <span class="capitalize">{$t('common.clickHere')}!</span>
     </a>
     <a href="/auth/recovery" class="link first-letter:uppercase">
-      {$t('common.forgot', {values: {item: `${$t('common.your.f')} ${$t('auth.password')}`}})}?
+      {$t('common.forgot', { values: { item: `${$t('common.your.f')} ${$t('auth.password')}` } })}?
     </a>
   </div>
 </form>
+
+{#if showMFACodeModal}
+  <MfaCodeModal
+    bind:MFACode
+    bind:rememberMultiFactor
+    on:submit={async () => {
+      await handleSubmit();
+    }}
+  />
+{/if}
 
 {#if errorMsg}
   <ErrorModal
@@ -127,16 +137,6 @@
       email = '';
       password = '';
       errorMsg = null;
-    }}
-  />
-{/if}
-
-{#if showMFACodeModal}
-  <MfaCodeModal
-    bind:MFACode
-    bind:rememberMultiFactor
-    on:submit={async () => {
-      await handleSubmit();
     }}
   />
 {/if}

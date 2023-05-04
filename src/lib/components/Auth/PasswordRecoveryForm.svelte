@@ -2,6 +2,8 @@
   import { t } from 'svelte-i18n';
   import TextInput from '../Custom/TextInput.svelte';
   import { getRecoveryToken, recoverPassword } from '$lib/useAuth';
+  import { goto } from '$app/navigation';
+  import { page } from '$app/stores';
 
   export let email: string = '';
   export let token: string = '';
@@ -53,12 +55,16 @@
     if (!token) {
       const res = await getRecoveryToken({ email });
       console.log(res);
+      token = res.result;
+      await goto(`${$page.url.pathname}?email=${email}&token=${token.replaceAll('/', '%2F')}`, {
+        replaceState: true,
+      });
       return;
     }
     const res = await recoverPassword({ password, email, token });
-    console.log(res)
+    console.log(res);
   }
-  console.log(email)
+  console.log(email);
 </script>
 
 <form

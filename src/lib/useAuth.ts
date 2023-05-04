@@ -111,15 +111,16 @@ async function getRecoveryToken(body: { email: string }) {
   });
 }
 
-async function recoverPassword(
-  body: { password: string, email: string; token: string },
-) {
+async function recoverPassword(body: { password: string; email: string; token: string }) {
   return await ofetch('/user/recovery', {
     baseURL,
     body,
     method: 'PUT',
     mode: 'cors',
     credentials: 'include',
+    onResponse({ response }) {
+      console.log(response);
+    },
   });
 }
 
