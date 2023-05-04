@@ -16,7 +16,7 @@
 <div class="py-3 {friend.isOnline ? 'opacity-100' : 'opacity-50'} ">
   <div class="grid grid-cols-5 indicator gap-3">
     <span class="indicator-item indicator-start {friend.isOnline ? 'badge badge-success' : ''}" />
-    <UserAvatarAndName user={friend} size={50} />
+    <UserAvatarAndName user={friend} size="half" />
     <div class="col-span-3 flex flex-col">
       <p>{friend.userName}</p>
       <p>{friend.isOnline ? 'Online' : 'Offline'}</p>
