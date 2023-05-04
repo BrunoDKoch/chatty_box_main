@@ -1,13 +1,13 @@
 <script lang="ts">
   import useActiveScreen from '$lib/useActiveScreen';
   import FriendsScreen from './FriendsScreen/FriendsScreen.svelte';
-  import { connection } from '$lib/useSignalR';
+  import { connection, previews } from '$lib/useSignalR';
   import ChatScreen from './Chat/ChatScreen.svelte';
-  import { chat, chatId } from '$lib/useActiveChat';
+  import { chatId } from '$lib/useActiveChat';
+  import Aside from '../Aside/Aside.svelte';
   $: $chatId, getChat().then((data) => data);
   async function getChat() {
     if ($useActiveScreen !== 'chat') return;
-    console.log($chatId)
     await connection.invoke('GetChat', $chatId, 0);
   }
 </script>
@@ -16,4 +16,6 @@
   <FriendsScreen />
 {:else if $useActiveScreen === 'chat'}
   <ChatScreen />
+{:else if $useActiveScreen === 'aside'}
+  <Aside chats={$previews} />
 {/if}

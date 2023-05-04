@@ -12,7 +12,7 @@
 <div class="flex flex-col gap-3">
   <div class="flex items-center">
     <button on:click={() => (settingsMenuActive = !settingsMenuActive)} class="btn btn-ghost">
-      <iconify-icon icon="mdi:menu" height="1.4rem" />
+      <iconify-icon icon="mdi:cog" height="1.4rem" />
     </button>
     {#if settingsMenuActive}
       <h2 class="capitalize">{$t('common.settings')}</h2>

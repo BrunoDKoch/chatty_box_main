@@ -59,10 +59,6 @@ async function getCurrentUser(idCookie: string): Promise<{
     headers: { cookie: `${PUBLIC_IDENTITY_COOKIE}=${idCookie}` },
     onResponse({ response }) {
       if (!response.ok) return;
-      const user = response._data;
-      currentUser.set({
-        ...user,
-      });
     },
   });
 }

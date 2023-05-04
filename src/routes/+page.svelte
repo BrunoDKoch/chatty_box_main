@@ -10,7 +10,12 @@
   import NotificationToast from '$lib/components/Notification/NotificationToast.svelte';
   import useUserNotificationSettings from '$lib/useUserNotificationSettings';
   import ConnectingComponent from '$lib/components/ConnectingComponent.svelte';
-  $: notifications = [] as { notificationType: 'message' | 'friend request'; text: string, userName: string }[];
+  import useActiveScreen from '$lib/useActiveScreen';
+  $: notifications = [] as {
+    notificationType: 'message' | 'friend request';
+    text: string;
+    userName: string;
+  }[];
 
   // Handle a new message
   connection.on('newMessage', async (data: MessageResponse) => {
@@ -64,11 +69,19 @@
 
 {#if $online}
   <title>{$messagesCount ? `(${$messagesCount}) ` : ''}ChattyBox</title>
-  <div class="grid grid-cols-4 w-screen">
-    <aside class="col-span-1 bg-base-200 h-screen">
+  <div class="lg:grid lg:grid-cols-4 w-screen">
+    <aside class="col-span-1 bg-base-200 h-screen max-md:hidden">
       <Aside chats={$previews} />
     </aside>
-    <section class="col-span-3 overflow-x-hidden">
+    <div class="lg:hidden flex bg-base-200 z-50">
+      <button
+        on:click={() => ($useActiveScreen = $useActiveScreen === 'aside' ? 'friends' : 'aside')}
+        class="btn btn-ghost text-4xl"
+      >
+        <iconify-icon icon="mdi:menu" />
+      </button>
+    </div>
+    <section class="lg:col-span-3 overflow-x-hidden">
       <ActiveScreen />
     </section>
   </div>

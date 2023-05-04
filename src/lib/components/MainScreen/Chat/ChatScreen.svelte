@@ -83,7 +83,7 @@
 {/if}
 
 {#if $chat && $chat.id === $chatId}
-  <div class="fixed bg-base-200 w-[75vw] z-30">
+  <div class="fixed bg-base-200 max-md:w-full lg:w-[75vw] z-30">
     {#if $chat.chatName}
       <h1>{$chat.chatName}</h1>
     {:else}
@@ -117,7 +117,7 @@
   <form
     on:keydown={async () => await handleTyping()}
     on:submit|preventDefault={async () => await sendMessage()}
-    class="fixed bottom-0 w-[75vw] box-border form-control overflow-hidden"
+    class="fixed bottom-0 max-md:w-full w-[75vw] box-border form-control overflow-hidden"
   >
     <label class="label" for="">
       {#if otherUserIsTyping}
