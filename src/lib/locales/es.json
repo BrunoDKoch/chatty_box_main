@@ -26,7 +26,8 @@
     },
     "youMustConfirm": "debes confirmar {your} {thing}",
     "rememberMultiFactor": "no solicitar el código en este dispositivo",
-    "recovery": "recuperación"
+    "recovery": "recuperación",
+    "letsRecover": "vamos a recuperar su cuenta"
   },
   "common": {
     "is": {
@@ -80,7 +81,8 @@
     "code": "{codeCount, plural, one {código} other {códigos}} de {item}",
     "more": "más",
     "cancel": "cancelar",
-    "proceed": "proceder"
+    "proceed": "proceder",
+    "forgot": "olvidó {item}"
   },
   "aside": {
     "searchChats": "{search} chats"

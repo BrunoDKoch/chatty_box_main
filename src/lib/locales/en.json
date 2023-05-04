@@ -30,7 +30,8 @@
     },
     "youMustConfirm": "you must confirm {your} {thing}",
     "rememberMultiFactor": "do not ask for code in this device",
-    "recovery": "recovery"
+    "recovery": "recovery",
+    "letsRecover": "let's recover your account"
   },
   "common": {
     "is": {
@@ -84,7 +85,8 @@
     "code": "{item} {codeCount, plural, one {code} other {codes}}",
     "more": "more",
     "cancel": "cancel",
-    "proceed": "proceed"
+    "proceed": "proceed",
+    "forgot": "forgot {item}"
   },
   "aside": {
     "searchChats": "{search} chats"

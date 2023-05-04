@@ -72,7 +72,6 @@ async function logOut() {
       await goto('/auth/login', {
         invalidateAll: true,
         replaceState: true,
-
       });
     },
   });
@@ -102,6 +101,28 @@ async function validateEmail(body: { code: string }) {
   });
 }
 
+async function getRecoveryToken(body: { email: string }) {
+  return await ofetch('/user/recovery', {
+    baseURL,
+    body,
+    method: 'POST',
+    mode: 'cors',
+    credentials: 'include',
+  });
+}
+
+async function recoverPassword(
+  body: { password: string, email: string; token: string },
+) {
+  return await ofetch('/user/recovery', {
+    baseURL,
+    body,
+    method: 'PUT',
+    mode: 'cors',
+    credentials: 'include',
+  });
+}
+
 const currentUser = writable({
   id: '',
   email: '',
@@ -109,4 +130,14 @@ const currentUser = writable({
   roles: [] as string[],
 });
 
-export { logIn, logOut, signUp, getCurrentUser, suspendUser, validateEmail, currentUser };
+export {
+  logIn,
+  logOut,
+  signUp,
+  getCurrentUser,
+  suspendUser,
+  validateEmail,
+  getRecoveryToken,
+  recoverPassword,
+  currentUser,
+};

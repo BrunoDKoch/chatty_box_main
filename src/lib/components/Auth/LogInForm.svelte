@@ -108,10 +108,15 @@
   />
   <Checkbox bind:checked={remember} name="remember" labelText={$t('auth.remember')} />
   <button disabled={pending} class="btn">{$t('common.submit')}</button>
-  <a class="link first-letter:uppercase" href="/auth/signup">
-    <span>{$t('common.negatory')} {$t('auth.have')} {$t('auth.anAccount')}?</span>
-    <span class="capitalize">{$t('common.clickHere')}!</span>
-  </a>
+  <div class="flex flex-col gap-4">
+    <a class="link first-letter:uppercase" href="/auth/signup">
+      <span>{$t('common.negatory')} {$t('auth.have')} {$t('auth.anAccount')}?</span>
+      <span class="capitalize">{$t('common.clickHere')}!</span>
+    </a>
+    <a href="/auth/recovery" class="link first-letter:uppercase">
+      {$t('common.forgot', {values: {item: `${$t('common.your.f')} ${$t('auth.password')}`}})}?
+    </a>
+  </div>
 </form>
 
 {#if errorMsg}
