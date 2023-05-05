@@ -82,7 +82,14 @@
     "more": "más",
     "cancel": "cancelar",
     "proceed": "proceder",
-    "forgot": "olvidó {item}"
+    "forgot": "olvidó {item}",
+    "and": {
+      "1": "e",
+      "2": "y"
+    },
+    "toBe": "{count, plural, one {está} other {están}}",
+    "typing": "escribiendo",
+    "manyPeople": "varias personas"
   },
   "aside": {
     "searchChats": "{search} chats"

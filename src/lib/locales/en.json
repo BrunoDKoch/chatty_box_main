@@ -86,7 +86,14 @@
     "more": "more",
     "cancel": "cancel",
     "proceed": "proceed",
-    "forgot": "forgot {item}"
+    "forgot": "forgot {item}",
+    "and": {
+      "1": "and",
+      "2": "and"
+    },
+    "toBe": "{count, plural, one {is} other {are}}",
+    "typing": "typing",
+    "manyPeople": "many people"
   },
   "aside": {
     "searchChats": "{search} chats"

@@ -75,7 +75,7 @@
 
 {#if $online}
   <title>{$messagesCount ? `(${$messagesCount}) ` : ''}ChattyBox</title>
-  <div class="lg:grid lg:grid-cols-4 w-screen">
+  <div class="lg:grid lg:grid-cols-4 max-md:flex max-md:flex-col w-screen">
     <aside class="col-span-1 bg-base-200 h-screen max-md:hidden">
       <Aside chats={$previews} />
     </aside>
