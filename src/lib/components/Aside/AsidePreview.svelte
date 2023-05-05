@@ -5,34 +5,35 @@
   import useActiveScreen from '$lib/useActiveScreen';
   import { scale } from 'svelte/transition';
   import { quintInOut } from 'svelte/easing';
-  import { PUBLIC_IMAGES_URL } from '$env/static/public';
   import UserAvatarAndName from '../UserAvatarAndName.svelte';
+  import UserAvatar from '../UserAvatar.svelte';
   export let chat: ChatPreview;
 </script>
 
-<div
-  class="hover:bg-gray-300 hover:dark:bg-gray-700 cursor-pointer pl-2"
-  on:keydown={() => {
-    $chatId = chat.id;
-    $useActiveScreen = 'chat';
-  }}
-  on:click={() => {
+<a
+  href="/"
+  class="hover:bg-gray-300 hover:dark:bg-gray-700 cursor-pointer pl-2 indicator w-full"
+  on:click|preventDefault={() => {
     $chatId = chat.id;
     $useActiveScreen = 'chat';
   }}
 >
-  <p class="font-semibold">{chat.chatName ?? chat.users.map((u) => u.userName).join(', ')}</p>
-  <div class="grid grid-cols-8 gap-2 indicator">
-    {#if chat.lastMessage && !chat.lastMessage.read}
-      <span
-        transition:scale={{ start: 0, easing: quintInOut }}
-        class="indicator-item badge badge-warning">!</span
-      >
-    {/if}
+  {#if chat.lastMessage && !chat.lastMessage.read}
+    <span
+      transition:scale={{ start: 0, easing: quintInOut }}
+      class="indicator-item indicator-middle right-5 badge badge-warning">!</span
+    >
+  {/if}
+  <div class="flex flex-col gap-2">
+    <p class="font-semibold">{chat.chatName ?? chat.users.map((u) => u.userName).join(', ')}</p>
     {#if chat.lastMessage}
-      <UserAvatarAndName user={chat.lastMessage.from} size={25} />
-      <div class=" col-span-4">
-        <p>{chat.lastMessage.text.slice(0, 140)}</p>
+      <div class="grid grid-cols-8 w-80">
+        <div class="col-span-1">
+          <UserAvatar user={chat.lastMessage.from} size={25} />
+        </div>
+        <div class="col-span-7">
+          <p>{chat.lastMessage.text.slice(0, 140)}</p>
+        </div>
       </div>
       <p class="col-span-full">
         {$date(new Date(`${chat.lastMessage.sentAt}z`), { format: 'medium' })} - {$time(
@@ -43,4 +44,4 @@
       <p>No messages yet</p>
     {/if}
   </div>
-</div>
+</a>

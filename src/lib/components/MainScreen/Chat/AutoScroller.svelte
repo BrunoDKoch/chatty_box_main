@@ -4,12 +4,11 @@
   import { onMount } from 'svelte';
   import { t } from 'svelte-i18n';
   export let skip: number;
-  export let hasFetched = false;
   let thisElement: HTMLElement;
   let fetching = false;
   const observer = new IntersectionObserver(async (entries) => {
     const entry = entries[0];
-    if (entry.isIntersecting && !hasFetched) {
+    if (entry.isIntersecting && !$chat.hasFetched) {
       fetching = true;
       setTimeout(async () => {
         if (!entry.isIntersecting) {
@@ -24,10 +23,10 @@
     if (fetching) observer.unobserve(thisElement);
   }
   $: {
-    if (hasFetched) {
+    if ($chat.hasFetched) {
       fetching = false;
       setTimeout(() => {
-        hasFetched = false;
+        $chat.hasFetched = false;
         observer.observe(thisElement);
       }, 1000);
     }
@@ -36,7 +35,7 @@
 </script>
 
 <div bind:this={thisElement} class="flex flex-col items-center justify-center">
-  {#if fetching && !hasFetched}
+  {#if fetching && !$chat.hasFetched}
     <iconify-icon icon="svg-spinners:6-dots-scale" />
   {:else}
     <p class="first-letter:uppercase text-center">

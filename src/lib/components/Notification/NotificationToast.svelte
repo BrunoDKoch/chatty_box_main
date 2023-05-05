@@ -5,43 +5,73 @@
   export let userName: string;
   export let text: string;
   const dispatch = createEventDispatcher();
-  let radialProgress: HTMLElement;
-  let elapsedSeconds = 0;
+  let circleTimer: HTMLElement;
+  $: elapsedSeconds = 0;
+  $: countdownValue = 5 - elapsedSeconds;
   const interval = setInterval(() => {
     elapsedSeconds++;
-    radialProgress.innerText = String(5 - elapsedSeconds);
     if (elapsedSeconds >= 5) {
-      radialProgress.style.removeProperty('--value');
       clearInterval(interval);
       dispatch('close');
-    } else radialProgress.style.setProperty('--value', `${(5 - elapsedSeconds) * 20}`);
+    }
   }, 1000);
   onDestroy(() => {
     if (interval) clearInterval(interval);
   });
 </script>
 
-<div class="alert {notificationType === 'message' ? 'alert-info' : 'alert-success'}">
+<div class="alert {notificationType === 'message' ? 'alert-info text-info-content' : 'alert-success text-success-content'}">
   <div class="flex gap-1">
     <p class="font-bold">{userName}:</p>
     <span>{text}</span>
   </div>
   <div class="close-button-container">
-    <div bind:this={radialProgress} class="radial-progress" style="--value: 100">5</div>
+    <div class="relative m-auto text-center" />
     <button
       on:click={() => dispatch('close')}
-      class="btn btn-circle btn-ghost absolute right-12 opacity-0"
+      class="btn btn-circle btn-ghost absolute {notificationType === 'message' ? 'text-info-content' : 'text-success-content'} right-12"
     >
-      <iconify-icon icon="mdi:close" class="text-3xl" />
+      <span class="opacity-100 absolute">
+        {countdownValue}
+      </span>
+      <svg width="3rem" height="3rem" class="absolute {notificationType === 'message' ? 'stroke-info-content' : 'stroke-success-content'}">
+        <circle r="24" cx="24" cy="24" >
+      </svg>
+      <iconify-icon icon="mdi:close" class="text-3xl opacity-0 absolute" />
     </button>
   </div>
 </div>
 
 <style>
-  .close-button-container:hover div {
+  button:hover span {
     @apply opacity-0;
   }
-  .close-button-container:hover button {
+  button:hover iconify-icon {
     @apply opacity-100;
+  }
+
+  svg {
+    position: absolute;
+    width: 3rem;
+    height: 3rem;
+    transform: rotateY(-180deg) rotateZ(-90deg);
+  }
+
+  svg circle {
+    stroke-dasharray: 10rem;
+    stroke-dashoffset: 0px;
+    stroke-linecap: round;
+    stroke-width: 2px;
+    fill: none;
+    animation: countdown 5s linear forwards;
+  }
+
+  @keyframes countdown {
+    from {
+      stroke-dashoffset: 0px;
+    }
+    to {
+      stroke-dashoffset: 10rem;
+    }
   }
 </style>

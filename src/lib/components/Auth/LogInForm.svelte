@@ -67,6 +67,7 @@
     let body: LogInInfo = { email, password, remember, MFACode, rememberMultiFactor };
     try {
       await logIn(body);
+      showMFACodeModal = false;
       await goto('/');
     } catch (err) {
       if ((err as { code: number; error?: any }).code === 400) {

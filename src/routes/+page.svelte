@@ -11,6 +11,7 @@
   import useUserNotificationSettings from '$lib/useUserNotificationSettings';
   import ConnectingComponent from '$lib/components/ConnectingComponent.svelte';
   import useActiveScreen from '$lib/useActiveScreen';
+    import { chat } from '$lib/useActiveChat';
   $: notifications = [] as {
     notificationType: 'message' | 'friend request';
     text: string;
@@ -28,6 +29,11 @@
       }
       return p;
     });
+    chat.update((ch) => {
+      if (ch.id !== data.chatId || ch.messages.includes(data)) return ch;
+      ch.messages.push(data);
+      return ch;
+    })
     // Stop here if it's from the user
     if (data.isFromCaller) return;
     // Add to unread messages count
@@ -88,7 +94,7 @@
 
   <div>
     {#each notifications as notification}
-      <div class="toast toast-top toast-center w-[50vw]">
+      <div class="toast toast-top toast-center w-[50vw] z-50">
         <NotificationToast
           on:close={() => {
             notifications = notifications.filter((n) => n !== notification);

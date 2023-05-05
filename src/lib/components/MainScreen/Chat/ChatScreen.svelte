@@ -8,9 +8,14 @@
   import { date, t } from 'svelte-i18n';
 
   let loading = true;
-  let hasFetched = false;
-  $: hasMore = false;
   $: $chatId, (loading = $chat.id !== $chatId);
+  let messageComposer: HTMLInputElement;
+
+  $: {
+    if (!loading && messageComposer) {
+      messageComposer.focus({ preventScroll: true });
+    }
+  }
 
   let newMessage = '';
   $: otherUserName = '';
@@ -18,41 +23,12 @@
   $: currentUserIsTyping = false;
 
   $: userNamesJoined = $chat.users.map((u) => u.userName).join(', ');
-  connection.on('typing', (data: { from: string; isTyping: boolean }) => {
+  connection.on('typing', (data: { from: string; isTyping: boolean; chatId: string }) => {
+    if (data.chatId !== $chatId) return;
     otherUserIsTyping = data.isTyping;
     otherUserName = data.from;
   });
-  connection.on('chat', (data: CompleteChat) => {
-    // If chat isn't loaded, fetch full data. Else, grab messages
-    if (!$chat.messages || !$chat.messages.length) chat.set(data);
-    else if ($chat.id !== data.id) {
-      console.log(data)
-      $chatId = data.id;
-      chat.set(data);
-    }
-    else {
-      $chat.messages.push(...data.messages);
-      $chat.messages = $chat.messages;
-      $chat = $chat;
-      hasFetched = true;
-    }
 
-    if ($chat.messageCount > $chat.messages.length) hasMore = true;
-    else hasMore = false;
-
-    // Sort messages properly
-    $chat.messages = $chat.messages.sort(
-      (a, b) => Number(new Date(a.sentAt)) - Number(new Date(b.sentAt)),
-    );
-    $chat.messages = $chat.messages;
-    $chat = $chat;
-  });
-
-  connection.on('newMessage', (data: MessageResponse) => {
-    $chat.messages.push(data);
-    $chat.messages = $chat.messages;
-    $chat = $chat;
-  });
   function isFromPreviousDate(message1: MessageResponse, message2: MessageResponse) {
     return new Date(`${message1.sentAt}z`).getDate() !== new Date(`${message2.sentAt}z`).getDate();
   }
@@ -74,6 +50,7 @@
     await connection.invoke<'saved' | 'msgError'>('SendMessage', $chat.id, newMessage, undefined);
     newMessage = '';
   }
+  console.log($chat);
 </script>
 
 {#if loading}
@@ -91,8 +68,8 @@
     {/if}
   </div>
   <div class="my-10 overflow-y-auto overflow-x-hidden max-h-[89vh]">
-    {#if hasMore}
-      <AutoScroller bind:hasFetched skip={$chat.messages.length} />
+    {#if $chat.hasMore}
+      <AutoScroller skip={$chat.messages.length} />
     {/if}
     {#if $chat.messages.length}
       {#each $chat.messages as message}
@@ -129,7 +106,12 @@
       <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
     </label>
     <div class="input-group w-full">
-      <input bind:value={newMessage} type="text" class="input input-bordered w-full box-border" />
+      <input
+        bind:this={messageComposer}
+        bind:value={newMessage}
+        type="text"
+        class="input input-bordered w-full box-border"
+      />
       <button class="btn text-2xl">
         <iconify-icon icon="mdi:send" />
       </button>

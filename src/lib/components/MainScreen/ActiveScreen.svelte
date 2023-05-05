@@ -5,11 +5,6 @@
   import ChatScreen from './Chat/ChatScreen.svelte';
   import { chatId } from '$lib/useActiveChat';
   import Aside from '../Aside/Aside.svelte';
-  $: $chatId, getChat().then((data) => data);
-  async function getChat() {
-    if ($useActiveScreen !== 'chat') return;
-    await connection.invoke('GetChat', $chatId, 0);
-  }
 </script>
 
 {#if $useActiveScreen === 'friends'}

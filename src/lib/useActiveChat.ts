@@ -3,6 +3,7 @@ import { writable, type Writable } from 'svelte/store';
 import type { CompleteChat, MessageResponse } from './types/combinationTypes';
 import { connection } from './useSignalR';
 import type { UserPartialResponse } from './types/partialTypes';
+import { HubConnectionState } from '@microsoft/signalr';
 
 export const chatId = writable('');
 
@@ -14,4 +15,6 @@ export const chat = writable({
   isGroupChat: false,
   createdAt: new Date(),
   messageCount: 0,
-}) as Writable<CompleteChat>;
+  hasMore: false,
+  hasFetched: false,
+}) as Writable<CompleteChat & { hasMore: boolean; hasFetched: boolean }>;

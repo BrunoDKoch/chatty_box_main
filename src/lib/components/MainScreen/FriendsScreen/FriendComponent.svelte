@@ -5,6 +5,7 @@
   import useActiveScreen from '$lib/useActiveScreen';
   import { chat, chatId } from '$lib/useActiveChat';
   import UserAvatarAndName from '$lib/components/UserAvatarAndName.svelte';
+    import UserAvatar from '$lib/components/UserAvatar.svelte';
   export let friend: FriendResponse;
   async function handleNewChat() {
     await connection.invoke('CreateNewChat', [friend.id], undefined, undefined);
@@ -16,7 +17,7 @@
 <div class="py-3 {friend.isOnline ? 'opacity-100' : 'opacity-50'} ">
   <div class="grid grid-cols-5 indicator gap-3">
     <span class="indicator-item indicator-start {friend.isOnline ? 'badge badge-success' : ''}" />
-    <UserAvatarAndName user={friend} size="half" />
+    <UserAvatar user={friend} size="half" />
     <div class="col-span-3 flex flex-col">
       <p>{friend.userName}</p>
       <p>{friend.isOnline ? 'Online' : 'Offline'}</p>

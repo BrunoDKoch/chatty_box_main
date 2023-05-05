@@ -1,5 +1,6 @@
 <script lang="ts">
   import { PUBLIC_IMAGES_URL } from '$env/static/public';
+    import UserAvatar from '$lib/components/UserAvatar.svelte';
   import UserAvatarAndName from '$lib/components/UserAvatarAndName.svelte';
   import type { MessageResponse } from '$lib/types/combinationTypes';
   import { chat } from '$lib/useActiveChat';
@@ -41,7 +42,7 @@
 </script>
 
 <div bind:this={thisElement} class="chat {isFromCaller ? 'chat-end' : 'chat-start'}">
-  <UserAvatarAndName {user} size={50} isChatImage />
+  <UserAvatar {user} size={50} isChatImage />
   <div class="chat-header">
     {user.userName}
   </div>
