@@ -46,6 +46,6 @@
 
 <svelte:body use:setTheme />
 
-<main class="dark:bg-black min-h-screen w-screen overflow-hidden">
+<main class="dark:bg-black h-screen w-screen overflow-hidden">
   <slot />
 </main>

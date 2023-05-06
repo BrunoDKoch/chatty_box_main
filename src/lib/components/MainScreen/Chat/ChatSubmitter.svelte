@@ -4,6 +4,8 @@
   import { t } from 'svelte-i18n';
   export let loading = true;
   let newMessage = '';
+  $: submitting = false;
+  let messageError = false;
   $: otherUsers = [] as { userName: string; isTyping: boolean }[];
   $: otherUsersTyping = otherUsers.filter((u) => u.isTyping);
   $: currentUserIsTyping = false;
@@ -57,10 +59,10 @@
   }
   function getTypingMessage(userTyping: { userName: string; isTyping: boolean }) {
     const index = otherUsersTyping.indexOf(userTyping);
-    const {length} = otherUsersTyping
+    const { length } = otherUsersTyping;
     switch (length - index) {
       case 2:
-        return `${userTyping.userName} ${getSpanishAnd(userTyping.userName)} `
+        return `${userTyping.userName} ${getSpanishAnd(userTyping.userName)} `;
       case 1:
         return userTyping.userName;
       default:
@@ -82,6 +84,7 @@
     setTimeout(async () => await compareInput(), 3000);
   }
   async function sendMessage() {
+    submitting = true;
     await connection.invoke('StopTyping', $chat.id);
     const result = await connection.invoke<'newMessage' | 'msgError'>(
       'SendMessage',
@@ -89,7 +92,10 @@
       newMessage,
       undefined,
     );
+    submitting = false;
     if (result === 'msgError') {
+      messageError = true;
+      return;
     }
     newMessage = '';
   }
@@ -98,34 +104,35 @@
 <form
   on:keydown={async () => await handleTyping()}
   on:submit|preventDefault={async () => await sendMessage()}
-  class="max-md:w-full w-[75vw] box-border form-control overflow-hidden"
+  class="box-border form-control overflow-hidden max-md:pb-10 max-h-fit"
 >
   <div class="input-group px-4">
     <input
       bind:this={messageComposer}
       bind:value={newMessage}
       type="text"
-      class="input input-bordered w-full box-border"
+      class="input {messageError ? 'input-error' : 'input-bordered'} w-full box-border"
+      disabled={loading || submitting}
     />
     <button class="btn text-2xl">
-      <iconify-icon icon="mdi:send" />
+      <iconify-icon icon={submitting ? 'svg-spinners:6-dots-scale' : 'mdi:send'} />
     </button>
   </div>
   <label class="label" for="">
     {#if otherUsersTyping.length}
       <span class="label-text">
-        {#if otherUsersTyping.length <=4}
+        {#if otherUsersTyping.length <= 4}
           {#each otherUsersTyping as userTyping}
             {getTypingMessage(userTyping)}
           {/each}
-          {:else}
+        {:else}
           {$t('common.manyPeople')}
         {/if}
         {$t('common.toBe', { values: { count: otherUsersTyping.length } })}
         {$t('common.typing')}
         <iconify-icon class="align-bottom" icon="svg-spinners:3-dots-scale" />
       </span>
-      {:else}
+    {:else}
       <span class="label-text">&nbsp;&nbsp;&nbsp;&nbsp;</span>
     {/if}
   </label>

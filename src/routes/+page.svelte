@@ -76,7 +76,7 @@
 {#if $online}
   <title>{$messagesCount ? `(${$messagesCount}) ` : ''}ChattyBox</title>
   <div class="lg:grid lg:grid-cols-4 max-md:flex max-md:flex-col w-screen">
-    <aside class="col-span-1 bg-base-200 h-screen max-md:hidden">
+    <aside class="col-span-1 bg-base-200 min-h-screen max-md:hidden">
       <Aside chats={$previews} />
     </aside>
     <div class="lg:hidden flex bg-base-200 z-50">
@@ -87,7 +87,7 @@
         <iconify-icon icon="mdi:menu" />
       </button>
     </div>
-    <section class="lg:col-span-3 overflow-x-hidden">
+    <section class="lg:col-span-3 max-h-screen overflow-hidden">
       <ActiveScreen />
     </section>
   </div>

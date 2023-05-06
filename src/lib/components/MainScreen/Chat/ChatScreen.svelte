@@ -23,7 +23,7 @@
   </div>
 {/if}
 
-<div class="flex flex-col">
+<div class="flex flex-col max-md:h-[95vh]">
   {#if $chat && $chat.id === $chatId}
     <ChatNameComponent />
     <div class="overflow-y-auto overflow-x-hidden max-h-[88vh]">
