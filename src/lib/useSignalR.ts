@@ -85,44 +85,24 @@ connection.on('notificationSettings', (data: UserNotificationSettings) => {
 connection.on('chat', (data: CompleteChat) => {
   chat.update((ch) => {
     const hasMore = data.messageCount > ch.messages.length;
+    // If chat isn't loaded, fetch full data. Else, grab messages
     if (!ch.messages || !ch.messages.length) {
       ch = { ...data, hasFetched: false, hasMore };
     } else if (ch.id !== data.id) {
       chatId.set(data.id);
       ch = { ...data, hasFetched: false, hasMore };
     } else {
+      // This loop is not super efficient (O(n)?), but it prevents duplicates
       data.messages.forEach((message) => {
         if (!ch.messages.find((m) => m.id === message.id)) ch.messages.push(message);
       });
       ch.hasFetched = true;
       ch.hasMore = hasMore;
     }
+    // Sort messages properly
     ch.messages.sort((a, b) => Number(new Date(a.sentAt)) - Number(new Date(b.sentAt)));
-    console.log(`data messages: ${data.messages.length}. chat messages: ${ch.messages.length}`)
     return ch;
   });
-  // If chat isn't loaded, fetch full data. Else, grab messages
-  /*if (!$chat.messages || !$chat.messages.length) chat.set(data);
-  else if ($chatId !== data.id) {
-    console.log(data);
-    $chatId = data.id;
-    chat.set(data);
-  } else {
-    $chat.messages.push(...data.messages);
-    $chat.messages = $chat.messages;
-    $chat = $chat;
-    hasFetched = true;
-  }
-
-  if ($chat.messageCount > $chat.messages.length) hasMore = true;
-  else hasMore = false;
-
-  // Sort messages properly
-  $chat.messages = $chat.messages.sort(
-    (a, b) => Number(new Date(a.sentAt)) - Number(new Date(b.sentAt)),
-  );
-  $chat.messages = $chat.messages;
-  $chat = $chat;*/
 });
 
 export const online = writable(connection.state === HubConnectionState.Connected);

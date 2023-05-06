@@ -19,7 +19,7 @@
   let maxUsers = 99;
 
   connection.on('newChat', (data: CompleteChat) => {
-    $chat = data;
+    $chat = {...data, hasFetched: false, hasMore: false};
     $chatId = data.id;
   });
 
@@ -47,13 +47,13 @@
     {#each currentlySelectedUsers as user}
       <div class="divider" />
       <div class="flex items-center justify-between">
-        <UserAvatarAndName {user} size="half" showName />
+        <UserAvatarAndName {user} size="half" />
         <button
           class="btn btn-warning"
           on:click={() =>
             (currentlySelectedUsers = currentlySelectedUsers.filter((u) => u !== user))}
         >
-          {$t('common.remove')}
+          {$t('common.remove', { values: { item: 'chatter' } })}
         </button>
       </div>
     {/each}

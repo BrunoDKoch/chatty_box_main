@@ -14,15 +14,18 @@ interface UserPartialResponse {
 }
 
 interface FriendResponse extends UserPartialResponse {
-  isOnline: boolean
-};
+  isOnline: boolean;
+}
 
-type ChatPreview = {
+interface ChatBasicInfo {
   id: string;
   chatName?: string;
+  createdAt: Date;
+}
+
+interface ChatPreview extends ChatBasicInfo {
   lastMessage?: MessagePreview;
   users: UserPartialResponse[];
-  createdAt: Date;
-};
+}
 
-export type { MessagePreview, UserPartialResponse, FriendResponse, ChatPreview };
+export type { MessagePreview, UserPartialResponse, FriendResponse, ChatBasicInfo, ChatPreview };

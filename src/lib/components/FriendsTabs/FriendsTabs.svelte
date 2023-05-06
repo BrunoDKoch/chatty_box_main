@@ -10,7 +10,7 @@
   <div class="flex">
     <div class="flex capitalize items-center">
       <iconify-icon icon="material-symbols:emoji-people" />
-      <span>{$t('common.friend')}s</span>
+      <span>{$t('friends.friend', { values: { count: 2 } })}</span>
     </div>
     <div class="divider divider-horizontal" />
     {#each tabs as tab}

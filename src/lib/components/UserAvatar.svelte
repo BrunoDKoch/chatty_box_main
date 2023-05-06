@@ -1,16 +1,18 @@
 <script lang="ts">
   import { PUBLIC_IMAGES_URL } from '$env/static/public';
   import type { UserPartialResponse } from '$lib/types/partialTypes';
+  import UserModal from './UserModal.svelte';
   export let user: UserPartialResponse;
   export let size: number | 'half' | 'full';
   export let isChatImage = false;
-  const { className, rawSize, textSize } = getWidthAndHeight();
+  let { className, rawSize, textSize } = getWidthAndHeight();
+  let showModal = false;
   function getWidthAndHeight() {
     switch (size) {
       case 'full':
-        return { className: 'w-24 h-24', rawSize: 150, textSize: '6xl' };
+        return { className: 'w-24 h-24', rawSize: 150, textSize: '7xl' };
       case 'half':
-        return { className: 'w-12 h-12', rawSize: 75, textSize: '3xl' };
+        return { className: 'w-12 h-12', rawSize: 75, textSize: '4xl' };
       default:
         return {
           className: `w-[${size}px] h-[${size}px]`,
@@ -21,18 +23,28 @@
   }
 </script>
 
-<figure class="avatar mask mask-squircle {className} {isChatImage ? 'chat-image' : ''}">
+<figure
+  on:click={() => (showModal = !showModal)}
+  on:keydown={() => (showModal = !showModal)}
+  class="avatar cursor-pointer mask mask-squircle {className} {isChatImage ? 'chat-image' : ''}"
+>
   {#if user.avatar}
     <img src="{PUBLIC_IMAGES_URL}/{user.avatar}?width={rawSize}" alt="{user.userName} avatar" />
   {:else}
     <div class="flex min-h-full">
       <div
-        class="flex items-center justify-center min-h-full text-{textSize} bg-blue-600 text-white dark:bg-blue-800"
+        class="flex items-center justify-center min-h-full bg-blue-600 text-white dark:bg-blue-800"
       >
-        <p class="font-bold text-white text-center px-3">
+        <p class="font-bold text-white text-center px-3 text-{textSize}">
           {user.userName[0]}
         </p>
       </div>
     </div>
   {/if}
 </figure>
+
+{#if showModal}
+  <div class="absolute">
+    <UserModal on:close={() => (showModal = false)} {user} />
+  </div>
+{/if}

@@ -56,7 +56,7 @@
     "search": "search",
     "friend": "friend",
     "clear": "clear",
-    "remove": "remove",
+    "remove": "remove {item}",
     "at": "at",
     "settings": "settings",
     "new": {
@@ -93,12 +93,15 @@
     },
     "toBe": "{count, plural, one {is} other {are}}",
     "typing": "typing",
-    "manyPeople": "many people"
+    "manyPeople": "many people",
+    "block": "block",
+    "add": "add {item}"
   },
   "aside": {
     "searchChats": "{search} chats"
   },
   "friends": {
+    "friend": "{count, plural, one {friend} other {friends}}",
     "available": "available",
     "pending": "pending",
     "blocked": "blocked",

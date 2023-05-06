@@ -5,7 +5,7 @@
   import useActiveScreen from '$lib/useActiveScreen';
   import { chat, chatId } from '$lib/useActiveChat';
   import UserAvatarAndName from '$lib/components/UserAvatarAndName.svelte';
-    import UserAvatar from '$lib/components/UserAvatar.svelte';
+  import UserAvatar from '$lib/components/UserAvatar.svelte';
   export let friend: FriendResponse;
   async function handleNewChat() {
     await connection.invoke('CreateNewChat', [friend.id], undefined, undefined);
@@ -31,7 +31,9 @@
         <iconify-icon icon="mdi:message-plus" />
       </button>
       <button
-        aria-label="{$t('common.remove')} {$t('common.friend')}"
+        aria-label={$t('common.remove', {
+          values: { item: $t('common.friend', { values: { count: 1 } }) },
+        })}
         class="btn text-3xl btn-outline btn-error"
       >
         <iconify-icon icon="mdi:close" />

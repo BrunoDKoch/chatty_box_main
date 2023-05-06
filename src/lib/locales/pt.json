@@ -52,7 +52,7 @@
     "search": "pesquisar",
     "friend": "amigo",
     "clear": "limpar",
-    "remove": "remover",
+    "remove": "remover {item}",
     "at": "em",
     "settings": "configurações",
     "new": {
@@ -89,12 +89,15 @@
     },
     "toBe": "{count, plural, one {está} other {estão}}",
     "typing": "digitando",
-    "manyPeople": "várias pessoas"
+    "manyPeople": "várias pessoas",
+    "block": "bloquear",
+    "add": "adicionar"
   },
   "aside": {
     "searchChats": "{search} chats"
   },
   "friends": {
+    "friend": "{count, plural, one {amigo} other {amigos}}",
     "available": "disponível",
     "pending": "pendente",
     "blocked": "bloqueado",
