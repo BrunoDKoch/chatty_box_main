@@ -10,20 +10,19 @@
 </script>
 
 <div in:fade={{ delay: 500, duration: 100 }}>
-  <div
-    on:keydown={() => ($useActiveScreen = 'friends')}
+  <button
     on:click={() => ($useActiveScreen = 'friends')}
-    class="flex py-2 gap-3 items-center cursor-pointer hover:bg-gray-300 hover:dark:bg-gray-700"
+    class="flex w-full py-2 gap-3 items-center cursor-pointer hover:bg-gray-300 hover:dark:bg-gray-700"
   >
-    <iconify-icon icon="material-symbols:person" />
+    <iconify-icon class="text-2xl ml-2" icon="material-symbols:person" />
     <p class="capitalize">{$t('friends.friend', { values: { count: 2 } })}</p>
-  </div>
+  </button>
   <div class="divider" />
   <button
     on:click={() => (showNewChatModal = !showNewChatModal)}
     class="flex w-full py-2 gap-3 items-center cursor-pointer hover:bg-gray-300 hover:dark:bg-gray-700"
   >
-    <iconify-icon icon="mdi:chat-plus" />
+    <iconify-icon class="text-2xl ml-2" icon="mdi:chat-plus" />
     <p class="first-letter:capitalize">{$t('common.new.m')} chat</p>
   </button>
   <div class="divider" />
