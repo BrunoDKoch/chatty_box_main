@@ -1,11 +1,6 @@
 <script lang="ts">
   import type { CompleteChat, MessageResponse } from '$lib/types/combinationTypes';
   import { chat, chatId } from '$lib/useActiveChat';
-  import { connection } from '$lib/useSignalR';
-  import { onMount } from 'svelte';
-  import MessageComponent from './MessageComponent.svelte';
-  import AutoScroller from './AutoScroller.svelte';
-  import { date, t } from 'svelte-i18n';
   import ChatNameComponent from './ChatNameComponent.svelte';
   import ChatSubmitter from './ChatSubmitter.svelte';
   import MessagesWrapper from './MessagesWrapper.svelte';
@@ -17,8 +12,6 @@
   };
   $: $chatId, (loading = $chat.id !== $chatId);
   $: activeSearchPage = 1;
-
-  console.log($chat);
 </script>
 
 {#if loading}

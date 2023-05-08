@@ -5,6 +5,7 @@
   export let user: UserPartialResponse;
   export let size: number | 'half' | 'full';
   export let isChatImage = false;
+  export let lowerOpacity = false;
   let { className, rawSize, textSize } = getWidthAndHeight();
   let showModal = false;
   function getWidthAndHeight() {
@@ -26,7 +27,9 @@
 <figure
   on:click={() => (showModal = !showModal)}
   on:keydown={() => (showModal = !showModal)}
-  class="avatar cursor-pointer mask mask-squircle {className} {isChatImage ? 'chat-image' : ''}"
+  class="avatar cursor-pointer mask mask-squircle {lowerOpacity
+    ? 'opacity-50'
+    : 'opacity-100'} {className} {isChatImage ? 'chat-image' : ''}"
 >
   {#if user.avatar}
     <img src="{PUBLIC_IMAGES_URL}/{user.avatar}?width={rawSize}" alt="{user.userName} avatar" />

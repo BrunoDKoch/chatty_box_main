@@ -91,7 +91,8 @@
     "typing": "escribiendo",
     "manyPeople": "varias personas",
     "block": "bloquear",
-    "add": "añadir {item}"
+    "add": "añadir {item}",
+    "inCommon": "en común"
   },
   "aside": {
     "searchChats": "{search} chats"

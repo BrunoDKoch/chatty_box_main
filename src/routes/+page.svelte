@@ -11,11 +11,14 @@
   import useUserNotificationSettings from '$lib/useUserNotificationSettings';
   import ConnectingComponent from '$lib/components/ConnectingComponent.svelte';
   import useActiveScreen from '$lib/useActiveScreen';
-    import { chat } from '$lib/useActiveChat';
+  import { chat } from '$lib/useActiveChat';
+  import type { FriendRequest } from '@prisma/client';
+  import type { UserPartialResponse } from '$lib/types/partialTypes';
   $: notifications = [] as {
     notificationType: 'message' | 'friend request';
     text: string;
     userName: string;
+    action?: string;
   }[];
 
   // Handle a new message
@@ -33,7 +36,7 @@
       if (ch.id !== data.chatId || ch.messages.includes(data)) return ch;
       ch.messages.push(data);
       return ch;
-    })
+    });
     // Stop here if it's from the user
     if (data.isFromCaller) return;
     // Add to unread messages count
@@ -55,9 +58,22 @@
         notificationType: 'message',
         userName: data.user.userName,
         text: data.text.slice(0, 240),
+        action: data.chatId,
       });
       notifications = notifications;
     }
+  });
+
+  connection.on('newFriendRequest', async (data: { userAdding: UserPartialResponse }) => {
+    notifications.push({
+      notificationType: 'friend request',
+      userName: data.userAdding.userName,
+      text: 'sent a friend request',
+    });
+    notifications = notifications;
+    var audio = new Audio('/sounds/newMessage.mp3');
+    if ($useUserNotificationSettings?.playSound) await audio.play();
+    await connection.invoke('GetFriendRequests');
   });
 
   onMount(async () => {

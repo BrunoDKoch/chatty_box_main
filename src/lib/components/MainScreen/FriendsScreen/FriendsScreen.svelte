@@ -20,6 +20,6 @@
       <h2 class="first-letter:uppercase">{$t('friends.noFriends')}</h2>
     {/if}
   {:else if $friendsTab === 'friends.pending'}
-    <PendingScreen requests={$friendRequests} />
+    <PendingScreen bind:requests={$friendRequests} />
   {/if}
 </div>

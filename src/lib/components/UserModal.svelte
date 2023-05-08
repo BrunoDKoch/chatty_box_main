@@ -9,8 +9,8 @@
 
   export let user: UserPartialResponse;
   let isFriend = !!$friends.find((f) => f.id === user.id);
-  let friendsInCommon: UserPartialResponse[] = [];
-  let chatsInCommon: ChatBasicInfo[] = []
+  $: friendsInCommon = [] as UserPartialResponse[];
+  $: chatsInCommon = [] as ChatBasicInfo[];
   connection.on(
     'userDetails',
     (
@@ -19,11 +19,18 @@
         chatsInCommon: ChatBasicInfo[];
       },
     ) => {
+      console.log(data);
       user = { ...data };
       friendsInCommon = data.friendsInCommon;
       chatsInCommon = data.chatsInCommon;
     },
   );
+  async function handleAddOrRemoveClick() {
+    if (!isFriend) {
+      await connection.invoke('SendFriendRequest', user.id);
+      return;
+    }
+  }
   onMount(async () => {
     await connection.invoke('GetUserDetails', user.id);
   });
@@ -38,7 +45,10 @@
       <UserAvatarAndName {user} size="full" />
       <div class="btn-group">
         <button class="btn btn-error">{$t('common.block')}</button>
-        <button class="btn {isFriend ? 'btn-warning' : 'btn-success'}">
+        <button
+          on:click={async () => await handleAddOrRemoveClick()}
+          class="btn {isFriend ? 'btn-warning' : 'btn-success'}"
+        >
           {$t(isFriend ? 'common.remove' : 'common.add', {
             values: { item: $t('friends.friend', { values: { count: 1 } }) },
           })}
@@ -46,8 +56,21 @@
       </div>
     </div>
     {#if friendsInCommon && friendsInCommon.length}
+      <div class="divider uppercase">
+        {$t('friends.friend', { values: { count: 2 } })}
+        {$t('common.inCommon')}
+      </div>
       {#each friendsInCommon as friend}
         <UserAvatarAndName user={friend} size="half" />
+      {/each}
+    {/if}
+    {#if chatsInCommon && chatsInCommon.length}
+      <div class="divider uppercase">
+        chats
+        {$t('common.inCommon')}
+      </div>
+      {#each chatsInCommon as chat}
+        <p>{chat.chatName}</p>
       {/each}
     {/if}
   </div>

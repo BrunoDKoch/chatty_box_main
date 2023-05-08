@@ -1,9 +1,13 @@
 <script lang="ts">
+  import { chatId } from '$lib/useActiveChat';
+  import useActiveScreen from '$lib/useActiveScreen';
+  import { friends } from '$lib/useSignalR';
   import { createEventDispatcher, onDestroy } from 'svelte';
 
   export let notificationType: 'message' | 'friend request';
   export let userName: string;
   export let text: string;
+  export let action: string | undefined = undefined;
   const dispatch = createEventDispatcher();
   let circleTimer: HTMLElement;
   $: elapsedSeconds = 0;
@@ -15,12 +19,26 @@
       dispatch('close');
     }
   }, 1000);
+  function handleClick() {
+    if (action) {
+      if ($chatId !== action) $chatId = action;
+      $useActiveScreen = 'chat';
+      return;
+    }
+    $useActiveScreen = 'friends';
+  }
   onDestroy(() => {
     if (interval) clearInterval(interval);
   });
 </script>
 
-<div class="alert {notificationType === 'message' ? 'alert-info text-info-content' : 'alert-success text-success-content'}">
+<div
+  on:click={() => handleClick()}
+  on:keypress={() => handleClick()}
+  class="alert {notificationType === 'message'
+    ? 'alert-info text-info-content'
+    : 'alert-success text-success-content'}"
+>
   <div class="flex gap-1">
     <p class="font-bold">{userName}:</p>
     <span>{text}</span>
@@ -28,15 +46,23 @@
   <div class="close-button-container">
     <div class="relative m-auto text-center" />
     <button
-      on:click={() => dispatch('close')}
-      class="btn btn-circle btn-ghost absolute {notificationType === 'message' ? 'text-info-content' : 'text-success-content'} right-12"
+      on:click|stopPropagation={() => dispatch('close')}
+      class="btn btn-circle btn-ghost absolute {notificationType === 'message'
+        ? 'text-info-content'
+        : 'text-success-content'} right-12"
     >
       <span class="opacity-100 absolute">
         {countdownValue}
       </span>
-      <svg width="3rem" height="3rem" class="absolute {notificationType === 'message' ? 'stroke-info-content' : 'stroke-success-content'}">
-        <circle r="24" cx="24" cy="24" >
-      </svg>
+      <svg
+        width="3rem"
+        height="3rem"
+        class="absolute {notificationType === 'message'
+          ? 'stroke-info-content'
+          : 'stroke-success-content'}"
+      >
+        <circle r="24" cx="24" cy="24" /></svg
+      >
       <iconify-icon icon="mdi:close" class="text-3xl opacity-0 absolute" />
     </button>
   </div>

@@ -62,7 +62,6 @@
       .replace(/user:\w+/g, '')
       .trim();
     const skip = (activeSearchPage - 1) * 15;
-    console.log({ skip });
     setTimeout(async () => {
       await connection.invoke(
         invokeCommand,

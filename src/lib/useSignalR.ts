@@ -9,7 +9,7 @@ import type {
   UserNotificationSettings,
 } from '@prisma/client';
 import { get, writable, type Writable } from 'svelte/store';
-import type { MessagePreview, FriendResponse, ChatPreview } from '$lib/types/partialTypes';
+import type { MessagePreview, FriendResponse, ChatPreview, UserPartialResponse } from '$lib/types/partialTypes';
 import { chat, chatId } from './useActiveChat';
 import type { CompleteChat, MessageResponse } from './types/combinationTypes';
 import { t } from 'svelte-i18n';
@@ -17,7 +17,7 @@ import useUserNotificationSettings from './useUserNotificationSettings';
 
 export const messagesCount = writable(0);
 export const previews = writable([]) as Writable<ChatPreview[]>;
-export const friendRequests = writable([]) as Writable<(FriendRequest & { userAdding: User })[]>;
+export const friendRequests = writable([]) as Writable<({ userAdding: UserPartialResponse })[]>;
 export const friends = writable([]) as Writable<FriendResponse[]>;
 
 export let connection = new HubConnectionBuilder()
@@ -49,7 +49,7 @@ connection.on('read', (data: ReadMessage & { user: User }) => {
   });
 });
 connection.on('previews', (data: ChatPreview[]) => previews.set(data));
-connection.on('pendingRequests', (data: (FriendRequest & { userAdding: User })[]) =>
+connection.on('pendingRequests', (data: ({ userAdding: UserPartialResponse })[]) =>
   friendRequests.set(data),
 );
 connection.on('friends', (data: FriendResponse[]) => {

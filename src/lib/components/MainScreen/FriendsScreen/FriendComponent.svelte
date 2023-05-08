@@ -14,15 +14,15 @@
   }
 </script>
 
-<div class="py-3 {friend.isOnline ? 'opacity-100' : 'opacity-50'} ">
+<div class="py-3">
   <div class="grid grid-cols-5 indicator gap-3">
     <span class="indicator-item indicator-start {friend.isOnline ? 'badge badge-success' : ''}" />
-    <UserAvatar user={friend} size="half" />
-    <div class="col-span-3 flex flex-col">
+    <UserAvatar user={friend} size="half" lowerOpacity={!friend.isOnline} />
+    <div class="col-span-3 flex flex-col {friend.isOnline ? 'opacity-100' : 'opacity-50'}">
       <p>{friend.userName}</p>
       <p>{friend.isOnline ? 'Online' : 'Offline'}</p>
     </div>
-    <div class="btn-group">
+    <div class="btn-group {friend.isOnline ? 'opacity-100' : 'opacity-50'}">
       <button
         on:click={async () => await handleNewChat()}
         aria-label={$t('friends.newChat')}
