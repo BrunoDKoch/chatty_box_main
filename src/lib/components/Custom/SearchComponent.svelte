@@ -9,9 +9,10 @@
 
   // These handle the search
   export let search = '';
-  export let results: any[] = [];
+  export let results: any;
   export let invokeCommand: string;
   export let receiveCommand: string;
+  export let activeSearchPage = 1;
 
   let searchIcon: HTMLElement;
   let loadingIcon: HTMLElement;
@@ -20,17 +21,19 @@
   let fetching = false;
 
   connection.on(receiveCommand, (data: typeof results) => {
-    console.log(results);
     results = data;
     fetching = false;
   });
 
   $: {
-    if (!search && results.length) {
-      results.length = 0;
+    if (!search) {
+      if (results.length) results.length = 0;
+      if (results.messages && results.messages.length) results.messages.length = 0;
       fetching = false;
     }
   }
+
+  $: activeSearchPage, handleSubmit().then((data) => data);
 
   async function handleSubmit() {
     if (fetching) {
@@ -58,8 +61,18 @@
       .replace(/end:[0-9]{4}-[0-9]{2}(-[0-9]{2})?/g, '')
       .replace(/user:\w+/g, '')
       .trim();
+    const skip = (activeSearchPage - 1) * 15;
+    console.log({ skip });
     setTimeout(async () => {
-      await connection.invoke(invokeCommand, $chat.id, cleanSearch, startDate, endDate, userIds);
+      await connection.invoke(
+        invokeCommand,
+        $chat.id,
+        cleanSearch,
+        startDate,
+        endDate,
+        userIds,
+        skip,
+      );
       fetching = false;
     }, 500);
   }

@@ -2,7 +2,11 @@
   import SearchComponent from '$lib/components/Custom/SearchComponent.svelte';
   import type { MessageResponse } from '$lib/types/combinationTypes';
   import { chat } from '$lib/useActiveChat';
-  export let searchResults: MessageResponse[] = [];
+  export let searchResults: { messages: MessageResponse[]; messageCount: number } = {
+    messages: [],
+    messageCount: 0,
+  };
+  export let activeSearchPage = 1;
   $: userNamesJoined = $chat.users.map((u) => u.userName).join(', ');
   $: search = '';
 </script>
@@ -17,7 +21,13 @@
       {/if}
     </div>
     <div class="jusitfy-self-end place-self-end">
-      <SearchComponent bind:search bind:results={searchResults} invokeCommand="SearchChat" receiveCommand="chatSearchResults" />
+      <SearchComponent
+        bind:search
+        bind:results={searchResults}
+        bind:activeSearchPage
+        invokeCommand="SearchChat"
+        receiveCommand="chatSearchResults"
+      />
     </div>
   </div>
 </div>
