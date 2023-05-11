@@ -3,7 +3,7 @@
   import AutoScroller from './AutoScroller.svelte';
   import { date, t } from 'svelte-i18n';
   import MessageComponent from './MessageComponent.svelte';
-  import Pagination from '$lib/components/Pagination.svelte';
+  import Pagination from '$lib/components/Pagination/Pagination.svelte';
   export let pagination = false;
   export let total: number;
   export let messages: MessageResponse[];

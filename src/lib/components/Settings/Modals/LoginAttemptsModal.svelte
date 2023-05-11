@@ -3,7 +3,7 @@
   import type { UserLoginAttempt } from '@prisma/client';
   import { createEventDispatcher, onMount } from 'svelte';
   import { connection } from '$lib/useSignalR';
-  import Pagination from '$lib/components/Pagination.svelte';
+  import Pagination from '$lib/components/Pagination/Pagination.svelte';
   import Modal from '$lib/components/Modal.svelte';
   import CloseButton from '$lib/components/Custom/CloseButton.svelte';
 
