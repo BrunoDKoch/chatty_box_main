@@ -17,27 +17,28 @@
 <div class="py-3">
   <div class="grid grid-cols-5 indicator gap-3">
     <span class="indicator-item indicator-start {friend.isOnline ? 'badge badge-success' : ''}" />
-    <UserAvatar user={friend} size="half" lowerOpacity={!friend.isOnline} />
-    <div class="col-span-3 flex flex-col {friend.isOnline ? 'opacity-100' : 'opacity-50'}">
-      <p>{friend.userName}</p>
-      <p>{friend.isOnline ? 'Online' : 'Offline'}</p>
-    </div>
-    <div class="btn-group {friend.isOnline ? 'opacity-100' : 'opacity-50'}">
-      <button
-        on:click={async () => await handleNewChat()}
-        aria-label={$t('friends.newChat')}
-        class="btn text-3xl"
-      >
-        <iconify-icon icon="mdi:message-plus" />
-      </button>
-      <button
-        aria-label={$t('common.remove', {
-          values: { item: $t('common.friend', { values: { count: 1 } }) },
-        })}
-        class="btn text-3xl btn-outline btn-error"
-      >
-        <iconify-icon icon="mdi:close" />
-      </button>
-    </div>
+    <UserAvatarAndName user={friend} size="half" extraText={friend.isOnline ? 'Online' : 'Offline'} lowerOpacity={!friend.isOnline}>
+      <div class="btn-group {friend.isOnline ? 'opacity-100' : 'opacity-50'}">
+        <button
+          on:click={async () => await handleNewChat()}
+          aria-label={$t('friends.newChat')}
+          data-tip={$t('friends.newChat')}
+          class="btn text-3xl tooltip"
+        >
+          <iconify-icon icon="mdi:message-plus" />
+        </button>
+        <button
+          data-tip="{$t('common.remove', {
+            values: { item: $t('common.friend', { values: { count: 1 } }) },
+          })}"
+          aria-label={$t('common.remove', {
+            values: { item: $t('common.friend', { values: { count: 1 } }) },
+          })}
+          class="btn text-3xl btn-outline btn-error tooltip"
+        >
+          <iconify-icon icon="mdi:close" />
+        </button>
+      </div>
+    </UserAvatarAndName>
   </div>
 </div>

@@ -1,11 +1,12 @@
 <script lang="ts">
   import { PUBLIC_IMAGES_URL } from '$env/static/public';
-  import type { UserPartialResponse } from '$lib/types/partialTypes';
+  import type { UserDetailedResponse, UserPartialResponse } from '$lib/types/partialTypes';
   import UserModal from './UserModal.svelte';
-  export let user: UserPartialResponse;
+  export let user: UserDetailedResponse | UserPartialResponse;
   export let size: number | 'half' | 'full';
   export let isChatImage = false;
   export let lowerOpacity = false;
+  export let disableModal = false;
   let { className, rawSize, textSize } = getWidthAndHeight();
   let showModal = false;
   function getWidthAndHeight() {
@@ -22,11 +23,15 @@
         };
     }
   }
+  function handleClick() {
+    if (disableModal) return;
+    showModal = !showModal;
+  }
 </script>
 
 <figure
-  on:click={() => (showModal = !showModal)}
-  on:keydown={() => (showModal = !showModal)}
+  on:click={() => handleClick()}
+  on:keydown={() => handleClick()}
   class="avatar cursor-pointer mask mask-squircle {lowerOpacity
     ? 'opacity-50'
     : 'opacity-100'} {className} {isChatImage ? 'chat-image' : ''}"

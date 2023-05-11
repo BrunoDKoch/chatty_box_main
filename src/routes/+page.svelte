@@ -3,7 +3,6 @@
   import { HubConnectionState } from '@microsoft/signalr';
   import { connection, previews, messagesCount, online } from '$lib/useSignalR';
   import { onDestroy, onMount } from 'svelte';
-  import FriendsTabs from '$lib/components/FriendsTabs/FriendsTabs.svelte';
   import ActiveScreen from '$lib/components/MainScreen/ActiveScreen.svelte';
   import type { MessageResponse } from '$lib/types/combinationTypes';
   import { locale, t } from 'svelte-i18n';
@@ -12,7 +11,6 @@
   import ConnectingComponent from '$lib/components/ConnectingComponent.svelte';
   import useActiveScreen from '$lib/useActiveScreen';
   import { chat } from '$lib/useActiveChat';
-  import type { FriendRequest } from '@prisma/client';
   import type { UserPartialResponse } from '$lib/types/partialTypes';
   $: notifications = [] as {
     notificationType: 'message' | 'friend request';
@@ -77,12 +75,11 @@
   });
 
   onMount(async () => {
-    await Notification.requestPermission();
-    if (connection.state === HubConnectionState.Disconnected) await connection.start();
-    await connection.invoke('GetChatPreviews');
-    await connection.invoke('GetFriends');
-    await connection.invoke('GetFriendRequests');
-    await connection.invoke('GetNotificationSettings');
+    setTimeout(async () => {
+      if (connection.state !== HubConnectionState.Connected) await connection.start();
+      await Notification.requestPermission();
+      await connection.invoke('InitialCall');
+    }, 100);
   });
   onDestroy(async () => {
     await connection.stop();

@@ -2,14 +2,26 @@
   import { connection } from '$lib/useSignalR';
   import { chat, chatId } from '$lib/useActiveChat';
   import { t } from 'svelte-i18n';
+  import { onMount } from 'svelte';
   export let loading = true;
+  // Message handling
   let newMessage = '';
   $: submitting = false;
   let messageError = false;
+
+  // Typing handling
   $: otherUsers = [] as { userName: string; isTyping: boolean }[];
   $: otherUsersTyping = otherUsers.filter((u) => u.isTyping);
   $: currentUserIsTyping = false;
+
+  let singleChatUserBlocked =
+    !$chat.isGroupChat && !!$chat.users.find((u) => u.isBlocked || u.isBlocking);
   let messageComposer: HTMLInputElement;
+  $: disabled = loading || submitting || singleChatUserBlocked;
+
+  $: {
+    if(disabled && newMessage) newMessage = ''
+  }
 
   $: {
     if (!loading && messageComposer) {
@@ -99,6 +111,8 @@
     }
     newMessage = '';
   }
+  // TODO: delete logging
+  onMount(() => console.log(singleChatUserBlocked));
 </script>
 
 <form
@@ -111,10 +125,11 @@
       bind:this={messageComposer}
       bind:value={newMessage}
       type="text"
-      class="input {messageError ? 'input-error' : 'input-bordered'} w-full box-border"
-      disabled={loading || submitting}
+      placeholder={singleChatUserBlocked ? $t('message.cannotCommunicate') : ''}
+      class="input {messageError ? 'input-error' : 'input-bordered'} {disabled ? 'input-disabled' : ''} w-full box-border"
+      {disabled}
     />
-    <button class="btn text-2xl">
+    <button {disabled} class="btn text-2xl">
       <iconify-icon icon={submitting ? 'svg-spinners:6-dots-scale' : 'mdi:send'} />
     </button>
   </div>

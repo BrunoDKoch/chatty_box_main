@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { LogInInfo } from '$lib/types/authTypes';
-  import { logIn, getCurrentUser } from '$lib/useAuth';
+  import { logIn, checkIfLoggedIn } from '$lib/useAuth';
   import Checkbox from '../Custom/Checkbox.svelte';
   import TextInput from '../Custom/TextInput.svelte';
   import ErrorModal from '../ErrorModal.svelte';

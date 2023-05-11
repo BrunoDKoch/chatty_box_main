@@ -9,16 +9,23 @@ import type {
   UserNotificationSettings,
 } from '@prisma/client';
 import { get, writable, type Writable } from 'svelte/store';
-import type { MessagePreview, FriendResponse, ChatPreview, UserPartialResponse } from '$lib/types/partialTypes';
+import type {
+  MessagePreview,
+  FriendResponse,
+  ChatPreview,
+  UserPartialResponse,
+} from '$lib/types/partialTypes';
 import { chat, chatId } from './useActiveChat';
 import type { CompleteChat, MessageResponse } from './types/combinationTypes';
 import { t } from 'svelte-i18n';
 import useUserNotificationSettings from './useUserNotificationSettings';
+import { goto } from '$app/navigation';
 
 export const messagesCount = writable(0);
 export const previews = writable([]) as Writable<ChatPreview[]>;
-export const friendRequests = writable([]) as Writable<({ userAdding: UserPartialResponse })[]>;
+export const friendRequests = writable([]) as Writable<{ userAdding: UserPartialResponse }[]>;
 export const friends = writable([]) as Writable<FriendResponse[]>;
+export const blockedUsers = writable([]) as Writable<UserPartialResponse[]>;
 
 export let connection = new HubConnectionBuilder()
   .withUrl(`${baseURL}/hub/messages`)
@@ -49,7 +56,7 @@ connection.on('read', (data: ReadMessage & { user: User }) => {
   });
 });
 connection.on('previews', (data: ChatPreview[]) => previews.set(data));
-connection.on('pendingRequests', (data: ({ userAdding: UserPartialResponse })[]) =>
+connection.on('pendingRequests', (data: { userAdding: UserPartialResponse }[]) =>
   friendRequests.set(data),
 );
 connection.on('friends', (data: FriendResponse[]) => {
@@ -60,6 +67,13 @@ connection.on('friends', (data: FriendResponse[]) => {
       else f.find((u) => u.userName === user.userName)!.isOnline = user.isOnline;
     });
     return f;
+  });
+});
+connection.on('blockedUsers', (data: UserPartialResponse[]) => {
+  blockedUsers.update((b) => {
+    const newItems = data.filter((item) => !b.includes(item));
+    b = b.concat(newItems);
+    return b;
   });
 });
 connection.on('updateStatus', (data: string) => {
@@ -104,6 +118,8 @@ connection.on('chat', (data: CompleteChat) => {
     return ch;
   });
 });
+
+connection.on('notConnected', async () => await goto('/auth/login'));
 
 export const online = writable(connection.state === HubConnectionState.Connected);
 connection.onreconnected(() => online.set(true));

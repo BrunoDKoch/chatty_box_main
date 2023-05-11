@@ -7,6 +7,7 @@
   import type { FriendResponse } from '$lib/types/partialTypes';
   import FriendsTabs from '$lib/components/FriendsTabs/FriendsTabs.svelte';
   import { friends } from '$lib/useSignalR';
+  import BlockedScreen from './BlockedScreen/BlockedScreen.svelte';
 </script>
 
 <FriendsTabs />
@@ -21,5 +22,7 @@
     {/if}
   {:else if $friendsTab === 'friends.pending'}
     <PendingScreen bind:requests={$friendRequests} />
+  {:else}
+    <BlockedScreen />
   {/if}
 </div>

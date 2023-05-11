@@ -95,6 +95,7 @@
     "typing": "typing",
     "manyPeople": "many people",
     "block": "block",
+    "unblock": "unblock",
     "add": "add {item}",
     "inCommon": "in common"
   },
@@ -111,7 +112,8 @@
     "newChat": "new chat"
   },
   "message": {
-    "readBy": "read by"
+    "readBy": "read by",
+    "cannotCommunicate": "Cannot communicate with someone you blocked, or whom blocked you"
   },
   "settings": {
     "theme": "theme",

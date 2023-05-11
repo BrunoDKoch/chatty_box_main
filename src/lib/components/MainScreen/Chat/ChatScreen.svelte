@@ -1,6 +1,7 @@
 <script lang="ts">
   import type { CompleteChat, MessageResponse } from '$lib/types/combinationTypes';
   import { chat, chatId } from '$lib/useActiveChat';
+    import { onMount } from 'svelte';
   import ChatNameComponent from './ChatNameComponent.svelte';
   import ChatSubmitter from './ChatSubmitter.svelte';
   import MessagesWrapper from './MessagesWrapper.svelte';
@@ -12,6 +13,8 @@
   };
   $: $chatId, (loading = $chat.id !== $chatId);
   $: activeSearchPage = 1;
+  // TODO: delete this logging
+  onMount(() => console.log($chat))
 </script>
 
 {#if loading}

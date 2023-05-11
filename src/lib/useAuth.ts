@@ -14,7 +14,7 @@ async function logIn(body: LogInInfo) {
     credentials: 'include',
     async onResponse({ response }) {
       if (response.ok) {
-        await getCurrentUser(response.headers.get('set-cookie')!);
+        await checkIfLoggedIn();
       }
     },
     onResponseError({ response }) {
@@ -45,21 +45,11 @@ async function signUp(body: SignUpInfo) {
   });
 }
 
-async function getCurrentUser(idCookie: string): Promise<{
-  email: string;
-  userName: string;
-}> {
-  return await ofetch<{
-    email: string;
-    userName: string;
-  }>('/User/current', {
+async function checkIfLoggedIn(): Promise<boolean> {
+  return await ofetch<boolean>('/User/LoggedIn', {
     mode: 'cors',
     baseURL,
     credentials: 'include',
-    headers: { cookie: `${PUBLIC_IDENTITY_COOKIE}=${idCookie}` },
-    onResponse({ response }) {
-      if (!response.ok) return;
-    },
   });
 }
 async function logOut() {
@@ -135,7 +125,7 @@ export {
   logIn,
   logOut,
   signUp,
-  getCurrentUser,
+  checkIfLoggedIn,
   suspendUser,
   validateEmail,
   getRecoveryToken,

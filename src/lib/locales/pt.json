@@ -91,6 +91,7 @@
     "typing": "digitando",
     "manyPeople": "várias pessoas",
     "block": "bloquear",
+    "unblock": "desbloquear",
     "add": "adicionar",
     "inCommon": "em comum"
   },
@@ -107,7 +108,8 @@
     "newChat": "novo chat"
   },
   "message": {
-    "readBy": "lida por"
+    "readBy": "lida por",
+    "cannotCommunicate": "Você não pode se comunicar com alguém que você bloqueou ou bloqueou você"
   },
   "settings": {
     "theme": "tema",
