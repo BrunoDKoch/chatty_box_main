@@ -5,6 +5,7 @@
   import { connection, previews } from '$lib/useSignalR';
   import { onDestroy, onMount } from 'svelte';
   import { date, t, time } from 'svelte-i18n';
+  import MessageLinkPreview from './MessageLinkPreview.svelte';
   export let message: MessageResponse;
   export let focusOn: boolean;
   let thisElement: HTMLElement;
@@ -31,6 +32,12 @@
       $chat.messages = $chat.messages;
     }
   });
+  const links = messageContainsLink();
+  function messageContainsLink() {
+    console.log(message.text);
+    const urlRegex = /((?:https?|ftp):\/\/[^\s/$.?#].[^\s]*)/gi;
+    return message.text.match(urlRegex);
+  }
   onMount(() => {
     observer.observe(thisElement);
     if (focusOn) thisElement.scrollIntoView({ behavior: 'smooth' });
@@ -44,7 +51,13 @@
     {message.user.userName}
   </div>
   <div class="chat-bubble {message.isFromCaller ? 'chat-bubble-success' : 'chat-bubble-primary'}">
-    {message.text}
+    {#if links && links.length}
+      {#each links as link}
+        <MessageLinkPreview {link} />
+      {/each}
+    {:else}
+      {message.text}
+    {/if}
   </div>
   <div class="chat-footer opacity-50">
     {$date(new Date(`${message.sentAt}z`), { format: 'medium' })}

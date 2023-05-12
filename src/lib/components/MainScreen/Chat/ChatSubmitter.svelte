@@ -5,7 +5,7 @@
   import { onMount } from 'svelte';
   export let loading = true;
   // Message handling
-  let newMessage = '';
+  $: newMessage = '';
   $: submitting = false;
   let messageError = false;
 
@@ -18,10 +18,6 @@
     !$chat.isGroupChat && !!$chat.users.find((u) => u.isBlocked || u.isBlocking);
   let messageComposer: HTMLInputElement;
   $: disabled = loading || submitting || singleChatUserBlocked;
-
-  $: {
-    if(disabled && newMessage) newMessage = ''
-  }
 
   $: {
     if (!loading && messageComposer) {
@@ -96,6 +92,7 @@
     setTimeout(async () => await compareInput(), 3000);
   }
   async function sendMessage() {
+    if (!newMessage) return;
     submitting = true;
     await connection.invoke('StopTyping', $chat.id);
     const result = await connection.invoke<'newMessage' | 'msgError'>(
@@ -104,6 +101,7 @@
       newMessage,
       undefined,
     );
+    console.log({ newMessage });
     submitting = false;
     if (result === 'msgError') {
       messageError = true;
@@ -126,7 +124,9 @@
       bind:value={newMessage}
       type="text"
       placeholder={singleChatUserBlocked ? $t('message.cannotCommunicate') : ''}
-      class="input {messageError ? 'input-error' : 'input-bordered'} {disabled ? 'input-disabled' : ''} w-full box-border"
+      class="input {messageError ? 'input-error' : 'input-bordered'} {disabled
+        ? 'input-disabled'
+        : ''} w-full box-border"
       {disabled}
     />
     <button {disabled} class="btn text-2xl">

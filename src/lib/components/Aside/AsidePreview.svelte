@@ -32,7 +32,7 @@
           <UserAvatar user={chat.lastMessage.from} size={25} />
         </div>
         <div class="col-span-7">
-          <p>{chat.lastMessage.text.slice(0, 140)}</p>
+          <p>{chat.lastMessage.text.length <= 30 ? chat.lastMessage.text : chat.lastMessage.text.slice(0, 30) + '...'}</p>
         </div>
       </div>
       <p class="col-span-full">
