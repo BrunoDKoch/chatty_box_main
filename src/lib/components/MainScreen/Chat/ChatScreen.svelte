@@ -24,7 +24,7 @@
 {/if}
 
 <div
-  class="grid {searchResults.messages && searchResults.messages.length
+  class="grid z-10 {searchResults.messages && searchResults.messages.length
     ? 'grid-cols-3'
     : 'grid-cols-1'}"
 >

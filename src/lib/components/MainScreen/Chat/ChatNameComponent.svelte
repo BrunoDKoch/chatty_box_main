@@ -2,6 +2,7 @@
   import SearchComponent from '$lib/components/Custom/SearchComponent.svelte';
   import type { MessageResponse } from '$lib/types/combinationTypes';
   import { chat } from '$lib/useActiveChat';
+  import ChatDropdown from './ChatDropdown.svelte';
   export let searchResults: { messages: MessageResponse[]; messageCount: number } = {
     messages: [],
     messageCount: 0,
@@ -20,7 +21,8 @@
         <h1>{userNamesJoined}</h1>
       {/if}
     </div>
-    <div class="jusitfy-self-end place-self-end">
+    <div class="flex items-center place-self-end z-50">
+      <ChatDropdown />
       <SearchComponent
         bind:search
         bind:results={searchResults}

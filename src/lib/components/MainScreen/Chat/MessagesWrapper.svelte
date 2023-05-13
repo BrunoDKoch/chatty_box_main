@@ -14,7 +14,7 @@
   }
 </script>
 
-<div class="overflow-y-auto overflow-x-hidden max-h-[82vh] box-border mt-[4.6rem]">
+<div class="overflow-y-auto overflow-x-hidden max-h-[82vh] box-border mt-[4.6rem] z-10">
   {#if hasMore && !pagination}
     <AutoScroller skip={messages.length} />
   {/if}
