@@ -12,7 +12,7 @@
   $: search = '';
 </script>
 
-<div class="bg-base-200 fixed max-md:w-full lg:w-[75vw] z-30 overflow-hidden py-5">
+<div class="bg-base-200 max-md:w-full lg:w-[75vw] z-50 py-5">
   <div class="grid grid-cols-2 items-center justify-evenly">
     <div class="font-semibold text-lg">
       {#if $chat.chatName}
