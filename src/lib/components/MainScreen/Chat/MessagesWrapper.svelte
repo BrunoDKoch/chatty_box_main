@@ -12,6 +12,19 @@
   function isFromPreviousDate(message1: MessageResponse, message2: MessageResponse) {
     return new Date(`${message1.sentAt}z`).getDate() !== new Date(`${message2.sentAt}z`).getDate();
   }
+  function checkUserAndTime(message: MessageResponse) {
+    if (!messages) return;
+    const index = messages.indexOf(message);
+    const nextMessage = messages[index + 1];
+    if (!nextMessage) return;
+    return (
+      index !== messages.length - 1 &&
+      nextMessage.user.id === message.user.id &&
+      new Date(
+        new Date(`${nextMessage.sentAt}z`).getTime() - new Date(`${message.sentAt}z`).getTime(),
+      ).getMinutes() < 10
+    );
+  }
 </script>
 
 <div class="overflow-y-auto overflow-x-hidden h-[82vh] box-border mt-[5.2rem] z-10">
@@ -29,6 +42,7 @@
       {/if}
       <MessageComponent
         bind:message
+        hideBottomInfo={checkUserAndTime(message)}
         focusOn={messages.indexOf(message) === messages.length - 1 && messages.length <= 15}
       />
     {/each}
@@ -39,8 +53,10 @@
       </div>
     {/if}
   {:else}
-  <div class="grid h-full place-items-center">
-    <p class="first-letter:capitalize text-2xl font-semibold">{$t('common.message', { values: { count: 0 } })}</p>
-  </div>
+    <div class="grid h-full place-items-center">
+      <p class="first-letter:capitalize text-2xl font-semibold">
+        {$t('common.message', { values: { count: 0 } })}
+      </p>
+    </div>
   {/if}
 </div>

@@ -8,6 +8,7 @@
   import MessageLinkPreview from './MessageLinkPreview.svelte';
   export let message: MessageResponse;
   export let focusOn: boolean;
+  export let hideBottomInfo = false;
   let thisElement: HTMLElement;
   $: readBy = message.readBy;
   $: readByTooltip = readBy
@@ -59,21 +60,23 @@
       {message.text}
     {/if}
   </div>
-  <div class="chat-footer opacity-50">
-    {$date(new Date(`${message.sentAt}z`), { format: 'medium' })}
-    {$time(new Date(`${message.sentAt}z`))}
-    {#if message.isFromCaller && message.readBy.length}
-      <div
-        class="tooltip first-letter:capitalize"
-        data-tip="{$t('message.readBy')} {readByTooltip}"
-      >
-        <iconify-icon
-          icon="mdi:check-all"
-          class={message.readBy.filter((r) => r.id !== message.user.id).length
-            ? 'text-success'
-            : ''}
-        />
-      </div>
-    {/if}
-  </div>
+  {#if !hideBottomInfo}
+    <div class="chat-footer opacity-50">
+      {$date(new Date(`${message.sentAt}z`), { format: 'medium' })}
+      {$time(new Date(`${message.sentAt}z`))}
+      {#if message.isFromCaller && message.readBy.length}
+        <div
+          class="tooltip first-letter:capitalize"
+          data-tip="{$t('message.readBy')} {readByTooltip}"
+        >
+          <iconify-icon
+            icon="mdi:check-all"
+            class={message.readBy.filter((r) => r.id !== message.user.id).length
+              ? 'text-success'
+              : ''}
+          />
+        </div>
+      {/if}
+    </div>
+  {/if}
 </div>
