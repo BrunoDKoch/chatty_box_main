@@ -5,7 +5,7 @@ import { waitLocale } from 'svelte-i18n';
 function getTheme(cookies: Cookies) {
   let theme = cookies.get('theme') as 'light' | 'dark';
   if (!theme) {
-    theme = 'light';
+    theme = 'dark';
     cookies.set('theme', 'light', {
       path: '/',
     });

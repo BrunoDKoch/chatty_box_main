@@ -3,7 +3,8 @@
   import { t } from 'svelte-i18n';
   import TextInput from '../Custom/TextInput.svelte';
   import Modal from '../Modal.svelte';
-
+  import { createEventDispatcher } from 'svelte';
+  export let email: string;
   let otp = '';
   $: rules = {
     otpRules: [
@@ -15,9 +16,15 @@
       },
     ],
   };
+  const dispatch = createEventDispatcher();
   async function handleSubmit() {
-    const res = await validateEmail({ code: otp });
-    console.log(res);
+    try {
+      const res = await validateEmail({ code: otp, email });
+      console.log(res);
+      dispatch('ok');
+    } catch (err) {
+      console.error(err);
+    }
   }
 </script>
 

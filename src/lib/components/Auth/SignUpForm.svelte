@@ -1,7 +1,7 @@
 <script lang="ts">
   import TextInput from '../Custom/TextInput.svelte';
   import type { SignUpInfo } from '$lib/types/authTypes';
-  import { signUp } from '$lib/useAuth';
+  import { logIn, signUp } from '$lib/useAuth';
   import ErrorModal from '../ErrorModal.svelte';
   import { createEventDispatcher } from 'svelte';
   import QrCodeModal from '../QrCodeModal.svelte';
@@ -41,7 +41,7 @@
               "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$",
             ),
           ),
-          text: $t('auth.somethingWrong.m', {
+        text: $t('auth.somethingWrong.m', {
           values: {
             thing: $t('auth.email'),
             complement: $t('auth.address'),
@@ -215,5 +215,9 @@
 {/if}
 
 {#if openOtpModal}
-  <EmailOtpModal />
+  <EmailOtpModal
+    bind:email
+    on:ok={async () =>
+      await logIn({ email, password, remember: false, rememberMultiFactor: false })}
+  />
 {/if}

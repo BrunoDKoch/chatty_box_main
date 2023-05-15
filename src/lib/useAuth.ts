@@ -78,7 +78,7 @@ async function suspendUser(body: { reason: string; until?: Date; id: string }) {
   });
 }
 
-async function validateEmail(body: { code: string }) {
+async function validateEmail(body: { email: string, code: string }) {
   await ofetch('/User/Validate/Email', {
     baseURL,
     method: 'POST',

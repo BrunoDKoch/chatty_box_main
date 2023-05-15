@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { ChatPreview } from '$lib/types/partialTypes';
-  import { date, time } from 'svelte-i18n';
+  import { date, t, time } from 'svelte-i18n';
   import { chatId } from '$lib/useActiveChat';
   import useActiveScreen from '$lib/useActiveScreen';
   import { scale } from 'svelte/transition';
@@ -32,7 +32,11 @@
           <UserAvatar user={chat.lastMessage.from} size={25} />
         </div>
         <div class="col-span-7">
-          <p>{chat.lastMessage.text.length <= 30 ? chat.lastMessage.text : chat.lastMessage.text.slice(0, 30) + '...'}</p>
+          <p>
+            {chat.lastMessage.text.length <= 30
+              ? chat.lastMessage.text
+              : chat.lastMessage.text.slice(0, 30) + '...'}
+          </p>
         </div>
       </div>
       <p class="col-span-full">
@@ -41,7 +45,7 @@
         )}
       </p>
     {:else}
-      <p>No messages yet</p>
+      <p class="first-letter:capitalize">{$t('common.message', { values: { count: 0 } })}</p>
     {/if}
   </div>
 </a>

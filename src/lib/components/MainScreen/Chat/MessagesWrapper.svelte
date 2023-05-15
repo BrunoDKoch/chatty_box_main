@@ -14,7 +14,7 @@
   }
 </script>
 
-<div class="overflow-y-auto overflow-x-hidden max-h-[82vh] box-border mt-[4.6rem] z-10">
+<div class="overflow-y-auto overflow-x-hidden h-[82vh] box-border mt-[5.2rem] z-10">
   {#if hasMore && !pagination}
     <AutoScroller skip={messages.length} />
   {/if}
@@ -39,6 +39,8 @@
       </div>
     {/if}
   {:else}
-    <p>{$t('common.message', { values: { count: 0 } })}</p>
+  <div class="grid h-full place-items-center">
+    <p class="first-letter:capitalize text-2xl font-semibold">{$t('common.message', { values: { count: 0 } })}</p>
+  </div>
   {/if}
 </div>

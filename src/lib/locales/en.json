@@ -63,7 +63,7 @@
       "m": "new",
       "f": "new"
     },
-    "message": "{count, plural, zero {no messages} one {message} other {messages}}",
+    "message": "{count, plural, =0 {no messages} one {message} other {messages}}",
     "sound": "sound",
     "osNotification": "system notification",
     "connecting": "connecting",
