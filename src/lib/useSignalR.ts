@@ -119,8 +119,6 @@ connection.on('chat', (data: CompleteChat) => {
   });
 });
 
-connection.on('notConnected', async () => await goto('/auth/login'));
-
 export const online = writable(connection.state === HubConnectionState.Connected);
 connection.onreconnected(() => online.set(true));
 connection.onreconnecting(() => online.set(false));

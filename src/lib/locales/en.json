@@ -97,7 +97,8 @@
     "block": "block",
     "unblock": "unblock",
     "add": "add {item}",
-    "inCommon": "in common"
+    "inCommon": "in common",
+    "member": "member"
   },
   "aside": {
     "searchChats": "{search} chats"

@@ -12,6 +12,8 @@
   import useActiveScreen from '$lib/useActiveScreen';
   import { chat } from '$lib/useActiveChat';
   import type { UserPartialResponse } from '$lib/types/partialTypes';
+  import { checkIfLoggedIn, accessToken } from '$lib/useAuth';
+  import { goto } from '$app/navigation';
   $: notifications = [] as {
     notificationType: 'message' | 'friend request';
     text: string;
@@ -80,6 +82,11 @@
       await Notification.requestPermission();
       await connection.invoke('InitialCall');
     }, 100);
+    accessToken.read();
+    await checkIfLoggedIn();
+    setInterval(async () => {
+      await checkIfLoggedIn();
+    }, 300000);
   });
   onDestroy(async () => {
     await connection.stop();

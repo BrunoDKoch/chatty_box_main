@@ -93,7 +93,8 @@
     "block": "bloquear",
     "unblock": "desbloquear",
     "add": "añadir {item}",
-    "inCommon": "en común"
+    "inCommon": "en común",
+    "member": "membro"
   },
   "aside": {
     "searchChats": "{search} chats"

@@ -1,6 +1,13 @@
 <script lang="ts">
+  import { t } from 'svelte-i18n';
+
   let open = false;
-  const options = ['notifications', 'add member', 'remove member', 'leave chat']
+  const options = [
+    $t('settings.notifications'),
+    $t('common.add', { values: { item: $t('friends.friend', { values: { count: 1 } }) } }),
+    $t('common.remove', { values: { item: $t('friends.friend', { values: { count: 1 } }) } }),
+    'leave chat',
+  ];
 </script>
 
 <div class="dropdown z-50 {open ? 'dropdown-open' : ''}">
