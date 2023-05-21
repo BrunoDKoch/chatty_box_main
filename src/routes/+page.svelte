@@ -14,6 +14,10 @@
   import type { UserPartialResponse } from '$lib/types/partialTypes';
   import { checkIfLoggedIn, accessToken } from '$lib/useAuth';
   import { goto } from '$app/navigation';
+  import ErrorModal from '$lib/components/ErrorModal.svelte';
+
+  let error: { status: number; cause: string; message: string } | null = null;
+
   $: notifications = [] as {
     notificationType: 'message' | 'friend request';
     text: string;
@@ -78,9 +82,16 @@
 
   onMount(async () => {
     setTimeout(async () => {
-      if (connection.state !== HubConnectionState.Connected) await connection.start();
-      await Notification.requestPermission();
-      await connection.invoke('InitialCall');
+      try {
+        if (connection.state !== HubConnectionState.Connected) {
+          await connection.start();
+        }
+        await Notification.requestPermission();
+        $online = connection.state === HubConnectionState.Connected;
+        await connection.invoke('InitialCall');
+      } catch (err) {
+        error = err as typeof error;
+      }
     }, 100);
     accessToken.read();
     await checkIfLoggedIn();
@@ -127,4 +138,8 @@
   </div>
 {:else}
   <ConnectingComponent />
+{/if}
+
+{#if error}
+  <ErrorModal {error} on:close={() => (error = null)} />
 {/if}

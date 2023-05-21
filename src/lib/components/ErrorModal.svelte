@@ -2,9 +2,8 @@
   import { createEventDispatcher } from 'svelte';
   import Modal from './Modal.svelte';
 
-  export let status: number;
-  export let error: { message: string; cause: string };
-  $: icon = getIcon(status);
+  export let error: { status: number; cause: string; message: string };
+  $: icon = getIcon(error.status);
   const dispatch = createEventDispatcher();
   function getIcon(status: number) {
     switch (status) {
@@ -42,9 +41,9 @@
 <Modal modalType="error">
   <div class="grid grid-cols-[1fr_3fr]">
     <iconify-icon class="row-span-2 self-center justify-self-center" {icon} height="5rem" />
-    <h1 class="font-bold text-2xl">{status} - {error.message}</h1>
-    {#if error.cause}
-      <p>{error.cause}</p>
+    <h1 class="font-bold text-2xl">{error.status ?? 500} - {error.cause ?? 'Internal server error'}</h1>
+    {#if error.message}
+      <p>{error.message}</p>
     {/if}
   </div>
   <div class="modal-action">

@@ -17,10 +17,7 @@
   let remember = false;
   let submitted = false;
   let rememberMultiFactor = false;
-  let errorMsg: {
-    status: number;
-    error: { message: string; cause: string };
-  } | null = null;
+  let errorMsg: { status: number; message: string; cause: string } | null = null;
   $: {
     if (errorMsg) dispatch('error');
   }
@@ -74,10 +71,7 @@
         showMFACodeModal = !showMFACodeModal;
         return;
       }
-      errorMsg = {
-        status: (err as { code: number; error?: any }).code,
-        error: (err as { code: number; error?: any }).error,
-      };
+      errorMsg = { status: (err as any).code, message: (err as any).error.message, cause: (err as any).error.cause };
     } finally {
       pending = false;
       dispatch('hideSpinner');
@@ -132,7 +126,7 @@
 
 {#if errorMsg}
   <ErrorModal
-    {...errorMsg}
+    error={errorMsg}
     on:close={() => {
       pending = false;
       email = '';

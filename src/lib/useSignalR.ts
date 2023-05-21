@@ -1,4 +1,8 @@
-import { HubConnectionBuilder, HubConnectionState } from '@microsoft/signalr';
+import {
+  HubConnectionBuilder,
+  HubConnectionState,
+  type IHttpConnectionOptions,
+} from '@microsoft/signalr';
 import { PUBLIC_AUTH_URL_DEV as baseURL } from '$env/static/public';
 import { currentUser } from '$lib/useAuth';
 import type {
@@ -28,7 +32,13 @@ export const friends = writable([]) as Writable<FriendResponse[]>;
 export const blockedUsers = writable([]) as Writable<UserPartialResponse[]>;
 
 export let connection = new HubConnectionBuilder()
-  .withUrl(`${baseURL}/hub/messages`)
+  .withUrl(`${baseURL}/hub/messages`, {
+    accessTokenFactory() {
+      if (!localStorage) return '';
+      return localStorage.getItem('accessToken') ?? '';
+    },
+    withCredentials: true,
+  })
   .withAutomaticReconnect()
   .build();
 

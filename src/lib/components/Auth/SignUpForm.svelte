@@ -17,10 +17,7 @@
   let userName = '';
   let confirmEmail = '';
   let confirmPassword = '';
-  let errorMsg: {
-    status: number;
-    error: { message: string; cause: string };
-  } | null = null;
+  let errorMsg: { status: number; message: string; cause: string } | null = null;
   $: rules = {
     emailRules: [
       {
@@ -139,9 +136,10 @@
       pending = false;
       dispatch('showQR');
     } catch (err) {
-      errorMsg = {
-        status: (err as { code: number; error?: any }).code,
-        error: (err as { code: number; error?: any }).error,
+      errorMsg = errorMsg = {
+        status: (err as any).code,
+        message: (err as any).error.message,
+        cause: (err as any).error.cause,
       };
     }
   }
@@ -204,7 +202,7 @@
 
 {#if errorMsg}
   <ErrorModal
-    {...errorMsg}
+    error={errorMsg}
     on:close={() => {
       pending = false;
       email = '';
