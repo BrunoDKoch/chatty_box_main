@@ -7,9 +7,9 @@
   import { connection, friends } from '$lib/useSignalR';
   import { t } from 'svelte-i18n';
   import Modal from './Modal.svelte';
-  import UserAvatarAndName from './UserAvatarAndName.svelte';
+  import UserAvatarAndName from '../UserAvatarAndName.svelte';
   import { onMount } from 'svelte';
-  import CloseButton from './Custom/CloseButton.svelte';
+  import CloseButton from '../Custom/CloseButton.svelte';
   import { error } from '@sveltejs/kit';
 
   export let user: UserPartialResponse | UserDetailedResponse;

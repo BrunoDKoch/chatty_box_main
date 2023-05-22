@@ -1,7 +1,7 @@
 <script lang="ts">
   import { createEventDispatcher } from 'svelte';
   import { t } from 'svelte-i18n';
-  import Modal from '../Modal.svelte';
+  import Modal from '$lib/components/Modals/Modal.svelte';
   import TextInput from '../Custom/TextInput.svelte';
   export let MFACode: string;
   export let rememberMultiFactor: boolean;

@@ -2,7 +2,7 @@
   import { t } from 'svelte-i18n';
   import SingleTab from './SingleTab.svelte';
   import { tabs } from '$lib/friendsTab';
-  import FriendsModal from '../FriendsModal.svelte';
+  import FriendsModal from '$lib/components/Modals/FriendsModal.svelte';
   let showModal = false;
 </script>
 

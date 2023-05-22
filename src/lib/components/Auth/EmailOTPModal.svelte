@@ -2,7 +2,7 @@
   import { validateEmail } from '$lib/useAuth';
   import { t } from 'svelte-i18n';
   import TextInput from '../Custom/TextInput.svelte';
-  import Modal from '../Modal.svelte';
+  import Modal from '$lib/components/Modals/Modal.svelte';
   import { createEventDispatcher } from 'svelte';
   export let email: string;
   let otp = '';

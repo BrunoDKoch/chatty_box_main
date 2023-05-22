@@ -1,7 +1,7 @@
 <script lang="ts">
   import CloseButton from '$lib/components/Custom/CloseButton.svelte';
   import DragNDrop from '$lib/components/Custom/DragNDrop.svelte';
-  import Modal from '$lib/components/Modal.svelte';
+  import Modal from '$lib/components/Modals/Modal.svelte';
   $: uploadSuccessful = false;
   $: uploading = false;
 </script>

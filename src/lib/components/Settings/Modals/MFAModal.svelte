@@ -1,6 +1,6 @@
 <script lang="ts">
-  import Modal from '$lib/components/Modal.svelte';
-  import QrCodeModal from '$lib/components/QrCodeModal.svelte';
+  import Modal from '$lib/components/Modals/Modal.svelte';
+  import QrCodeModal from '$lib/components/Modals/QrCodeModal.svelte';
   import { connection } from '$lib/useSignalR';
   import { createEventDispatcher, onMount } from 'svelte';
   import { t } from 'svelte-i18n';

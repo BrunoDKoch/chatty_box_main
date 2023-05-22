@@ -2,9 +2,9 @@
   import TextInput from '../Custom/TextInput.svelte';
   import type { SignUpInfo } from '$lib/types/authTypes';
   import { logIn, signUp } from '$lib/useAuth';
-  import ErrorModal from '../ErrorModal.svelte';
+  import ErrorModal from '$lib/components/Modals/ErrorModal.svelte';
   import { createEventDispatcher } from 'svelte';
-  import QrCodeModal from '../QrCodeModal.svelte';
+  import QrCodeModal from '$lib/components/Modals/QrCodeModal.svelte';
   import EmailOtpModal from './EmailOTPModal.svelte';
   import { t } from 'svelte-i18n';
   export let pending = false;

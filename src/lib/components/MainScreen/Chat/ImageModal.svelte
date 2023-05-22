@@ -1,6 +1,6 @@
 <script lang="ts">
   import CloseButton from '$lib/components/Custom/CloseButton.svelte';
-  import Modal from '$lib/components/Modal.svelte';
+  import Modal from '$lib/components/Modals/Modal.svelte';
   export let link: string;
 </script>
 

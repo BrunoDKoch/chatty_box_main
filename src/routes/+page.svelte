@@ -14,7 +14,7 @@
   import type { UserPartialResponse } from '$lib/types/partialTypes';
   import { checkIfLoggedIn, accessToken } from '$lib/useAuth';
   import { goto } from '$app/navigation';
-  import ErrorModal from '$lib/components/ErrorModal.svelte';
+  import ErrorModal from '$lib/components/Modals/ErrorModal.svelte';
 
   let error: { status: number; cause: string; message: string } | null = null;
 

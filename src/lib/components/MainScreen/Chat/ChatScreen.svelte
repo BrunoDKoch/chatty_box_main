@@ -6,6 +6,7 @@
   import ChatSubmitter from './ChatSubmitter.svelte';
   import MessagesWrapper from './MessagesWrapper.svelte';
   import MainChatWrapper from './MainChatWrapper.svelte';
+  import UserSearchModal from '$lib/components/Modals/UserSearchModal.svelte';
 
   let loading = true;
   let searchResults: { messages: MessageResponse[]; messageCount: number } = {
@@ -14,6 +15,9 @@
   };
   $: $chatId, (loading = $chat.id !== $chatId);
   $: activeSearchPage = 1;
+  let showUserSearchModal = false;
+  let showConfirmLeaveModal = false;
+  let showNotificationsModal = false;
   // TODO: delete this logging
   onMount(() => console.log($chat));
 </script>
@@ -23,7 +27,11 @@
     <iconify-icon icon="svg-spinners:6-dots-scale" />
   </div>
 {:else}
-  <ChatNameComponent bind:activeSearchPage bind:searchResults />
+  <ChatNameComponent
+    bind:activeSearchPage
+    bind:searchResults
+    on:openUserSearchModal={() => (showUserSearchModal = !showUserSearchModal)}
+  />
   <div
     class="grid {searchResults.messages && searchResults.messages.length
       ? 'grid-cols-3'
@@ -39,4 +47,8 @@
       />
     {/if}
   </div>
+{/if}
+
+{#if showUserSearchModal}
+  <UserSearchModal on:close={() => (showUserSearchModal = !showUserSearchModal)} />
 {/if}

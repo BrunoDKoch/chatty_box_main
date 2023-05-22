@@ -2,7 +2,7 @@
   import type { FriendResponse, UserPartialResponse } from '$lib/types/partialTypes';
   import { t } from 'svelte-i18n';
   import CloseButton from '../Custom/CloseButton.svelte';
-  import Modal from '../Modal.svelte';
+  import Modal from '$lib/components/Modals/Modal.svelte';
   import UserAvatarAndName from '../UserAvatarAndName.svelte';
   import UserSearch from '../UserSearch.svelte';
   import { createEventDispatcher } from 'svelte';

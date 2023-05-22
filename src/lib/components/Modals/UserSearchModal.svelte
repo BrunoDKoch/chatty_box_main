@@ -1,20 +1,17 @@
 <script lang="ts">
-  import { scale } from 'svelte/transition';
+  import type { UserPartialResponse } from '$lib/types/partialTypes';
   import { t } from 'svelte-i18n';
-  import { createEventDispatcher } from 'svelte';
-  import { connection } from '$lib/useSignalR';
-  import type { User } from '@prisma/client';
+  import CloseButton from '../Custom/CloseButton.svelte';
   import Modal from './Modal.svelte';
-  import CloseButton from './Custom/CloseButton.svelte';
-  import type { FriendResponse } from '$lib/types/partialTypes';
-  import UserSearch from './UserSearch.svelte';
+  import UserSearch from '../UserSearch.svelte';
+  import { connection } from '$lib/useSignalR';
+  import { chatId } from '$lib/useActiveChat';
+  import { createEventDispatcher } from 'svelte';
+  let selection: UserPartialResponse | null = null;
   const dispatch = createEventDispatcher();
-
-  let selection: FriendResponse | null = null;
-
   async function handleSubmit() {
     if (!selection) return;
-    await connection.invoke('SendFriendRequest', selection.id);
+    await connection.invoke('AddUserToChat', selection.id, $chatId);
     dispatch('close');
   }
 </script>
@@ -27,7 +24,7 @@
       icon="material-symbols:person-add"
       height="5rem"
     />
-    <h1 class="font-bold text-2xl first-letter:uppercase">{$t('friends.add')}</h1>
+    <h1 class="font-bold text-2xl first-letter:uppercase">{$t('common.add', {values: {item: 'chatter'}})}</h1>
     {#if !selection}
       <UserSearch bind:selection />
     {:else}
