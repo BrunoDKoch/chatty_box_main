@@ -13,6 +13,7 @@ async function logIn(body: LogInInfo) {
     baseURL,
     credentials: 'include',
     async onResponse({ response }) {
+      console.log(response)
       if (response.ok) {
         accessToken.save(response._data!.token);
         await checkIfLoggedIn();
@@ -20,8 +21,9 @@ async function logIn(body: LogInInfo) {
     },
     onResponseError({ response }) {
       throw {
-        code: response.status,
-        error: { message: response.status, cause: 'Credenciais inválidas' },
+        status: response.status,
+        message: response.status,
+        cause: 'Credenciais inválidas',
       };
     },
   });
@@ -53,7 +55,7 @@ async function checkIfLoggedIn(): Promise<boolean> {
     credentials: 'include',
     headers: { authorization: `Bearer ${localStorage.getItem('accessToken')}` },
     async onResponseError() {
-      await goto('/auth/login')
+      await goto('/auth/login');
     },
     onResponse(ctx) {
       console.log(ctx);

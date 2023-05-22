@@ -92,9 +92,10 @@
     "manyPeople": "várias pessoas",
     "block": "bloquear",
     "unblock": "desbloquear",
-    "add": "adicionar",
+    "add": "adicionar {item}",
     "inCommon": "em comum",
-    "member": "membro"
+    "member": "membro",
+    "leave": "sair do {item}"
   },
   "aside": {
     "searchChats": "{search} chats"

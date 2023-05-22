@@ -3,7 +3,7 @@
   import { logIn, checkIfLoggedIn } from '$lib/useAuth';
   import Checkbox from '../Custom/Checkbox.svelte';
   import TextInput from '../Custom/TextInput.svelte';
-  import ErrorModal from '../ErrorModal.svelte';
+  import ErrorModal from '$lib/components/Modals/ErrorModal.svelte';
   import { createEventDispatcher, onMount } from 'svelte';
   import { goto } from '$app/navigation';
   import { t } from 'svelte-i18n';

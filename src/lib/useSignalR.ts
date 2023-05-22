@@ -20,7 +20,7 @@ import type {
   UserPartialResponse,
 } from '$lib/types/partialTypes';
 import { chat, chatId } from './useActiveChat';
-import type { CompleteChat, MessageResponse } from './types/combinationTypes';
+import type { CompleteChat, MessageResponse, SystemMessagePartial } from './types/combinationTypes';
 import { t } from 'svelte-i18n';
 import useUserNotificationSettings from './useUserNotificationSettings';
 import { goto } from '$app/navigation';
@@ -128,6 +128,14 @@ connection.on('chat', (data: CompleteChat) => {
     return ch;
   });
 });
+
+connection.on('systemMessage', (data: SystemMessagePartial) => {
+  chat.update((ch) => {
+    if (ch.id !== data.chatId) return ch;
+    ch.systemMessages.push(data)
+    return ch;
+  })
+})
 
 export const online = writable(connection.state === HubConnectionState.Connected);
 connection.onreconnected(() => online.set(true));

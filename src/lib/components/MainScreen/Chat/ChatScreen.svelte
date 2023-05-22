@@ -7,6 +7,7 @@
   import MessagesWrapper from './MessagesWrapper.svelte';
   import MainChatWrapper from './MainChatWrapper.svelte';
   import UserSearchModal from '$lib/components/Modals/UserSearchModal.svelte';
+  import UserRemovalModal from '$lib/components/Modals/UserRemovalModal.svelte';
 
   let loading = true;
   let searchResults: { messages: MessageResponse[]; messageCount: number } = {
@@ -16,6 +17,7 @@
   $: $chatId, (loading = $chat.id !== $chatId);
   $: activeSearchPage = 1;
   let showUserSearchModal = false;
+  let showUserRemovalModal = false;
   let showConfirmLeaveModal = false;
   let showNotificationsModal = false;
   // TODO: delete this logging
@@ -31,6 +33,7 @@
     bind:activeSearchPage
     bind:searchResults
     on:openUserSearchModal={() => (showUserSearchModal = !showUserSearchModal)}
+    on:openUserRemovalModal={() => (showUserRemovalModal = !showUserRemovalModal)}
   />
   <div
     class="grid {searchResults.messages && searchResults.messages.length
@@ -40,6 +43,7 @@
     <MainChatWrapper bind:searchResults bind:loading />
     {#if searchResults.messages && searchResults.messages.length}
       <MessagesWrapper
+        systemMessages={[]}
         bind:messages={searchResults.messages}
         bind:total={searchResults.messageCount}
         bind:activePage={activeSearchPage}
@@ -51,4 +55,6 @@
 
 {#if showUserSearchModal}
   <UserSearchModal on:close={() => (showUserSearchModal = !showUserSearchModal)} />
+{:else if showUserRemovalModal}
+  <UserRemovalModal on:close={() => (showUserRemovalModal = !showUserRemovalModal)} />
 {/if}

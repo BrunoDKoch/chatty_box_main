@@ -14,6 +14,7 @@ export const chat = writable({
   id: '',
   isGroupChat: false,
   createdAt: new Date(),
+  userIsAdmin: false,
   messageCount: 0,
   hasMore: false,
   hasFetched: false,

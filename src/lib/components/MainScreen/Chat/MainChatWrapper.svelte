@@ -11,7 +11,11 @@
 
 <div class="flex {searchResultsAreOpen ? 'col-span-2' : 'col-span-1'} flex-col max-md:h-[95vh]">
   {#if $chat && $chat.id === $chatId}
-    <MessagesWrapper bind:messages={$chat.messages} bind:total={$chat.messageCount} />
+    <MessagesWrapper
+      bind:systemMessages={$chat.systemMessages}
+      bind:messages={$chat.messages}
+      bind:total={$chat.messageCount}
+    />
     <ChatSubmitter bind:loading />
   {:else}
     <div class="text-9xl flex w-full h-full items-center justify-center">

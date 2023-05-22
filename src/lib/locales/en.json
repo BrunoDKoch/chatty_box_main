@@ -98,7 +98,8 @@
     "unblock": "unblock",
     "add": "add {item}",
     "inCommon": "in common",
-    "member": "member"
+    "member": "member",
+    "leave": "leave {item}"
   },
   "aside": {
     "searchChats": "{search} chats"

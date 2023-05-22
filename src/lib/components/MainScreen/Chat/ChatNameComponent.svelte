@@ -22,7 +22,12 @@
       {/if}
     </div>
     <div class="flex items-center place-self-end z-50">
-      <ChatDropdown />
+      <ChatDropdown
+        on:openConfirmLeaveModal
+        on:openNotificationsModal
+        on:openUserRemovalModal
+        on:openUserSearchModal
+      />
       <SearchComponent
         bind:search
         bind:results={searchResults}

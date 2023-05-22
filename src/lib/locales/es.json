@@ -94,7 +94,8 @@
     "unblock": "desbloquear",
     "add": "añadir {item}",
     "inCommon": "en común",
-    "member": "membro"
+    "member": "membro",
+    "leave": "salir del {item}"
   },
   "aside": {
     "searchChats": "{search} chats"

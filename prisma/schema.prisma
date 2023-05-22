@@ -63,42 +63,44 @@ model UserRole {
 }
 
 model User {
-  id                       String                     @id(map: "PK_Users") @unique(map: "IX_Users_Id") @db.NVarChar(450)
-  userName                 String?                    @db.NVarChar(256)
-  normalizedUserName       String?                    @db.NVarChar(256)
-  email                    String?                    @unique @db.NVarChar(256)
-  normalizedEmail          String?                    @unique @db.NVarChar(256)
-  emailConfirmed           Boolean
-  passwordHash             String?                    @db.NVarChar(Max)
-  securityStamp            String?                    @db.NVarChar(Max)
-  concurrencyStamp         String?                    @db.NVarChar(Max)
-  phoneNumber              String?                    @db.NVarChar(Max)
-  phoneNumberConfirmed     Boolean
-  twoFactorEnabled         Boolean
-  lockoutEnd               DateTime?                  @db.DateTimeOffset
-  lockoutEnabled           Boolean
-  accessFailedCount        Int
-  userClaim                UserClaim[]
-  userLogin                UserLogin[]
-  userRole                 UserRole[]
-  userToken                UserToken[]
+  id                          String                     @id(map: "PK_Users") @unique(map: "IX_Users_Id") @db.NVarChar(450)
+  userName                    String?                    @db.NVarChar(256)
+  normalizedUserName          String?                    @db.NVarChar(256)
+  email                       String?                    @unique @db.NVarChar(256)
+  normalizedEmail             String?                    @unique @db.NVarChar(256)
+  emailConfirmed              Boolean
+  passwordHash                String?                    @db.NVarChar(Max)
+  securityStamp               String?                    @db.NVarChar(Max)
+  concurrencyStamp            String?                    @db.NVarChar(Max)
+  phoneNumber                 String?                    @db.NVarChar(Max)
+  phoneNumberConfirmed        Boolean
+  twoFactorEnabled            Boolean
+  lockoutEnd                  DateTime?                  @db.DateTimeOffset
+  lockoutEnabled              Boolean
+  accessFailedCount           Int
+  userClaim                   UserClaim[]
+  userLogin                   UserLogin[]
+  userRole                    UserRole[]
+  userToken                   UserToken[]
   // Non ASP.NET additions
-  avatar                   String?
-  loginAttempts            UserLoginAttempt[]
-  friendRequestsSent       FriendRequest[]            @relation("adding")
-  friendRequestsReceived   FriendRequest[]            @relation("added")
-  friends                  User[]                     @relation("friends")
-  isFriendsWith            User[]                     @relation("friends")
-  blocking                 User[]                     @relation("blocked")
-  blockedBy                User[]                     @relation("blocked")
-  chats                    Chat[]
-  messages                 Message[]
-  isAdminIn                ChatAdmin[]
-  clientConnection         ClientConnection?
-  readMessages             ReadMessage[]
-  userNotificationSettings UserNotificationSettings?
-  chatNotificationSettings ChatNotificationSettings[]
-  privacyLevel             Int                        @default(1)
+  avatar                      String?
+  loginAttempts               UserLoginAttempt[]
+  friendRequestsSent          FriendRequest[]            @relation("adding")
+  friendRequestsReceived      FriendRequest[]            @relation("added")
+  friends                     User[]                     @relation("friends")
+  isFriendsWith               User[]                     @relation("friends")
+  blocking                    User[]                     @relation("blocked")
+  blockedBy                   User[]                     @relation("blocked")
+  chats                       Chat[]
+  messages                    Message[]
+  isAdminIn                   ChatAdmin[]
+  clientConnection            ClientConnection?
+  readMessages                ReadMessage[]
+  userNotificationSettings    UserNotificationSettings?
+  chatNotificationSettings    ChatNotificationSettings[]
+  privacyLevel                Int                        @default(1)
+  systemMessagesInstigates    SystemMessage[]            @relation("instigated")
+  systemMessagesAffectingUser SystemMessage[]            @relation("affectedBy")
 
   @@index([normalizedEmail], map: "EmailIndex")
   @@index([normalizedUserName], map: "UserNameIndex")
@@ -142,6 +144,7 @@ model Chat {
   admins                   ChatAdmin[]
   createdAt                DateTime                   @default(now())
   messages                 Message[]
+  systemMessages           SystemMessage[]
   chatNotificationSettings ChatNotificationSettings[]
 }
 
@@ -193,6 +196,19 @@ model FriendRequest {
   sentAt           DateTime @default(now())
 
   @@id([userAddingId, userBeingAddedId])
+}
+
+// System messages
+model SystemMessage {
+  id                String   @id @default(uuid())
+  chat              Chat     @relation(fields: [chatId], references: [id])
+  chatId            String
+  firedAt           DateTime @default(now())
+  instigatingUser   User     @relation("instigated", fields: [instigatingUserId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  instigatingUserId String   @db.NVarChar(450)
+  eventType         String
+  affectedUser      User?    @relation("affectedBy", fields: [affectedUserId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  affectedUserId    String   @db.NVarChar(450)
 }
 
 // Notifications
