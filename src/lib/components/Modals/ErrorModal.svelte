@@ -36,13 +36,22 @@
         return 'mdi:close-circle';
     }
   }
+  const brokenUpMessage = error.message.split('\n');
 </script>
 
 <Modal modalType="error">
-  <div class="grid grid-cols-[1fr_3fr]">
+  <div class="grid grid-cols-[1fr_3fr] max-w-[100vw]">
     <iconify-icon class="row-span-2 self-center justify-self-center" {icon} height="5rem" />
-    <h1 class="font-bold text-2xl">{error.status ?? 500} - {error.cause ?? 'Internal server error'}</h1>
-    {#if error.message}
+    <h1 class="font-bold text-2xl">
+      {error.status ?? 500} - {error.cause ?? 'Internal server error'}
+    </h1>
+    {#if error.message && brokenUpMessage}
+      <div>
+        {#each brokenUpMessage as portion}
+          <p>{portion}</p>
+        {/each}
+      </div>
+    {:else if error.message}
       <p>{error.message}</p>
     {/if}
   </div>

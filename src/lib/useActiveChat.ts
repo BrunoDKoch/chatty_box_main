@@ -19,3 +19,11 @@ export const chat = writable({
   hasMore: false,
   hasFetched: false,
 }) as Writable<CompleteChat & { hasMore: boolean; hasFetched: boolean }>;
+
+export const chatNotificationSettings = writable([]) as Writable<
+  {
+    chatId: string;
+    showOSNotification: boolean | null;
+    playSound: boolean | null;
+  }[]
+>;

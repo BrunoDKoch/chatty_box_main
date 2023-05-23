@@ -8,6 +8,7 @@
   import MainChatWrapper from './MainChatWrapper.svelte';
   import UserSearchModal from '$lib/components/Modals/UserSearchModal.svelte';
   import UserRemovalModal from '$lib/components/Modals/UserRemovalModal.svelte';
+  import ChatNotificationsModal from '$lib/components/Modals/ChatNotificationsModal.svelte';
 
   let loading = true;
   let searchResults: { messages: MessageResponse[]; messageCount: number } = {
@@ -34,6 +35,7 @@
     bind:searchResults
     on:openUserSearchModal={() => (showUserSearchModal = !showUserSearchModal)}
     on:openUserRemovalModal={() => (showUserRemovalModal = !showUserRemovalModal)}
+    on:openNotificationsModal={() => (showNotificationsModal = !showNotificationsModal)}
   />
   <div
     class="grid {searchResults.messages && searchResults.messages.length
@@ -57,4 +59,6 @@
   <UserSearchModal on:close={() => (showUserSearchModal = !showUserSearchModal)} />
 {:else if showUserRemovalModal}
   <UserRemovalModal on:close={() => (showUserRemovalModal = !showUserRemovalModal)} />
+{:else if showNotificationsModal}
+  <ChatNotificationsModal on:close={() => (showNotificationsModal = !showNotificationsModal)} />
 {/if}

@@ -19,7 +19,7 @@ import type {
   ChatPreview,
   UserPartialResponse,
 } from '$lib/types/partialTypes';
-import { chat, chatId } from './useActiveChat';
+import { chat, chatId, chatNotificationSettings } from './useActiveChat';
 import type { CompleteChat, MessageResponse, SystemMessagePartial } from './types/combinationTypes';
 import { t } from 'svelte-i18n';
 import useUserNotificationSettings from './useUserNotificationSettings';
@@ -65,7 +65,18 @@ connection.on('read', (data: ReadMessage & { user: User }) => {
     return c;
   });
 });
-connection.on('previews', (data: ChatPreview[]) => previews.set(data));
+connection.on('previews', (data: ChatPreview[]) => {
+  previews.set(data);
+  chatNotificationSettings.update((cn) => {
+    cn = data.map((preview) => {
+      const { showOSNotification, playSound, id: chatId } = preview;
+      return {
+        showOSNotification, playSound, chatId
+      };
+    });
+    return cn;
+  });
+});
 connection.on('pendingRequests', (data: { userAdding: UserPartialResponse }[]) =>
   friendRequests.set(data),
 );
@@ -132,10 +143,10 @@ connection.on('chat', (data: CompleteChat) => {
 connection.on('systemMessage', (data: SystemMessagePartial) => {
   chat.update((ch) => {
     if (ch.id !== data.chatId) return ch;
-    ch.systemMessages.push(data)
+    ch.systemMessages.push(data);
     return ch;
-  })
-})
+  });
+});
 
 export const online = writable(connection.state === HubConnectionState.Connected);
 connection.onreconnected(() => online.set(true));

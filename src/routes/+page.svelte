@@ -80,6 +80,16 @@
     await connection.invoke('GetFriendRequests');
   });
 
+  connection.on('error', (data: string) => {
+    error = {
+      status: 500,
+      cause: $t('error.cause.signalR'),
+      message: `${$t('error.signalR', { values: { error: data } })}\n ${$t('error.ourEnd')}\n ${$t(
+        'error.contactSupport',
+      )}`,
+    };
+  });
+
   onMount(async () => {
     setTimeout(async () => {
       try {
@@ -90,7 +100,11 @@
         $online = connection.state === HubConnectionState.Connected;
         await connection.invoke('InitialCall');
       } catch (err) {
-        error = err as typeof error;
+        error = {
+          status: 503,
+          cause: 'Connection error',
+          message: (err as typeof error)!.message
+        }
       }
     }, 100);
     accessToken.read();

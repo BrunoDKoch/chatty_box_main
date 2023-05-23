@@ -99,7 +99,10 @@
     "add": "add {item}",
     "inCommon": "in common",
     "member": "member",
-    "leave": "leave {item}"
+    "leave": "leave {item}",
+    "added": "added",
+    "removed": "removed",
+    "left": "left"
   },
   "aside": {
     "searchChats": "{search} chats"
@@ -142,5 +145,13 @@
     "1": "Anyone can add me as a friend or to chats",
     "2": "Only people in my chats can add me as a friend or to other chats",
     "3": "Only my friends can add me to chats"
+  },
+  "error": {
+    "signalR": "There was a SignalR error with the following description:\n\"{error}\"",
+    "ourEnd": "This is likely an issue on our end",
+    "contactSupport": "If this issue persists, please contact support",
+    "cause": {
+      "signalR": "SignalR Error"
+    }
   }
 }

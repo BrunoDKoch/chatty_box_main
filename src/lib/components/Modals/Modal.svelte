@@ -4,6 +4,17 @@
   export let modalType: 'base' | 'error' | 'warning' = 'base';
   let show = false;
   show = true;
+  let bgClass = getBgClass();
+  function getBgClass() {
+    switch (modalType) {
+      case 'error':
+        return 'bg-error dark:bg-error-content';
+      case 'warning':
+        return 'bg-warning dark:bg-warning-content';
+      default:
+        return 'bg-base'
+    }
+  }
 </script>
 
 <div>
@@ -11,7 +22,7 @@
     {#if show}
       <div
         transition:scale
-        class="modal-box min-w-max overflow-x-hidden bg-{modalType} dark:bg-{modalType}-content"
+        class="modal-box min-w-max overflow-x-hidden {bgClass}"
       >
         <slot />
       </div>

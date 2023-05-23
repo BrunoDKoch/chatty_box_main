@@ -220,9 +220,9 @@ model UserNotificationSettings {
 }
 
 model ChatNotificationSettings {
-  userId             String  @unique @db.NVarChar(450)
+  userId             String  @db.NVarChar(450)
   user               User    @relation(fields: [userId], references: [id])
-  chatId             String  @unique
+  chatId             String
   chat               Chat    @relation(fields: [chatId], references: [id])
   playSound          Boolean @default(true)
   showOSNotification Boolean @default(true)

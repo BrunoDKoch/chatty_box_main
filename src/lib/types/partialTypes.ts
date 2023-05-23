@@ -23,6 +23,8 @@ interface ChatBasicInfo {
   id: string;
   chatName?: string;
   createdAt: Date;
+  showOSNotification: boolean | null;
+  playSound: boolean | null;
 }
 
 interface UserDetailedResponse extends UserPartialResponse {

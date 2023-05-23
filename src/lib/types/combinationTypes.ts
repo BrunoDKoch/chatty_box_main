@@ -1,4 +1,4 @@
-import type { Chat, Message, ReadMessage, User } from '@prisma/client';
+import type { Chat, ChatNotificationSettings, Message, ReadMessage, User } from '@prisma/client';
 import type { UserPartialResponse } from './partialTypes';
 
 type MessageResponse = {
