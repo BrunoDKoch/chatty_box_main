@@ -12,8 +12,10 @@
   export let systemMessages: SystemMessagePartial[];
   export let activePage = 1;
   export let hasMore: boolean = false;
+  export let replyTo: undefined | MessageResponse;
   $: combinedMessages = [...messages, ...systemMessages];
-  $: combinedMessages, combinedMessages.sort((a, b) => Number(new Date(getDate(a))) - Number(new Date(getDate(b))));
+  $: combinedMessages,
+    combinedMessages.sort((a, b) => Number(new Date(getDate(a))) - Number(new Date(getDate(b))));
 
   function getDate(message: MessageResponse | SystemMessagePartial) {
     if ('sentAt' in message) return message.sentAt;
@@ -53,6 +55,7 @@
           </div>
         {/if}
         <MessageComponent
+          on:replyTo={({ detail }) => (replyTo = detail)}
           bind:message
           hideBottomInfo={checkUserAndTime(message)}
           focusOn={messages.indexOf(message) === messages.length - 1 && messages.length <= 15}

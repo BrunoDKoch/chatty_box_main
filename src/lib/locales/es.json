@@ -100,7 +100,8 @@
     "removed": "removió a",
     "left": "dejó el chat",
     "edit": "editar {item}",
-    "replyTo": "responder a {item}"
+    "replyTo": "responder a {item}",
+    "replyingTo": "respondiendo a {item}"
   },
   "aside": {
     "searchChats": "{search} chats"

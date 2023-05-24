@@ -100,7 +100,8 @@
     "removed": "removeu",
     "left": "saiu",
     "edit": "editar {item}",
-    "replyTo": "responder a {item}"
+    "replyTo": "responder a {item}",
+    "replyingTo": "respondendo a {item}"
   },
   "aside": {
     "searchChats": "{search} chats"

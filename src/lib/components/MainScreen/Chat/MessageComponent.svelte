@@ -3,14 +3,16 @@
   import type { MessageResponse } from '$lib/types/combinationTypes';
   import { chat } from '$lib/useActiveChat';
   import { connection, previews } from '$lib/useSignalR';
-  import { onDestroy, onMount } from 'svelte';
+  import { createEventDispatcher, onDestroy, onMount } from 'svelte';
   import { date, t, time } from 'svelte-i18n';
   import MessageLinkPreview from './MessageLinkPreview.svelte';
   import TextInput from '$lib/components/Custom/TextInput.svelte';
+  import MessageRepliedTo from './MessageRepliedTo.svelte';
   export let message: MessageResponse;
   export let focusOn: boolean;
   export let hideBottomInfo = false;
   let thisElement: HTMLElement;
+  const dispatch = createEventDispatcher();
 
   // Hover options
   let showOptions = false;
@@ -21,7 +23,7 @@
       name: $t('common.replyTo', { values }),
       icon: 'mdi:reply',
       action() {
-        return;
+        dispatch('replyTo', message);
       },
     },
   ];
@@ -118,51 +120,56 @@
       </button>
     </form>
   {:else}
-    <div class="chat px-4 {message.isFromCaller ? 'chat-end' : 'chat-start'}">
-      <UserAvatar disableModal={message.isFromCaller} user={message.user} size={50} isChatImage />
-      <div class="chat-header">
-        {message.user.userName}
-      </div>
-      <div
-        class="chat-bubble {message.isFromCaller ? 'chat-bubble-success' : 'chat-bubble-primary'}"
-      >
-        {#if links && links.length}
-          {#each links as link}
-            <MessageLinkPreview {link} />
-          {/each}
-        {:else}
-          {message.text}
-        {/if}
-      </div>
-      {#if !hideBottomInfo}
-        <div class="chat-footer flex gap-1 opacity-50">
-          <div class="flex-col flex">
-            <p class={new Date(message.editedAt).getUTCFullYear() !== 1 ? 'line-through' : ''}>
-              {$date(new Date(`${message.sentAt}z`), { format: 'medium' })}
-              {$time(new Date(`${message.sentAt}z`))}
-            </p>
-            {#if message.editedAt && new Date(message.editedAt).getUTCFullYear() !== 1}
-              <p>
-                {$date(new Date(`${message.editedAt}z`), { format: 'medium' })}
-                {$time(new Date(`${message.editedAt}z`))}
-              </p>
-            {/if}
-          </div>
-          {#if message.isFromCaller && message.readBy.length}
-            <div
-              class="tooltip first-letter:capitalize"
-              data-tip="{$t('message.readBy')} {readByTooltip}"
-            >
-              <iconify-icon
-                icon="mdi:check-all"
-                class={message.readBy.filter((r) => r.id !== message.user.id).length
-                  ? 'text-success'
-                  : ''}
-              />
-            </div>
+    <div>
+      {#if message.replyToId}
+        <MessageRepliedTo on:scrollTo isFromCaller={message.isFromCaller} replyToId={message.replyToId} />
+      {/if}
+      <div class="chat px-4 {message.isFromCaller ? 'chat-end' : 'chat-start'}">
+        <UserAvatar disableModal={message.isFromCaller} user={message.user} size={50} isChatImage />
+        <div class="chat-header">
+          {message.user.userName}
+        </div>
+        <div
+          class="chat-bubble {message.isFromCaller ? 'chat-bubble-success' : 'chat-bubble-primary'}"
+        >
+          {#if links && links.length}
+            {#each links as link}
+              <MessageLinkPreview {link} />
+            {/each}
+          {:else}
+            {message.text}
           {/if}
         </div>
-      {/if}
+        {#if !hideBottomInfo}
+          <div class="chat-footer flex gap-1 opacity-50">
+            <div class="flex-col flex">
+              <p class={new Date(message.editedAt).getUTCFullYear() > 1 ? 'line-through' : ''}>
+                {$date(new Date(`${message.sentAt}z`), { format: 'medium' })}
+                {$time(new Date(`${message.sentAt}z`))}
+              </p>
+              {#if message.editedAt && new Date(message.editedAt).getUTCFullYear() > 1}
+                <p>
+                  {$date(new Date(`${message.editedAt}z`), { format: 'medium' })}
+                  {$time(new Date(`${message.editedAt}z`))}
+                </p>
+              {/if}
+            </div>
+            {#if message.isFromCaller && message.readBy.length}
+              <div
+                class="tooltip first-letter:capitalize"
+                data-tip="{$t('message.readBy')} {readByTooltip}"
+              >
+                <iconify-icon
+                  icon="mdi:check-all"
+                  class={message.readBy.filter((r) => r.id !== message.user.id).length
+                    ? 'text-success'
+                    : ''}
+                />
+              </div>
+            {/if}
+          </div>
+        {/if}
+      </div>
     </div>
   {/if}
 </div>

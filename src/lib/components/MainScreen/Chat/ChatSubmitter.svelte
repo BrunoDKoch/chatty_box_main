@@ -3,12 +3,14 @@
   import { chat, chatId } from '$lib/useActiveChat';
   import { t } from 'svelte-i18n';
   import { onMount } from 'svelte';
+  import type { MessageResponse } from '$lib/types/combinationTypes';
   export let loading = true;
+  export let replyTo: MessageResponse | undefined = undefined;
   // Message handling
   $: newMessage = '';
   $: submitting = false;
   let messageError = false;
-  connection.on('msgError', () => messageError = true)
+  connection.on('msgError', () => (messageError = true));
 
   // Typing handling
   $: otherUsers = [] as { userName: string; isTyping: boolean }[];
@@ -96,12 +98,7 @@
     if (!newMessage) return;
     submitting = true;
     await connection.invoke('StopTyping', $chat.id);
-    await connection.invoke(
-      'SendMessage',
-      $chat.id,
-      newMessage,
-      undefined,
-    );
+    await connection.invoke('SendMessage', $chat.id, newMessage, replyTo?.id ?? undefined);
     submitting = false;
     newMessage = '';
   }
@@ -112,8 +109,13 @@
 <form
   on:keydown={async () => await handleTyping()}
   on:submit|preventDefault={async () => await sendMessage()}
-  class="box-border form-control overflow-hidden max-md:pb-10 max-h-fit"
+  class="box-border relative form-control overflow-hidden max-md:pb-10 max-h-fit"
 >
+  {#if replyTo}
+    <label class="label absolute bottom-100" for="">
+      <span class="label-text">{$t('common.replyTo', { values: { item: replyTo.user.userName } })}</span>
+    </label>
+  {/if}
   <div class="input-group px-4">
     <input
       bind:this={messageComposer}

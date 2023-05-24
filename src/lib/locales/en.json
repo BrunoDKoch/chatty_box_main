@@ -104,7 +104,8 @@
     "removed": "removed",
     "left": "left",
     "edit": "edit {item}",
-    "replyTo": "reply to {item}"
+    "replyTo": "reply to {item}",
+    "replyingTo": "replying to {item}"
   },
   "aside": {
     "searchChats": "{search} chats"

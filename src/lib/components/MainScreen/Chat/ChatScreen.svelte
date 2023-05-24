@@ -45,6 +45,7 @@
     <MainChatWrapper bind:searchResults bind:loading />
     {#if searchResults.messages && searchResults.messages.length}
       <MessagesWrapper
+        replyTo={undefined}
         systemMessages={[]}
         bind:messages={searchResults.messages}
         bind:total={searchResults.messageCount}
