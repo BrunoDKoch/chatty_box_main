@@ -51,17 +51,16 @@ connection.on('unread', (data) => {
   data.forEach((n: Message) => messagesCount.set(get(messagesCount) + 1));
 });
 
-connection.on('read', (data: ReadMessage & { user: User }) => {
+connection.on('read', (data: {id: string, readBy: UserPartialResponse & {readAt: Date}}) => {
   messagesCount.update((m) => {
     if (!m) return m;
     return m - 1;
   });
   chat.update((c) => {
-    const { readAt, user, messageId: id } = data;
-    c.messages = c.messages.map((m) => {
-      m.readBy.push({ readAt, userName: user.userName!, id });
-      return m;
-    });
+    const message = c.messages.find((m) => m.id === data.id);
+    if (!message) return c;
+    if (!data.readBy.userName) return c;
+    message.readBy.push({ ...data.readBy });
     return c;
   });
 });
@@ -151,7 +150,7 @@ connection.on('systemMessage', (data: SystemMessagePartial) => {
 });
 
 connection.on('editedMessage', (data: MessageResponse) => {
-  console.log(data)
+  console.log(data);
   chat.update((ch) => {
     if (ch.id !== data.chatId || !ch.messages.map((m) => m.id).includes(data.id)) return ch;
     const message = ch.messages.find((m) => m.id === data.id)!;
