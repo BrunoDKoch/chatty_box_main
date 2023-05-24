@@ -102,7 +102,9 @@
     "leave": "leave {item}",
     "added": "added",
     "removed": "removed",
-    "left": "left"
+    "left": "left",
+    "edit": "edit {item}",
+    "replyTo": "reply to {item}"
   },
   "aside": {
     "searchChats": "{search} chats"
@@ -151,7 +153,21 @@
     "ourEnd": "This is likely an issue on our end",
     "contactSupport": "If this issue persists, please contact support",
     "cause": {
-      "signalR": "SignalR Error"
+      "signalR": "SignalR Error",
+      "401": "Unauthorized",
+      "402": "Payment Required",
+      "403": "Forbidden",
+      "404": "Not Found",
+      "405": "Method Not Allowed",
+      "409": "Conflict",
+      "418": "I'm a Teapot",
+      "429": "Too Many Requests",
+      "451": "Unavailable For Legal Reasons",
+      "500": "Internal Server Error",
+      "502": "Bad Gateway",
+      "503": "Service Unavailable",
+      "504": "Gateway Timeout",
+      "fallback": "Unspecified Error"
     }
   }
 }

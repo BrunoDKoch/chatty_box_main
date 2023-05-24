@@ -98,7 +98,9 @@
     "leave": "salir del {item}",
     "added": "agregó a",
     "removed": "removió a",
-    "left": "dejó el chat"
+    "left": "dejó el chat",
+    "edit": "editar {item}",
+    "replyTo": "responder a {item}"
   },
   "aside": {
     "searchChats": "{search} chats"
@@ -147,7 +149,21 @@
     "ourEnd": "Es probable que esto sea un problema de nuestro fin",
     "contactSupport": "Si este problema persistir, informe al soporte técnico",
     "cause": {
-      "signalR": "Error con el SignalR"
+      "signalR": "Error con el SignalR",
+      "401": "No autorizado",
+      "402": "Pago requerido",
+      "403": "Prohibido",
+      "404": "No encontrado",
+      "405": "Método no permitido",
+      "409": "Conflicto",
+      "418": "Soy una tetera",
+      "429": "Demasiadas solicitudes",
+      "451": "No disponible por motivos legales",
+      "500": "Error interno del servidor",
+      "502": "Puerta de enlace incorrecta",
+      "503": "Servicio no disponible",
+      "504": "Tiempo de espera de la puerta de enlace",
+      "fallback": "Error no especificado"
     }
   }
 }

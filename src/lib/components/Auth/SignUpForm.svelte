@@ -8,6 +8,7 @@
   import EmailOtpModal from './EmailOTPModal.svelte';
   import { t } from 'svelte-i18n';
   export let pending = false;
+  export let errorMsg: { status: number; message: string; cause: string } | null = null;
   const dispatch = createEventDispatcher();
   let qrCode: { content: string; height: number; width: number } | null = null;
   let token = '';
@@ -17,7 +18,6 @@
   let userName = '';
   let confirmEmail = '';
   let confirmPassword = '';
-  let errorMsg: { status: number; message: string; cause: string } | null = null;
   $: rules = {
     emailRules: [
       {
@@ -136,10 +136,10 @@
       pending = false;
       dispatch('showQR');
     } catch (err) {
-      errorMsg = errorMsg = {
-        status: (err as any).code,
+      errorMsg = {
+        status: (err as any).status,
         message: (err as any).error.message,
-        cause: (err as any).error.cause,
+        cause: $t(`error.cause.${(err as any).status}`),
       };
     }
   }
@@ -200,21 +200,10 @@
   </div>
 </form>
 
-{#if errorMsg}
-  <ErrorModal
-    error={errorMsg}
-    on:close={() => {
-      pending = false;
-      email = '';
-      password = '';
-      errorMsg = null;
-    }}
-  />
-{/if}
-
 {#if openOtpModal}
   <EmailOtpModal
     bind:email
+    bind:errorMsg
     on:ok={async () =>
       await logIn({ email, password, remember: false, rememberMultiFactor: false })}
   />

@@ -22,8 +22,8 @@ async function logIn(body: LogInInfo) {
     onResponseError({ response }) {
       throw {
         status: response.status,
-        message: response.status,
-        cause: 'Credenciais inválidas',
+        message: response._data,
+        cause: response.status,
       };
     },
   });

@@ -8,6 +8,7 @@
   $: newMessage = '';
   $: submitting = false;
   let messageError = false;
+  connection.on('msgError', () => messageError = true)
 
   // Typing handling
   $: otherUsers = [] as { userName: string; isTyping: boolean }[];
@@ -95,18 +96,13 @@
     if (!newMessage) return;
     submitting = true;
     await connection.invoke('StopTyping', $chat.id);
-    const result = await connection.invoke<'newMessage' | 'msgError'>(
+    await connection.invoke(
       'SendMessage',
       $chat.id,
       newMessage,
       undefined,
     );
-    console.log({ newMessage });
     submitting = false;
-    if (result === 'msgError') {
-      messageError = true;
-      return;
-    }
     newMessage = '';
   }
   // TODO: delete logging

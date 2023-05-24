@@ -71,7 +71,9 @@ connection.on('previews', (data: ChatPreview[]) => {
     cn = data.map((preview) => {
       const { showOSNotification, playSound, id: chatId } = preview;
       return {
-        showOSNotification, playSound, chatId
+        showOSNotification,
+        playSound,
+        chatId,
       };
     });
     return cn;
@@ -144,6 +146,17 @@ connection.on('systemMessage', (data: SystemMessagePartial) => {
   chat.update((ch) => {
     if (ch.id !== data.chatId) return ch;
     ch.systemMessages.push(data);
+    return ch;
+  });
+});
+
+connection.on('editedMessage', (data: MessageResponse) => {
+  console.log(data)
+  chat.update((ch) => {
+    if (ch.id !== data.chatId || !ch.messages.map((m) => m.id).includes(data.id)) return ch;
+    const message = ch.messages.find((m) => m.id === data.id)!;
+    message.text = data.text;
+    message.editedAt = data.editedAt;
     return ch;
   });
 });

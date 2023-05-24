@@ -4,9 +4,10 @@
   import { getRecoveryToken, recoverPassword } from '$lib/useAuth';
   import { goto } from '$app/navigation';
   import { page } from '$app/stores';
-
+  export let errorMsg: { status: number; message: string; cause: string } | null = null
   export let email: string = '';
   export let token: string = '';
+  
   let password = '';
   let confirmPassword = '';
   $: rules = {
@@ -51,18 +52,26 @@
     ],
   };
   async function handleSubmit() {
-    if (!email) return;
-    if (!token) {
-      const res = await getRecoveryToken({ email });
+    try {
+      if (!email) return;
+      if (!token) {
+        const res = await getRecoveryToken({ email });
+        console.log(res);
+        token = res.result;
+        await goto(`${$page.url.pathname}?email=${email}&token=${token.replaceAll('/', '%2F')}`, {
+          replaceState: true,
+        });
+        return;
+      }
+      const res = await recoverPassword({ password, email, token });
       console.log(res);
-      token = res.result;
-      await goto(`${$page.url.pathname}?email=${email}&token=${token.replaceAll('/', '%2F')}`, {
-        replaceState: true,
-      });
-      return;
+    } catch (err) {
+      errorMsg = {
+        status: (err as any).status,
+        message: (err as any).error.message,
+        cause: $t(`error.cause.${(err as any).status}`),
+      }
     }
-    const res = await recoverPassword({ password, email, token });
-    console.log(res);
   }
   console.log(email);
 </script>

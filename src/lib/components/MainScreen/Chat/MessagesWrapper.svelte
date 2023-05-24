@@ -5,19 +5,22 @@
   import MessageComponent from './MessageComponent.svelte';
   import Pagination from '$lib/components/Pagination/Pagination.svelte';
   import SystemMessageComponent from './SystemMessageComponent.svelte';
+  import { onMount } from 'svelte';
   export let pagination = false;
   export let total: number;
   export let messages: MessageResponse[];
   export let systemMessages: SystemMessagePartial[];
   export let activePage = 1;
-  let hasMore = total > messages.length;
-  let combinedMessages = [...messages, ...systemMessages];
-  combinedMessages.sort((a, b) => Number(new Date(getDate(a))) - Number(new Date(getDate(b))));
+  export let hasMore: boolean = false;
+  $: combinedMessages = [...messages, ...systemMessages];
+  $: combinedMessages, combinedMessages.sort((a, b) => Number(new Date(getDate(a))) - Number(new Date(getDate(b))));
+
   function getDate(message: MessageResponse | SystemMessagePartial) {
     if ('sentAt' in message) return message.sentAt;
     return message.firedAt;
   }
   function isFromPreviousDate(message1: MessageResponse, message2: MessageResponse) {
+    if (!message1 || !message2) return;
     return new Date(`${message1.sentAt}z`).getDate() !== new Date(`${message2.sentAt}z`).getDate();
   }
   function checkUserAndTime(message: MessageResponse) {

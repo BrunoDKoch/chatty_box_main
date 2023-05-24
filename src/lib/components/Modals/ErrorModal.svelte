@@ -1,6 +1,7 @@
 <script lang="ts">
-  import { createEventDispatcher } from 'svelte';
+  import { createEventDispatcher, onMount } from 'svelte';
   import Modal from './Modal.svelte';
+  import { date, t, time } from 'svelte-i18n';
 
   export let error: { status: number; cause: string; message: string };
   $: icon = getIcon(error.status);
@@ -36,19 +37,29 @@
         return 'mdi:close-circle';
     }
   }
-  const brokenUpMessage = error.message.split('\n');
+  let brokenUpMessage = [] as string[];
+  onMount(() => {
+    console.log(error);
+    if (error.message.includes('\n')) {
+      brokenUpMessage = error.message.split('\n');
+    }
+  });
 </script>
 
 <Modal modalType="error">
   <div class="grid grid-cols-[1fr_3fr] max-w-[100vw]">
     <iconify-icon class="row-span-2 self-center justify-self-center" {icon} height="5rem" />
     <h1 class="font-bold text-2xl">
-      {error.status ?? 500} - {error.cause ?? 'Internal server error'}
+      {error.status ?? 500} - {error.cause ?? $t('error.cause.fallback')}
     </h1>
-    {#if error.message && brokenUpMessage}
+    {#if error.message && brokenUpMessage.length}
       <div>
         {#each brokenUpMessage as portion}
-          <p>{portion}</p>
+          <p class="first-letter:uppercase">
+            {portion.includes('/') && portion.includes(':')
+              ? `${$date(new Date(`${portion}z`))} ${$time(new Date(`${portion}z`))}`
+              : portion}
+          </p>
         {/each}
       </div>
     {:else if error.message}
@@ -56,6 +67,6 @@
     {/if}
   </div>
   <div class="modal-action">
-    <button class="btn" on:click={() => dispatch('close')}>Entendido</button>
+    <button class="btn" on:click={() => dispatch('close')}>Ok</button>
   </div>
 </Modal>

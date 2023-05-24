@@ -1,13 +1,21 @@
 <script lang="ts">
   import { page } from '$app/stores';
+  import ErrorModal from '../Modals/ErrorModal.svelte';
   import LogInForm from './LogInForm.svelte';
   import PasswordRecoveryForm from './PasswordRecoveryForm.svelte';
   import SignUpForm from './SignUpForm.svelte';
   import { t } from 'svelte-i18n';
   export let email: string = '';
   export let token: string = '';
+  $: errorMsg = null as { status: number; message: string; cause: string } | null;
   $: pending = false;
   $: showSpinner = false;
+  $: {
+    if (errorMsg) {
+      pending = false;
+      showSpinner = false;
+    }
+  }
 </script>
 
 <div
@@ -31,6 +39,7 @@
         {#if $page.url.pathname.includes('signup')}
           <SignUpForm
             bind:pending
+            bind:errorMsg
             on:error={() => (showSpinner = false)}
             on:success={() => (showSpinner = true)}
             on:showQR={() => (showSpinner = false)}
@@ -38,6 +47,7 @@
         {:else if $page.url.pathname.includes('login')}
           <LogInForm
             bind:pending
+            bind:errorMsg
             on:showSpinner={() => (showSpinner = true)}
             on:hideSpinner={() => (showSpinner = false)}
           />
@@ -51,6 +61,15 @@
     <iconify-icon class="text-7xl" icon="svg-spinners:6-dots-scale-middle" />
   {/if}
 </div>
+
+{#if errorMsg}
+  <ErrorModal
+    error={errorMsg}
+    on:close={() => {
+      errorMsg = null;
+    }}
+  />
+{/if}
 
 <style>
   .custom-shadow {

@@ -5,6 +5,7 @@
   import Modal from '$lib/components/Modals/Modal.svelte';
   import { createEventDispatcher } from 'svelte';
   export let email: string;
+  export let errorMsg: { status: number; message: string; cause: string } | null = null
   let otp = '';
   $: rules = {
     otpRules: [
@@ -23,7 +24,11 @@
       console.log(res);
       dispatch('ok');
     } catch (err) {
-      console.error(err);
+      errorMsg = {
+        status: (err as any).status,
+        message: (err as any).error.message,
+        cause: $t(`error.cause.${(err as any).status}`),
+      }
     }
   }
 </script>

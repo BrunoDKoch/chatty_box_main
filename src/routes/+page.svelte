@@ -37,16 +37,22 @@
       return p;
     });
     chat.update((ch) => {
-      if (ch.id !== data.chatId || ch.messages.includes(data)) return ch;
+      if (ch.id !== data.chatId || !!ch.messages.find((m) => m.id === data.id)) return ch;
       ch.messages.push(data);
       return ch;
     });
     // Stop here if it's from the user
     if (data.isFromCaller) return;
+
     // Add to unread messages count
-    $messagesCount++;
+    if ($chat.id !== data.chatId) $messagesCount++;
+
+    // Play audio if appropriate
     var audio = new Audio('/sounds/newMessage.mp3');
-    if ($useUserNotificationSettings?.playSound) await audio.play();
+    if ($previews.find((p) => p.id === data.chatId)?.playSound) {
+      if ($chat.id === data.chatId || !document.hidden) return;
+      await audio.play();
+    }
     // Show OS notification if window is unfocused
     if (document.hidden && $useUserNotificationSettings?.showOSNotification)
       new Notification(
@@ -102,9 +108,11 @@
       } catch (err) {
         error = {
           status: 503,
-          cause: 'Connection error',
-          message: (err as typeof error)!.message
-        }
+          cause: $t('error.cause.503'),
+          message: `${$t('error.signalR', {
+            values: { error: (err as { message: string }).message },
+          })}\n ${$t('error.ourEnd')}\n ${$t('error.contactSupport')}`,
+        };
       }
     }, 100);
     accessToken.read();

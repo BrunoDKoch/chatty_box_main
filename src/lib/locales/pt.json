@@ -98,7 +98,9 @@
     "leave": "sair do {item}",
     "added": "adicionou",
     "removed": "removeu",
-    "left": "saiu"
+    "left": "saiu",
+    "edit": "editar {item}",
+    "replyTo": "responder a {item}"
   },
   "aside": {
     "searchChats": "{search} chats"
@@ -147,7 +149,21 @@
     "ourEnd": "É provável que isto seja um problema interno nosso",
     "contactSupport": "Caso o problema persista, por favor, informe o suporte técnico",
     "cause": {
-      "signalR": "Erro com o SignalR"
+      "signalR": "Erro com o SignalR",
+      "401": "Não autorizado",
+      "402": "Pagamento necessário",
+      "403": "Proibido",
+      "404": "Não encontrado",
+      "405": "Método não permitido",
+      "409": "Conflito",
+      "418": "Sou uma chaleira",
+      "429": "Muitas solicitações",
+      "451": "Indisponível por motivos legais",
+      "500": "Erro interno do servidor",
+      "502": "Gateway ruim",
+      "503": "Serviço indisponível",
+      "504": "Tempo limite da porta de entrada",
+      "fallback": "Erro não especificado"
     }
   }
 }

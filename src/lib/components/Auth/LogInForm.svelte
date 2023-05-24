@@ -9,6 +9,7 @@
   import { t } from 'svelte-i18n';
   import MfaCodeModal from './MFACodeModal.svelte';
   export let pending = false;
+  export let errorMsg: { status: number; message: string; cause: string } | null;
   const dispatch = createEventDispatcher();
   let showMFACodeModal = false;
   let email = '';
@@ -17,10 +18,6 @@
   let remember = false;
   let submitted = false;
   let rememberMultiFactor = false;
-  let errorMsg: { status: number; message: string; cause: string } | null = null;
-  $: {
-    if (errorMsg) dispatch('error');
-  }
   $: rules = {
     emailRules: [
       {
@@ -67,11 +64,17 @@
       showMFACodeModal = false;
       await goto('/');
     } catch (err) {
-      if ((err as { code: number; error?: any }).code === 400) {
+      if ((err as { status: number; error?: any }).status === 400) {
         showMFACodeModal = !showMFACodeModal;
         return;
       }
-      errorMsg = { status: (err as any).code, message: (err as any).error.message, cause: (err as any).error.cause };
+      console.log(err)
+      errorMsg = {
+        status: (err as any).status,
+        message: (err as any).message,
+        cause: $t(`error.cause.${(err as any).status}`),
+      };
+      pending = false;
     } finally {
       pending = false;
       dispatch('hideSpinner');
@@ -124,14 +127,3 @@
   />
 {/if}
 
-{#if errorMsg}
-  <ErrorModal
-    error={errorMsg}
-    on:close={() => {
-      pending = false;
-      email = '';
-      password = '';
-      errorMsg = null;
-    }}
-  />
-{/if}
