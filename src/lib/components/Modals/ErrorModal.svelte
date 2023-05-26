@@ -57,7 +57,7 @@
         {#each brokenUpMessage as portion}
           <p class="first-letter:uppercase">
             {portion.includes('/') && portion.includes(':')
-              ? `${$date(new Date(`${portion}z`))} ${$time(new Date(`${portion}z`))}`
+              ? `${$date(new Date(`${portion}Z`))} ${$time(new Date(`${portion}Z`))}`
               : portion}
           </p>
         {/each}

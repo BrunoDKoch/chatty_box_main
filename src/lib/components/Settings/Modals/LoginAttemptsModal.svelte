@@ -45,8 +45,8 @@
             <tr class="text-center">
               <th>{attempts.indexOf(attempt) + 1}</th>
               <td
-                >{$date(new Date(`${attempt.attemptedAt}z`))} - {$time(
-                  new Date(`${attempt.attemptedAt}z`),
+                >{$date(new Date(`${attempt.attemptedAt}Z`))} - {$time(
+                  new Date(`${attempt.attemptedAt}Z`),
                 )}</td
               >
               <td>{countryNames.of(attempt.countryIsoCode)}</td>

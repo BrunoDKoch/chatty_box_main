@@ -8,6 +8,7 @@
   import UserAvatarAndName from '../UserAvatarAndName.svelte';
   import UserAvatar from '../UserAvatar.svelte';
   export let chat: ChatPreview;
+  console.log(chat.lastMessage)
 </script>
 
 <a
@@ -42,8 +43,8 @@
         </div>
       </div>
       <p class="col-span-full">
-        {$date(new Date(`${chat.lastMessage.sentAt}z`), { format: 'medium' })} - {$time(
-          new Date(`${chat.lastMessage.sentAt}z`),
+        {$date(new Date(`${chat.lastMessage.sentAt}Z`), { format: 'medium' })} - {$time(
+          new Date(`${chat.lastMessage.sentAt}Z`),
         )}
       </p>
     {:else}

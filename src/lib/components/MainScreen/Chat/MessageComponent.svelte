@@ -34,8 +34,8 @@
     .map((r) => {
       if (r.id === message.user.id) return;
       return `${r.userName} ${$t('common.at')} ${$date(
-        new Date(`${r.readAt ?? message.sentAt}z`),
-      )} - ${$time(new Date(`${r.readAt ?? message.sentAt}z`))}`;
+        new Date(`${r.readAt ?? message.sentAt}Z`),
+      )} - ${$time(new Date(`${r.readAt ?? message.sentAt}Z`))}`;
     })
     .filter((a) => a)
     .join(', ');
@@ -144,13 +144,13 @@
           <div class="chat-footer flex gap-1 opacity-50">
             <div class="flex-col flex">
               <p class={new Date(message.editedAt).getUTCFullYear() > 1 ? 'line-through' : ''}>
-                {$date(new Date(`${message.sentAt}z`), { format: 'medium' })}
-                {$time(new Date(`${message.sentAt}z`))}
+                {$date(new Date(`${message.sentAt}Z`), { format: 'medium' })}
+                {$time(new Date(`${message.sentAt}Z`))}
               </p>
               {#if message.editedAt && new Date(message.editedAt).getUTCFullYear() > 1}
                 <p>
-                  {$date(new Date(`${message.editedAt}z`), { format: 'medium' })}
-                  {$time(new Date(`${message.editedAt}z`))}
+                  {$date(new Date(`${message.editedAt}Z`), { format: 'medium' })}
+                  {$time(new Date(`${message.editedAt}Z`))}
                 </p>
               {/if}
             </div>

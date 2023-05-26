@@ -23,7 +23,7 @@
   }
   function isFromPreviousDate(message1: MessageResponse, message2: MessageResponse) {
     if (!message1 || !message2) return;
-    return new Date(`${message1.sentAt}z`).getDate() !== new Date(`${message2.sentAt}z`).getDate();
+    return new Date(`${message1.sentAt}Z`).getDate() !== new Date(`${message2.sentAt}Z`).getDate();
   }
   function checkUserAndTime(message: MessageResponse) {
     if (!messages) return;
@@ -34,7 +34,7 @@
       index !== messages.length - 1 &&
       nextMessage.user.id === message.user.id &&
       new Date(
-        new Date(`${nextMessage.sentAt}z`).getTime() - new Date(`${message.sentAt}z`).getTime(),
+        new Date(`${nextMessage.sentAt}Z`).getTime() - new Date(`${message.sentAt}Z`).getTime(),
       ).getMinutes() < 10
     );
   }
@@ -50,7 +50,7 @@
         {#if combinedMessages.indexOf(message) !== 0 && isFromPreviousDate(message, messages[messages.indexOf(message) - 1])}
           <div class="divider">
             <p class="first-letter:uppercase">
-              {$date(new Date(`${message.sentAt}z`), { format: 'full' })}
+              {$date(new Date(`${message.sentAt}Z`), { format: 'full' })}
             </p>
           </div>
         {/if}
