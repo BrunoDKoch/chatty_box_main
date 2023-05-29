@@ -12,5 +12,5 @@
 {:else if $useActiveScreen === 'chat'}
   <ChatScreen />
 {:else if $useActiveScreen === 'aside'}
-  <Aside chats={$previews} />
+  <Aside />
 {/if}

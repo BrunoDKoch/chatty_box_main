@@ -101,7 +101,11 @@
     "left": "dejó el chat",
     "edit": "editar {item}",
     "replyTo": "responder a {item}",
-    "replyingTo": "respondiendo a {item}"
+    "replyingTo": "respondiendo a {item}",
+    "areYouSure": "está seguro",
+    "wishTo": "que desea {item}",
+    "yes": "sí",
+    "no": "no"
   },
   "aside": {
     "searchChats": "{search} chats"

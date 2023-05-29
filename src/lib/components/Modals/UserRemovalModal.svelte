@@ -8,7 +8,9 @@
   import { chat, chatId } from '$lib/useActiveChat';
   import { createEventDispatcher } from 'svelte';
   import Select from '../Custom/Select.svelte';
+  import ConfirmationModal from './ConfirmationModal.svelte';
   let selection = '';
+  let showConfirmationModal = false;
   const dispatch = createEventDispatcher();
   let options = $chat.users.map((u) => {
     return {
@@ -44,10 +46,20 @@
       <button
         class="btn btn-success"
         disabled={!selection}
-        on:click={async () => await handleSubmit()}
+        on:click={() => (showConfirmationModal = !showConfirmationModal)}
       >
         {$t('common.submit')}
       </button>
     </div>
   </div>
 </Modal>
+
+{#if showConfirmationModal}
+  <ConfirmationModal
+    action={$t('common.remove', {
+      values: { item: options.find((u) => u.value === selection)?.name },
+    })}
+    on:confirm={async () => await handleSubmit()}
+    on:deny={() => dispatch('close')}
+  />
+{/if}

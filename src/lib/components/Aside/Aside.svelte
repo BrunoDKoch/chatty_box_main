@@ -5,7 +5,7 @@
   import AsideSearch from './AsideSearch.svelte';
   import AsideMain from './AsideMain.svelte';
   import { t } from 'svelte-i18n';
-  export let chats: ChatPreview[];
+  import { previews } from '$lib/useSignalR';
   let settingsMenuActive = false;
 </script>
 
@@ -23,6 +23,6 @@
   {#if settingsMenuActive}
     <SettingsComponent />
   {:else}
-    <AsideMain {chats} />
+    <AsideMain />
   {/if}
 </div>

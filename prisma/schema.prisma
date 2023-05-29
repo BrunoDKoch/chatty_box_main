@@ -208,7 +208,7 @@ model SystemMessage {
   instigatingUserId String   @db.NVarChar(450)
   eventType         String
   affectedUser      User?    @relation("affectedBy", fields: [affectedUserId], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  affectedUserId    String   @db.NVarChar(450)
+  affectedUserId    String?   @db.NVarChar(450)
 }
 
 // Notifications

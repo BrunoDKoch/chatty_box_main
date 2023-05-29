@@ -6,7 +6,7 @@
   import type { ChatPreview } from '$lib/types/partialTypes';
   import NewChatModal from './NewChatModal.svelte';
   import { friendRequests } from '$lib/useSignalR';
-  export let chats: ChatPreview[];
+  import { previews } from '$lib/useSignalR';
   let showNewChatModal = false;
 </script>
 
@@ -36,7 +36,7 @@
   </button>
   <div class="divider" />
   <div class="flex flex-col gap-4 even:bg-base-300">
-    {#each chats as chat}
+    {#each $previews as chat}
       <AsideMsg {chat} />
     {/each}
   </div>

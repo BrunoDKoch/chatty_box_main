@@ -105,7 +105,11 @@
     "left": "left",
     "edit": "edit {item}",
     "replyTo": "reply to {item}",
-    "replyingTo": "replying to {item}"
+    "replyingTo": "replying to {item}",
+    "areYouSure": "are you sure",
+    "wishTo": "you wish to {item}",
+    "yes": "yes",
+    "no": "no"
   },
   "aside": {
     "searchChats": "{search} chats"

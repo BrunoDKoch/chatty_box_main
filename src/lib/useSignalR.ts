@@ -51,7 +51,7 @@ connection.on('unread', (data) => {
   data.forEach((n: Message) => messagesCount.set(get(messagesCount) + 1));
 });
 
-connection.on('read', (data: {id: string, readBy: UserPartialResponse & {readAt: Date}}) => {
+connection.on('read', (data: { id: string; readBy: UserPartialResponse & { readAt: Date } }) => {
   messagesCount.update((m) => {
     if (!m) return m;
     return m - 1;
@@ -107,9 +107,22 @@ connection.on('updateStatus', (data: string) => {
     return f;
   });
 });
-connection.on('newChat', (data: CompleteChat) =>
-  chat.set({ ...data, hasFetched: false, hasMore: false }),
-);
+connection.on('newChat', (data: CompleteChat) => {
+  chat.set({ ...data, hasFetched: false, hasMore: false });
+  chatId.set(data.id);
+  const { playSound, showOSNotification } = get(useUserNotificationSettings)!;
+  const { id, createdAt, users } = data;
+  previews.update((p) => {
+    p.push({
+      id,
+      playSound,
+      showOSNotification,
+      createdAt,
+      users,
+    });
+    return p;
+  });
+});
 
 connection.on('notificationSettings', (data: UserNotificationSettings) => {
   useUserNotificationSettings.update((un) => {

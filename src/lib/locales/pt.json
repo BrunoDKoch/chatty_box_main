@@ -101,7 +101,11 @@
     "left": "saiu",
     "edit": "editar {item}",
     "replyTo": "responder a {item}",
-    "replyingTo": "respondendo a {item}"
+    "replyingTo": "respondendo a {item}",
+    "areYouSure": "tem certeza",
+    "wishTo": "que deseja {item}",
+    "yes": "sim",
+    "no": "não"
   },
   "aside": {
     "searchChats": "{search} chats"

@@ -6,22 +6,18 @@
   import UserAvatarAndName from '../UserAvatarAndName.svelte';
   import UserSearch from '../UserSearch.svelte';
   import { createEventDispatcher } from 'svelte';
-  import { connection } from '$lib/useSignalR';
+  import { connection, previews } from '$lib/useSignalR';
   import useActiveScreen from '$lib/useActiveScreen';
   import { chat, chatId } from '$lib/useActiveChat';
   import type { CompleteChat } from '$lib/types/combinationTypes';
   import TextInput from '../Custom/TextInput.svelte';
+  import useUserNotificationSettings from '$lib/useUserNotificationSettings';
   const dispatch = createEventDispatcher();
   let selection: UserPartialResponse | null = null;
   let currentlySelectedUsers: UserPartialResponse[] = [];
   $: selection, handleSelection(selection);
   let chatName = '';
   let maxUsers = 99;
-
-  connection.on('newChat', (data: CompleteChat) => {
-    $chat = {...data, hasFetched: false, hasMore: false};
-    $chatId = data.id;
-  });
 
   function handleSelection(selection: UserPartialResponse | null) {
     if (!selection) return;

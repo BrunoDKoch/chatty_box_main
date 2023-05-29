@@ -9,6 +9,10 @@
   import UserSearchModal from '$lib/components/Modals/UserSearchModal.svelte';
   import UserRemovalModal from '$lib/components/Modals/UserRemovalModal.svelte';
   import ChatNotificationsModal from '$lib/components/Modals/ChatNotificationsModal.svelte';
+  import ConfirmationModal from '$lib/components/Modals/ConfirmationModal.svelte';
+  import { t } from 'svelte-i18n';
+  import useActiveScreen from '$lib/useActiveScreen';
+  import { connection, previews } from '$lib/useSignalR';
 
   let loading = true;
   let searchResults: { messages: MessageResponse[]; messageCount: number } = {
@@ -21,8 +25,12 @@
   let showUserRemovalModal = false;
   let showConfirmLeaveModal = false;
   let showNotificationsModal = false;
-  // TODO: delete this logging
-  onMount(() => console.log($chat));
+  async function handleLeaveChat() {
+    await connection.invoke('LeaveChat', $chatId);
+    $useActiveScreen = 'friends';
+    $previews = $previews.filter((p) => p.id !== $chatId);
+    $previews = $previews;
+  }
 </script>
 
 {#if loading}
@@ -36,6 +44,7 @@
     on:openUserSearchModal={() => (showUserSearchModal = !showUserSearchModal)}
     on:openUserRemovalModal={() => (showUserRemovalModal = !showUserRemovalModal)}
     on:openNotificationsModal={() => (showNotificationsModal = !showNotificationsModal)}
+    on:openConfirmLeaveModal={() => (showConfirmLeaveModal = !showConfirmLeaveModal)}
   />
   <div
     class="grid {searchResults.messages && searchResults.messages.length
@@ -62,4 +71,10 @@
   <UserRemovalModal on:close={() => (showUserRemovalModal = !showUserRemovalModal)} />
 {:else if showNotificationsModal}
   <ChatNotificationsModal on:close={() => (showNotificationsModal = !showNotificationsModal)} />
+{:else if showConfirmLeaveModal}
+  <ConfirmationModal
+    on:deny={() => (showConfirmLeaveModal = !showConfirmLeaveModal)}
+    on:confirm={async () => await handleLeaveChat()}
+    action={$t('common.leave', { values: { item: 'chat' } })}
+  />
 {/if}

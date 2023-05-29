@@ -70,7 +70,6 @@
 
   onMount(() => {
     observer.observe(thisElement);
-    console.log(new Date(message.editedAt));
     if (focusOn) thisElement.scrollIntoView({ behavior: 'smooth' });
     if (message.isFromCaller || $chat.userIsAdmin)
       options.push({

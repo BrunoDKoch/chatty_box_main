@@ -27,6 +27,7 @@
         on:openNotificationsModal
         on:openUserRemovalModal
         on:openUserSearchModal
+        on:openAddAdminModal
       />
       <SearchComponent
         bind:search
