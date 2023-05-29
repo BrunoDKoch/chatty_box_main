@@ -31,7 +31,6 @@
 
   function startTimer(search: string) {
     if (!search || search === selection?.userName) return;
-    console.log(search);
     if (!timerHasStarted) timerHasStarted = true;
   }
 

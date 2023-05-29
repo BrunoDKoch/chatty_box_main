@@ -130,7 +130,7 @@
   <title>{$messagesCount ? `(${$messagesCount}) ` : ''}ChattyBox</title>
   <div class="lg:grid lg:grid-cols-4 max-md:flex max-md:flex-col w-screen">
     <aside class="col-span-1 bg-base-200 min-h-screen max-md:hidden">
-      <Aside chats={$previews} />
+      <Aside />
     </aside>
     <div class="lg:hidden flex bg-base-200 z-50">
       <button

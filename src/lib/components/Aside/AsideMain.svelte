@@ -10,7 +10,7 @@
   let showNewChatModal = false;
 </script>
 
-<div in:fade={{ delay: 500, duration: 100 }}>
+<div in:fade={{ delay: 150, duration: 100 }}>
   <button
     on:click={() => ($useActiveScreen = 'friends')}
     class="flex w-full py-2 gap-3 items-center cursor-pointer hover:bg-gray-300 hover:dark:bg-gray-700 {$friendRequests &&

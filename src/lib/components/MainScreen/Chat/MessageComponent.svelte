@@ -85,7 +85,6 @@
         icon: 'material-symbols:edit',
         action() {
           isEditing = !isEditing;
-          console.log(isEditing);
         },
       });
   });
@@ -109,27 +108,31 @@
       {/each}
     </div>
   {/if}
-  {#if isEditing}
-    <form
-      on:submit|preventDefault={async () => await handleEditSubmission()}
-      class="input-group"
-      action=""
-    >
-      <input type="text" class="input" name="edit" bind:value={message.text} />
-      <button class="btn">
-        <iconify-icon icon="mdi:send" />
-      </button>
-    </form>
-  {:else}
-    <div>
-      {#if message.replyToId}
-        <MessageRepliedTo on:scrollTo isFromCaller={message.isFromCaller} replyToId={message.replyToId} />
-      {/if}
-      <div class="chat px-4 {message.isFromCaller ? 'chat-end' : 'chat-start'}">
-        <UserAvatar disableModal={message.isFromCaller} user={message.user} size={50} isChatImage />
-        <div class="chat-header">
-          {message.user.userName}
-        </div>
+  <div>
+    {#if message.replyToId}
+      <MessageRepliedTo
+        on:scrollTo
+        isFromCaller={message.isFromCaller}
+        replyToId={message.replyToId}
+      />
+    {/if}
+    <div class="chat px-4 {message.isFromCaller ? 'chat-end' : 'chat-start'}">
+      <UserAvatar disableModal={message.isFromCaller} user={message.user} size={50} isChatImage />
+      <div class="chat-header">
+        {message.user.userName}
+      </div>
+      {#if isEditing}
+        <form
+          on:submit|preventDefault={async () => await handleEditSubmission()}
+          class="input-group w-full"
+          action=""
+        >
+          <input type="text" class="input w-full" name="edit" bind:value={message.text} />
+          <button class="btn">
+            <iconify-icon icon="mdi:send" />
+          </button>
+        </form>
+      {:else}
         <div
           class="chat-bubble {message.isFromCaller ? 'chat-bubble-success' : 'chat-bubble-primary'}"
         >
@@ -141,36 +144,36 @@
             {message.text}
           {/if}
         </div>
-        {#if !hideBottomInfo}
-          <div class="chat-footer flex gap-1 opacity-50">
-            <div class="flex-col flex">
-              <p class={new Date(message.editedAt).getUTCFullYear() > 1 ? 'line-through' : ''}>
-                {$date(new Date(`${message.sentAt}Z`), { format: 'medium' })}
-                {$time(new Date(`${message.sentAt}Z`))}
+      {/if}
+      {#if !hideBottomInfo}
+        <div class="chat-footer flex gap-1 opacity-50">
+          <div class="flex-col flex">
+            <p class={new Date(message.editedAt).getUTCFullYear() > 1 ? 'line-through' : ''}>
+              {$date(new Date(`${message.sentAt}Z`), { format: 'medium' })}
+              {$time(new Date(`${message.sentAt}Z`))}
+            </p>
+            {#if message.editedAt && new Date(message.editedAt).getUTCFullYear() > 1}
+              <p>
+                {$date(new Date(`${message.editedAt}Z`), { format: 'medium' })}
+                {$time(new Date(`${message.editedAt}Z`))}
               </p>
-              {#if message.editedAt && new Date(message.editedAt).getUTCFullYear() > 1}
-                <p>
-                  {$date(new Date(`${message.editedAt}Z`), { format: 'medium' })}
-                  {$time(new Date(`${message.editedAt}Z`))}
-                </p>
-              {/if}
-            </div>
-            {#if message.isFromCaller && message.readBy.length}
-              <div
-                class="tooltip first-letter:capitalize"
-                data-tip="{$t('message.readBy')} {readByTooltip}"
-              >
-                <iconify-icon
-                  icon="mdi:check-all"
-                  class={message.readBy.filter((r) => r.id !== message.user.id).length
-                    ? 'text-success'
-                    : ''}
-                />
-              </div>
             {/if}
           </div>
-        {/if}
-      </div>
+          {#if message.isFromCaller && message.readBy.length}
+            <div
+              class="tooltip first-letter:capitalize"
+              data-tip="{$t('message.readBy')} {readByTooltip}"
+            >
+              <iconify-icon
+                icon="mdi:check-all"
+                class={message.readBy.filter((r) => r.id !== message.user.id).length
+                  ? 'text-success'
+                  : ''}
+              />
+            </div>
+          {/if}
+        </div>
+      {/if}
     </div>
-  {/if}
+  </div>
 </div>

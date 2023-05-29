@@ -149,9 +149,10 @@
     }
   },
   "privacyLevel": {
-    "1": "Anyone can add me as a friend or to chats",
-    "2": "Only people in my chats can add me as a friend or to other chats",
-    "3": "Only my friends can add me to chats"
+    "who": "Who can message you?",
+    "1": "Anyone",
+    "2": "Only people in my chats and friends",
+    "3": "Only my friends"
   },
   "error": {
     "signalR": "There was a SignalR error with the following description:\n\"{error}\"",

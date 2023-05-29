@@ -145,9 +145,10 @@
     }
   },
   "privacyLevel": {
-    "1": "Qualquer um pode me adicionar como amigo ou me enviar uma mensagem",
-    "2": "Somente as pessoas nos meus chats podem me adicionar como amigos, e somente eles e meus amigos podem me enviar uma mensagem",
-    "3": "Somente meus amigos podem me enviar uma mensagem"
+    "who": "Quem pode lhe enviar mensagens?",
+    "1": "Qualquer um",
+    "2": "Somente as pessoas nos meus chats e meus amigos",
+    "3": "Somente meus amigos"
   },
   "error": {
     "signalR": "Ocorreu um erro com o SignalR, com a seguinte descrição:\n\"{error}\"",

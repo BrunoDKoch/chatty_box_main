@@ -163,7 +163,6 @@ connection.on('systemMessage', (data: SystemMessagePartial) => {
 });
 
 connection.on('editedMessage', (data: MessageResponse) => {
-  console.log(data);
   chat.update((ch) => {
     if (ch.id !== data.chatId || !ch.messages.map((m) => m.id).includes(data.id)) return ch;
     const message = ch.messages.find((m) => m.id === data.id)!;

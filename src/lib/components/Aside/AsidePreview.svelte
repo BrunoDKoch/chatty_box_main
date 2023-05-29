@@ -5,10 +5,8 @@
   import useActiveScreen from '$lib/useActiveScreen';
   import { scale } from 'svelte/transition';
   import { quintInOut } from 'svelte/easing';
-  import UserAvatarAndName from '../UserAvatarAndName.svelte';
   import UserAvatar from '../UserAvatar.svelte';
   export let chat: ChatPreview;
-  console.log(chat.lastMessage)
 </script>
 
 <a

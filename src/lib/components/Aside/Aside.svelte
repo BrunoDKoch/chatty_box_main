@@ -1,11 +1,8 @@
 <script lang="ts">
   import SettingsComponent from '../Settings/SettingsComponent.svelte';
-
-  import type { ChatPreview } from '$lib/types/partialTypes';
   import AsideSearch from './AsideSearch.svelte';
   import AsideMain from './AsideMain.svelte';
   import { t } from 'svelte-i18n';
-  import { previews } from '$lib/useSignalR';
   let settingsMenuActive = false;
 </script>
 
