@@ -95,6 +95,7 @@
 
 <div
   class="relative hover:bg-base-300"
+  id={message.id}
   bind:this={thisElement}
   on:mouseenter={() => (showOptions = !showOptions)}
   on:touchstart={() => (showOptions = !showOptions)}
