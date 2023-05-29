@@ -97,10 +97,11 @@
   class="relative hover:bg-base-300"
   bind:this={thisElement}
   on:mouseenter={() => (showOptions = !showOptions)}
+  on:touchstart={() => (showOptions = !showOptions)}
   on:mouseleave={() => (showOptions = !showOptions)}
 >
   {#if showOptions}
-    <div class="absolute btn-group right-5 z-50">
+    <div class="absolute btn-group {message.isFromCaller ? 'right-14' : 'left-14'} z-50">
       {#each options as option}
         <button on:click={() => option.action()} data-tip={option.name} class="btn tooltip">
           <iconify-icon icon={option.icon} />
