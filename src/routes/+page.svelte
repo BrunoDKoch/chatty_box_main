@@ -18,6 +18,12 @@
 
   let error: { status: number; cause: string; message: string } | null = null;
 
+  $: title = 'ChattyBox';
+  $: {
+    if ($online)
+      title = $messagesCount ? `(${$messagesCount}) ${title}` : title;
+  }
+
   $: notifications = [] as {
     notificationType: 'message' | 'friend request';
     text: string;
@@ -126,8 +132,8 @@
   });
 </script>
 
+<title>{title}</title>
 {#if $online}
-  <title>{$messagesCount ? `(${$messagesCount}) ` : ''}ChattyBox</title>
   <div class="lg:grid lg:grid-cols-4 max-md:flex max-md:flex-col w-screen">
     <aside class="col-span-1 bg-base-200 min-h-screen max-md:hidden">
       <Aside />

@@ -5,7 +5,6 @@
   import MessageComponent from './MessageComponent.svelte';
   import Pagination from '$lib/components/Pagination/Pagination.svelte';
   import SystemMessageComponent from './SystemMessageComponent.svelte';
-  import { onMount } from 'svelte';
   export let pagination = false;
   export let total: number;
   export let messages: MessageResponse[];

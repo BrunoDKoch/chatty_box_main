@@ -1,9 +1,7 @@
 <script lang="ts">
   import useActiveScreen from '$lib/useActiveScreen';
   import FriendsScreen from './FriendsScreen/FriendsScreen.svelte';
-  import { connection, previews } from '$lib/useSignalR';
   import ChatScreen from './Chat/ChatScreen.svelte';
-  import { chatId } from '$lib/useActiveChat';
   import Aside from '../Aside/Aside.svelte';
 </script>
 

@@ -172,6 +172,22 @@ connection.on('editedMessage', (data: MessageResponse) => {
   });
 });
 
+connection.on('blockToggle', (data: { id: string; blocked: boolean }) => {
+  const { id, blocked } = data;
+  blockedUsers.update((b) => {
+    if (!blocked) {
+      b = b.filter((u) => u.id !== id);
+      return b;
+    }
+    const user =
+      get(friends).find((u) => u.id === id) ??
+      get(previews).find((p) => p.users.find((u) => u.id === id))?.users[0];
+    if (!user) return b;
+    b.push(user);
+    return b;
+  });
+});
+
 export const online = writable(connection.state === HubConnectionState.Connected);
 connection.onreconnected(() => online.set(true));
 connection.onreconnecting(() => online.set(false));

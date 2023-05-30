@@ -3,7 +3,6 @@
   import useActiveScreen from '$lib/useActiveScreen';
   import { t } from 'svelte-i18n';
   import AsideMsg from './AsidePreview.svelte';
-  import type { ChatPreview } from '$lib/types/partialTypes';
   import NewChatModal from './NewChatModal.svelte';
   import { friendRequests } from '$lib/useSignalR';
   import { previews } from '$lib/useSignalR';

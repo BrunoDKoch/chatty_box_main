@@ -1,9 +1,7 @@
 <script lang="ts">
   import type { CompleteChat, MessageResponse } from '$lib/types/combinationTypes';
   import { chat, chatId } from '$lib/useActiveChat';
-  import { onMount } from 'svelte';
   import ChatNameComponent from './ChatNameComponent.svelte';
-  import ChatSubmitter from './ChatSubmitter.svelte';
   import MessagesWrapper from './MessagesWrapper.svelte';
   import MainChatWrapper from './MainChatWrapper.svelte';
   import UserSearchModal from '$lib/components/Modals/UserSearchModal.svelte';
