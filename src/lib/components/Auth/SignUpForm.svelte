@@ -13,11 +13,11 @@
   let qrCode: { content: string; height: number; width: number } | null = null;
   let token = '';
   let openOtpModal = false;
-  let email = '';
-  let password = '';
-  let userName = '';
-  let confirmEmail = '';
-  let confirmPassword = '';
+  $: email = '';
+  $: password = '';
+  $: userName = '';
+  $: confirmEmail = '';
+  $: confirmPassword = '';
   $: rules = {
     emailRules: [
       {
@@ -155,7 +155,7 @@
     type="email"
     labelText="{$t('common.your.m')} {$t('auth.email')}"
     required
-    rules={rules.emailRules}
+    bind:rules={rules.emailRules}
     bind:value={email}
   />
   <TextInput
@@ -163,7 +163,7 @@
     type="email"
     labelText="{$t('auth.confirm')} {$t('common.your.m')} {$t('auth.email')}"
     required
-    rules={rules.confirmEmailRules}
+    bind:rules={rules.confirmEmailRules}
     bind:value={confirmEmail}
   />
   <TextInput
@@ -171,7 +171,7 @@
     type="password"
     labelText="{$t('common.your.f')} {$t('auth.password')}"
     required
-    rules={rules.passwordRules}
+    bind:rules={rules.passwordRules}
     bind:value={password}
   />
   <TextInput
@@ -179,7 +179,7 @@
     type="password"
     labelText="{$t('auth.confirm')} {$t('common.your.f')} {$t('auth.password')}"
     required
-    rules={rules.confirmPasswordRules}
+    bind:rules={rules.confirmPasswordRules}
     bind:value={confirmPassword}
   />
   <div class="col-span-2">
@@ -187,7 +187,7 @@
       name="username"
       labelText="{$t('common.your.m')} {$t('auth.userName')}"
       required
-      rules={rules.userNameRules}
+      bind:rules={rules.userNameRules}
       bind:value={userName}
     />
   </div>

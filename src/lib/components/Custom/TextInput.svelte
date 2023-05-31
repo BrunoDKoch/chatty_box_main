@@ -28,20 +28,20 @@
   export let name: string | undefined;
   $: errorClass = '';
   $: ruleText = '';
-  function checkRules() {
-    if (!rules || !rules.length) return;
-    const brokenRule = rules.find((r) => !!!r.condition);
-    if (brokenRule) {
-      ruleText = brokenRule.text;
-      errorClass =
-        type !== 'area'
-          ? 'input-error transition-all duration-300'
-          : 'textarea-error transition-all duration-300';
-    } else {
-      ruleText = '';
-      errorClass = '';
+  $: {
+    if (value && rules && rules.length) {
+      const brokenRule = rules.find((r) => !!!r.condition);
+      if (brokenRule) {
+        ruleText = brokenRule.text;
+        errorClass =
+          type !== 'area'
+            ? 'input-error transition-all duration-300'
+            : 'textarea-error transition-all duration-300';
+      } else {
+        ruleText = '';
+        errorClass = '';
+      }
     }
-    rules = rules;
   }
   const dispatch = createEventDispatcher();
   function getType(node: HTMLInputElement) {
@@ -50,7 +50,7 @@
 </script>
 
 <div class="form-control">
-  <label for="{name}" class="label">
+  <label for={name} class="label">
     <span class="label-text first-letter:uppercase">{required ? labelText + '*' : labelText}</span>
   </label>
   {#if type !== 'area'}
@@ -65,7 +65,6 @@
       {name}
       {disabled}
       on:input={() => {
-        checkRules();
         dispatch('update');
       }}
     />
@@ -81,7 +80,6 @@
       rows="10"
       {disabled}
       on:input={() => {
-        checkRules();
         dispatch('update');
       }}
     />

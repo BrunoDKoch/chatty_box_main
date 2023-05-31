@@ -91,7 +91,7 @@
     type="email"
     labelText={$t('auth.email')}
     required
-    rules={rules.emailRules}
+    bind:rules={rules.emailRules}
     disabled={pending}
     bind:value={email}
   />
@@ -100,7 +100,7 @@
     type="password"
     labelText={$t('auth.password')}
     required
-    rules={rules.passwordRules}
+    bind:rules={rules.passwordRules}
     disabled={pending}
     bind:value={password}
   />

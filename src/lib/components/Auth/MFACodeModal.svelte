@@ -17,7 +17,7 @@
     <TextInput
       type="text"
       bind:value={MFACode}
-      labelText={$t('common.code', { values: { item: $t('security.mfa.mfa'), codeCount: 1 } })}
+      labelText={$t('common.code', { values: { codeCount: 1, item: $t('security.mfa.mfa')} })}
       required
       name="MFA"
     />
