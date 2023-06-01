@@ -7,7 +7,10 @@
   const dispatch = createEventDispatcher();
   let options = [
     { label: $t('settings.notifications'), action: () => dispatch('openNotificationsModal') },
-    { label: 'leave chat', action: () => dispatch('openConfirmLeaveModal') },
+    {
+      label: $t('common.leave', { values: { item: 'chat' } }),
+      action: () => dispatch('openConfirmLeaveModal'),
+    },
   ];
   $: {
     if ($chat.userIsAdmin) {
