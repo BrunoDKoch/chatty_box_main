@@ -53,6 +53,7 @@
     "friend": "amigo",
     "clear": "limpiar",
     "remove": "remover {item}",
+    "image": "imagen",
     "at": "en",
     "settings": "ajustes",
     "new": {
@@ -81,6 +82,7 @@
     "code": "{codeCount, plural, one {código} other {códigos}} de {item}",
     "more": "más",
     "cancel": "cancelar",
+    "upload": "carga",
     "proceed": "proceder",
     "forgot": "olvidó {item}",
     "and": {
@@ -171,5 +173,9 @@
       "504": "Tiempo de espera de la puerta de enlace",
       "fallback": "Error no especificado"
     }
+  },
+  "files": {
+    "tooBig": "Archivo muy grande! Por favor, envíe archivos hasta 20 MB",
+    "dragHere": "Drag the image here or click here to select it (max size: 20MB)"
   }
 }

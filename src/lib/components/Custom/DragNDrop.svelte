@@ -1,10 +1,9 @@
 <script lang="ts">
-    import { PUBLIC_AUTH_URL_DEV } from '$env/static/public';
-  import Dropzone, { type DropzoneFile } from 'dropzone';
+  import { PUBLIC_AUTH_URL_DEV } from '$env/static/public';
+  import Dropzone from 'dropzone';
   import { ofetch } from 'ofetch';
   import { createEventDispatcher, onMount } from 'svelte';
-  import { fade } from 'svelte/transition';
-  import type { Transition } from 'svelte/types/compiler/interfaces';
+  import { t } from 'svelte-i18n';
 
   export let uploadSuccessful: boolean;
   export let uploading: boolean;
@@ -58,15 +57,15 @@
       acceptedFiles: accept,
       maxFilesize: 20,
       withCredentials: true,
-      dictFileTooBig: 'Arquivo muito grande! Por favor, envie arquivos de até 20MB.',
+      dictFileTooBig: $t('files.tooBig'),
       filesizeBase: 1000,
       thumbnailHeight: 800,
-      dictDefaultMessage: 'Arraste a imagem aqui ou clique para selecioná-la (limitado a 20MB)',
+      dictDefaultMessage: $t('files.dragHere'),
       thumbnailWidth: 800,
       thumbnailMethod: 'contain',
       maxFiles: 1,
-      dictCancelUpload: 'Cancelar envio',
-      dictRemoveFile: 'Remover imagem',
+      dictCancelUpload: `${$t('common.cancel')} ${$t('common.upload')}`,
+      dictRemoveFile: $t('common.remove', { values: { item: $t('common.image') } }),
 
       accept(file, done) {
         if (file) {
@@ -98,12 +97,7 @@
         preview.alt = '';
         fileName.innerHTML = '';
         dispatch('updateFile', null);
-        await ofetch('/api/temp', {
-          method: 'DELETE',
-          body: {
-            file: file.name,
-          },
-        });
+        
         file.previewTemplate.removeChild(document.getElementsByClassName('dz-remove')[0]);
       },
       addRemoveLinks: true,
@@ -132,7 +126,6 @@
           if (!showCheck) showCheck = true;
           dispatch('updateFile', file.name);
           setTimeout(() => {
-            console.log('triggered on success');
             showCheck = false;
             if (preview.classList.contains('opacity-10')) preview.classList.remove('opacity-10');
           }, 2000);

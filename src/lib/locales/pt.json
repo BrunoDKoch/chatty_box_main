@@ -53,6 +53,7 @@
     "friend": "amigo",
     "clear": "limpar",
     "remove": "remover {item}",
+    "image": "imagem",
     "at": "em",
     "settings": "configurações",
     "new": {
@@ -81,6 +82,7 @@
     "code": "{codeCount, plural, one {código} other {códigos}} de {item}",
     "more": "mais",
     "cancel": "cancelar",
+    "upload": "envio",
     "proceed": "proceder",
     "forgot": "esqueceu {item}",
     "and": {
@@ -171,5 +173,9 @@
       "504": "Tempo limite da porta de entrada",
       "fallback": "Erro não especificado"
     }
+  },
+  "files": {
+    "tooBig": "Arquivo muito grande! Por favor, envie arquivos de até 20MB",
+    "dragHere": "Arraste a imagem aqui ou clique para selecioná-la (limitado a 20MB)"
   }
 }

@@ -57,6 +57,7 @@
     "friend": "friend",
     "clear": "clear",
     "remove": "remove {item}",
+    "image": "image",
     "at": "at",
     "settings": "settings",
     "new": {
@@ -85,6 +86,7 @@
     "code": "{item} {codeCount, plural, one {code} other {codes}}",
     "more": "more",
     "cancel": "cancel",
+    "upload": "upload",
     "proceed": "proceed",
     "forgot": "forgot {item}",
     "and": {
@@ -175,5 +177,9 @@
       "504": "Gateway Timeout",
       "fallback": "Unspecified Error"
     }
+  },
+  "files": {
+    "tooBig": "File too big! Please limit your upload size to 20MB",
+    "dragHere": "Arrastre la imagen aquí o haga clic para seleccionarla (limitado a 20 MB)"
   }
 }

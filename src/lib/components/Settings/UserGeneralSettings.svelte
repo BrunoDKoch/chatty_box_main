@@ -1,9 +1,11 @@
 <script lang="ts">
-  import { PUBLIC_IMAGES_URL } from '$env/static/public';
   import AvatarAndNameEdit from './Editing/AvatarAndNameEdit.svelte';
   import UserAvatarModal from './Modals/UserAvatarModal.svelte';
   export let user: { userName: string; avatar?: string };
   $: showModal = false;
+  async function handleFileUpdate(file: string | null) {
+    user.avatar = file ?? undefined;
+  }
 </script>
 
 <div class="flex pl-2 gap-2 items-center">
@@ -17,5 +19,8 @@
   {/if}
 </div>
 {#if showModal}
-  <UserAvatarModal on:close={() => (showModal = !showModal)} />
+  <UserAvatarModal
+    on:updateFile={async ({ detail }) => await handleFileUpdate(detail)}
+    on:close={() => (showModal = !showModal)}
+  />
 {/if}
