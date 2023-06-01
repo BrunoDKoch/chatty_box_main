@@ -1,5 +1,6 @@
 <script lang="ts">
   import { PUBLIC_AUTH_URL_DEV } from '$env/static/public';
+  import { chatId } from '$lib/useActiveChat';
   import Dropzone from 'dropzone';
   import { ofetch } from 'ofetch';
   import { createEventDispatcher, onMount } from 'svelte';
@@ -7,6 +8,7 @@
 
   export let uploadSuccessful: boolean;
   export let uploading: boolean;
+  export let isAvatar = false;
 
   let preview: HTMLImageElement;
   let fileName: HTMLElement;
@@ -26,8 +28,20 @@
   $: showPreview, (icon = 'mdi:upload');
   const dispatch = createEventDispatcher();
 
-  const accept = 'image/*';
+  // If it's an avatar, only accept one image
+  const settingsObject = isAvatar
+    ? {
+        acceptedFiles: 'image/*',
+        parallelUploads: 1,
+        url: `${PUBLIC_AUTH_URL_DEV}/User/Avatar`,
+      }
+    : {
+        acceptedFiles: 'image/*',
+        parallelUploads: 4,
+        url: `${PUBLIC_AUTH_URL_DEV}/User/Upload/${$chatId}`,
+      };
 
+  const { acceptedFiles, parallelUploads, url } = settingsObject;
   let dropzone: Dropzone;
 
   $: {
@@ -50,11 +64,11 @@
   onMount(() => {
     dropzone = new Dropzone('form#file-drop', {
       // NOTE: might need to change url
-      url: `${PUBLIC_AUTH_URL_DEV}/User/Avatar`,
+      url,
       clickable: true,
       previewTemplate: document.getElementById('preview-template')!.innerHTML,
-      parallelUploads: 1,
-      acceptedFiles: accept,
+      parallelUploads,
+      acceptedFiles,
       maxFilesize: 20,
       withCredentials: true,
       dictFileTooBig: $t('files.tooBig'),
@@ -63,7 +77,7 @@
       dictDefaultMessage: $t('files.dragHere'),
       thumbnailWidth: 800,
       thumbnailMethod: 'contain',
-      maxFiles: 1,
+      maxFiles: parallelUploads,
       dictCancelUpload: `${$t('common.cancel')} ${$t('common.upload')}`,
       dictRemoveFile: $t('common.remove', { values: { item: $t('common.image') } }),
 
@@ -97,7 +111,7 @@
         preview.alt = '';
         fileName.innerHTML = '';
         dispatch('updateFile', null);
-        
+
         file.previewTemplate.removeChild(document.getElementsByClassName('dz-remove')[0]);
       },
       addRemoveLinks: true,

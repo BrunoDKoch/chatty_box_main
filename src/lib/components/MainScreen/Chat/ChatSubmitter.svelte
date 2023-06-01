@@ -2,10 +2,13 @@
   import { connection } from '$lib/useSignalR';
   import { chat, chatId } from '$lib/useActiveChat';
   import { t } from 'svelte-i18n';
-  import { onMount } from 'svelte';
+  import { createEventDispatcher, onMount } from 'svelte';
   import type { MessageResponse } from '$lib/types/combinationTypes';
   export let loading = true;
   export let replyTo: MessageResponse | undefined = undefined;
+
+  const dispatch = createEventDispatcher();
+
   // Message handling
   $: newMessage = '';
   $: submitting = false;
@@ -41,6 +44,7 @@
     otherUsers = otherUsers;
   });
 
+  // Because there's no other way to know if one should use "e" or "y0000000000000000"
   function getSpanishAnd(userName: string) {
     if (
       [
@@ -68,6 +72,8 @@
       return $t('common.and.2');
     return $t('common.and.1');
   }
+
+  // Print out "X is typing", "X and y are typing" or "Multiple users are typing"
   function getTypingMessage(userTyping: { userName: string; isTyping: boolean }) {
     const index = otherUsersTyping.indexOf(userTyping);
     const { length } = otherUsersTyping;
@@ -81,6 +87,7 @@
     }
   }
 
+  // Typing logic
   async function compareInput() {
     const initialInput = newMessage;
     const newInput = newMessage;
@@ -94,6 +101,7 @@
     await connection.invoke('StartTyping', $chat.id);
     setTimeout(async () => await compareInput(), 3000);
   }
+  // Message logic
   async function sendMessage() {
     if (!newMessage) return;
     submitting = true;
@@ -102,8 +110,6 @@
     submitting = false;
     newMessage = '';
   }
-  // TODO: delete logging
-  onMount(() => console.log(singleChatUserBlocked));
 </script>
 
 <form
@@ -113,10 +119,15 @@
 >
   {#if replyTo}
     <label class="label absolute bottom-100" for="">
-      <span class="label-text">{$t('common.replyTo', { values: { item: replyTo.user.userName } })}</span>
+      <span class="label-text"
+        >{$t('common.replyTo', { values: { item: replyTo.user.userName } })}</span
+      >
     </label>
   {/if}
   <div class="input-group px-4">
+    <button on:click|preventDefault={() => dispatch('toggleAttachmentsModal')} class="btn text-2xl">
+      <iconify-icon icon="mdi:attachment" />
+    </button>
     <input
       bind:this={messageComposer}
       bind:value={newMessage}

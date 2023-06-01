@@ -2,6 +2,7 @@
   import { ofetch } from 'ofetch';
   import { onMount } from 'svelte';
   import ImageModal from './ImageModal.svelte';
+  import { PUBLIC_IMAGES_URL } from '$env/static/public';
   export let link: string;
   let showImageModal = false;
   function isImageLink() {
@@ -20,12 +21,16 @@
 
 {#if isImageLink()}
   <button on:click={() => (showImageModal = !showImageModal)}>
-    <img class="max-w-52 max-h-52" src={link} alt="" />
+    <img
+      class="max-w-52 max-h-52"
+      src={link.startsWith('static/images') ? `${PUBLIC_IMAGES_URL}/${link}?width=200` : link}
+      alt=""
+    />
   </button>
 {:else if isVideoLink()}
   <video controls>
-    <track kind="captions">
-      <source src={link} type="video/{link.split('.').pop()}" >
+    <track kind="captions" />
+    <source src={link} type="video/{link.split('.').pop()}" />
   </video>
 {:else}
   <a class="link" rel="external" href={link}>{link}</a>

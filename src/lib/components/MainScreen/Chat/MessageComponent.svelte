@@ -58,7 +58,9 @@
   const links = messageContainsLink();
   function messageContainsLink() {
     const urlRegex = /((?:https?|ftp):\/\/[^\s/$.?#].[^\s]*)/gi;
-    return message.text.match(urlRegex);
+    const hostedImagesRegex = /^static\/images.*/gi;
+    console.log(message.text.match(hostedImagesRegex))
+    return message.text.match(urlRegex)?.length ? message.text.match(urlRegex) : message.text.match(hostedImagesRegex);
   }
 
   // Handling editing

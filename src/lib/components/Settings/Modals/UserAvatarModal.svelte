@@ -22,7 +22,7 @@
 
 <Modal>
   <CloseButton on:close />
-  <DragNDrop on:updateFile {uploading} {uploadSuccessful} />
+  <DragNDrop isAvatar on:updateFile {uploading} {uploadSuccessful} />
   <div class="modal-action">
     <div class="btn-group">
       <button on:click={async () => await handleCancellation()} class="btn btn-error"
