@@ -9,8 +9,7 @@
   const dispatch = createEventDispatcher();
 </script>
 
-<div class="grid grid-cols-4 place-items-center">
-  <UserAvatarAndName user={request.userAdding} size="half" />
+<UserAvatarAndName user={request.userAdding} size="half">
   <div class="btn-group items-center justify-center">
     <button
       data-tip={$t('common.accept', {
@@ -22,13 +21,13 @@
       <iconify-icon icon="mdi:check" />
     </button>
     <button
-    data-tip={$t('common.decline', {
-      values: { item: $t('friends.request', { values: { count: 1 } }) },
-    })}
+      data-tip={$t('common.decline', {
+        values: { item: $t('friends.request', { values: { count: 1 } }) },
+      })}
       on:click={() => dispatch('decision', { id, accept: false })}
       class="btn btn-circle btn-error tooltip"
     >
       <iconify-icon icon="mdi:close" />
     </button>
   </div>
-</div>
+</UserAvatarAndName>

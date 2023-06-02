@@ -8,7 +8,7 @@
 
 <button
   on:click={() => ($friendsTab = name)}
-  class="tab capitalize {active ? 'tab-active tab-bordered' : 'hover:tab-bordered '}"
+  class="tab max-md:tab-sm capitalize {active ? 'tab-active tab-bordered' : 'hover:tab-bordered '}"
 >
   {$t(name)}
 </button>

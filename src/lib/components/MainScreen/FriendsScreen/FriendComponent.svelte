@@ -17,7 +17,7 @@
 </script>
 
 <div class="py-3">
-  <div class="grid grid-cols-5 indicator gap-3">
+  <div class="grid grid-cols-2 indicator lg:gap-3">
     <span class="indicator-item indicator-start {friend.isOnline ? 'badge badge-success' : ''}" />
     <UserAvatarAndName
       user={friend}
@@ -30,7 +30,7 @@
           on:click={async () => await handleNewChat()}
           aria-label={$t('friends.newChat')}
           data-tip={$t('friends.newChat')}
-          class="btn text-3xl tooltip"
+          class="btn max-md:btn-md lg:text-3xl max-md:text-xl tooltip"
         >
           <iconify-icon icon="mdi:message-plus" />
         </button>
@@ -42,7 +42,7 @@
           aria-label={$t('common.remove', {
             values: { item: $t('common.friend', { values: { count: 1 } }) },
           })}
-          class="btn text-3xl btn-outline btn-error tooltip"
+          class="btn max-md:btn-md lg:text-3xl max-md:text-xl btn-outline btn-error tooltip"
         >
           <iconify-icon icon="mdi:close" />
         </button>
