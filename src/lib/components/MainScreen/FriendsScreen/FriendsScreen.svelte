@@ -2,12 +2,20 @@
   import { t } from 'svelte-i18n';
   import friendsTab from '$lib/friendsTab';
   import PendingScreen from './PendingScreen/PendingScreen.svelte';
-  import { friendRequests } from '$lib/useSignalR';
+  import { connection, friendRequests } from '$lib/useSignalR';
   import FriendComponent from './FriendComponent.svelte';
   import type { FriendResponse } from '$lib/types/partialTypes';
   import FriendsTabs from '$lib/components/FriendsTabs/FriendsTabs.svelte';
   import { friends } from '$lib/useSignalR';
   import BlockedScreen from './BlockedScreen/BlockedScreen.svelte';
+  import ConfirmationModal from '$lib/components/Modals/ConfirmationModal.svelte';
+  let showConfirmationModal = false;
+  $: friendToRemove = null as (typeof $friends)[number] | null;
+  async function handleDeletion() {
+    if (!friendToRemove) return;
+    await connection.invoke('RemoveFriend', friendToRemove.id);
+    showConfirmationModal = false;
+  }
 </script>
 
 <FriendsTabs />
@@ -15,7 +23,13 @@
   {#if $friendsTab === 'friends.available'}
     {#if $friends.length}
       {#each $friends as friend}
-        <FriendComponent {friend} />
+        <FriendComponent
+          on:remove={({ detail }) => {
+            friendToRemove = detail;
+            showConfirmationModal = true;
+          }}
+          {friend}
+        />
       {/each}
     {:else}
       <h2 class="first-letter:uppercase">{$t('friends.noFriends')}</h2>
@@ -26,3 +40,11 @@
     <BlockedScreen />
   {/if}
 </div>
+
+{#if showConfirmationModal}
+  <ConfirmationModal
+    on:confirm={async () => await handleDeletion()}
+    on:deny={() => showConfirmationModal = false}
+    action={$t('common.remove', { values: { item: friendToRemove?.userName } })}
+  />
+{/if}

@@ -6,7 +6,9 @@
   import { chat, chatId } from '$lib/useActiveChat';
   import UserAvatarAndName from '$lib/components/UserAvatarAndName.svelte';
   import UserAvatar from '$lib/components/UserAvatar.svelte';
+  import { createEventDispatcher } from 'svelte';
   export let friend: FriendResponse;
+  const dispatch = createEventDispatcher();
   async function handleNewChat() {
     await connection.invoke('CreateNewChat', [friend.id], undefined, undefined);
     $useActiveScreen = 'chat';
@@ -17,7 +19,12 @@
 <div class="py-3">
   <div class="grid grid-cols-5 indicator gap-3">
     <span class="indicator-item indicator-start {friend.isOnline ? 'badge badge-success' : ''}" />
-    <UserAvatarAndName user={friend} size="half" extraText={friend.isOnline ? 'Online' : 'Offline'} lowerOpacity={!friend.isOnline}>
+    <UserAvatarAndName
+      user={friend}
+      size="half"
+      extraText={friend.isOnline ? 'Online' : 'Offline'}
+      lowerOpacity={!friend.isOnline}
+    >
       <div class="btn-group {friend.isOnline ? 'opacity-100' : 'opacity-50'}">
         <button
           on:click={async () => await handleNewChat()}
@@ -28,9 +35,10 @@
           <iconify-icon icon="mdi:message-plus" />
         </button>
         <button
-          data-tip="{$t('common.remove', {
+          on:click={() => dispatch('remove', friend)}
+          data-tip={$t('common.remove', {
             values: { item: $t('common.friend', { values: { count: 1 } }) },
-          })}"
+          })}
           aria-label={$t('common.remove', {
             values: { item: $t('common.friend', { values: { count: 1 } }) },
           })}

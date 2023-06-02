@@ -111,7 +111,9 @@
     "areYouSure": "are you sure",
     "wishTo": "you wish to {item}",
     "yes": "yes",
-    "no": "no"
+    "no": "no",
+    "accept": "accept {item}",
+    "decline": "decline {item}"
   },
   "aside": {
     "searchChats": "{search} chats"
@@ -123,7 +125,8 @@
     "blocked": "blocked",
     "add": "add friend",
     "noFriends": "you don't have any friends added",
-    "newChat": "new chat"
+    "newChat": "new chat",
+    "request": "{count, plural, one {friend request} other {friend requests}}"
   },
   "message": {
     "readBy": "read by",

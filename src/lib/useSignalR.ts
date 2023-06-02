@@ -91,6 +91,22 @@ connection.on('friends', (data: FriendResponse[]) => {
     return f;
   });
 });
+connection.on('newFriend', (data: FriendResponse | null) => {
+  if (!data) return;
+  friends.update((f) => {
+    f.push(data);
+    f.sort((a, b) => {
+      if (a.userName < b.userName) return -1;
+      if (a.userName > b.userName) return 1;
+      return 0;
+    });
+    return f;
+  });
+});
+connection.on('removeFriend', (data: { userId: string; friendId: string }) => {
+  const { userId, friendId } = data;
+  friends.update((f) => (f = f.filter((friend) => friend.id !== userId && friend.id !== friendId)));
+});
 connection.on('blockedUsers', (data: UserPartialResponse[]) => {
   blockedUsers.update((b) => {
     const newItems = data.filter((item) => !b.includes(item));

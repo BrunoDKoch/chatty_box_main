@@ -24,7 +24,7 @@
         <span>¿</span>
       {/if}
       <span class="first-letter:uppercase">
-        {$t('common.areYouSure')}
+        {$t('common.areYouSure').charAt(0).toUpperCase()}{$t('common.areYouSure').slice(1)}
         {$t('common.wishTo', { values: { item: action } })}?
       </span>
     </p>

@@ -1,6 +1,7 @@
 import type { Cookies } from '@sveltejs/kit';
 import type { LayoutServerLoad } from './$types';
-import { waitLocale } from 'svelte-i18n';
+import { locales, waitLocale } from 'svelte-i18n';
+import { get } from 'svelte/store';
 
 function getTheme(cookies: Cookies) {
   let theme = cookies.get('theme') as 'light' | 'dark';
@@ -17,7 +18,8 @@ function getLanguage(data: { cookies: Cookies; request: Request }) {
   const { cookies, request } = data;
   if (cookies.get('lang')) return cookies.get('lang');
   const lang = request.headers.get('accept-language')!.split(',')[0];
-  cookies.set('lang', lang.slice(0, 2), {
+  const existingLocale = get(locales).find((l) => lang.startsWith(l));
+  cookies.set('lang', existingLocale ?? 'en', {
     path: '/',
     expires: new Date((new Date()).setFullYear(9999))
   });

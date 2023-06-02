@@ -107,7 +107,9 @@
     "areYouSure": "está seguro",
     "wishTo": "que desea {item}",
     "yes": "sí",
-    "no": "no"
+    "no": "no",
+    "accept": "aceptar {item}",
+    "decline": "rechazar {item}"
   },
   "aside": {
     "searchChats": "{search} chats"
@@ -119,7 +121,8 @@
     "blocked": "bloqueado",
     "add": "añadir amigo",
     "noFriends": "no tienes amigos agregados",
-    "newChat": "nuevo chat"
+    "newChat": "nuevo chat",
+    "request": "{count, plural, one {petición de amistad} other {peticiones de amistad}}"
   },
   "message": {
     "readBy": "leído por",
