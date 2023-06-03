@@ -30,7 +30,7 @@
 </button>
 <div class="flex gap-2 items-center">
   {#if editingName}
-    <form on:submit|preventDefault={async () => await handleSubmit()} class="input-group" action="">
+    <form on:submit|preventDefault={async () => await handleSubmit()} class="join" action="">
       <input bind:value={user.userName} class="input input-bordered" type="text" />
       <button class="btn">{$t('common.submit')}</button>
     </form>

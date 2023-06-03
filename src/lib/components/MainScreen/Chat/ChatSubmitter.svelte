@@ -118,14 +118,14 @@
   class="box-border relative form-control overflow-hidden max-md:pb-10 max-h-fit"
 >
   {#if replyTo}
-    <label class="label absolute bottom-100" for="">
+    <label class="label bottom-100" for="">
       <span class="label-text"
         >{$t('common.replyTo', { values: { item: replyTo.user.userName } })}</span
       >
     </label>
   {/if}
-  <div class="input-group px-4">
-    <button on:click|preventDefault={() => dispatch('toggleAttachmentsModal')} class="btn text-2xl">
+  <div class="join px-4">
+    <button type="button" on:click|preventDefault={() => dispatch('toggleAttachmentsModal')} class="btn join-item text-2xl">
       <iconify-icon icon="mdi:attachment" />
     </button>
     <input
@@ -133,12 +133,12 @@
       bind:value={newMessage}
       type="text"
       placeholder={singleChatUserBlocked ? $t('message.cannotCommunicate') : ''}
-      class="input {messageError ? 'input-error' : 'input-bordered'} {disabled
+      class="input join-item {messageError ? 'input-error' : 'input-bordered'} {disabled
         ? 'input-disabled'
         : ''} w-full box-border"
       {disabled}
     />
-    <button {disabled} class="btn text-2xl">
+    <button {disabled} class="btn text-2xl join-item">
       <iconify-icon icon={submitting ? 'svg-spinners:6-dots-scale' : 'mdi:send'} />
     </button>
   </div>

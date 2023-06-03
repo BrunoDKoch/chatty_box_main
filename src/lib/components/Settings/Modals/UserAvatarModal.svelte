@@ -24,11 +24,11 @@
   <CloseButton on:close />
   <DragNDrop isAvatar on:updateFile {uploading} {uploadSuccessful} />
   <div class="modal-action">
-    <div class="btn-group">
-      <button on:click={async () => await handleCancellation()} class="btn btn-error"
+    <div class="join">
+      <button on:click={async () => await handleCancellation()} class="btn join-item btn-error"
         >{$t('common.cancel')}</button
       >
-      <button on:click={() => dispatch('close')} class="btn btn-success">OK</button>
+      <button on:click={() => dispatch('close')} class="btn join-item btn-success">OK</button>
     </div>
   </div>
 </Modal>

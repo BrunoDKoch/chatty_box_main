@@ -40,7 +40,7 @@
     {/if}
   </div>
   <div class="modal-action">
-    <div class="btn-group">
+    <div class="join">
       <button class="btn btn-warning" on:click={() => (selection = null)}>
         {$t('common.clear')}
       </button>

@@ -8,14 +8,14 @@
 </script>
 
 <div class="form-control w-fit overflow-hidden">
-  <div class="input-group input-group-sm overflow-hidden">
+  <div class="join join overflow-hidden">
     <input
       type="search"
-      class="input input-sm capitalize w-48"
+      class="input join-item input-sm capitalize w-48"
       bind:value={search}
       placeholder={$t('aside.searchChats', { values: { search: ($t('common.search')) } })}
     />
-    <button on:click={() => (searching = !searching)} class="btn btn-square btn-sm">
+    <button on:click={() => (searching = !searching)} class="btn join-item btn-square btn-sm">
       <label class="swap swap-rotate" for="submit">
         <input type="checkbox" bind:checked={searching} name="submit" />
         <iconify-icon icon="mdi:archive-search-outline" bind:this={searchIcon} class="swap-off" height="1.4rem" />

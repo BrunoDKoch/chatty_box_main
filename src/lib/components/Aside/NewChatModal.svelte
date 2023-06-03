@@ -56,11 +56,11 @@
     <UserSearch bind:selection />
   </div>
   <div class="modal-action">
-    <div class="btn-group">
-      <button on:click={() => dispatch('close')} class="btn btn-error">
+    <div class="join">
+      <button on:click={() => dispatch('close')} class="btn join-item btn-error">
         {$t('common.cancel')}
       </button>
-      <button on:click={async () => await handleNewChat()} class="btn btn-success">
+      <button on:click={async () => await handleNewChat()} class="btn join-item btn-success">
         {$t('common.proceed')}
       </button>
     </div>

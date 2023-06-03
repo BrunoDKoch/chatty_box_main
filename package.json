@@ -21,7 +21,7 @@
     "@types/dropzone": "^5.7.4",
     "@types/qrcode": "^1.5.0",
     "autoprefixer": "^10.4.14",
-    "daisyui": "^2.51.5",
+    "daisyui": "^3.0.1",
     "ofetch": "^1.0.1",
     "postcss": "^8.4.21",
     "prettier": "^2.8.0",

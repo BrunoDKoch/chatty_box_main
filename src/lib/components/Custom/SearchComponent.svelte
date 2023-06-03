@@ -79,10 +79,10 @@
 
 <form
   on:submit|preventDefault={async () => await handleSubmit()}
-  class="input-group input-group-sm"
+  class="join"
 >
   <TextInputWithButton name="chatSearch" type="search" size="small" bind:value={search}>
-    <button type="submit" class="btn btn-square btn-sm">
+    <button type="submit" class="btn join-item btn-square btn-sm">
       <label class="swap swap-rotate" for="submit">
         <input type="checkbox" bind:checked={fetching} name="submit" />
         <iconify-icon

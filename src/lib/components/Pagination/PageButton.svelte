@@ -5,7 +5,7 @@
 
 <button
   on:click={() => (activePage = pageNumber + 1)}
-  class="btn {pageNumber + 1 === activePage ? 'btn-active' : ''}"
+  class="btn join-item {pageNumber + 1 === activePage ? 'btn-active' : ''}"
 >
   {pageNumber + 1}
 </button>

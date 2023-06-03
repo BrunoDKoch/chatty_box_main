@@ -53,6 +53,6 @@
 
 {#if showModal}
   <div class="absolute">
-    <UserModal on:close={() => (showModal = false)} {user} />
+    <UserModal on:close={() => (showModal = false)} userId={user.id} />
   </div>
 {/if}

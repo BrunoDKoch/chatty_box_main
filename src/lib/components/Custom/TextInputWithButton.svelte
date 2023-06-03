@@ -25,7 +25,7 @@
   export let disabled: boolean = false;
   export let name: string | undefined;
   export let size: 'base' | 'small' | 'large' = 'base';
-  let { inputSize, groupSize } = getSize();
+  let { inputSize } = getSize();
   $: errorClass = '';
   $: ruleText = '';
   function checkRules() {
@@ -49,21 +49,20 @@
       case 'base':
         return {
           inputSize: '',
-          groupSize: '',
         };
       case 'large':
-        return { inputSize: 'input-lg', groupSize: 'input-group-lg' };
+        return { inputSize: 'input-lg'};
       case 'small':
-        return { inputSize: 'input-sm', groupSize: 'input-group-sm' };
+        return { inputSize: 'input-sm' };
     }
   }
 </script>
 
-<div class="input-group {groupSize}">
+<div class="join">
   <input
     id={name}
     use:getType
-    class="input input-bordered {inputSize} {!disabled ? errorClass : 'input-disabled'}"
+    class="input join-item input-bordered {inputSize} {!disabled ? errorClass : 'input-disabled'}"
     bind:value
     {required}
     {name}

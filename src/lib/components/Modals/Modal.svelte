@@ -1,9 +1,10 @@
 <script lang="ts">
+    import { onMount } from 'svelte';
   import { scale } from 'svelte/transition';
 
   export let modalType: 'base' | 'error' | 'warning' = 'base';
   let show = false;
-  show = true;
+  let modalElement: HTMLDialogElement;
   let bgClass = getBgClass();
   function getBgClass() {
     switch (modalType) {
@@ -15,10 +16,14 @@
         return 'bg-base'
     }
   }
+  onMount(() => {
+    modalElement.showModal();
+    show = true;
+  })
 </script>
 
 <div>
-  <dialog class="modal w-screen h-screen modal-open">
+  <dialog bind:this={modalElement} class="modal w-screen h-screen">
     {#if show}
       <div
         transition:scale
@@ -27,5 +32,8 @@
         <slot />
       </div>
     {/if}
+    <form method="dialog" class="modal-backdrop">
+      <button>close</button>
+    </form>
   </dialog>
 </div>

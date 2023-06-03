@@ -29,8 +29,8 @@
       </span>
     </p>
   </div>
-  <div class="modal-action btn-group">
-    <button class="btn btn-success" on:click={() => dispatch('confirm')}>{$t('common.yes')}</button>
-    <button class="btn btn-error" on:click={() => dispatch('deny')}>{$t('common.no')}</button>
+  <div class="modal-action join">
+    <button class="btn join-item btn-success" on:click={() => dispatch('confirm')}>{$t('common.yes')}</button>
+    <button class="btn join-item btn-error" on:click={() => dispatch('deny')}>{$t('common.no')}</button>
   </div>
 </Modal>

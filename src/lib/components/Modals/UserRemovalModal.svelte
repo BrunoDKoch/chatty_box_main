@@ -39,12 +39,12 @@
     <Select name="chatter" labelText="Chatter" {options} bind:value={selection} />
   </div>
   <div class="modal-action">
-    <div class="btn-group">
-      <button class="btn btn-warning" on:click={() => (selection = '')}>
+    <div class="join">
+      <button class="btn join-item btn-warning" on:click={() => (selection = '')}>
         {$t('common.clear')}
       </button>
       <button
-        class="btn btn-success"
+        class="btn join-item btn-success"
         disabled={!selection}
         on:click={() => (showConfirmationModal = !showConfirmationModal)}
       >

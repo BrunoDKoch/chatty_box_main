@@ -25,12 +25,12 @@
       extraText={friend.isOnline ? 'Online' : 'Offline'}
       lowerOpacity={!friend.isOnline}
     >
-      <div class="btn-group {friend.isOnline ? 'opacity-100' : 'opacity-50'}">
+      <div class="join {friend.isOnline ? 'opacity-100' : 'opacity-50'}">
         <button
           on:click={async () => await handleNewChat()}
           aria-label={$t('friends.newChat')}
           data-tip={$t('friends.newChat')}
-          class="btn max-md:btn-md lg:text-3xl max-md:text-xl tooltip"
+          class="btn max-md:btn-md lg:text-3xl max-md:text-xl join-item tooltip"
         >
           <iconify-icon icon="mdi:message-plus" />
         </button>
@@ -42,7 +42,7 @@
           aria-label={$t('common.remove', {
             values: { item: $t('common.friend', { values: { count: 1 } }) },
           })}
-          class="btn max-md:btn-md lg:text-3xl max-md:text-xl btn-outline btn-error tooltip"
+          class="btn max-md:btn-md lg:text-3xl max-md:text-xl btn-outline btn-error join-item tooltip"
         >
           <iconify-icon icon="mdi:close" />
         </button>

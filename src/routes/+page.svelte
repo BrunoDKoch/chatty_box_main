@@ -13,15 +13,13 @@
   import { chat } from '$lib/useActiveChat';
   import type { UserPartialResponse } from '$lib/types/partialTypes';
   import { checkIfLoggedIn, accessToken } from '$lib/useAuth';
-  import { goto } from '$app/navigation';
   import ErrorModal from '$lib/components/Modals/ErrorModal.svelte';
 
   let error: { status: number; cause: string; message: string } | null = null;
 
   $: title = 'ChattyBox';
   $: {
-    if ($online)
-      title = $messagesCount ? `(${$messagesCount}) ${title}` : title;
+    if ($online) title = $messagesCount ? `(${$messagesCount}) ${title}` : title;
   }
 
   $: notifications = [] as {
@@ -40,6 +38,11 @@
         const { sentAt, text } = data;
         existingChat.lastMessage = { from: data.user, sentAt, text, read: data.isFromCaller };
       }
+      p.sort((a, b) => {
+        if (a.lastMessage && b.lastMessage)
+          return Number(new Date(b.lastMessage.sentAt)) - Number(new Date(a.lastMessage.sentAt));
+        return Number(new Date(b.createdAt)) - Number(new Date(a.createdAt));
+      });
       return p;
     });
     chat.update((ch) => {

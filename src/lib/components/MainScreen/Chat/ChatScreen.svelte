@@ -19,15 +19,22 @@
   };
   $: $chatId, (loading = $chat.id !== $chatId);
   $: activeSearchPage = 1;
+  $: messageToDelete = null as MessageResponse | null;
   let showUserSearchModal = false;
   let showUserRemovalModal = false;
   let showConfirmLeaveModal = false;
   let showNotificationsModal = false;
+  let showConfirmDeletionModal = false;
   async function handleLeaveChat() {
     await connection.invoke('LeaveChat', $chatId);
     $useActiveScreen = 'friends';
     $previews = $previews.filter((p) => p.id !== $chatId);
     $previews = $previews;
+  }
+  async function handleMessageDeletion(message: MessageResponse | null) {
+    if (!message) return;
+    await connection.invoke('DeleteMessage', message.id, message.chatId);
+    messageToDelete = null;
   }
 </script>
 
@@ -49,7 +56,15 @@
       ? 'grid-cols-3'
       : 'grid-cols-1'}"
   >
-    <MainChatWrapper bind:searchResults bind:loading />
+    <MainChatWrapper
+      on:delete={({ detail }) => {
+        console.log({ detail });
+        messageToDelete = detail;
+        showConfirmDeletionModal = !showConfirmDeletionModal;
+      }}
+      bind:searchResults
+      bind:loading
+    />
     {#if searchResults.messages && searchResults.messages.length}
       <MessagesWrapper
         replyTo={undefined}
@@ -74,5 +89,13 @@
     on:deny={() => (showConfirmLeaveModal = !showConfirmLeaveModal)}
     on:confirm={async () => await handleLeaveChat()}
     action={$t('common.leave', { values: { item: 'chat' } })}
+  />
+{:else if showConfirmDeletionModal && messageToDelete}
+  <ConfirmationModal
+    on:deny={() => (showConfirmDeletionModal = !showConfirmDeletionModal)}
+    on:confirm={async () => await handleMessageDeletion(messageToDelete)}
+    action={$t('common.remove', {
+      values: { item: $t('common.message', { values: { count: 1 } }) },
+    })}
   />
 {/if}

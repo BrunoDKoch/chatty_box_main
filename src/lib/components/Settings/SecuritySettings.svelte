@@ -6,7 +6,7 @@
   let showMFAModal = false;
 </script>
 
-<menu class="menu uppercase">
+<menu class="menu menu-lg uppercase">
   <li>
     <a href="/" on:click|preventDefault={() => (showLoginAttempts = !showLoginAttempts)}>
       {$t('security.loginAttempt.loginAttempts')}

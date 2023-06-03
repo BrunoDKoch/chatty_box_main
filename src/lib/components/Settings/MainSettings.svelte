@@ -10,7 +10,7 @@
 </script>
 
 <UserGeneralSettings {user} />
-<menu class="menu">
+<menu class="menu menu-lg">
   {#each settingOptions as item}
     <li class="uppercase {user ? '' : 'disabled'}">
       <a

@@ -8,6 +8,7 @@
   import MessageLinkPreview from './MessageLinkPreview.svelte';
   import TextInput from '$lib/components/Custom/TextInput.svelte';
   import MessageRepliedTo from './MessageRepliedTo.svelte';
+  import { hostedImagesRegex, urlRegex } from '$lib/useLinkCheck';
   export let message: MessageResponse;
   export let focusOn: boolean;
   export let hideBottomInfo = false;
@@ -57,10 +58,9 @@
   // Handling links
   const links = messageContainsLink();
   function messageContainsLink() {
-    const urlRegex = /((?:https?|ftp):\/\/[^\s/$.?#].[^\s]*)/gi;
-    const hostedImagesRegex = /^static\/images.*/gi;
-    console.log(message.text.match(hostedImagesRegex))
-    return message.text.match(urlRegex)?.length ? message.text.match(urlRegex) : message.text.match(hostedImagesRegex);
+    return message.text.match(urlRegex)?.length
+      ? message.text.match(urlRegex)
+      : message.text.match(hostedImagesRegex);
   }
 
   // Handling editing
@@ -78,7 +78,7 @@
         name: $t('common.remove', { values }),
         icon: 'mdi:trash-can',
         action() {
-          return;
+          dispatch('delete', message);
         },
       });
     if (message.isFromCaller)
@@ -102,9 +102,9 @@
   on:mouseleave={() => (showOptions = !showOptions)}
 >
   {#if showOptions}
-    <div class="absolute btn-group {message.isFromCaller ? 'right-14' : 'left-14'} z-50">
+    <div class="absolute join {message.isFromCaller ? 'right-14' : 'left-14'} z-50">
       {#each options as option}
-        <button on:click={() => option.action()} data-tip={option.name} class="btn tooltip">
+        <button on:click={() => option.action()} data-tip={option.name} class="btn join-item tooltip">
           <iconify-icon icon={option.icon} />
         </button>
       {/each}
@@ -126,7 +126,7 @@
       {#if isEditing}
         <form
           on:submit|preventDefault={async () => await handleEditSubmission()}
-          class="input-group w-full"
+          class="join w-full"
           action=""
         >
           <input type="text" class="input w-full" name="edit" bind:value={message.text} />

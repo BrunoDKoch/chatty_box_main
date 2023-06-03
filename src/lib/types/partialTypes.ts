@@ -31,6 +31,7 @@ interface UserDetailedResponse extends UserPartialResponse {
   friendsInCommon: UserPartialResponse[];
   chatsInCommon: ChatBasicInfo[];
   friendRequestPending: boolean;
+  isFriend: boolean;
 }
 
 interface ChatPreview extends ChatBasicInfo {

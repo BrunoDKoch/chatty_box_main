@@ -7,7 +7,7 @@
   let pages = Math.ceil(total / itemsPerPage);
 </script>
 
-<div class="btn-group">
+<div class="join">
   {#if pages < 5}
     {#each { length: pages } as _, pageNumber}
       <PageButton bind:activePage {pageNumber} />

@@ -34,10 +34,10 @@
         <thead>
           <tr>
             <th />
-            <th>{$t('security.loginAttempt.attemptedAt')}</th>
-            <th>{$t('security.loginAttempt.country')}</th>
-            <th>{$t('security.loginAttempt.city')}</th>
-            <th>{$t('security.loginAttempt.successful')}</th>
+            <th class="first-letter:uppercase">{$t('security.loginAttempt.attemptedAt')}</th>
+            <th class="first-letter:uppercase">{$t('security.loginAttempt.country')}</th>
+            <th class="first-letter:uppercase">{$t('security.loginAttempt.city')}</th>
+            <th class="first-letter:uppercase">{$t('security.loginAttempt.successful')}</th>
           </tr>
         </thead>
         <tbody>

@@ -10,7 +10,7 @@
 </script>
 
 <UserAvatarAndName user={request.userAdding} size="half">
-  <div class="btn-group items-center justify-center">
+  <div class="join items-center justify-center">
     <button
       data-tip={$t('common.accept', {
         values: { item: $t('friends.request', { values: { count: 1 } }) },
