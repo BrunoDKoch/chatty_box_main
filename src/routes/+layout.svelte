@@ -6,8 +6,6 @@
   import { locale } from 'svelte-i18n';
   import { theme } from '$lib/theme';
   import { ofetch } from 'ofetch';
-  import { connection } from '$lib/useSignalR';
-  import { HubConnectionState } from '@microsoft/signalr';
   export let data: LayoutServerData;
   $theme = data.theme;
 

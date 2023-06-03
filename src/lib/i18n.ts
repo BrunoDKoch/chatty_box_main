@@ -8,5 +8,5 @@ register('es', async () => await import('./locales/es.json'));
 register('pt', async () => await import('./locales/pt.json'));
 init({
   fallbackLocale,
-  initialLocale: browser ? window.navigator.language : fallbackLocale,
+  initialLocale: browser ? window.navigator.language.slice(0, 2) : fallbackLocale,
 });
