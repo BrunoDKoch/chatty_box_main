@@ -7,12 +7,19 @@
   import MessagesWrapper from './MessagesWrapper.svelte';
   export let loading: boolean;
   export let searchResults: { messages: MessageResponse[]; messageCount: number };
+
+  // Used to dynamically change layout
+  // In mobile, the main chat should be hidden if search results are open
   $: searchResultsAreOpen = searchResults.messages && !!searchResults.messages.length;
   $: replyTo = undefined as MessageResponse | undefined;
   let showAttachmentsModal = false;
 </script>
 
-<div class="flex {searchResultsAreOpen ? 'col-span-2' : 'col-span-1'} flex-col max-md:h-[95vh]">
+<div
+  class="flex {searchResultsAreOpen
+    ? 'max-md:hidden lg:col-span-2'
+    : 'col-span-1'} flex-col max-md:h-[95vh]"
+>
   {#if $chat && $chat.id === $chatId}
     <MessagesWrapper
       on:delete

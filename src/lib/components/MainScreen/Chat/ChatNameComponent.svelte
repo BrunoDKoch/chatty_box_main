@@ -8,8 +8,8 @@
     messageCount: 0,
   };
   export let activeSearchPage = 1;
+  export let search = '';
   $: userNamesJoined = $chat.users.map((u) => u.userName).join(', ');
-  $: search = '';
 </script>
 
 <div class="bg-base-200 px-2 max-md:w-full lg:w-[75vw] z-50 py-5">

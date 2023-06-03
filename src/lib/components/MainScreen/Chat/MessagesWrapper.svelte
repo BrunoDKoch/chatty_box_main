@@ -5,6 +5,7 @@
   import MessageComponent from './MessageComponent.svelte';
   import Pagination from '$lib/components/Pagination/Pagination.svelte';
   import SystemMessageComponent from './SystemMessageComponent.svelte';
+  import CloseButton from '$lib/components/Custom/CloseButton.svelte';
   export let pagination = false;
   export let total: number;
   export let messages: MessageResponse[];
@@ -12,6 +13,7 @@
   export let activePage = 1;
   export let hasMore: boolean = false;
   export let replyTo: undefined | MessageResponse;
+  export let isSearch = false;
   $: combinedMessages = [...messages, ...systemMessages];
   $: combinedMessages,
     combinedMessages.sort((a, b) => Number(new Date(getDate(a))) - Number(new Date(getDate(b))));
@@ -39,9 +41,15 @@
   }
 </script>
 
-<div class="overflow-y-auto overflow-x-hidden max-md:h-[75vh] lg:h-[82vh] box-border">
+<div
+  class="overflow-y-auto {isSearch
+    ? 'lg:border-l-2'
+    : ''} overflow-x-hidden max-md:h-[75vh] lg:h-[82vh] box-border"
+>
   {#if hasMore && !pagination}
     <AutoScroller skip={messages.length} />
+  {:else if isSearch}
+    <CloseButton on:close />
   {/if}
   {#if combinedMessages.length}
     {#each combinedMessages as message}

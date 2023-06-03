@@ -7,5 +7,5 @@
 <p class="opacity-70 text-center first-letter:uppercase">
   {message.instigatingUser.userName}
   {message.eventType.replace('user', '')}
-  {message.affectedUser?.userName}
+  {message.affectedUser?.userName ?? ''}
 </p>

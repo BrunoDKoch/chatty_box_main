@@ -20,6 +20,7 @@
   $: $chatId, (loading = $chat.id !== $chatId);
   $: activeSearchPage = 1;
   $: messageToDelete = null as MessageResponse | null;
+  $: search = '';
   let showUserSearchModal = false;
   let showUserRemovalModal = false;
   let showConfirmLeaveModal = false;
@@ -46,6 +47,7 @@
   <ChatNameComponent
     bind:activeSearchPage
     bind:searchResults
+    bind:search
     on:openUserSearchModal={() => (showUserSearchModal = !showUserSearchModal)}
     on:openUserRemovalModal={() => (showUserRemovalModal = !showUserRemovalModal)}
     on:openNotificationsModal={() => (showNotificationsModal = !showNotificationsModal)}
@@ -53,7 +55,7 @@
   />
   <div
     class="grid {searchResults.messages && searchResults.messages.length
-      ? 'grid-cols-3'
+      ? 'lg:grid-cols-3'
       : 'grid-cols-1'}"
   >
     <MainChatWrapper
@@ -68,6 +70,11 @@
     {#if searchResults.messages && searchResults.messages.length}
       <MessagesWrapper
         replyTo={undefined}
+        on:close={() => {
+          searchResults.messages.length = 0;
+          search = '';
+        }}
+        isSearch
         systemMessages={[]}
         bind:messages={searchResults.messages}
         bind:total={searchResults.messageCount}
