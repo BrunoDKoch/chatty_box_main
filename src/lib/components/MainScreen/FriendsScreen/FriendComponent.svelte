@@ -16,7 +16,7 @@
   }
 </script>
 
-<div class="py-3">
+<div class="py-5">
   <div class="grid grid-cols-2 indicator lg:gap-3">
     <span class="indicator-item indicator-start {friend.isOnline ? 'badge badge-success' : ''}" />
     <UserAvatarAndName
