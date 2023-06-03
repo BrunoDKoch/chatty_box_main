@@ -137,17 +137,20 @@
 
 <title>{title}</title>
 {#if $online}
-  <div class="lg:grid lg:grid-cols-4 max-md:flex max-md:flex-col w-screen">
+  <div class="lg:grid lg:grid-cols-4 max-md:flex max-md:flex-col w-screen overflow-hidden">
     <aside class="col-span-1 min-h-screen max-md:hidden">
       <Aside />
     </aside>
-    <div class="lg:hidden flex bg-base-200 z-50">
+    <div class="lg:hidden flex items-center bg-base-200 z-50">
       <button
         on:click={() => ($useActiveScreen = $useActiveScreen === 'aside' ? 'friends' : 'aside')}
         class="btn btn-ghost text-4xl"
       >
         <iconify-icon icon="mdi:menu" />
       </button>
+      {#if $useActiveScreen === 'chat' && $chat}
+        <h1 class="font-bold text-2xl">{$chat.chatName ?? $chat.users.map((u) => u.userName).join(', ')}</h1>
+      {/if}
     </div>
     <section class="lg:col-span-3 max-h-screen overflow-hidden">
       <ActiveScreen />

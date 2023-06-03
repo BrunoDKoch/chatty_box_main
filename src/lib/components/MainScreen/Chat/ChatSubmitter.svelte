@@ -115,10 +115,10 @@
 <form
   on:keydown={async () => await handleTyping()}
   on:submit|preventDefault={async () => await sendMessage()}
-  class="box-border relative form-control overflow-hidden max-md:pb-10 max-h-fit"
+  class="box-border relative form-control overflow-hidden max-h-fit"
 >
   {#if replyTo}
-    <label class="label bottom-100" for="">
+    <label class="label absolute bottom-0" for="">
       <span class="label-text"
         >{$t('common.replyTo', { values: { item: replyTo.user.userName } })}</span
       >

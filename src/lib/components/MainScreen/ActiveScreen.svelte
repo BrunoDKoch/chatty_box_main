@@ -5,7 +5,7 @@
   import Aside from '../Aside/Aside.svelte';
 </script>
 
-<div class="{$useActiveScreen !== 'aside' ? 'bg-base-300' : ''} h-screen">
+<div class="{$useActiveScreen !== 'aside' ? 'bg-base-300' : ''} overflow-hidden h-screen">
   {#if $useActiveScreen === 'friends'}
     <FriendsScreen />
   {:else if $useActiveScreen === 'chat'}
