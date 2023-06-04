@@ -4,13 +4,14 @@
     UserDetailedResponse,
     UserPartialResponse,
   } from '$lib/types/partialTypes';
-  import { connection, friends } from '$lib/useSignalR';
+  import { blockedUsers, connection, friends } from '$lib/useSignalR';
   import { t } from 'svelte-i18n';
   import Modal from './Modal.svelte';
   import UserAvatarAndName from '../UserAvatarAndName.svelte';
   import { onMount } from 'svelte';
   import CloseButton from '../Custom/CloseButton.svelte';
   import { error } from '@sveltejs/kit';
+    import useBlockToggle from '$lib/useBlockToggle';
 
   export let userId: string;
   $: user = null as null | UserDetailedResponse;
@@ -24,7 +25,13 @@
   }
   async function handleBlockToggle() {
     try {
-      await connection.invoke('ToggleBlock', userId);
+      const userResponse = await useBlockToggle(userId);
+      if (userResponse.isBlocked) {
+        $friends = $friends.filter((f) => f.id !== userResponse.id);
+        $blockedUsers.push(userResponse);
+        return;
+      }
+      $blockedUsers = $blockedUsers.filter((b) => b.id !== userResponse.id)
     } catch (err) {
       throw error((err as any).status, err as any);
     } finally {
