@@ -139,7 +139,10 @@
       "status": "status",
       "online": "online",
       "busy": "ocupado(a)",
-      "away": "ausente"
+      "away": "ausente",
+      "device": "dispositivo",
+      "os": "sistema operacional",
+      "browser": "navegador"
     }
   },
   "security": {

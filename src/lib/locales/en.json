@@ -152,7 +152,10 @@
       "attemptedAt": "attempted at",
       "successful": "successful",
       "city": "city",
-      "country": "country"
+      "country": "country",
+      "device": "device",
+      "os": "operating system",
+      "browser": "browser"
     },
     "mfa": {
       "mfa": "multi-factor authentication",

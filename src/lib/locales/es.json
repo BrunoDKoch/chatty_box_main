@@ -148,7 +148,10 @@
       "attemptedAt": "intento en",
       "successful": "éxito",
       "city": "cuidad",
-      "country": "país"
+      "country": "país",
+      "device": "dispositivo",
+      "os": "sistema operativo",
+      "browser": "navegador"
     },
     "mfa": {
       "mfa": "autenticación multifactor",

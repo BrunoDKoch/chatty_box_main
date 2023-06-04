@@ -1,7 +1,7 @@
 <script lang="ts">
   import { t, date, time, locale } from 'svelte-i18n';
   import type { UserLoginAttempt } from '@prisma/client';
-  import { createEventDispatcher, onMount } from 'svelte';
+  import { onMount } from 'svelte';
   import { connection } from '$lib/useSignalR';
   import Pagination from '$lib/components/Pagination/Pagination.svelte';
   import Modal from '$lib/components/Modals/Modal.svelte';
@@ -12,7 +12,15 @@
   let total: number;
   const countryNames = new Intl.DisplayNames([$locale!], { type: 'region' });
 
-  const dispatch = createEventDispatcher();
+  const headers = [
+    'security.loginAttempt.attemptedAt',
+    'security.loginAttempt.country',
+    'security.loginAttempt.city',
+    'security.loginAttempt.device',
+    'security.loginAttempt.os',
+    'security.loginAttempt.browser',
+    'security.loginAttempt.successful'
+  ]
 
   connection.on('loginAttempts', (data: { attempts: UserLoginAttempt[]; count: number }) => {
     attempts = data.attempts;
@@ -34,10 +42,9 @@
         <thead>
           <tr>
             <th />
-            <th class="first-letter:uppercase">{$t('security.loginAttempt.attemptedAt')}</th>
-            <th class="first-letter:uppercase">{$t('security.loginAttempt.country')}</th>
-            <th class="first-letter:uppercase">{$t('security.loginAttempt.city')}</th>
-            <th class="first-letter:uppercase">{$t('security.loginAttempt.successful')}</th>
+            {#each headers as header}
+              <th class="first-letter:uppercase">{$t(header)}</th>
+            {/each}
           </tr>
         </thead>
         <tbody>
@@ -51,6 +58,9 @@
               >
               <td>{countryNames.of(attempt.countryIsoCode)}</td>
               <td>{attempt.cityName}</td>
+              <td>{attempt.device}</td>
+              <td>{attempt.os}</td>
+              <td>{attempt.browser}</td>
               <td>
                 <iconify-icon
                   class="text-lg {attempt.success ? 'text-info' : 'text-error'}"

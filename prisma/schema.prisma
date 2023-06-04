@@ -134,6 +134,9 @@ model UserLoginAttempt {
   latitude       Float
   longitude      Float
   success        Boolean
+  os             String   @default("unknown")
+  device         String   @default("unknown")
+  browser        String   @default("unknown")
 }
 
 // Chat and messages
