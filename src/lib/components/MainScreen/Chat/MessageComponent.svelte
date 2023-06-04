@@ -34,9 +34,11 @@
   $: readByTooltip = readBy
     .map((r) => {
       if (r.id === message.user.id) return;
+      let baseDate = `${r.readAt ?? message.sentAt}`;
+      baseDate = baseDate.endsWith('Z') ? baseDate : baseDate + 'Z';
       return `${r.userName} ${$t('common.at')} ${$date(
-        new Date(`${r.readAt ?? message.sentAt}Z`),
-      )} - ${$time(new Date(`${r.readAt ?? message.sentAt}Z`))}`;
+        new Date(baseDate),
+      )} - ${$time(new Date(baseDate))}`;
     })
     .filter((a) => a)
     .join(', ');
@@ -44,15 +46,17 @@
   // Marking messages as read
   const observer = new IntersectionObserver(async (entries) => {
     const entry = entries[0];
-    if (
-      entry.isIntersecting &&
-      ((message.isFromCaller && !readBy.filter((r) => r.id === message.user.id).length) ||
-        readBy.length < $chat.users.length)
-    ) {
-      await connection.invoke('MarkAsRead', message.id);
-      $previews.find((c) => c.id === message.chatId)!.lastMessage!.read = true;
-      $previews = $previews;
-    }
+    if (readBy.length >= $chat.users.length) return;
+    if (!entry.isIntersecting) return;
+    await connection.invoke('MarkAsRead', message.id);
+    previews.update((p) => {
+      p = p.map((preview) => {
+        if (preview.id !== message.chatId) return preview;
+        preview.lastMessage!.read = true;
+        return preview;
+      })
+      return p;
+    })
   });
 
   // Handling links
@@ -72,7 +76,8 @@
 
   onMount(() => {
     observer.observe(thisElement);
-    if (focusOn) thisElement.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' });
+    if (focusOn)
+      thisElement.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' });
     if (message.isFromCaller || $chat.userIsAdmin)
       options.push({
         name: $t('common.remove', { values }),
@@ -104,7 +109,11 @@
   {#if showOptions}
     <div class="absolute join {message.isFromCaller ? 'right-14' : 'left-14'} z-50">
       {#each options as option}
-        <button on:click={() => option.action()} data-tip={option.name} class="btn join-item tooltip">
+        <button
+          on:click={() => option.action()}
+          data-tip={option.name}
+          class="btn join-item tooltip"
+        >
           <iconify-icon icon={option.icon} />
         </button>
       {/each}
@@ -150,11 +159,11 @@
       {#if !hideBottomInfo}
         <div class="chat-footer flex gap-1 opacity-50">
           <div class="flex-col flex">
-            <p class={new Date(message.editedAt).getUTCFullYear() > 1 ? 'line-through' : ''}>
+            <p class={message.editedAt ? 'line-through' : ''}>
               {$date(new Date(`${message.sentAt}Z`), { format: 'medium' })}
               {$time(new Date(`${message.sentAt}Z`))}
             </p>
-            {#if message.editedAt && new Date(message.editedAt).getUTCFullYear() > 1}
+            {#if message.editedAt}
               <p>
                 {$date(new Date(`${message.editedAt}Z`), { format: 'medium' })}
                 {$time(new Date(`${message.editedAt}Z`))}

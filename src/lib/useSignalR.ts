@@ -57,10 +57,9 @@ connection.on('read', (data: { id: string; readBy: UserPartialResponse & { readA
     return m - 1;
   });
   chat.update((c) => {
-    const message = c.messages.find((m) => m.id === data.id);
-    if (!message) return c;
+    if (!c.messages.find((m) => m.id === data.id)) return c;
     if (!data.readBy.userName) return c;
-    message.readBy.push({ ...data.readBy });
+    c.messages.find((m) => m.id === data.id)!.readBy.push({ ...data.readBy });
     return c;
   });
 });

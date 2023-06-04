@@ -36,7 +36,7 @@
   <div class="divider" />
   <div class="flex flex-col gap-4 even:bg-base-300">
     {#each $previews as chat}
-      <AsideMsg {chat} />
+      <AsideMsg bind:chat />
     {/each}
   </div>
 </div>
