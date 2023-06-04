@@ -13,6 +13,7 @@ interface UserPartialResponse {
   id: string;
   isBlocked: boolean;
   isBlocking: boolean;
+  status?: string;
 }
 
 interface FriendResponse extends UserPartialResponse {

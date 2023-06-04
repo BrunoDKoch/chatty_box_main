@@ -101,6 +101,8 @@ model User {
   privacyLevel                Int                        @default(1)
   systemMessagesInstigates    SystemMessage[]            @relation("instigated")
   systemMessagesAffectingUser SystemMessage[]            @relation("affectedBy")
+  status                      String? // Busy, away, etc
+  showStatus                  Boolean                    @default(true) // If false, don't show if online
 
   @@index([normalizedEmail], map: "EmailIndex")
   @@index([normalizedUserName], map: "UserNameIndex")
@@ -208,7 +210,7 @@ model SystemMessage {
   instigatingUserId String   @db.NVarChar(450)
   eventType         String
   affectedUser      User?    @relation("affectedBy", fields: [affectedUserId], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  affectedUserId    String?   @db.NVarChar(450)
+  affectedUserId    String?  @db.NVarChar(450)
 }
 
 // Notifications

@@ -134,7 +134,13 @@
     "privacy": "privacidad",
     "security": "seguridad",
     "language": "idioma",
-    "notifications": "notificaciones"
+    "notifications": "notificaciones",
+    "status": {
+      "status": "status",
+      "online": "online",
+      "busy": "ocupado(a)",
+      "away": "ausente"
+    }
   },
   "security": {
     "loginAttempt": {

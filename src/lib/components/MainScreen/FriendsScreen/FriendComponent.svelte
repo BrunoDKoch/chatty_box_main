@@ -7,6 +7,7 @@
   import UserAvatarAndName from '$lib/components/UserAvatarAndName.svelte';
   import UserAvatar from '$lib/components/UserAvatar.svelte';
   import { createEventDispatcher } from 'svelte';
+  import StatusIndicator from '$lib/components/Status/StatusIndicator.svelte';
   export let friend: FriendResponse;
   const dispatch = createEventDispatcher();
   async function handleNewChat() {
@@ -18,11 +19,11 @@
 
 <div class="py-5">
   <div class="grid grid-cols-2 indicator lg:gap-3">
-    <span class="indicator-item indicator-start {friend.isOnline ? 'badge badge-success' : ''}" />
+    <StatusIndicator bind:status={friend.status} bind:isOnline={friend.isOnline} />
     <UserAvatarAndName
       user={friend}
       size="half"
-      extraText={friend.isOnline ? 'Online' : 'Offline'}
+      extraText={!friend.isOnline ? 'Offline' : friend.status ?? 'Online'}
       lowerOpacity={!friend.isOnline}
     >
       <div class="join {friend.isOnline ? 'opacity-100' : 'opacity-50'}">

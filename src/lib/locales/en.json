@@ -138,7 +138,13 @@
     "privacy": "privacy",
     "security": "security",
     "language": "language",
-    "notifications": "notifications"
+    "notifications": "notifications",
+    "status": {
+      "status": "status",
+      "online": "online",
+      "busy": "busy",
+      "away": "away"
+    }
   },
   "security": {
     "loginAttempt": {

@@ -114,10 +114,14 @@ connection.on('blockedUsers', (data: UserPartialResponse[]) => {
     return b;
   });
 });
-connection.on('updateStatus', (data: string) => {
+connection.on('updateStatus', (data: { id: string; online: boolean; status?: string }) => {
   friends.update((f) => {
+    const { id, online, status } = data;
     f = f.map((u) => {
-      if (u.id === data) u.isOnline = !u.isOnline;
+      if (u.id === id) {
+        u.isOnline = online;
+        u.status = status;
+      }
       return u;
     });
     return f;

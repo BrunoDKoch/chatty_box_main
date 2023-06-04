@@ -9,6 +9,7 @@
   import type { SettingOptions } from '$lib/types/otherTypes';
   import SecuritySettings from './SecuritySettings.svelte';
   import PrivacySettings from './PrivacySettings.svelte';
+  import StatusSettings from './StatusSettings.svelte';
   let user: { userName: string; avatar?: string };
   let show = false;
   show = true;
@@ -37,6 +38,8 @@
       <SecuritySettings />
     {:else if activeScreen === 'settings.privacy'}
       <PrivacySettings />
+    {:else if activeScreen === 'settings.status.status'}
+      <StatusSettings />
     {/if}
   </div>
 {/if}

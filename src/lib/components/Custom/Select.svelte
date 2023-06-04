@@ -32,11 +32,11 @@
 
 <div class="form-control">
   <label for="{name}" class="label">
-    <span class="label-text">{required ? labelText + '*' : labelText}</span>
+    <span class="label-text first-letter:uppercase">{required ? labelText + '*' : labelText}</span>
   </label>
-  <select bind:value {disabled} class="select select-bordered" {name}>
+  <select on:change on:input bind:value {disabled} class="select capitalize select-bordered" {name}>
     {#each options as opt}
-      <option value="{opt.value}">{opt.name}</option>
+      <option class="capitalize" value="{opt.value}">{opt.name}</option>
     {/each}
   </select>
   <p class="label">
