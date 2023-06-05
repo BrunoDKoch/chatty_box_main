@@ -113,7 +113,9 @@
     "yes": "yes",
     "no": "no",
     "accept": "accept {item}",
-    "decline": "decline {item}"
+    "decline": "decline {item}",
+    "asAn": "as an",
+    "admin": "administrator"
   },
   "aside": {
     "searchChats": "{search} chats"

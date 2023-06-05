@@ -11,6 +11,7 @@
   import { t } from 'svelte-i18n';
   import useActiveScreen from '$lib/useActiveScreen';
   import { connection, previews } from '$lib/useSignalR';
+  import ChatMembersModal from '$lib/components/Modals/ChatMembersModal.svelte';
 
   let loading = true;
   let searchResults: { messages: MessageResponse[]; messageCount: number } = {
@@ -26,6 +27,7 @@
   let showConfirmLeaveModal = false;
   let showNotificationsModal = false;
   let showConfirmDeletionModal = false;
+  let showAddAdminModal = false;
   async function handleLeaveChat() {
     await connection.invoke('LeaveChat', $chatId);
     $useActiveScreen = 'friends';
@@ -52,6 +54,7 @@
     on:openUserRemovalModal={() => (showUserRemovalModal = !showUserRemovalModal)}
     on:openNotificationsModal={() => (showNotificationsModal = !showNotificationsModal)}
     on:openConfirmLeaveModal={() => (showConfirmLeaveModal = !showConfirmLeaveModal)}
+    on:openAddAdminModal={() => (showAddAdminModal = !showAddAdminModal)}
   />
   <div
     class="grid {searchResults.messages && searchResults.messages.length
@@ -88,7 +91,10 @@
 {#if showUserSearchModal}
   <UserSearchModal on:close={() => (showUserSearchModal = !showUserSearchModal)} />
 {:else if showUserRemovalModal}
-  <UserRemovalModal on:close={() => (showUserRemovalModal = !showUserRemovalModal)} />
+  <ChatMembersModal
+    modalType="remove member"
+    on:close={() => (showUserRemovalModal = !showUserRemovalModal)}
+  />
 {:else if showNotificationsModal}
   <ChatNotificationsModal on:close={() => (showNotificationsModal = !showNotificationsModal)} />
 {:else if showConfirmLeaveModal}
@@ -104,5 +110,9 @@
     action={$t('common.remove', {
       values: { item: $t('common.message', { values: { count: 1 } }) },
     })}
+  />{:else if showAddAdminModal}
+  <ChatMembersModal
+    modalType="add admin"
+    on:close={() => (showAddAdminModal = !showAddAdminModal)}
   />
 {/if}

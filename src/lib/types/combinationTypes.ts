@@ -23,6 +23,7 @@ type SystemMessagePartial = {
 };
 
 interface CompleteChat extends Chat {
+  admins: UserPartialResponse[];
   users: UserPartialResponse[];
   messages: MessageResponse[];
   messageCount: number;

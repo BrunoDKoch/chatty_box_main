@@ -109,7 +109,9 @@
     "yes": "sim",
     "no": "não",
     "accept": "aceitar {item}",
-    "decline": "rejeitar {item}"
+    "decline": "rejeitar {item}",
+    "asAn": "como um(a)",
+    "admin": "administrador(a)"
   },
   "aside": {
     "searchChats": "{search} chats"

@@ -24,6 +24,7 @@ import type { CompleteChat, MessageResponse, SystemMessagePartial } from './type
 import { t } from 'svelte-i18n';
 import useUserNotificationSettings from './useUserNotificationSettings';
 import { goto } from '$app/navigation';
+import useActiveScreen from './useActiveScreen';
 
 export const messagesCount = writable(0);
 export const previews = writable([]) as Writable<ChatPreview[]>;
@@ -206,6 +207,30 @@ connection.on('blockToggle', (data: { id: string; blocked: boolean }) => {
     return b;
   });
 });
+
+connection.on('addedAsAdmin', (data: string) => {
+  if (get(chatId) === data) {
+    chat.update((c) => {
+      c.admins.push(c.users.find((u) => u.id === c.systemMessages.at(-1)!.affectedUser!.id)!)
+      c.userIsAdmin = true;
+      return c;
+    })
+  }
+})
+
+connection.on('addedToChat', (data: ChatPreview) => {
+  previews.update((p) => {
+    p.push(data);
+    return p;
+  });
+})
+
+connection.on('removedFromChat', (data: string) => {
+  if (get(useActiveScreen) === 'chat' && get(chatId) === data) {
+    useActiveScreen.update((screen) => screen = 'friends');
+  }
+  previews.update((p) => p = p.filter((c) => c.id !== data));
+})
 
 export const online = writable(connection.state === HubConnectionState.Connected);
 connection.onreconnected(() => online.set(true));
