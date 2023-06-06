@@ -12,7 +12,7 @@
 <div in:fade={{ delay: 150, duration: 100 }}>
   <button
     on:click={() => ($useActiveScreen = 'friends')}
-    class="flex w-full py-2 gap-3 items-center cursor-pointer hover:bg-gray-300 hover:dark:bg-gray-700 {$friendRequests &&
+    class="flex w-full py-2 gap-3 items-center cursor-pointer custom-hover {$friendRequests &&
     $friendRequests.length
       ? 'indicator'
       : ''} "
@@ -28,7 +28,7 @@
   <div class="divider" />
   <button
     on:click={() => (showNewChatModal = !showNewChatModal)}
-    class="flex w-full py-2 gap-3 items-center cursor-pointer hover:bg-gray-300 hover:dark:bg-gray-700"
+    class="flex w-full py-2 gap-3 items-center cursor-pointer custom-hover"
   >
     <iconify-icon class="text-2xl ml-2" icon="mdi:chat-plus" />
     <p class="first-letter:capitalize">{$t('common.new.m')} chat</p>

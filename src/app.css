@@ -1,3 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.custom-hover {
+  @apply hover:transition-all hover:bg-gradient-to-r hover:dark:from-gray-700 dark:via-gray-800 dark:to-black from-gray-300 via-gray-100 to-white;
+}

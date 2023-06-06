@@ -6,18 +6,14 @@
   import { getLinkType } from '$lib/useLinkCheck';
   export let link: string;
   let showImageModal = false;
-  let innerWidth: number;
   $: linkType = getLinkType(link);
 </script>
-
-<svelte:window bind:innerWidth />
 
 {#if linkType === 'YouTube'}
   <iframe
     src={link.replace('watch?v=', 'embed/')}
     frameborder="0"
-    width={innerWidth >= 1024 ? 560 : 250}
-    height={innerWidth >= 1024 ? 315 : 135}
+    class="lg:w-[560px] lg:h-[315px] max-md:w-[100%] max-md:h-[100%]"
     title="YouTube video player"
     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
   />

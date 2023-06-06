@@ -12,7 +12,7 @@
 
 <a
   href="/"
-  class="hover:bg-gray-300 hover:dark:bg-gray-700 {$chatId === chat.id
+  class="custom-hover {$chatId === chat.id
     ? 'bg-gray-400 dark:bg-gray-600'
     : ''} cursor-pointer pl-2 indicator w-full"
   on:click|preventDefault={() => {

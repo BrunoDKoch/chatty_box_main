@@ -18,7 +18,7 @@
 <div
   class="flex {searchResultsAreOpen
     ? 'max-md:hidden lg:col-span-2'
-    : 'col-span-1'} flex-col max-md:h-[95vh]"
+    : 'col-span-1'} flex-col h-[91vh] max-md:h-[82vh]"
 >
   {#if $chat && $chat.id === $chatId}
     <MessagesWrapper
