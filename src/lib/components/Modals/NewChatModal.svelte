@@ -51,7 +51,7 @@
       </div>
     {/each}
   </div>
-  <TextInput bind:value={chatName} name="chatName" labelText="Chat name" />
+  <TextInput required bind:value={chatName} name="chatName" labelText="Chat name" />
   <div class="modal-middle">
     <UserSearch bind:selection />
   </div>
