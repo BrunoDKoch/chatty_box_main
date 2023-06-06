@@ -3,23 +3,25 @@
   import { onMount } from 'svelte';
   import ImageModal from './ImageModal.svelte';
   import { PUBLIC_IMAGES_URL } from '$env/static/public';
+  import { getLinkType } from '$lib/useLinkCheck';
   export let link: string;
   let showImageModal = false;
-  function isImageLink() {
-    const imageExtensions = ['jpg', 'jpeg', 'png', 'gif', 'webp', 'svg'];
-    const extension = link.split('.').pop();
-    if (!extension) return;
-    return imageExtensions.includes(extension.toLowerCase());
-  }
-  function isVideoLink() {
-    const videoExtensions = ['mp4', 'webm', 'ogg'];
-    const extension = link.split('.').pop();
-    if (!extension) return;
-    return videoExtensions.includes(extension.toLowerCase());
-  }
+  let innerWidth: number;
+  $: linkType = getLinkType(link);
 </script>
 
-{#if isImageLink()}
+<svelte:window bind:innerWidth />
+
+{#if linkType === 'YouTube'}
+  <iframe
+    src={link.replace('watch?v=', 'embed/')}
+    frameborder="0"
+    width={innerWidth >= 1024 ? 560 : 250}
+    height={innerWidth >= 1024 ? 315 : 135}
+    title="YouTube video player"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+  />
+{:else if linkType === 'image'}
   <button on:click={() => (showImageModal = !showImageModal)}>
     <img
       class="max-w-52 max-h-52"
@@ -27,7 +29,7 @@
       alt=""
     />
   </button>
-{:else if isVideoLink()}
+{:else if linkType === 'video'}
   <video controls>
     <track kind="captions" />
     <source src={link} type="video/{link.split('.').pop()}" />

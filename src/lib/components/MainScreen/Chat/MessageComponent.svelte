@@ -36,9 +36,9 @@
       if (r.id === message.user.id) return;
       let baseDate = `${r.readAt ?? message.sentAt}`;
       baseDate = baseDate.endsWith('Z') ? baseDate : baseDate + 'Z';
-      return `${r.userName} ${$t('common.at')} ${$date(
+      return `${r.userName} ${$t('common.at')} ${$date(new Date(baseDate))} - ${$time(
         new Date(baseDate),
-      )} - ${$time(new Date(baseDate))}`;
+      )}`;
     })
     .filter((a) => a)
     .join(', ');
@@ -54,18 +54,19 @@
         if (preview.id !== message.chatId) return preview;
         preview.lastMessage!.read = true;
         return preview;
-      })
+      });
       return p;
-    })
+    });
   });
 
   // Handling links
-  const links = messageContainsLink();
+  $: links = messageContainsLink();
   function messageContainsLink() {
     return message.text.match(urlRegex)?.length
       ? message.text.match(urlRegex)
       : message.text.match(hostedImagesRegex);
   }
+  $: message, (links = messageContainsLink()); // Sadly necessary to avoid the wrong link showing
 
   // Handling editing
   let isEditing = false;
@@ -149,7 +150,7 @@
         >
           {#if links && links.length}
             {#each links as link}
-              <MessageLinkPreview {link} />
+              <MessageLinkPreview bind:link />
             {/each}
           {:else}
             {message.text}
