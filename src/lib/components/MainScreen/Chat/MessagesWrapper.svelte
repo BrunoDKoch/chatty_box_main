@@ -49,7 +49,9 @@
   {#if hasMore && !pagination}
     <AutoScroller skip={messages.length} />
   {:else if isSearch}
+  <div class="fixed right-0 z-50">
     <CloseButton on:close />
+  </div>
   {/if}
   {#if combinedMessages.length}
     {#each combinedMessages as message}
