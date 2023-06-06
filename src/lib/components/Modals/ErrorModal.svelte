@@ -54,11 +54,11 @@
     {#if error.message && brokenUpMessage.length}
       <div>
         {#each brokenUpMessage as portion}
-          <p class="first-letter:uppercase">
+          <time class="first-letter:uppercase">
             {portion.includes('/') && portion.includes(':')
               ? `${$date(new Date(`${portion}Z`))} ${$time(new Date(`${portion}Z`))}`
               : portion}
-          </p>
+          </time>
         {/each}
       </div>
     {:else if error.message}

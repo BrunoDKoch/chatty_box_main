@@ -164,10 +164,10 @@
               {$time(new Date(`${message.sentAt}Z`))}
             </p>
             {#if message.editedAt}
-              <p>
+              <time>
                 {$date(new Date(`${message.editedAt}Z`), { format: 'medium' })}
                 {$time(new Date(`${message.editedAt}Z`))}
-              </p>
+              </time>
             {/if}
           </div>
           {#if message.isFromCaller && message.readBy.length}

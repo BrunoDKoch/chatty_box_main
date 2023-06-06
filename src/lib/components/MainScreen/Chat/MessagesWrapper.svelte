@@ -56,9 +56,9 @@
       {#if 'sentAt' in message}
         {#if combinedMessages.indexOf(message) !== 0 && isFromPreviousDate(message, messages[messages.indexOf(message) - 1])}
           <div class="divider">
-            <p class="first-letter:uppercase">
+            <time class="first-letter:uppercase">
               {$date(new Date(`${message.sentAt}Z`), { format: 'full' })}
-            </p>
+            </time>
           </div>
         {/if}
         <MessageComponent
