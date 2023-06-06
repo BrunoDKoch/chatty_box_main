@@ -8,7 +8,7 @@
 </script>
 
 <div class="form-control w-fit overflow-hidden">
-  <div class="join join overflow-hidden">
+  <div class="join overflow-hidden">
     <input
       type="search"
       class="input join-item input-sm capitalize w-48"

@@ -14,7 +14,7 @@
   import type { UserPartialResponse } from '$lib/types/partialTypes';
   import { checkIfLoggedIn, accessToken } from '$lib/useAuth';
   import ErrorModal from '$lib/components/Modals/ErrorModal.svelte';
-    import { goto } from '$app/navigation';
+  import { goto } from '$app/navigation';
 
   let error: { status: number; cause: string; message: string } | null = null;
 
@@ -116,8 +116,8 @@
         $online = connection.state === HubConnectionState.Connected;
         await connection.invoke('InitialCall');
       } catch (err) {
-        if ((err as {message: string}).message.endsWith("Error: Unauthorized: Status code '401'"))
-          return await goto('/auth/login')
+        if ((err as { message: string }).message.endsWith("Error: Unauthorized: Status code '401'"))
+          return await goto('/auth/login');
         error = {
           status: 503,
           cause: $t('error.cause.503'),
@@ -152,7 +152,9 @@
         <iconify-icon icon="mdi:menu" />
       </button>
       {#if $useActiveScreen === 'chat' && $chat}
-        <h1 class="font-bold text-2xl">{$chat.chatName ?? $chat.users.map((u) => u.userName).join(', ')}</h1>
+        <h1 class="font-bold text-2xl">
+          {$chat.chatName ?? $chat.users.map((u) => u.userName).join(', ')}
+        </h1>
       {/if}
     </div>
     <section class="lg:col-span-3 max-h-screen overflow-hidden">
