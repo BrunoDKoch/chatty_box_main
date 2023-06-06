@@ -26,20 +26,16 @@
   export let required: boolean = false;
   export let disabled: boolean = false;
   export let name: string | undefined;
-  $: errorClass = '';
+  let inputElement: HTMLInputElement | HTMLTextAreaElement;
   $: ruleText = '';
   $: {
     if (value && rules && rules.length) {
       const brokenRule = rules.find((r) => !!!r.condition);
       if (brokenRule) {
         ruleText = brokenRule.text;
-        errorClass =
-          type !== 'area'
-            ? 'input-error transition-all duration-300'
-            : 'textarea-error transition-all duration-300';
+        inputElement.setAttribute('isvalid', 'false')
       } else {
         ruleText = '';
-        errorClass = '';
       }
     }
   }
@@ -55,11 +51,10 @@
   </label>
   {#if type !== 'area'}
     <input
+      bind:this={inputElement}
       id={name}
       use:getType
-      class={!disabled
-        ? `input input-bordered ${errorClass}`
-        : 'input input-bordered input-disabled'}
+      class="input input-bordered disabled:input-disabled invalid:input-error invalid:transition-all invalid:duration-300"
       bind:value
       {required}
       {name}
@@ -70,9 +65,8 @@
     />
   {:else}
     <textarea
-      class={!disabled
-        ? `textarea textarea-bordered ${errorClass}`
-        : 'textarea textarea-bordered textarea-disabled'}
+      class="textarea textarea-bordered disabled:textarea-disabled invalid:textarea-error invalid:transition-all invalid:duration-300"
+      bind:this={inputElement}
       bind:value
       {required}
       {name}
