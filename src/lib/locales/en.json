@@ -115,7 +115,9 @@
     "accept": "accept {item}",
     "decline": "decline {item}",
     "asAn": "as an",
-    "admin": "administrator"
+    "admin": "administrator",
+    "video": "video",
+    "youtubeLink": "YouTube link"
   },
   "aside": {
     "searchChats": "{search} chats"
@@ -194,6 +196,6 @@
   },
   "files": {
     "tooBig": "File too big! Please limit your upload size to 20MB",
-    "dragHere": "Arrastre la imagen aquí o haga clic para seleccionarla (limitado a 20 MB)"
+    "dragHere": "Drag an image here or click to select one (limited to 20 MB)"
   }
 }

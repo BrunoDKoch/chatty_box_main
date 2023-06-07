@@ -111,7 +111,9 @@
     "accept": "aceitar {item}",
     "decline": "rejeitar {item}",
     "asAn": "como um(a)",
-    "admin": "administrador(a)"
+    "admin": "administrador(a)",
+    "video": "vídeo",
+    "youtubeLink": "Link do YouTube"
   },
   "aside": {
     "searchChats": "{search} chats"

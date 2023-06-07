@@ -4,6 +4,7 @@
   import { t } from 'svelte-i18n';
   import { createEventDispatcher, onMount } from 'svelte';
   import type { MessageResponse } from '$lib/types/combinationTypes';
+  import CloseButton from '$lib/components/Custom/CloseButton.svelte';
   export let loading = true;
   export let replyTo: MessageResponse | undefined = undefined;
 
@@ -117,17 +118,22 @@
   on:submit|preventDefault={async () => await sendMessage()}
   class="box-border relative form-control overflow-hidden max-h-fit"
 >
-    <label class="label" for="">
+  <label class="label justify-between" for="">
+    {#if replyTo}
       <span class="label-text first-letter:uppercase">
-        {#if replyTo}
-          {$t('common.replyTo', { values: { item: replyTo.user.userName } })}
-          {:else}
-          &nbsp;&nbsp;&nbsp;&nbsp;
-        {/if}
-        </span>
-    </label>
+        {$t('common.replyTo', { values: { item: replyTo.user.userName } })}
+      </span>
+      <CloseButton on:close={() => (replyTo = undefined)} />
+    {:else}
+      <span> &nbsp;&nbsp;&nbsp;&nbsp; </span>
+    {/if}
+  </label>
   <div class="join px-4">
-    <button type="button" on:click|preventDefault={() => dispatch('toggleAttachmentsModal')} class="btn join-item text-2xl">
+    <button
+      type="button"
+      on:click|preventDefault={() => dispatch('toggleAttachmentsModal')}
+      class="btn join-item text-2xl"
+    >
       <iconify-icon icon="mdi:attachment" />
     </button>
     <input

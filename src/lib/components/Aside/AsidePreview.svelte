@@ -7,6 +7,7 @@
   import { quintInOut } from 'svelte/easing';
   import UserAvatar from '../UserAvatar.svelte';
   import { hostedImagesRegex, urlRegex } from '$lib/useLinkCheck';
+  import AsidePreviewLink from './AsidePreviewLink.svelte';
   export let chat: ChatPreview;
 </script>
 
@@ -34,16 +35,8 @@
           <UserAvatar user={chat.lastMessage.from} size={25} />
         </div>
         <div class="col-span-7">
-          {#if chat.lastMessage.text.match(urlRegex)}
-            <div class="flex items-center gap-2">
-              <iconify-icon icon="mdi:link" />
-              <p>Link</p>
-            </div>
-          {:else if chat.lastMessage.text.match(hostedImagesRegex)}
-            <div class="flex items-center gap-2">
-              <iconify-icon icon="mdi:image" />
-              <p class="capitalize">{$t('common.image')}</p>
-            </div>
+          {#if chat.lastMessage.text.match(urlRegex) || chat.lastMessage.text.match(hostedImagesRegex)}
+            <AsidePreviewLink link={chat.lastMessage.text} />
           {:else}
             <p>
               {chat.lastMessage.text.length <= 30
