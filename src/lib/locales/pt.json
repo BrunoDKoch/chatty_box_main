@@ -46,8 +46,8 @@
     "negatory": "não",
     "please": "por favor",
     "the": {
-      "m": "o",
-      "f": "a"
+      "m": "{prepositions, plural, =0 {o} one {ao} other {ao}}",
+      "f": "{prepositions, plural, =0 {a} one {à} other {à}}"
     },
     "search": "pesquisar",
     "friend": "amigo",
@@ -102,7 +102,7 @@
     "removed": "removeu",
     "left": "saiu",
     "edit": "editar {item}",
-    "replyTo": "responder a {item}",
+    "replyTo": "responder {item}",
     "replyingTo": "respondendo a {item}",
     "areYouSure": "tem certeza",
     "wishTo": "que deseja {item}",

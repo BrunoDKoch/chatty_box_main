@@ -121,7 +121,7 @@
   <label class="label justify-between" for="">
     {#if replyTo}
       <span class="label-text first-letter:uppercase">
-        {$t('common.replyTo', { values: { item: replyTo.user.userName } })}
+        {$t('common.replyingTo', { values: { item: replyTo.user.userName } })}
       </span>
       <CloseButton on:close={() => (replyTo = undefined)} />
     {:else}

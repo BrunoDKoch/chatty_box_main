@@ -18,7 +18,9 @@
   // Hover options
   let showOptions = false;
   let messageTranslation = $t('common.message', { values: { count: 1 } });
-  let values = { item: messageTranslation };
+  let values = {
+    item: `${$t('common.the.f', { values: { prepositions: 1 } })} ${messageTranslation}`,
+  };
   const options: { name: string; icon: string; action: () => void }[] = [
     {
       name: $t('common.replyTo', { values }),

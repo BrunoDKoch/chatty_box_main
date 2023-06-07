@@ -50,8 +50,8 @@
     "negatory": "don't",
     "please": "please",
     "the": {
-      "m": "the",
-      "f": "the"
+      "m": "{prepositions, plural, =0 {the} one {to the} other {to the}}",
+      "f": "{prepositions, plural, =0 {the} one {to the} other {to the}}"
     },
     "search": "search",
     "friend": "friend",
@@ -106,7 +106,7 @@
     "removed": "removed",
     "left": "left",
     "edit": "edit {item}",
-    "replyTo": "reply to {item}",
+    "replyTo": "reply {item}",
     "replyingTo": "replying to {item}",
     "areYouSure": "are you sure",
     "wishTo": "you wish to {item}",

@@ -46,8 +46,8 @@
     "negatory": "no",
     "please": "por favor",
     "the": {
-      "m": "el",
-      "f": "la"
+      "m": "{prepositions, plural, =0 {el} one {a el} other {a el}}",
+      "f": "{prepositions, plural, =0 {la} one {a la} other {a la}}"
     },
     "search": "buscar",
     "friend": "amigo",
@@ -102,7 +102,7 @@
     "removed": "removió a",
     "left": "dejó el chat",
     "edit": "editar {item}",
-    "replyTo": "responder a {item}",
+    "replyTo": "responder {item}",
     "replyingTo": "respondiendo a {item}",
     "areYouSure": "está seguro",
     "wishTo": "que desea {item}",
