@@ -94,7 +94,7 @@ model User {
   chats                       Chat[]
   messages                    Message[]
   isAdminIn                   ChatAdmin[]
-  clientConnection            ClientConnection?
+  clientConnections           ClientConnection[]
   readMessages                ReadMessage[]
   userNotificationSettings    UserNotificationSettings?
   chatNotificationSettings    ChatNotificationSettings[]
@@ -178,9 +178,23 @@ model Message {
 }
 
 model ClientConnection {
-  user         User   @relation(fields: [userId], references: [id])
-  userId       String @id @db.NVarChar(450)
-  connectionId String
+  user           User     @relation(fields: [userId], references: [id])
+  userId         String   @db.NVarChar(450)
+  connectionId   String
+  ipAddress      String
+  geoNameId      String
+  cityName       String
+  countryIsoCode String
+  countryName    String
+  latitude       Float
+  longitude      Float
+  os             String   @default("unknown")
+  device         String   @default("unknown")
+  browser        String   @default("unknown")
+  active         Boolean  @default(true)
+  createdAt      DateTime @default(now())
+
+  @@id([userId, connectionId])
 }
 
 model ReadMessage {
