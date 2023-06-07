@@ -222,6 +222,7 @@ model UserNotificationSettings {
   user               User    @relation(fields: [userId], references: [id])
   playSound          Boolean @default(true)
   showOSNotification Boolean @default(true)
+  showAlert          Boolean @default(true)
 }
 
 model ChatNotificationSettings {
@@ -231,6 +232,7 @@ model ChatNotificationSettings {
   chat               Chat    @relation(fields: [chatId], references: [id])
   playSound          Boolean @default(true)
   showOSNotification Boolean @default(true)
+  showAlert          Boolean @default(true)
 
   @@id([userId, chatId])
 }

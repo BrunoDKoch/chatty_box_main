@@ -63,6 +63,7 @@
     "message": "{count, plural, =0 {ninguna mensaje} one {mensaje} other {mensajes}}",
     "sound": "sonido",
     "osNotification": "notificación del sistema",
+    "alert": "alerta",
     "connecting": "conectando",
     "pleaseWait": "por favor espere",
     "invalid": {

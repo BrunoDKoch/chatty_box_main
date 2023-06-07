@@ -39,15 +39,15 @@
     ? 'alert-info text-info-content'
     : 'alert-success text-success-content'}"
 >
+  <iconify-icon icon="mdi:information-outline" />
   <div class="flex gap-1">
     <p class="font-bold">{userName}:</p>
     <span>{text}</span>
   </div>
-  <div class="close-button-container">
-    <div class="relative m-auto text-center" />
+  <div class="relative">
     <button
       on:click|stopPropagation={() => dispatch('close')}
-      class="btn btn-circle btn-ghost absolute {notificationType === 'message'
+      class="btn btn-circle box-border btn-ghost {notificationType === 'message'
         ? 'text-info-content'
         : 'text-success-content'} right-12"
     >
@@ -57,11 +57,11 @@
       <svg
         width="3rem"
         height="3rem"
-        class="absolute {notificationType === 'message'
+        class="block items-center {notificationType === 'message'
           ? 'stroke-info-content'
           : 'stroke-success-content'}"
       >
-        <circle r="24" cx="24" cy="24" /></svg
+        <circle r="20" cx="24" cy="24" /></svg
       >
       <iconify-icon icon="mdi:close" class="text-3xl opacity-0 absolute" />
     </button>

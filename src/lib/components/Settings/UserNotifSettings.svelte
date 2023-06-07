@@ -2,7 +2,27 @@
   import { t } from 'svelte-i18n';
   import notificationSettings from '$lib/useUserNotificationSettings';
   import { connection } from '$lib/useSignalR';
-  async function handleChange(change: 'playSound' | 'showOSNotification') {
+  const checkableOptions = [
+    {
+      text: $t('common.sound'),
+      name: 'sound',
+      checked: $notificationSettings?.playSound,
+      action: 'playSound',
+    },
+    {
+      text: $t('common.osNotification'),
+      name: 'osNotification',
+      checked: $notificationSettings?.showOSNotification,
+      action: 'showOSNotification',
+    },
+    {
+      text: $t('common.alert'),
+      name: 'alert',
+      checked: $notificationSettings?.showAlert,
+      action: 'showAlert',
+    },
+  ] as const;
+  async function handleChange(change: 'playSound' | 'showOSNotification' | 'showAlert') {
     if (!$notificationSettings) return;
     $notificationSettings[change] = !$notificationSettings[change];
     $notificationSettings = $notificationSettings;
@@ -10,6 +30,7 @@
       'UpdateNotificationSettings',
       $notificationSettings.playSound,
       $notificationSettings.showOSNotification,
+      $notificationSettings.showAlert,
     );
   }
 </script>
@@ -17,28 +38,19 @@
 {#if $notificationSettings}
   <form action="">
     <div class="form-control">
-      <label for="sound" class="label uppercase">
-        <span class="label-text">{$t('common.sound')}</span>
-        <input
-          on:change={async () => await handleChange('playSound')}
-          class="toggle"
-          bind:checked={$notificationSettings.playSound}
-          type="checkbox"
-          name="sound"
-          id=""
-        />
-      </label>
-      <label for="osNotification" class="label uppercase">
-        <span class="label-text">{$t('common.osNotification')}</span>
-        <input
-          on:change={async () => await handleChange('showOSNotification')}
-          class="toggle"
-          bind:checked={$notificationSettings.showOSNotification}
-          type="checkbox"
-          name="osNotification"
-          id=""
-        />
-      </label>
+      {#each checkableOptions as option}
+        <label for={option.name} class="label uppercase">
+          <span class="label-txt">{option.text}</span>
+          <input
+            on:change={async () => await handleChange(option.action)}
+            class="toggle"
+            bind:checked={option.checked}
+            type="checkbox"
+            name="sound"
+            id=""
+          />
+        </label>
+      {/each}
     </div>
   </form>
 {:else}

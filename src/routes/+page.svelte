@@ -15,12 +15,13 @@
   import { checkIfLoggedIn, accessToken } from '$lib/useAuth';
   import ErrorModal from '$lib/components/Modals/ErrorModal.svelte';
   import { goto } from '$app/navigation';
+  import NotificationsContainer from '$lib/components/Notification/NotificationsContainer.svelte';
 
   let error: { status: number; cause: string; message: string } | null = null;
 
   $: title = 'ChattyBox';
   $: {
-    if ($online) title = $messagesCount ? `(${$messagesCount}) ${title}` : title;
+    if ($online) title = $messagesCount ? `(${$messagesCount}) ChattyBox` : 'ChattyBox';
   }
 
   $: notifications = [] as {
@@ -73,7 +74,7 @@
         },
       );
     // Else, show notification toast
-    else {
+    else if ($useUserNotificationSettings?.showAlert) {
       notifications.push({
         notificationType: 'message',
         userName: data.user.userName,
@@ -162,19 +163,7 @@
     </section>
   </div>
 
-  <div>
-    {#each notifications as notification}
-      <div class="toast toast-top toast-center w-[50vw] z-50">
-        <NotificationToast
-          on:close={() => {
-            notifications = notifications.filter((n) => n !== notification);
-            notifications = notifications;
-          }}
-          {...notification}
-        />
-      </div>
-    {/each}
-  </div>
+  <NotificationsContainer bind:notifications />
 {:else}
   <ConnectingComponent />
 {/if}
