@@ -8,6 +8,7 @@
   import CloseButton from '../Custom/CloseButton.svelte';
   import type { FriendResponse } from '$lib/types/partialTypes';
   import UserSearch from '../UserSearch.svelte';
+  import UserAvatarAndName from '../UserAvatarAndName.svelte';
   const dispatch = createEventDispatcher();
 
   let selection: FriendResponse | null = null;
@@ -31,21 +32,16 @@
     {#if !selection}
       <UserSearch bind:selection />
     {:else}
-      <div class="grid grid-cols-3">
-        <figure>
-          <p>{selection.userName ? selection.userName[0] : ''}</p>
-        </figure>
-        <p class="col-span-2">{selection.userName}</p>
-      </div>
+      <UserAvatarAndName user={selection} size="half" />
     {/if}
   </div>
   <div class="modal-action">
     <div class="join">
-      <button class="btn btn-warning" on:click={() => (selection = null)}>
+      <button class="join-item btn btn-warning" on:click={() => (selection = null)}>
         {$t('common.clear')}
       </button>
       <button
-        class="btn btn-success"
+        class="join-item btn btn-success"
         disabled={!selection}
         on:click={async () => await handleSubmit()}
       >

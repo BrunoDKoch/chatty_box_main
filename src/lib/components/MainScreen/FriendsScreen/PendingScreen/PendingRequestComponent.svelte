@@ -16,7 +16,7 @@
         values: { item: $t('friends.request', { values: { count: 1 } }) },
       })}
       on:click={() => dispatch('decision', { id, accept: true })}
-      class="btn btn-circle btn-success tooltip"
+      class="btn join-item btn-circle btn-success tooltip"
     >
       <iconify-icon icon="mdi:check" />
     </button>
@@ -25,7 +25,7 @@
         values: { item: $t('friends.request', { values: { count: 1 } }) },
       })}
       on:click={() => dispatch('decision', { id, accept: false })}
-      class="btn btn-circle btn-error tooltip"
+      class="btn join-item btn-circle btn-error tooltip"
     >
       <iconify-icon icon="mdi:close" />
     </button>
