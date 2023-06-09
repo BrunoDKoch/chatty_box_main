@@ -13,7 +13,7 @@
     },
   ];
   $: {
-    if ($chat.userIsAdmin) {
+    if ($chat.isGroupChat && $chat.userIsAdmin) {
       const extraOptions = [
         {
           label: $t('common.add', {

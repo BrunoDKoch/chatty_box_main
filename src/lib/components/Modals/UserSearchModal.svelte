@@ -7,6 +7,7 @@
   import { connection } from '$lib/useSignalR';
   import { chatId } from '$lib/useActiveChat';
   import { createEventDispatcher } from 'svelte';
+  import UserAvatarAndName from '../UserAvatarAndName.svelte';
   let selection: UserPartialResponse | null = null;
   const dispatch = createEventDispatcher();
   async function handleSubmit() {
@@ -24,16 +25,13 @@
       icon="material-symbols:person-add"
       height="5rem"
     />
-    <h1 class="font-bold text-2xl first-letter:uppercase">{$t('common.add', {values: {item: 'chatter'}})}</h1>
+    <h1 class="font-bold text-2xl first-letter:uppercase">
+      {$t('common.add', { values: { item: 'chatter' } })}
+    </h1>
     {#if !selection}
       <UserSearch bind:selection />
     {:else}
-      <div class="grid grid-cols-3">
-        <figure>
-          <p>{selection.userName ? selection.userName[0] : ''}</p>
-        </figure>
-        <p class="col-span-2">{selection.userName}</p>
-      </div>
+      <UserAvatarAndName user={selection} size="half" />
     {/if}
   </div>
   <div class="modal-action">
