@@ -46,8 +46,8 @@
     ? 'lg:border-l-2'
     : ''} overflow-x-hidden max-md:h-[75vh] lg:h-[82vh] box-border"
 >
-  {#if !pagination && $chat.hasMore}
-    <AutoScroller skip={messages.length} />
+  {#if !pagination}
+    <AutoScroller bind:hasMore={$chat.hasMore} skip={messages.length} />
   {:else if isSearch}
   <div class="fixed right-0 z-50">
     <CloseButton on:close />

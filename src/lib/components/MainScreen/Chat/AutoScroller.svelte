@@ -4,6 +4,7 @@
   import { onMount } from 'svelte';
   import { t } from 'svelte-i18n';
   export let skip: number;
+  export let hasMore: boolean = false;
   let thisElement: HTMLElement;
   let fetching = false;
   const observer = new IntersectionObserver(async (entries) => {
@@ -20,7 +21,7 @@
     }
   });
   $: {
-    if (fetching) observer.unobserve(thisElement);
+    if (hasMore && fetching) observer.unobserve(thisElement);
   }
   $: {
     if ($chat.hasFetched) {
@@ -31,17 +32,26 @@
       }, 200);
     }
   }
-  onMount(() => setTimeout(() => observer.observe(thisElement), 1500));
+
+  $: hasMore, setUpObserver();
+
+  function setUpObserver() {
+    if (!hasMore) return;
+    return setTimeout(() => observer.observe(thisElement), 1500);
+  }
+  onMount(() => setUpObserver());
 </script>
 
-<div bind:this={thisElement} class="flex flex-col items-center justify-center">
-  {#if fetching && !$chat.hasFetched}
-    <iconify-icon icon="svg-spinners:6-dots-scale" />
-  {:else}
-    <p class="first-letter:uppercase text-center">
-      {$t('common.more')}
-      {$t('common.message', { values: { count: 15 } })}
-    </p>
-  {/if}
-  <div class="divider" />
-</div>
+{#if hasMore}
+  <div bind:this={thisElement} class="flex flex-col items-center justify-center">
+    {#if fetching && !$chat.hasFetched}
+      <iconify-icon icon="svg-spinners:6-dots-scale" />
+    {:else}
+      <p class="first-letter:uppercase text-center">
+        {$t('common.more')}
+        {$t('common.message', { values: { count: 15 } })}
+      </p>
+    {/if}
+    <div class="divider" />
+  </div>
+{/if}
