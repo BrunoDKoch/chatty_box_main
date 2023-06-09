@@ -31,7 +31,7 @@
     class="flex w-full py-2 gap-3 items-center cursor-pointer custom-hover"
   >
     <iconify-icon class="text-2xl ml-2" icon="mdi:chat-plus" />
-    <p class="first-letter:capitalize">{$t('common.new.m')} chat</p>
+    <p class="first-letter:capitalize">{$t('common.new.m')} {$t('common.groupChat')}</p>
   </button>
   <div class="divider" />
   <div class="flex flex-col gap-4 even:bg-base-300">

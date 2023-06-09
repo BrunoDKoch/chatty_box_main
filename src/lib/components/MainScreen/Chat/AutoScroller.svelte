@@ -16,7 +16,7 @@
           return;
         }
         await connection.invoke('GetChat', $chat.id, skip);
-      }, 1000);
+      }, 200);
     }
   });
   $: {
@@ -28,7 +28,7 @@
       setTimeout(() => {
         $chat.hasFetched = false;
         observer.observe(thisElement);
-      }, 1000);
+      }, 200);
     }
   }
   onMount(() => setTimeout(() => observer.observe(thisElement), 1500));

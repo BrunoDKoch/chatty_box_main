@@ -114,7 +114,8 @@
     "asAn": "como um(a)",
     "admin": "administrador(a)",
     "video": "vídeo",
-    "youtubeLink": "Link do YouTube"
+    "youtubeLink": "Link do YouTube",
+    "groupChat": "grupo de chat"
   },
   "aside": {
     "searchChats": "{search} chats"

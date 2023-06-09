@@ -4,6 +4,7 @@
   import { connection } from '$lib/useSignalR';
   import { createEventDispatcher } from 'svelte';
   import { t } from 'svelte-i18n';
+  import UserAvatarAndName from './UserAvatarAndName.svelte';
   export let selection: null | UserPartialResponse;
 
   const dispatch = createEventDispatcher();
@@ -65,27 +66,11 @@
               <button
                 on:click={() => {
                   selection = result;
-                  search = String(result.userName);
+                  search = '';
                 }}
                 class="flex gap-3"
               >
-                <figure class="avatar mask mask-squircle w-[25px] h-[25px]">
-                  {#if result.avatar}
-                    <img
-                      src="{PUBLIC_IMAGES_URL}/{result.avatar}?width=25"
-                      alt="{result.userName} avatar"
-                    />
-                  {:else}
-                    <div
-                      class="flex items-center justify-center bg-blue-600 text-white dark:bg-blue-800 w-full h-full"
-                    >
-                      <p class="font-bold bg-blue-600 dark:bg-blue-800 text-white text-center">
-                        {result.userName[0]}
-                      </p>
-                    </div>
-                  {/if}
-                </figure>
-                <p>{result.userName}</p>
+                <UserAvatarAndName user={result} size={25} />
               </button>
             </li>
           {/each}

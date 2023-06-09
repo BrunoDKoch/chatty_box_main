@@ -115,7 +115,6 @@
         }
         await Notification.requestPermission();
         $online = connection.state === HubConnectionState.Connected;
-        await connection.invoke('InitialCall');
       } catch (err) {
         if ((err as { message: string }).message.endsWith("Error: Unauthorized: Status code '401'"))
           return await goto('/auth/login');

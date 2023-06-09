@@ -31,6 +31,7 @@
       maxUsers,
     );
     $useActiveScreen = 'chat';
+    dispatch('close')
   }
 </script>
 

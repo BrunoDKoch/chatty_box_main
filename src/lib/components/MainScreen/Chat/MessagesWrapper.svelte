@@ -6,12 +6,12 @@
   import Pagination from '$lib/components/Pagination/Pagination.svelte';
   import SystemMessageComponent from './SystemMessageComponent.svelte';
   import CloseButton from '$lib/components/Custom/CloseButton.svelte';
+    import { chat } from '$lib/useActiveChat';
   export let pagination = false;
   export let total: number;
   export let messages: MessageResponse[];
   export let systemMessages: SystemMessagePartial[];
   export let activePage = 1;
-  export let hasMore: boolean = false;
   export let replyTo: undefined | MessageResponse;
   export let isSearch = false;
   $: combinedMessages = [...messages, ...systemMessages];
@@ -46,7 +46,7 @@
     ? 'lg:border-l-2'
     : ''} overflow-x-hidden max-md:h-[75vh] lg:h-[82vh] box-border"
 >
-  {#if hasMore && !pagination}
+  {#if !pagination && $chat.hasMore}
     <AutoScroller skip={messages.length} />
   {:else if isSearch}
   <div class="fixed right-0 z-50">
@@ -75,7 +75,7 @@
       {/if}
     {/each}
     <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
-    {#if pagination && hasMore}
+    {#if pagination && $chat.hasMore}
       <div class="flex items-center justify-center">
         <Pagination itemsPerPage={15} {total} bind:activePage />
       </div>

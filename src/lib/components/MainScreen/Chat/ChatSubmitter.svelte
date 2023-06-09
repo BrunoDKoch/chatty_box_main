@@ -110,6 +110,8 @@
     await connection.invoke('SendMessage', $chat.id, newMessage, replyTo?.id ?? undefined);
     submitting = false;
     newMessage = '';
+    // Input won't focus without the timeout, likely because of the scrolling to the new message
+    setTimeout(() => messageComposer.focus({ preventScroll: true }), 100);
   }
 </script>
 
@@ -140,6 +142,7 @@
       bind:this={messageComposer}
       bind:value={newMessage}
       type="text"
+      id="messageComposer"
       placeholder={singleChatUserBlocked ? $t('message.cannotCommunicate') : ''}
       class="input join-item {messageError ? 'input-error' : 'input-bordered'} {disabled
         ? 'input-disabled'

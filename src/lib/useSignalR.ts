@@ -78,11 +78,15 @@ connection.on('previews', (data: ChatPreview[]) => {
     return cn;
   });
 });
+
+// Handling friends
 connection.on('pendingRequests', (data: { userAdding: UserPartialResponse }[]) =>
   friendRequests.set(data),
 );
+
 connection.on('friends', (data: FriendResponse[]) => {
   online.set(true);
+  console.log(data);
   friends.update((f) => {
     data.forEach((user) => {
       if (!f.find((u) => u.userName === user.userName)) f.push(user);
@@ -91,6 +95,7 @@ connection.on('friends', (data: FriendResponse[]) => {
     return f;
   });
 });
+
 connection.on('newFriend', (data: FriendResponse | null) => {
   if (!data) return;
   friends.update((f) => {
@@ -103,10 +108,13 @@ connection.on('newFriend', (data: FriendResponse | null) => {
     return f;
   });
 });
+
 connection.on('removeFriend', (data: { userId: string; friendId: string }) => {
   const { userId, friendId } = data;
   friends.update((f) => (f = f.filter((friend) => friend.id !== userId && friend.id !== friendId)));
 });
+
+// Blocked users
 connection.on('blockedUsers', (data: UserPartialResponse[]) => {
   blockedUsers.update((b) => {
     const newItems = data.filter((item) => !b.includes(item));
@@ -114,8 +122,11 @@ connection.on('blockedUsers', (data: UserPartialResponse[]) => {
     return b;
   });
 });
+
+// Get new user status (friends on others in chat)
 connection.on('updateStatus', (data: { id: string; online: boolean; status?: string }) => {
   friends.update((f) => {
+    console.log(data);
     const { id, online, status } = data;
     f = f.map((u) => {
       if (u.id === id) {
@@ -127,14 +138,18 @@ connection.on('updateStatus', (data: { id: string; online: boolean; status?: str
     return f;
   });
 });
+
+// New chat created (by user or another member)
 connection.on('newChat', (data: CompleteChat) => {
   chat.set({ ...data, hasFetched: false, hasMore: false });
   chatId.set(data.id);
   const { playSound, showOSNotification } = get(useUserNotificationSettings)!;
-  const { id, createdAt, users } = data;
+  const { id, createdAt, chatName, users } = data;
   previews.update((p) => {
+    if (p.find((preview) => preview.id === id)) return p;
     p.push({
       id,
+      chatName: chatName ?? undefined,
       playSound,
       showOSNotification,
       createdAt,
@@ -144,13 +159,7 @@ connection.on('newChat', (data: CompleteChat) => {
   });
 });
 
-connection.on('notificationSettings', (data: UserNotificationSettings) => {
-  useUserNotificationSettings.update((un) => {
-    un = data;
-    return un;
-  });
-});
-
+// Get chat info
 connection.on('chat', (data: CompleteChat) => {
   chat.update((ch) => {
     const hasMore = data.messageCount > ch.messages.length;
@@ -170,10 +179,12 @@ connection.on('chat', (data: CompleteChat) => {
     }
     // Sort messages properly
     ch.messages.sort((a, b) => Number(new Date(a.sentAt)) - Number(new Date(b.sentAt)));
+    console.log(ch)
     return ch;
   });
 });
 
+// Add system message to chat
 connection.on('systemMessage', (data: SystemMessagePartial) => {
   chat.update((ch) => {
     if (ch.id !== data.chatId) return ch;
@@ -182,6 +193,7 @@ connection.on('systemMessage', (data: SystemMessagePartial) => {
   });
 });
 
+// Edit message
 connection.on('editedMessage', (data: MessageResponse) => {
   chat.update((ch) => {
     if (ch.id !== data.chatId || !ch.messages.map((m) => m.id).includes(data.id)) return ch;
@@ -192,6 +204,40 @@ connection.on('editedMessage', (data: MessageResponse) => {
   });
 });
 
+// Handling chat members
+connection.on('addedAsAdmin', (data: string) => {
+  if (get(chatId) === data) {
+    chat.update((c) => {
+      c.admins.push(c.users.find((u) => u.id === c.systemMessages.at(-1)!.affectedUser!.id)!);
+      c.userIsAdmin = true;
+      return c;
+    });
+  }
+});
+
+connection.on('addedToChat', (data: ChatPreview) => {
+  previews.update((p) => {
+    p.push(data);
+    return p;
+  });
+});
+
+connection.on('removedFromChat', (data: string) => {
+  if (get(useActiveScreen) === 'chat' && get(chatId) === data) {
+    useActiveScreen.update((screen) => (screen = 'friends'));
+  }
+  previews.update((p) => (p = p.filter((c) => c.id !== data)));
+});
+
+// Notifications
+connection.on('notificationSettings', (data: UserNotificationSettings) => {
+  useUserNotificationSettings.update((un) => {
+    un = data;
+    return un;
+  });
+});
+
+// Blocking
 connection.on('blockToggle', (data: { id: string; blocked: boolean }) => {
   const { id, blocked } = data;
   blockedUsers.update((b) => {
@@ -207,31 +253,6 @@ connection.on('blockToggle', (data: { id: string; blocked: boolean }) => {
     return b;
   });
 });
-
-connection.on('addedAsAdmin', (data: string) => {
-  if (get(chatId) === data) {
-    chat.update((c) => {
-      c.admins.push(c.users.find((u) => u.id === c.systemMessages.at(-1)!.affectedUser!.id)!)
-      c.userIsAdmin = true;
-      return c;
-    })
-  }
-})
-
-connection.on('addedToChat', (data: ChatPreview) => {
-  previews.update((p) => {
-    p.push(data);
-    return p;
-  });
-})
-
-connection.on('removedFromChat', (data: string) => {
-  if (get(useActiveScreen) === 'chat' && get(chatId) === data) {
-    useActiveScreen.update((screen) => screen = 'friends');
-  }
-  previews.update((p) => p = p.filter((c) => c.id !== data));
-})
-
 export const online = writable(connection.state === HubConnectionState.Connected);
 connection.onreconnected(() => online.set(true));
 connection.onreconnecting(() => online.set(false));

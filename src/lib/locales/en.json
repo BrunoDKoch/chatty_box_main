@@ -118,7 +118,8 @@
     "asAn": "as an",
     "admin": "administrator",
     "video": "video",
-    "youtubeLink": "YouTube link"
+    "youtubeLink": "YouTube link",
+    "groupChat": "group chat"
   },
   "aside": {
     "searchChats": "{search} chats"

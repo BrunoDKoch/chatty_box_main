@@ -22,6 +22,8 @@
   $: activeSearchPage = 1;
   $: messageToDelete = null as MessageResponse | null;
   $: search = '';
+
+  // Modals for added chat functionality
   let showUserSearchModal = false;
   let showUserRemovalModal = false;
   let showConfirmLeaveModal = false;
