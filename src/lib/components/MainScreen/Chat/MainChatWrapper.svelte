@@ -24,7 +24,6 @@
     <MessagesWrapper
       on:delete
       bind:replyTo
-      bind:hasMore={$chat.hasMore}
       bind:systemMessages={$chat.systemMessages}
       bind:messages={$chat.messages}
       bind:total={$chat.messageCount}
