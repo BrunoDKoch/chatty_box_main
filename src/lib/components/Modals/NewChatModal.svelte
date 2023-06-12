@@ -35,8 +35,7 @@
   }
 </script>
 
-<Modal>
-  <CloseButton on:close />
+<Modal on:close>
   <div class="min-h-96 flex flex-col gap-3">
     {#each currentlySelectedUsers as user}
       <div class="divider" />

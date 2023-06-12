@@ -10,7 +10,7 @@
   QRCode.toDataURL(token).then((url) => (codeElement.src = url));
 </script>
 
-<Modal>
+<Modal on:close>
   <div class="flex flex-col items-center justify-center">
     <img bind:this={codeElement} alt="QR Code" />
     <h3 class="text-lg font-semibold text-center">Scan the code above</h3>

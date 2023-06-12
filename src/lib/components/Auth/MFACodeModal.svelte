@@ -8,7 +8,7 @@
   const dispatch = createEventDispatcher();
 </script>
 
-<Modal>
+<Modal on:close>
   <form
     action=""
     class="flex flex-col items-center gap-4"

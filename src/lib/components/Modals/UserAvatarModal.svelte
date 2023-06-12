@@ -20,8 +20,7 @@
   }
 </script>
 
-<Modal>
-  <CloseButton on:close />
+<Modal on:close>
   <DragNDrop isAvatar on:updateFile {uploading} {uploadSuccessful} />
   <div class="modal-action">
     <div class="join">

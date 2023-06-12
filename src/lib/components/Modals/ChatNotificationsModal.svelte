@@ -29,7 +29,7 @@
   });
 </script>
 
-<Modal>
+<Modal on:close>
   <CloseButton on:close />
   {#if activePreview}
     <form action="">

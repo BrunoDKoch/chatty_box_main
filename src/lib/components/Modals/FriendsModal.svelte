@@ -20,8 +20,7 @@
   }
 </script>
 
-<Modal>
-  <CloseButton on:close />
+<Modal on:close>
   <div class="grid grid-cols-[1fr_3fr]">
     <iconify-icon
       class="row-span-2 self-center justify-self-center"

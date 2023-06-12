@@ -33,12 +33,7 @@
   });
 </script>
 
-<Modal>
-  <div class="flex items-end justify-end">
-    <button on:click={() => dispatch('close')} class="btn btn-circle btn-sm">
-      <iconify-icon icon="mdi:close" />
-    </button>
-  </div>
+<Modal on:close>
   <h1 class="text-center text-xl font-bold uppercase">
     {$t('security.mfa.mfa')}
     {$t('common.is.temp')}

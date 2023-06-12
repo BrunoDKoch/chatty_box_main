@@ -48,8 +48,7 @@
   }
 </script>
 
-<Modal>
-  <CloseButton on:close />
+<Modal on:close>
   {#await sessions}
     <iconify-icon icon="svg-spinners:6-dots-scale" />
   {:then data}
@@ -65,7 +64,9 @@
       <tbody>
         {#each data as session}
           <tr class="text-center {session.active ? 'bg-success-content' : 'bg-error-content'}">
-            <th>{data.indexOf(session) + 1}</th>
+            <th>
+              <input type="checkbox" class="checkbox-info" name="session{data.indexOf(session) + 1}" id="session{data.indexOf(session) + 1}">
+            </th>
             <td>
               <iconify-icon icon={getIcons(session).deviceIcon} />
               <span>{session.device}</span>

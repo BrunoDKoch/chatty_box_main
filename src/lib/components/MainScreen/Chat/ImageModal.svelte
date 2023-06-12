@@ -5,7 +5,7 @@
   export let link: string;
 </script>
 
-<Modal>
+<Modal on:close>
   <CloseButton on:close />
   <div class="flex items-center justify-center">
     <img

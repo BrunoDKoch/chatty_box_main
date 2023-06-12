@@ -33,7 +33,7 @@
   }
 </script>
 
-<Modal>
+<Modal on:close>
   <form on:submit|preventDefault={async () => await handleSubmit()} action="">
     <TextInput
       rules={rules.otpRules}

@@ -34,8 +34,7 @@
   });
 </script>
 
-<Modal>
-  <CloseButton on:close />
+<Modal on:close>
   <div class="flex flex-col justify-center">
     {#if attempts && attempts.length && total}
       <table class="table table-compact">

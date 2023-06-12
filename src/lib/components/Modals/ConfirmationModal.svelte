@@ -6,7 +6,7 @@
   const dispatch = createEventDispatcher();
 </script>
 
-<Modal>
+<Modal on:close>
   <div class="grid grid-cols-[1fr_3fr] max-w-[100vw]">
     <iconify-icon
       class="row-span-2 self-center justify-self-center"

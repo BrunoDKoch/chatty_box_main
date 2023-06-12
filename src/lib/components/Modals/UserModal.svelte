@@ -67,12 +67,9 @@
 
 <svelte:window bind:innerWidth />
 
-<Modal>
+<Modal on:close>
   {#if user}
     <div>
-      <div class="flex justify-end">
-        <CloseButton on:close />
-      </div>
       <div class="flex items-center">
         <UserAvatarAndName disableModal {user} size={innerWidth > 1024 ? 'full' : 'half'}>
           <div class="join">

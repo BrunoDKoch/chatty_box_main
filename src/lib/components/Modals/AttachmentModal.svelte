@@ -9,7 +9,6 @@
   const dispatch = createEventDispatcher();
 </script>
 
-<Modal>
-  <CloseButton on:close />
+<Modal on:close>
   <DragNDrop on:updateFile={() => dispatch('close')} {uploading} {uploadSuccessful} />
 </Modal>

@@ -1,6 +1,7 @@
 <script lang="ts">
-    import { onMount } from 'svelte';
+  import { onDestroy, onMount } from 'svelte';
   import { scale } from 'svelte/transition';
+  import CloseButton from '../Custom/CloseButton.svelte';
 
   export let modalType: 'base' | 'error' | 'warning' = 'base';
   let show = false;
@@ -13,22 +14,20 @@
       case 'warning':
         return 'bg-warning dark:bg-warning-content';
       default:
-        return 'bg-base'
+        return 'bg-base';
     }
   }
   onMount(() => {
     modalElement.showModal();
     show = true;
-  })
+  });
 </script>
 
 <div>
-  <dialog bind:this={modalElement} class="modal w-screen h-screen">
+  <dialog on:close bind:this={modalElement} class="modal w-screen h-screen">
     {#if show}
-      <div
-        transition:scale
-        class="modal-box min-w-max overflow-x-hidden {bgClass}"
-      >
+      <div transition:scale class="modal-box min-w-max overflow-x-hidden {bgClass}">
+        <CloseButton on:close />
         <slot />
       </div>
     {/if}
