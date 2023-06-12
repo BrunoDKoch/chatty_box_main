@@ -161,7 +161,8 @@
     },
     "mfa": {
       "mfa": "autenticación multifactor",
-      "authenticator": "aplicación de autenticación"
+      "authenticator": "aplicación de autenticación",
+      "mfaNotice": "Para habilitar la autenticación multifactor, deberá tener una aplicación de autenticador, como Google Authenticator, Microsoft Authenticator o Authy."
     }
   },
   "privacyLevel": {

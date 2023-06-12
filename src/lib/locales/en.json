@@ -165,7 +165,8 @@
     },
     "mfa": {
       "mfa": "multi-factor authentication",
-      "authenticator": "authenticator app"
+      "authenticator": "authenticator app",
+      "mfaNotice": "In order to enable multi-factor authentication, you will need to have an authenticator app, such as Google Authenticator, Microsoft Authenticator or Authy."
     }
   },
   "privacyLevel": {

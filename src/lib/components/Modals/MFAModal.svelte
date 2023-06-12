@@ -39,6 +39,9 @@
     {$t('common.is.temp')}
     {enabled ? $t('common.enabled.f') : $t('common.disabled.f')}
   </h1>
+  <p class="w-[45rem]">
+    {$t('security.mfa.mfaNotice')}
+  </p>
   <button on:click={async () => await handleChange(!enabled)} class="btn">
     {enabled ? $t('common.disable') : $t('common.enable')}
   </button>
