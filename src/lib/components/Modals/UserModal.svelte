@@ -1,21 +1,40 @@
 <script lang="ts">
-  import type {
-    ChatBasicInfo,
-    UserDetailedResponse,
-    UserPartialResponse,
-  } from '$lib/types/partialTypes';
+  import type { UserDetailedResponse } from '$lib/types/partialTypes';
   import { blockedUsers, connection, friends } from '$lib/useSignalR';
   import { t } from 'svelte-i18n';
   import Modal from './Modal.svelte';
   import UserAvatarAndName from '../UserAvatarAndName.svelte';
-  import { onMount } from 'svelte';
+  import { createEventDispatcher, onMount } from 'svelte';
   import CloseButton from '../Custom/CloseButton.svelte';
   import { error } from '@sveltejs/kit';
-    import useBlockToggle from '$lib/useBlockToggle';
+  import useBlockToggle from '$lib/useBlockToggle';
+  import useActiveScreen from '$lib/useActiveScreen';
+  import { chatId } from '$lib/useActiveChat';
 
   export let userId: string;
+  const dispatch = createEventDispatcher();
+
   $: user = null as null | UserDetailedResponse;
   let innerWidth: number;
+
+  // Sort chats in common by name
+  $: {
+    if (user) {
+      sortChats(user);
+    }
+  }
+  function sortChats(user: UserDetailedResponse) {
+    user.chatsInCommon.sort((a, b) => {
+      if (a.chatName! < b.chatName!) {
+        return -1;
+      }
+      if (a.chatName! > b.chatName!) {
+        return 1;
+      }
+      return 0;
+    });
+  }
+
   async function handleAddOrRemoveClick() {
     if (!user) return;
     if (!user.isFriend) {
@@ -31,7 +50,7 @@
         $blockedUsers.push(userResponse);
         return;
       }
-      $blockedUsers = $blockedUsers.filter((b) => b.id !== userResponse.id)
+      $blockedUsers = $blockedUsers.filter((b) => b.id !== userResponse.id);
     } catch (err) {
       throw error((err as any).status, err as any);
     } finally {
@@ -100,9 +119,19 @@
           chats
           {$t('common.inCommon')}
         </div>
-        {#each user.chatsInCommon as chat}
-          <p>{chat.chatName}</p>
-        {/each}
+        <div class="flex flex-col">
+          {#each user.chatsInCommon as chat}
+            <a
+              class="link hover:text-gray-700 dark:hover:text-gray-300"
+              href="/"
+              on:click|preventDefault={() => {
+                $useActiveScreen = 'chat';
+                $chatId = chat.id;
+                dispatch('close');
+              }}>{chat.chatName}</a
+            >
+          {/each}
+        </div>
       {/if}
     </div>
   {/if}

@@ -40,6 +40,19 @@ interface ChatPreview extends ChatBasicInfo {
   users: UserPartialResponse[];
 }
 
+interface ClientConnectionPartialInfo {
+  browser: string;
+  cityName: string;
+  countryIsoCode: string;
+  countryName: string;
+  device: string;
+  geoNameId: string;
+  ipAddress: string;
+  os: string;
+  active: boolean;
+  createdAt: Date;
+}
+
 export type {
   MessagePreview,
   UserPartialResponse,
@@ -47,4 +60,5 @@ export type {
   ChatBasicInfo,
   UserDetailedResponse,
   ChatPreview,
+  ClientConnectionPartialInfo
 };

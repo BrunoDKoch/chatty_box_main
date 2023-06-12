@@ -1,6 +1,6 @@
 <script lang="ts">
   import AvatarAndNameEdit from './Editing/AvatarAndNameEdit.svelte';
-  import UserAvatarModal from './Modals/UserAvatarModal.svelte';
+  import UserAvatarModal from '../Modals/UserAvatarModal.svelte';
   export let user: { userName: string; avatar?: string };
   $: showModal = false;
   async function handleFileUpdate(file: string | null) {

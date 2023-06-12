@@ -34,10 +34,6 @@ export const blockedUsers = writable([]) as Writable<UserPartialResponse[]>;
 
 export let connection = new HubConnectionBuilder()
   .withUrl(`${baseURL}/hub/messages`, {
-    accessTokenFactory() {
-      if (!localStorage) return '';
-      return localStorage.getItem('accessToken') ?? '';
-    },
     withCredentials: true,
   })
   .withAutomaticReconnect()
@@ -179,7 +175,7 @@ connection.on('chat', (data: CompleteChat) => {
     }
     // Sort messages properly
     ch.messages.sort((a, b) => Number(new Date(a.sentAt)) - Number(new Date(b.sentAt)));
-    console.log(ch)
+    console.log(ch);
     return ch;
   });
 });

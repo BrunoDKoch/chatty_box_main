@@ -13,10 +13,9 @@ async function logIn(body: LogInInfo) {
     baseURL,
     credentials: 'include',
     async onResponse({ response }) {
-      console.log(response)
+      console.log(response);
       if (response.ok) {
-        accessToken.save(response._data!.token);
-        await checkIfLoggedIn();
+        await goto('/');
       }
     },
     onResponseError({ response }) {
@@ -48,21 +47,6 @@ async function signUp(body: SignUpInfo) {
   });
 }
 
-async function checkIfLoggedIn(): Promise<boolean> {
-  return await ofetch<boolean>('/User/LoggedIn', {
-    mode: 'cors',
-    baseURL,
-    credentials: 'include',
-    headers: { authorization: `Bearer ${localStorage.getItem('accessToken')}` },
-    async onResponseError() {
-      await goto('/auth/login');
-    },
-    onResponse(ctx) {
-      console.log(ctx);
-      accessToken.save(ctx.response._data!.token);
-    },
-  });
-}
 async function logOut() {
   const { data, error } = await ofetch('/User/logout', {
     baseURL,
@@ -70,7 +54,6 @@ async function logOut() {
     mode: 'cors',
     credentials: 'include',
     async onResponse() {
-      accessToken.discard();
       await goto('/auth/login', {
         invalidateAll: true,
         replaceState: true,
@@ -99,6 +82,7 @@ async function validateEmail(body: { email: string; code: string }) {
     body,
     onResponseError({ response }) {
       console.log(response);
+      if (response.ok) return goto('/');
     },
   });
 }
@@ -126,26 +110,6 @@ async function recoverPassword(body: { password: string; email: string; token: s
   });
 }
 
-function createAccessToken() {
-  const { subscribe, set, update } = writable(null) as Writable<string | null>;
-  return {
-    subscribe,
-    set,
-    update,
-    read() {
-      set(localStorage ? localStorage.getItem('accessToken') : null);
-    },
-    save(newToken: string) {
-      set(newToken);
-      localStorage.setItem('accessToken', newToken);
-    },
-    discard() {
-      set(null);
-      localStorage.removeItem('accessToken');
-    },
-  };
-}
-
 const currentUser = writable({
   id: '',
   email: '',
@@ -153,17 +117,13 @@ const currentUser = writable({
   roles: [] as string[],
 });
 
-const accessToken = createAccessToken();
-
 export {
   logIn,
   logOut,
   signUp,
-  checkIfLoggedIn,
   suspendUser,
   validateEmail,
   getRecoveryToken,
   recoverPassword,
   currentUser,
-  accessToken,
 };
