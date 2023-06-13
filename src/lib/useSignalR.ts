@@ -18,6 +18,7 @@ import type {
   FriendResponse,
   ChatPreview,
   UserPartialResponse,
+  UserConnectionCallInfo,
 } from '$lib/types/partialTypes';
 import { chat, chatId, chatNotificationSettings } from './useActiveChat';
 import type { CompleteChat, MessageResponse, SystemMessagePartial } from './types/combinationTypes';
@@ -43,6 +44,14 @@ chatId.subscribe(async (cId) => {
   if (!connection || connection.state !== HubConnectionState.Connected) return;
   await connection.invoke('GetChat', cId, 0);
 });
+
+// Initial call to user
+connection.on('connectionInfo', (data: UserConnectionCallInfo) => {
+  friends.set(data.friends);
+  friendRequests.set(data.friendRequests)
+  blockedUsers.set(data.blocks);
+  previews.set(data.previews);
+})
 
 connection.on('unread', (data) => {
   data.forEach((n: Message) => messagesCount.set(get(messagesCount) + 1));

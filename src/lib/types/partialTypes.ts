@@ -1,4 +1,4 @@
-import type { Chat, User } from '@prisma/client';
+import type { Chat, FriendRequest, User } from '@prisma/client';
 
 type MessagePreview = {
   from: UserPartialResponse;
@@ -53,6 +53,17 @@ interface ClientConnectionPartialInfo {
   createdAt: Date;
 }
 
+interface UserConnectionCallInfo {
+  id: string;
+  avatar?: string;
+  userName: string;
+  email: string;
+  friends: FriendResponse[];
+  friendRequests: { userAdding: UserPartialResponse }[];
+  blocks: UserPartialResponse[];
+  previews: ChatPreview[];
+}
+
 export type {
   MessagePreview,
   UserPartialResponse,
@@ -60,5 +71,6 @@ export type {
   ChatBasicInfo,
   UserDetailedResponse,
   ChatPreview,
-  ClientConnectionPartialInfo
+  ClientConnectionPartialInfo,
+  UserConnectionCallInfo,
 };
