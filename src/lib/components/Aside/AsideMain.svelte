@@ -4,8 +4,9 @@
   import { t } from 'svelte-i18n';
   import AsideMsg from './AsidePreview.svelte';
   import NewChatModal from '../Modals/NewChatModal.svelte';
-  import { friendRequests } from '$lib/useSignalR';
+  import { fetchingInitialCallInfo, friendRequests } from '$lib/useSignalR';
   import { previews } from '$lib/useSignalR';
+  import SkeletonPreview from './SkeletonPreview.svelte';
   let showNewChatModal = false;
 </script>
 
@@ -35,9 +36,15 @@
   </button>
   <div class="divider" />
   <div class="flex flex-col gap-4 even:bg-base-300">
-    {#each $previews as chat}
-      <AsideMsg bind:chat />
-    {/each}
+    {#if $fetchingInitialCallInfo}
+      {#each [0, 1, 2, 3, 4, 5, 6] as _}
+        <SkeletonPreview />
+      {/each}
+    {:else}
+      {#each $previews as chat}
+        <AsideMsg bind:chat />
+      {/each}
+    {/if}
   </div>
 </div>
 

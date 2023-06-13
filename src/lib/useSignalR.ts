@@ -33,6 +33,9 @@ export const friendRequests = writable([]) as Writable<{ userAdding: UserPartial
 export const friends = writable([]) as Writable<FriendResponse[]>;
 export const blockedUsers = writable([]) as Writable<UserPartialResponse[]>;
 
+// Store that establishes if we're still fetching the initial call info
+export const fetchingInitialCallInfo = writable(true);
+
 export let connection = new HubConnectionBuilder()
   .withUrl(`${baseURL}/hub/messages`, {
     withCredentials: true,
@@ -48,10 +51,11 @@ chatId.subscribe(async (cId) => {
 // Initial call to user
 connection.on('connectionInfo', (data: UserConnectionCallInfo) => {
   friends.set(data.friends);
-  friendRequests.set(data.friendRequests)
+  friendRequests.set(data.friendRequests);
   blockedUsers.set(data.blocks);
   previews.set(data.previews);
-})
+  fetchingInitialCallInfo.set(false);
+});
 
 connection.on('unread', (data) => {
   data.forEach((n: Message) => messagesCount.set(get(messagesCount) + 1));
