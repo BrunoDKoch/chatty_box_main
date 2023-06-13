@@ -37,11 +37,9 @@ async function signUp(body: SignUpInfo) {
     credentials: 'include',
     onResponseError({ response }) {
       throw {
-        code: response.status,
-        error: {
-          message: response.status,
-          cause: 'Este e-mail já está cadastrado!',
-        },
+        status: response.status,
+        message: response._data,
+        cause: response._data,
       };
     },
   });

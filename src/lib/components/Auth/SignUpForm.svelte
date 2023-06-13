@@ -138,7 +138,7 @@
     } catch (err) {
       errorMsg = {
         status: (err as any).status,
-        message: (err as any).error.message,
+        message: (err as any).message,
         cause: $t(`error.cause.${(err as any).status}`),
       };
     }
@@ -147,7 +147,7 @@
 
 <form
   on:submit|preventDefault={async () => await handleSubmit()}
-  class="grid grid-cols-2 gap-x-4"
+  class="grid lg:grid-cols-2 gap-x-4"
   action=""
 >
   <TextInput
@@ -182,7 +182,7 @@
     bind:rules={rules.confirmPasswordRules}
     bind:value={confirmPassword}
   />
-  <div class="col-span-2">
+  <div class="lg:col-span-2">
     <TextInput
       name="username"
       labelText="{$t('common.your.m')} {$t('auth.userName')}"
@@ -191,7 +191,7 @@
       bind:value={userName}
     />
   </div>
-  <div class="col-span-2 row-span-2 flex flex-col items-center justify-center">
+  <div class="lg:col-span-2 lg:row-span-2 flex flex-col items-center justify-center">
     <button class="btn">{$t('common.submit')}</button>
     <a class="link first-letter:uppercase" href="/auth/login">
       <span>{$t('common.already')} {$t('auth.have')} {$t('auth.anAccount')}?</span>

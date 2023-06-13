@@ -41,24 +41,30 @@
   onMount(() => {
     if (error.message.includes('\n')) {
       brokenUpMessage = error.message.split('\n');
+      console.log(brokenUpMessage);
     }
   });
 </script>
 
 <Modal on:close modalType="error">
   <div class="grid grid-cols-[1fr_3fr] max-w-[100vw]">
-    <iconify-icon class="row-span-2 self-center justify-self-center" {icon} height="5rem" />
-    <h1 class="font-bold text-2xl">
+    <iconify-icon
+      class="row-span-2 self-center justify-self-center max-md:text-4xl lg:text-8xl"
+      {icon}
+    />
+    <h1 class="font-bold max-md:text-xl lg:text-2xl">
       {error.status ?? 500} - {error.cause ?? $t('error.cause.fallback')}
     </h1>
     {#if error.message && brokenUpMessage.length}
       <div>
         {#each brokenUpMessage as portion}
-          <time class="first-letter:uppercase">
-            {portion.includes('/') && portion.includes(':')
-              ? `${$date(new Date(`${portion}Z`))} ${$time(new Date(`${portion}Z`))}`
-              : portion}
-          </time>
+          {#if portion.includes('/') && portion.includes(':')}
+            <time class="first-letter:uppercase">
+              {`${$date(new Date(`${portion}Z`))} ${$time(new Date(`${portion}Z`))}`}
+            </time>
+            {:else}
+            <p>{portion}</p>
+          {/if}
         {/each}
       </div>
     {:else if error.message}
