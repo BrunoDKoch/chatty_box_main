@@ -6,7 +6,6 @@
 </script>
 
 <Modal on:close>
-  <CloseButton on:close />
   <div class="flex items-center justify-center">
     <img
       class="max-h-[70vh] max-w-[70vw]"

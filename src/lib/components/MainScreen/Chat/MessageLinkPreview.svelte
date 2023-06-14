@@ -1,7 +1,7 @@
 <script lang="ts">
   import { ofetch } from 'ofetch';
   import { onMount } from 'svelte';
-  import ImageModal from './ImageModal.svelte';
+  import ImageModal from '$lib/components/Modals/ImageModal.svelte';
   import { PUBLIC_IMAGES_URL } from '$env/static/public';
   import { getLinkType } from '$lib/useLinkCheck';
   export let link: string;
