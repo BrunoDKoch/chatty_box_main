@@ -15,8 +15,7 @@
   import ErrorModal from '$lib/components/Modals/ErrorModal.svelte';
   import { goto } from '$app/navigation';
   import NotificationsContainer from '$lib/components/Notification/NotificationsContainer.svelte';
-
-  let error: { status: number; cause: string; message: string } | null = null;
+    import useError from '$lib/useError';
 
   $: title = 'ChattyBox';
   $: {
@@ -97,7 +96,7 @@
   });
 
   connection.on('error', (data: string) => {
-    error = {
+    $useError = {
       status: 500,
       cause: $t('error.cause.signalR'),
       message: `${$t('error.signalR', { values: { error: data } })}\n ${$t('error.ourEnd')}\n ${$t(
@@ -117,7 +116,7 @@
       } catch (err) {
         if ((err as { message: string }).message.endsWith("Error: Unauthorized: Status code '401'"))
           return await goto('/auth/login');
-        error = {
+        $useError = {
           status: 503,
           cause: $t('error.cause.503'),
           message: `${$t('error.signalR', {
@@ -161,6 +160,6 @@
   <ConnectingComponent />
 {/if}
 
-{#if error}
-  <ErrorModal {error} on:close={() => (error = null)} />
+{#if $useError}
+  <ErrorModal error={$useError} on:close={() => ($useError = null)} />
 {/if}

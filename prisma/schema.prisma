@@ -103,6 +103,11 @@ model User {
   systemMessagesAffectingUser SystemMessage[]            @relation("affectedBy")
   status                      String? // Busy, away, etc
   showStatus                  Boolean                    @default(true) // If false, don't show if online
+  lockoutReason               String? // Reason for user being locked out
+  userReports                 UserReport[]               @relation("reportingUser")
+  reportsAgainstUser          UserReport[]               @relation("reportedUser")
+  markedForDeletion           Boolean                    @default(false)
+  deletionRequestedIn         DateTime?
 
   @@index([normalizedEmail], map: "EmailIndex")
   @@index([normalizedUserName], map: "UserNameIndex")
@@ -151,6 +156,7 @@ model Chat {
   messages                 Message[]
   systemMessages           SystemMessage[]
   chatNotificationSettings ChatNotificationSettings[]
+  userReports              UserReport[]
 }
 
 model ChatAdmin {
@@ -175,6 +181,7 @@ model Message {
   replyToId   String?
   replies     Message[]     @relation("replies")
   readByUsers ReadMessage[]
+  userReports UserReport[]
 }
 
 model ClientConnection {
@@ -248,4 +255,20 @@ model ChatNotificationSettings {
   showAlert          Boolean @default(true)
 
   @@id([userId, chatId])
+}
+
+// Admin stuff
+model UserReport {
+  id              String   @id @default(uuid())
+  reportingUser   User     @relation("reportingUser", fields: [reportingUserId], references: [id], onUpdate: NoAction, onDelete: NoAction)
+  reportingUserId String   @db.NVarChar(450)
+  reportedUser    User     @relation("reportedUser", fields: [reportedUserId], references: [id], onUpdate: NoAction, onDelete: NoAction)
+  reportedUserId  String   @db.NVarChar(450)
+  reportReason    String
+  chat            Chat?    @relation(fields: [chatId], references: [id], onUpdate: NoAction, onDelete: NoAction)
+  chatId          String?
+  message         Message? @relation(fields: [messageId], references: [id])
+  messageId       String?
+  sentAt          DateTime @default(now())
+  violationFound  Boolean?
 }

@@ -2,13 +2,13 @@
   import TextInput from '../Custom/TextInput.svelte';
   import type { SignUpInfo } from '$lib/types/authTypes';
   import { logIn, signUp } from '$lib/useAuth';
-  import ErrorModal from '$lib/components/Modals/ErrorModal.svelte';
   import { createEventDispatcher } from 'svelte';
   import QrCodeModal from '$lib/components/Modals/QrCodeModal.svelte';
   import EmailOtpModal from './EmailOTPModal.svelte';
   import { t } from 'svelte-i18n';
+    import useError from '$lib/useError';
+    import Button from '../Custom/Button.svelte';
   export let pending = false;
-  export let errorMsg: { status: number; message: string; cause: string } | null = null;
   const dispatch = createEventDispatcher();
   let qrCode: { content: string; height: number; width: number } | null = null;
   let token = '';
@@ -136,7 +136,7 @@
       pending = false;
       dispatch('showQR');
     } catch (err) {
-      errorMsg = {
+      $useError = {
         status: (err as any).status,
         message: (err as any).message,
         cause: $t(`error.cause.${(err as any).status}`),
@@ -192,7 +192,7 @@
     />
   </div>
   <div class="lg:col-span-2 lg:row-span-2 flex flex-col items-center justify-center">
-    <button class="btn">{$t('common.submit')}</button>
+    <Button>{$t('common.submit')}</Button>
     <a class="link first-letter:uppercase" href="/auth/login">
       <span>{$t('common.already')} {$t('auth.have')} {$t('auth.anAccount')}?</span>
       <span class="capitalize">{$t('common.clickHere')}!</span>
@@ -203,7 +203,6 @@
 {#if openOtpModal}
   <EmailOtpModal
     bind:email
-    bind:errorMsg
     on:ok={async () =>
       await logIn({ email, password, remember: false, rememberMultiFactor: false })}
   />

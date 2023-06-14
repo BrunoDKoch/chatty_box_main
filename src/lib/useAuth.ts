@@ -108,12 +108,27 @@ async function recoverPassword(body: { password: string; email: string; token: s
   });
 }
 
-const currentUser = writable({
-  id: '',
-  email: '',
-  userName: '',
-  roles: [] as string[],
-});
+async function startMFADisabling() {
+  return await ofetch('/user/mfa/disable', {
+    baseURL,
+    method: 'PUT',
+    mode: 'cors',
+    credentials: 'include',
+    onResponse({ response }) {
+      console.log(response);
+    },
+  });
+}
+
+async function finishMFADisabling(body: { password: string }) {
+  return await ofetch('/user/mfa/disable', {
+    baseURL,
+    method: 'POST',
+    body,
+    mode: 'cors',
+    credentials: 'include',
+  });
+}
 
 export {
   logIn,
@@ -123,5 +138,6 @@ export {
   validateEmail,
   getRecoveryToken,
   recoverPassword,
-  currentUser,
+  startMFADisabling,
+  finishMFADisabling,
 };

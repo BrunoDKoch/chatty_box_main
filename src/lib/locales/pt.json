@@ -177,6 +177,7 @@
     "contactSupport": "Caso o problema persista, por favor, informe o suporte técnico",
     "cause": {
       "signalR": "Erro com o SignalR",
+      "400": "Pedido mal formulado",
       "401": "Não autorizado",
       "402": "Pagamento necessário",
       "403": "Proibido",

@@ -3,6 +3,7 @@
   import { t } from 'svelte-i18n';
   import Modal from '$lib/components/Modals/Modal.svelte';
   import TextInput from '../Custom/TextInput.svelte';
+    import Button from '../Custom/Button.svelte';
   export let MFACode: string;
   export let rememberMultiFactor: boolean;
   const dispatch = createEventDispatcher();
@@ -29,6 +30,6 @@
         <input class="checkbox" bind:checked={rememberMultiFactor} type="checkbox" name="" id="" />
       </label>
     </div>
-    <button class="btn" type="submit">{$t('common.submit')}</button>
+    <Button>{$t('common.submit')}</Button>
   </form>
 </Modal>

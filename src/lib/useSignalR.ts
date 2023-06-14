@@ -4,7 +4,7 @@ import {
   type IHttpConnectionOptions,
 } from '@microsoft/signalr';
 import { PUBLIC_AUTH_URL_DEV as baseURL } from '$env/static/public';
-import { currentUser } from '$lib/useAuth';
+import { logOut } from '$lib/useAuth';
 import type {
   FriendRequest,
   Message,
@@ -213,6 +213,16 @@ connection.on('editedMessage', (data: MessageResponse) => {
   });
 });
 
+// Delete message
+connection.on('messageDeleted', (data: string) => {
+  chat.update((c) => {
+    const message = c.messages.find((m) => m.id === data);
+    if (!message) return c;
+    c.messages = c.messages.filter((m) => m !== message);
+    return c;
+  });
+});
+
 // Handling chat members
 connection.on('addedAsAdmin', (data: string) => {
   if (get(chatId) === data) {
@@ -262,6 +272,10 @@ connection.on('blockToggle', (data: { id: string; blocked: boolean }) => {
     return b;
   });
 });
+
+// Force log out
+connection.on('forceLogOut', async () => await logOut());
+
 export const online = writable(connection.state === HubConnectionState.Connected);
 connection.onreconnected(() => online.set(true));
 connection.onreconnecting(() => online.set(false));

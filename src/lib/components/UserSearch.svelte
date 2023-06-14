@@ -5,6 +5,7 @@
   import { createEventDispatcher } from 'svelte';
   import { t } from 'svelte-i18n';
   import UserAvatarAndName from './UserAvatarAndName.svelte';
+    import Button from './Custom/Button.svelte';
   export let selection: null | UserPartialResponse;
 
   const dispatch = createEventDispatcher();
@@ -63,15 +64,15 @@
         {:else if results.length}
           {#each results as result}
             <li>
-              <button
+              <Button
                 on:click={() => {
                   selection = result;
                   search = '';
                 }}
-                class="flex gap-3"
+                className="flex gap-3"
               >
                 <UserAvatarAndName user={result} size={25} />
-              </button>
+              </Button>
             </li>
           {/each}
         {/if}

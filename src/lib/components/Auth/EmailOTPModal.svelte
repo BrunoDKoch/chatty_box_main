@@ -4,8 +4,9 @@
   import TextInput from '../Custom/TextInput.svelte';
   import Modal from '$lib/components/Modals/Modal.svelte';
   import { createEventDispatcher } from 'svelte';
+    import useError from '$lib/useError';
+    import Button from '../Custom/Button.svelte';
   export let email: string;
-  export let errorMsg: { status: number; message: string; cause: string } | null = null
   let otp = '';
   $: rules = {
     otpRules: [
@@ -24,7 +25,7 @@
       console.log(res);
       dispatch('ok');
     } catch (err) {
-      errorMsg = {
+      $useError = {
         status: (err as any).status,
         message: (err as any).error.message,
         cause: $t(`error.cause.${(err as any).status}`),
@@ -43,6 +44,6 @@
       name="otp"
       labelText={$t('auth.typeCode')}
     />
-    <button class="btn">{$t('common.submit')}</button>
+    <Button>{$t('common.submit')}</Button>
   </form>
 </Modal>

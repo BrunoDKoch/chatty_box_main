@@ -8,6 +8,8 @@
   const dispatch = createEventDispatcher();
   function getIcon(status: number) {
     switch (status) {
+      case 400:
+        return 'material-symbols:warning';
       case 401:
         return 'mdi:shield-alert';
       case 402:
@@ -39,6 +41,7 @@
   }
   let brokenUpMessage = [] as string[];
   onMount(() => {
+    console.log(error)
     if (error.message.includes('\n')) {
       brokenUpMessage = error.message.split('\n');
       console.log(brokenUpMessage);

@@ -1,11 +1,12 @@
 <script lang="ts">
   import { createEventDispatcher } from 'svelte';
+    import Button from './Button.svelte';
 
   const dispatch = createEventDispatcher();
 </script>
 
 <div class="flex justify-end">
-  <button on:click={() => dispatch('close')} class="btn btn-circle btn-sm">
+  <Button on:click={() => dispatch('close')} size="sm" format="circle">
     <iconify-icon icon="mdi:close" />
-  </button>
+  </Button>
 </div>

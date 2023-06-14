@@ -4,6 +4,7 @@
   import { getRecoveryToken, recoverPassword } from '$lib/useAuth';
   import { goto } from '$app/navigation';
   import { page } from '$app/stores';
+    import Button from '../Custom/Button.svelte';
   export let errorMsg: { status: number; message: string; cause: string } | null = null
   export let email: string = '';
   export let token: string = '';
@@ -109,5 +110,5 @@
       labelText="{$t('auth.confirm')} {$t('common.your.f')} {$t('auth.password')}"
     />
   {/if}
-  <button class="btn" type="submit">{$t('common.submit')}</button>
+  <Button>{$t('common.submit')}</Button>
 </form>
