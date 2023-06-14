@@ -1,4 +1,4 @@
-export const settingOptions = [
+const settingOptions = [
   'settings.status.status',
   'settings.privacy',
   'settings.security',
@@ -7,12 +7,12 @@ export const settingOptions = [
   'settings.darkTheme',
 ] as const;
 
-export type SettingOptions = typeof settingOptions;
+type SettingOptions = typeof settingOptions;
 
-export const statusOptions = [
+const statusOptions = [
   {
     name: 'settings.status.online',
-    value: ''
+    value: '',
   },
   {
     name: 'settings.status.busy',
@@ -23,3 +23,20 @@ export const statusOptions = [
     value: 'away',
   },
 ] as const;
+
+const reportOptions = [
+  'report.harassmentBullying',
+  'report.spamMessages',
+  'report.inappropriateContent',
+  'report.violentGraphicContent',
+  'report.impersonationFakeProfile',
+  'report.hateSpeechOffensiveLanguage',
+  'report.suspiciousFraudulentActivity',
+  'report.intellectualPropertyInfringement',
+  'report.privacyViolation',
+  'report.other',
+] as const;
+
+type ReportOption = typeof reportOptions[number];
+
+export { settingOptions, type SettingOptions, statusOptions, reportOptions, type ReportOption };

@@ -12,6 +12,7 @@
   export let message: MessageResponse;
   export let focusOn: boolean;
   export let hideBottomInfo = false;
+  export let hideOptions = false;
   let thisElement: HTMLElement;
   const dispatch = createEventDispatcher();
 
@@ -97,6 +98,16 @@
           isEditing = !isEditing;
         },
       });
+    if (!message.isFromCaller)
+      options.push({
+        name: $t('report.report', {
+          values: { item: $t('common.message', { values: { count: 1 } }) },
+        }),
+        icon: 'material-symbols:exclamation',
+        action() {
+          dispatch('report', message);
+        },
+      });
   });
   onDestroy(() => observer.unobserve(thisElement));
 </script>
@@ -109,7 +120,7 @@
   on:touchstart={() => (showOptions = !showOptions)}
   on:mouseleave={() => (showOptions = !showOptions)}
 >
-  {#if showOptions}
+  {#if showOptions && !hideOptions}
     <div class="absolute join {message.isFromCaller ? 'right-14' : 'left-14'} z-50">
       {#each options as option}
         <button

@@ -2,22 +2,17 @@
   import { locale, t } from 'svelte-i18n';
   import Modal from './Modal.svelte';
   import { createEventDispatcher } from 'svelte';
+  import TitleAndIcon from './Titles/TitleAndIcon.svelte';
   export let action: string;
   const dispatch = createEventDispatcher();
 </script>
 
 <Modal on:close>
-  <div class="grid grid-cols-[1fr_3fr] max-w-[100vw]">
-    <iconify-icon
-      class="row-span-2 self-center justify-self-center"
-      icon="mdi:chat-question"
-      height="5rem"
-    />
-    <h1 class="font-bold uppercase text-2xl">
-      {$locale === 'es' ? '¿' : ''}
-      {$t('common.areYouSure')}?
-    </h1>
-  </div>
+  <TitleAndIcon
+    title="{$locale === 'es' ? '¿' : ''}
+    {$t('common.areYouSure')}?"
+    icon="mdi:chat-question"
+  />
   <div class="modal-middle">
     <p>
       {#if $locale === 'es'}
@@ -30,7 +25,11 @@
     </p>
   </div>
   <div class="modal-action join">
-    <button class="btn join-item btn-success" on:click={() => dispatch('confirm')}>{$t('common.yes')}</button>
-    <button class="btn join-item btn-error" on:click={() => dispatch('deny')}>{$t('common.no')}</button>
+    <button class="btn join-item btn-success" on:click={() => dispatch('confirm')}
+      >{$t('common.yes')}</button
+    >
+    <button class="btn join-item btn-error" on:click={() => dispatch('deny')}
+      >{$t('common.no')}</button
+    >
   </div>
 </Modal>

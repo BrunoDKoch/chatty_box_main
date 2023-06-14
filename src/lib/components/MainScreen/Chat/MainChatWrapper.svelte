@@ -1,5 +1,6 @@
 <script lang="ts">
   import AttachmentModal from '$lib/components/Modals/AttachmentModal.svelte';
+  import ReportModal from '$lib/components/Modals/ReportModal.svelte';
   import type { MessageResponse } from '$lib/types/combinationTypes';
   import { chat, chatId } from '$lib/useActiveChat';
   import ChatNameComponent from './ChatNameComponent.svelte';
@@ -7,6 +8,9 @@
   import MessagesWrapper from './MessagesWrapper.svelte';
   export let loading: boolean;
   export let searchResults: { messages: MessageResponse[]; messageCount: number };
+
+  let reportingMessage: MessageResponse;
+  $: showReportingModal = false;
 
   // Used to dynamically change layout
   // In mobile, the main chat should be hidden if search results are open
@@ -24,6 +28,10 @@
     <MessagesWrapper
       on:delete
       bind:replyTo
+      on:report={({ detail }) => {
+        showReportingModal = true;
+        reportingMessage = detail;
+      }}
       bind:systemMessages={$chat.systemMessages}
       bind:messages={$chat.messages}
       bind:total={$chat.messageCount}
@@ -42,4 +50,6 @@
 
 {#if showAttachmentsModal}
   <AttachmentModal on:close={() => (showAttachmentsModal = !showAttachmentsModal)} />
+{:else if showReportingModal}
+  <ReportModal message={reportingMessage} />
 {/if}

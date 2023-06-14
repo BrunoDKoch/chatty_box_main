@@ -66,6 +66,7 @@
         <MessageComponent
           on:replyTo={({ detail }) => (replyTo = detail)}
           on:delete
+          on:report
           bind:message
           hideBottomInfo={checkUserAndTime(message)}
           focusOn={messages.indexOf(message) === messages.length - 1 && messages.length <= 15}

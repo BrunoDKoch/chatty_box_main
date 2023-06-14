@@ -201,5 +201,18 @@
   "files": {
     "tooBig": "File too big! Please limit your upload size to 20MB",
     "dragHere": "Drag an image here or click to select one (limited to 20 MB)"
+  },
+  "report": {
+    "report": "report {item}",
+    "harassmentBullying": "Harassment or bullying",
+    "spamMessages": "Spam or unwanted messages",
+    "inappropriateContent": "Inappropriate content",
+    "violentGraphicContent": "Violent or graphic content",
+    "impersonationFakeProfile": "Impersonation or fake profile",
+    "hateSpeechOffensiveLanguage": "Hate speech or offensive language",
+    "suspiciousFraudulentActivity": "Suspicious or fraudulent activity",
+    "intellectualPropertyInfringement": "Intellectual property infringement",
+    "privacyViolation": "Privacy violation",
+    "other": "Other (please specify)"
   }
 }

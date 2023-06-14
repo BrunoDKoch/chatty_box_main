@@ -197,5 +197,18 @@
   "files": {
     "tooBig": "Arquivo muito grande! Por favor, envie arquivos de até 20MB",
     "dragHere": "Arraste a imagem aqui ou clique para selecioná-la (limitado a 20MB)"
+  },
+  "report": {
+    "report": "reportar {item}",
+    "harassmentBullying": "Assédio ou bullying",
+    "spamMessages": "Spam ou mensagens indesejadas",
+    "inappropriateContent": "Conteúdo inadequado",
+    "violentGraphicContent": "Conteúdo violento ou gráfico",
+    "impersonationFakeProfile": "Falsificação de identidade ou perfil falso",
+    "hateSpeechOffensiveLanguage": "Discurso de ódio ou linguagem ofensiva",
+    "suspiciousFraudulentActivity": "Atividade suspeita ou fraudulenta",
+    "intellectualPropertyInfringement": "Violação de propriedade intelectual",
+    "privacyViolation": "Violação de privacidade",
+    "other": "Outro (por favor, especifique)"
   }
 }
