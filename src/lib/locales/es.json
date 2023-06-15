@@ -45,6 +45,7 @@
     "already": "ya",
     "negatory": "no",
     "please": "por favor",
+    "specify": "especifique",
     "the": {
       "m": "{prepositions, plural, =0 {el} one {a el} other {a el}}",
       "f": "{prepositions, plural, =0 {la} one {a la} other {a la}}"
@@ -200,6 +201,8 @@
   },
   "report": {
     "report": "reportar {item}",
+    "reported": "{item} reportado",
+    "reportSent": "su reporte fue enviado",
     "harassmentBullying": "Acoso o bullying",
     "spamMessages": "Spam o mensajes no deseados",
     "inappropriateContent": "Contenido inapropiado",

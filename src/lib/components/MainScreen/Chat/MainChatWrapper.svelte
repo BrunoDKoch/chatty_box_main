@@ -51,5 +51,8 @@
 {#if showAttachmentsModal}
   <AttachmentModal on:close={() => (showAttachmentsModal = !showAttachmentsModal)} />
 {:else if showReportingModal}
-  <ReportModal message={reportingMessage} />
+  <ReportModal
+    on:close={() => (showReportingModal = !showReportingModal)}
+    message={reportingMessage}
+  />
 {/if}

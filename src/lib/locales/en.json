@@ -49,6 +49,7 @@
     "already": "already",
     "negatory": "don't",
     "please": "please",
+    "specify": "specify",
     "the": {
       "m": "{prepositions, plural, =0 {the} one {to the} other {to the}}",
       "f": "{prepositions, plural, =0 {the} one {to the} other {to the}}"
@@ -204,6 +205,8 @@
   },
   "report": {
     "report": "report {item}",
+    "reported": "{item} reported",
+    "reportSent": "your report was sent",
     "harassmentBullying": "Harassment or bullying",
     "spamMessages": "Spam or unwanted messages",
     "inappropriateContent": "Inappropriate content",
