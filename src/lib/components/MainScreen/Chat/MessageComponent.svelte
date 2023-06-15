@@ -10,9 +10,10 @@
   import MessageRepliedTo from './MessageRepliedTo.svelte';
   import { hostedImagesRegex, urlRegex } from '$lib/useLinkCheck';
   export let message: MessageResponse;
-  export let focusOn: boolean;
+  export let focusOn: boolean = false;
   export let hideBottomInfo = false;
   export let hideOptions = false;
+  export let displayOnly = false;
   let thisElement: HTMLElement;
   const dispatch = createEventDispatcher();
 
@@ -113,14 +114,14 @@
 </script>
 
 <div
-  class="relative hover:bg-base-300"
+  class="relative {displayOnly ? '' : 'hover:bg-base-300'}"
   id={message.id}
   bind:this={thisElement}
   on:mouseenter={() => (showOptions = !showOptions)}
   on:touchstart={() => (showOptions = !showOptions)}
   on:mouseleave={() => (showOptions = !showOptions)}
 >
-  {#if showOptions && !hideOptions}
+  {#if showOptions && !hideOptions && !displayOnly}
     <div class="absolute join {message.isFromCaller ? 'right-14' : 'left-14'} z-50">
       {#each options as option}
         <button

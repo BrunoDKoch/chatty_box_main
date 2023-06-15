@@ -213,5 +213,8 @@
     "intellectualPropertyInfringement": "Infracción de propiedad intelectual",
     "privacyViolation": "Violación de la privacidad",
     "other": "Otro (por favor, especifique)"
+  },
+  "admin": {
+    "title": "Área restringida"
   }
 }

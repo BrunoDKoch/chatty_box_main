@@ -19,10 +19,9 @@ function getLanguage(data: { cookies: Cookies; request: Request }) {
   if (cookies.get('lang')) return cookies.get('lang');
   const lang = request.headers.get('accept-language')!.split(',')[0];
   const existingLocale = get(locales).find((l) => lang.startsWith(l));
-  console.log({existingLocale})
   cookies.set('lang', existingLocale ?? 'en', {
     path: '/',
-    expires: new Date((new Date()).setFullYear(9999))
+    expires: new Date(new Date().setFullYear(9999)),
   });
   return lang;
 }

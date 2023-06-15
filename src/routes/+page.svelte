@@ -15,7 +15,7 @@
   import ErrorModal from '$lib/components/Modals/ErrorModal.svelte';
   import { goto } from '$app/navigation';
   import NotificationsContainer from '$lib/components/Notification/NotificationsContainer.svelte';
-    import useError from '$lib/useError';
+  import useError from '$lib/useError';
 
   $: title = 'ChattyBox';
   $: {
@@ -106,25 +106,7 @@
   });
 
   onMount(async () => {
-    setTimeout(async () => {
-      try {
-        if (connection.state !== HubConnectionState.Connected) {
-          await connection.start();
-        }
-        await Notification.requestPermission();
-        $online = connection.state === HubConnectionState.Connected;
-      } catch (err) {
-        if ((err as { message: string }).message.endsWith("Error: Unauthorized: Status code '401'"))
-          return await goto('/auth/login');
-        $useError = {
-          status: 503,
-          cause: $t('error.cause.503'),
-          message: `${$t('error.signalR', {
-            values: { error: (err as { message: string }).message },
-          })}\n ${$t('error.ourEnd')}\n ${$t('error.contactSupport')}`,
-        };
-      }
-    }, 100);
+    await Notification.requestPermission();
   });
   onDestroy(async () => {
     await connection.stop();
@@ -132,34 +114,27 @@
 </script>
 
 <title>{title}</title>
-{#if $online}
-  <div class="lg:grid lg:grid-cols-4 max-md:flex max-md:flex-col w-screen overflow-hidden">
-    <aside class="col-span-1 min-h-screen max-md:hidden">
-      <Aside />
-    </aside>
-    <div class="lg:hidden flex items-center bg-base-200 z-50">
-      <button
-        on:click={() => ($useActiveScreen = $useActiveScreen === 'aside' ? 'friends' : 'aside')}
-        class="btn btn-ghost text-4xl"
-      >
-        <iconify-icon icon="mdi:menu" />
-      </button>
-      {#if $useActiveScreen === 'chat' && $chat}
-        <h1 class="font-bold text-2xl">
-          {$chat.chatName ?? $chat.users.map((u) => u.userName).join(', ')}
-        </h1>
-      {/if}
-    </div>
-    <section class="lg:col-span-3 max-h-screen overflow-hidden">
-      <ActiveScreen />
-    </section>
+
+<div class="lg:grid lg:grid-cols-4 max-md:flex max-md:flex-col w-screen overflow-hidden">
+  <aside class="col-span-1 min-h-screen max-md:hidden">
+    <Aside />
+  </aside>
+  <div class="lg:hidden flex items-center bg-base-200 z-50">
+    <button
+      on:click={() => ($useActiveScreen = $useActiveScreen === 'aside' ? 'friends' : 'aside')}
+      class="btn btn-ghost text-4xl"
+    >
+      <iconify-icon icon="mdi:menu" />
+    </button>
+    {#if $useActiveScreen === 'chat' && $chat}
+      <h1 class="font-bold text-2xl">
+        {$chat.chatName ?? $chat.users.map((u) => u.userName).join(', ')}
+      </h1>
+    {/if}
   </div>
+  <section class="lg:col-span-3 max-h-screen overflow-hidden">
+    <ActiveScreen />
+  </section>
+</div>
 
-  <NotificationsContainer bind:notifications />
-{:else}
-  <ConnectingComponent />
-{/if}
-
-{#if $useError}
-  <ErrorModal error={$useError} on:close={() => ($useError = null)} />
-{/if}
+<NotificationsContainer bind:notifications />

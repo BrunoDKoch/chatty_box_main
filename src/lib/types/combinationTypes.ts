@@ -31,4 +31,29 @@ interface CompleteChat extends Chat {
   systemMessages: SystemMessagePartial[];
 }
 
-export type { CompleteChat, SystemMessagePartial, MessageResponse };
+interface UserReportPartial {
+  id: string;
+  reportReason: string;
+  sentAt: Date;
+  violationFound: boolean | null;
+}
+
+interface ReportUserResponse extends UserPartialResponse {
+  pastViolations: UserReportPartial[];
+}
+
+interface UserReportResponse extends UserReportPartial {
+  reportingUser: ReportUserResponse;
+  reportedUser: ReportUserResponse;
+  message: MessageResponse;
+  chat: CompleteChat;
+  adminAction?: string;
+}
+
+export type {
+  CompleteChat,
+  SystemMessagePartial,
+  MessageResponse,
+  ReportUserResponse,
+  UserReportResponse,
+};

@@ -43,7 +43,7 @@
 </script>
 
 {#if hasMore}
-  <div bind:this={thisElement} class="flex flex-col items-center justify-center">
+  <div bind:this={thisElement} id="auto-scroller" class="flex flex-col items-center justify-center">
     {#if fetching && !$chat.hasFetched}
       <iconify-icon icon="svg-spinners:6-dots-scale" />
     {:else}

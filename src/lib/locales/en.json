@@ -217,5 +217,8 @@
     "intellectualPropertyInfringement": "Intellectual property infringement",
     "privacyViolation": "Privacy violation",
     "other": "Other (please specify)"
+  },
+  "admin": {
+    "title": "Restricted area"
   }
 }

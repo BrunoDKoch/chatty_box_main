@@ -6,6 +6,14 @@
   import { locale } from 'svelte-i18n';
   import { theme } from '$lib/theme';
   import { ofetch } from 'ofetch';
+  import { connection, online } from '$lib/useSignalR';
+  import { HubConnectionState } from '@microsoft/signalr';
+  import { goto } from '$app/navigation';
+  import useError from '$lib/useError';
+  import { t } from 'svelte-i18n';
+  import { page } from '$app/stores';
+  import ConnectingComponent from '$lib/components/ConnectingComponent.svelte';
+    import ErrorModal from '$lib/components/Modals/ErrorModal.svelte';
   export let data: LayoutServerData;
   $theme = data.theme;
 
@@ -33,17 +41,40 @@
     if (darkThemeConditions) handleThemeClass(node, 'dark');
     else handleThemeClass(node, 'light');
   }
-
   onMount(async () => {
     theme.subscribe(async (t) => await changeThemeCookie(t));
     locale.subscribe((l) =>
       document ? document.getElementsByTagName('html')[0].setAttribute('lang', l ? l : 'en') : null,
     );
+    setTimeout(async () => {
+      try {
+        if (connection.state !== HubConnectionState.Connected) await connection.start();
+        $online = connection.state === HubConnectionState.Connected;
+      } catch (err) {
+        if ((err as { message: string }).message.endsWith("Error: Unauthorized: Status code '401'"))
+          return await goto('/auth/login');
+        $useError = {
+          status: 503,
+          cause: $t('error.cause.503'),
+          message: `${$t('error.signalR', {
+            values: { error: (err as { message: string }).message },
+          })}\n ${$t('error.ourEnd')}\n ${$t('error.contactSupport')}`,
+        };
+      }
+    }, 100);
   });
 </script>
 
 <svelte:body use:setTheme />
 
 <main class="dark:bg-black h-screen w-screen overflow-hidden">
-  <slot />
+  {#if !$online && !$page.url.pathname.includes('auth')}
+    <ConnectingComponent />
+  {:else}
+    <slot />
+  {/if}
 </main>
+
+{#if $useError}
+  <ErrorModal error={$useError} on:close={() => ($useError = null)} />
+{/if}
