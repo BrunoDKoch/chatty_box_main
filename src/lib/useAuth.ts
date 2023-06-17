@@ -1,9 +1,8 @@
 import { PUBLIC_AUTH_URL_DEV as baseURL } from '$env/static/public';
 import type { LogInInfo, SignUpInfo } from '$lib/types/authTypes';
 import { ofetch } from 'ofetch';
-import { writable, get, type Writable } from 'svelte/store';
 import { goto } from '$app/navigation';
-import { PUBLIC_IDENTITY_COOKIE } from '$env/static/public';
+import { connection, online } from './useSignalR';
 
 async function logIn(body: LogInInfo) {
   return await ofetch(`/User/login`, {
@@ -13,8 +12,9 @@ async function logIn(body: LogInInfo) {
     baseURL,
     credentials: 'include',
     async onResponse({ response }) {
-      console.log(response);
       if (response.ok) {
+        await connection.start();
+        online.set(true);
         await goto('/');
       }
     },
@@ -52,6 +52,7 @@ async function logOut() {
     mode: 'cors',
     credentials: 'include',
     async onResponse() {
+      await connection.stop();
       await goto('/auth/login', {
         invalidateAll: true,
         replaceState: true,

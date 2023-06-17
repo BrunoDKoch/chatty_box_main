@@ -64,6 +64,13 @@ interface UserConnectionCallInfo {
   previews: ChatPreview[];
 }
 
+interface LockoutInfo {
+  lockout: boolean;
+  lockoutReason: string;
+  lockoutEnd?: Date;
+  permanent?: boolean;
+}
+
 export type {
   MessagePreview,
   UserPartialResponse,
@@ -73,4 +80,5 @@ export type {
   ChatPreview,
   ClientConnectionPartialInfo,
   UserConnectionCallInfo,
+  LockoutInfo,
 };

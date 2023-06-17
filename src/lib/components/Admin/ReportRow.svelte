@@ -44,7 +44,9 @@
   <td>
     <MessageComponent message={report.message} hideOptions displayOnly />
   </td>
-  <td>{$date(new Date(report.sentAt))} - {$time(new Date(report.sentAt))}</td>
+  <td>
+    {$date(new Date(`${report.sentAt}Z`), { timeStyle: 'short', hour12: false, dateStyle: 'medium' })}
+  </td>
   <td>
     <Button bind:buttonUIType on:click={() => dispatch('openModal', report)}>{text}</Button>
   </td>

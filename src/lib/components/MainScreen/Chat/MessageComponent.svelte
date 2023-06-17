@@ -40,9 +40,10 @@
       if (r.id === message.user.id) return;
       let baseDate = `${r.readAt ?? message.sentAt}`;
       baseDate = baseDate.endsWith('Z') ? baseDate : baseDate + 'Z';
-      return `${r.userName} ${$t('common.at')} ${$date(new Date(baseDate))} - ${$time(
-        new Date(baseDate),
-      )}`;
+      return `${r.userName} ${$t('common.at')} ${$date(new Date(baseDate), {
+        dateStyle: 'short',
+        timeStyle: 'short',
+      })}`;
     })
     .filter((a) => a)
     .join(', ');
@@ -143,7 +144,12 @@
       />
     {/if}
     <div class="chat px-4 {message.isFromCaller ? 'chat-end' : 'chat-start'}">
-      <UserAvatar disableModal={message.isFromCaller} user={message.user} size={50} isChatImage />
+      <UserAvatar
+        disableModal={message.isFromCaller || displayOnly}
+        user={message.user}
+        size={50}
+        isChatImage
+      />
       <div class="chat-header">
         {message.user.userName}
       </div>
@@ -175,13 +181,11 @@
         <div class="chat-footer flex gap-1 opacity-50">
           <div class="flex-col flex">
             <p class={message.editedAt ? 'line-through' : ''}>
-              {$date(new Date(`${message.sentAt}Z`), { format: 'medium' })}
-              {$time(new Date(`${message.sentAt}Z`))}
+              {$date(new Date(`${message.sentAt}Z`), { dateStyle: 'medium', timeStyle: 'short' })}
             </p>
             {#if message.editedAt}
               <time>
-                {$date(new Date(`${message.editedAt}Z`), { format: 'medium' })}
-                {$time(new Date(`${message.editedAt}Z`))}
+                {$date(new Date(`${message.editedAt}Z`), { dateStyle: 'medium', timeStyle: 'short' })}
               </time>
             {/if}
           </div>

@@ -47,9 +47,7 @@
         </div>
       </div>
       <time class="col-span-full">
-        {$date(new Date(`${chat.lastMessage.sentAt}Z`), { format: 'medium' })} - {$time(
-          new Date(`${chat.lastMessage.sentAt}Z`),
-        )}
+        {$date(new Date(`${chat.lastMessage.sentAt}Z`), { dateStyle: 'medium', timeStyle: 'short' })}
       </time>
     {:else}
       <p class="first-letter:capitalize">{$t('common.message', { values: { count: 0 } })}</p>

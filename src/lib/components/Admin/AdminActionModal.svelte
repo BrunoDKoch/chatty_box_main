@@ -10,6 +10,8 @@
   import { slide } from 'svelte/transition';
   import Checkbox from '../Custom/Checkbox.svelte';
   import TextInput from '../Custom/TextInput.svelte';
+  import Button from '../Custom/Button.svelte';
+    import { lockUserOut } from '$lib/useAdminFetch';
   export let report: UserReportResponse;
   const dispatch = createEventDispatcher();
 
@@ -19,7 +21,7 @@
   let suspensionExpiry = new Date();
 
   // Get rule value
-  $: violatedRule = reportOptions.includes(report.reportReason as ReportOption)
+  let violatedRule = reportOptions.includes(report.reportReason as ReportOption)
     ? report.reportReason
     : 'report.other';
 
@@ -34,28 +36,42 @@
     await connection.invoke('UpdateReport', report.id, violationFound);
     if (!violationFound) dispatch('close');
   }
+  async function handleLockout() {
+    await lockUserOut(report.id, {
+      lockout: true,
+      lockoutReason: violatedRule,
+      lockoutEnd: suspensionExpiry,
+      permanent: permanentSuspension,
+    })
+  }
 </script>
 
 <Modal on:close>
-  {#if report.violationFound === null}
+  {#if !report.violationFound}
     <div out:slide={{ axis: 'y' }}>
       <MessageComponent message={report.message} displayOnly />
       <form action="">
         <label for="">Does this violate the rules?</label>
         <div class="join">
-          <button
+          <Button
             on:click={async () => await handleViolation(false)}
-            class="join-item btn btn-error">{$t('common.no')}</button
+            className="join-item"
+            buttonUIType="error"
           >
-          <button
+            {$t('common.no')}
+          </Button>
+          <Button
             on:click={async () => await handleViolation(true)}
-            class="join-item btn btn-success">{$t('common.yes')}</button
+            className="join-item"
+            buttonUIType="success"
           >
+            {$t('common.yes')}
+          </Button>
         </div>
       </form>
     </div>
   {:else if report.violationFound}
-    <form action="" method="post">
+    <form on:submit|preventDefault={async() => await handleLockout()} action="" method="post">
       <Select
         {options}
         bind:value={violatedRule}
@@ -85,6 +101,23 @@
           bind:checked={permanentSuspension}
         />
       {/if}
+      <div class="divider" />
+      <div class="join flex items-center justify-center min-w-full">
+        <Button
+          buttonType="button"
+          on:click={async () => await handleViolation(false)}
+          buttonUIType="error"
+          className="join-item"
+        >
+          No violation found
+        </Button>
+        <Button buttonType="button" buttonUIType="warning" className="join-item">
+          {$t('common.cancel')}
+        </Button>
+        <Button buttonType="submit" buttonUIType="success" className="join-item">
+          {$t('common.proceed')}
+        </Button>
+      </div>
     </form>
   {/if}
 </Modal>

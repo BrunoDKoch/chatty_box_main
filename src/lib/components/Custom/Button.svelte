@@ -9,6 +9,9 @@
   export let size: 'xs' | 'sm' | 'md' | 'lg' | undefined = undefined;
   export let className = '';
 
+  $: buttonSize = getSize();
+  $: buttonFormat = getButtonFormat();
+
   function getButtonFormat() {
     if (!format) return;
     return `btn-${format}`;
@@ -23,7 +26,7 @@
   on:click
   type={buttonType}
   disabled={disabled || loading}
-  class="btn {getButtonFormat()} {getSize()} btn-block btn-{buttonUIType} {className}"
+  class="btn {buttonFormat} {buttonSize} btn-{buttonUIType} {className}"
 >
   {#if loading}
     <iconify-icon icon="svg-spinners:6-dots-scale" />

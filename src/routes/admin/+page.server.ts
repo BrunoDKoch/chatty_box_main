@@ -11,7 +11,6 @@ export const load = (async ({ fetch, url }) => {
     credentials: 'include',
   });
   const isAdmin = await adminResponse.json();
-  console.log({ isAdmin });
   if (!isAdmin)
     throw error(403, {
       status: 403,

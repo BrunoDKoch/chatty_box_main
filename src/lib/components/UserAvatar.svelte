@@ -32,9 +32,10 @@
 <figure
   on:click={() => handleClick()}
   on:keydown={() => handleClick()}
-  class="avatar {user.avatar ? '' : 'placeholder'} cursor-pointer mask mask-squircle {lowerOpacity
+  class="avatar {user.avatar ? '' : 'placeholder'} mask mask-squircle {lowerOpacity
     ? 'opacity-50'
-    : 'opacity-100'} {className} {isChatImage ? 'chat-image' : ''}"
+    : 'opacity-100'} {className} {isChatImage ? 'chat-image' : ''}
+    {disableModal ? 'cursor-default' : 'cursor-pointer'}"
 >
   <div class="w-[{rawSize}px] rounded-lg bg-blue-600 dark:bg-blue-800 font-bold text-white text-center text-{textSize}">
     {#if user.avatar}

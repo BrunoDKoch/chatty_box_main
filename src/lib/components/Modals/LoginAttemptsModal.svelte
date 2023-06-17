@@ -50,11 +50,9 @@
           {#each attempts as attempt}
             <tr class="text-center">
               <th>{attempts.indexOf(attempt) + 1}</th>
-              <td
-                >{$date(new Date(`${attempt.attemptedAt}Z`))} - {$time(
-                  new Date(`${attempt.attemptedAt}Z`),
-                )}</td
-              >
+              <td>
+                {$date(new Date(`${attempt.attemptedAt}Z`), {dateStyle: 'short', timeStyle: 'short'})}
+                </td>
               <td>{countryNames.of(attempt.countryIsoCode)}</td>
               <td>{attempt.cityName}</td>
               <td>{attempt.device}</td>

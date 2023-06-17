@@ -37,7 +37,7 @@
         reportedUserId: message.user.id,
         messageId: message.id,
         chatId: message.chatId,
-        reportReason: other ?? value,
+        reportReason: value === 'report.other' ? other : value,
       });
     } catch (err) {
       $useError = err as App.Error;

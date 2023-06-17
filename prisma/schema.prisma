@@ -169,19 +169,20 @@ model ChatAdmin {
 }
 
 model Message {
-  id          String        @id @default(uuid())
-  sentAt      DateTime      @default(now())
-  editedAt    DateTime?     @updatedAt
-  from        User          @relation(fields: [fromId], references: [id])
-  fromId      String        @db.NVarChar(450)
-  chat        Chat          @relation(fields: [chatId], references: [id])
-  chatId      String
-  text        String
-  replyTo     Message?      @relation(name: "replies", fields: [replyToId], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  replyToId   String?
-  replies     Message[]     @relation("replies")
-  readByUsers ReadMessage[]
-  userReports UserReport[]
+  id             String        @id @default(uuid())
+  sentAt         DateTime      @default(now())
+  editedAt       DateTime?     @updatedAt
+  from           User          @relation(fields: [fromId], references: [id])
+  fromId         String        @db.NVarChar(450)
+  chat           Chat          @relation(fields: [chatId], references: [id])
+  chatId         String
+  text           String
+  replyTo        Message?      @relation(name: "replies", fields: [replyToId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  replyToId      String?
+  replies        Message[]     @relation("replies")
+  readByUsers    ReadMessage[]
+  userReports    UserReport[]
+  flaggedByAdmin Boolean       @default(false)
 }
 
 model ClientConnection {
