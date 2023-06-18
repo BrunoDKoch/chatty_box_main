@@ -20,8 +20,6 @@
   });
 </script>
 
-<title>ChattyBox - {$t('admin.title')}</title>
-
 <ReportsTable on:openModal={({ detail }) => (reportOpenedForAction = detail)} bind:reports />
 
 {#if reportOpenedForAction}
