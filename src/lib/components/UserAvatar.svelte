@@ -2,13 +2,14 @@
   import { PUBLIC_IMAGES_URL } from '$env/static/public';
   import type { UserDetailedResponse, UserPartialResponse } from '$lib/types/partialTypes';
   import UserModal from '$lib/components/Modals/UserModal.svelte';
+    import useUserModal, { updateUser } from '$lib/useUserModal';
   export let user: UserDetailedResponse | UserPartialResponse;
   export let size: number | 'half' | 'full';
   export let isChatImage = false;
   export let lowerOpacity = false;
   export let disableModal = false;
   let { className, rawSize, textSize } = getWidthAndHeight();
-  let showModal = false;
+
   function getWidthAndHeight() {
     switch (size) {
       case 'full':
@@ -23,9 +24,9 @@
         };
     }
   }
-  function handleClick() {
+  async function handleClick() {
     if (disableModal) return;
-    showModal = !showModal;
+    $useUserModal = await updateUser(user);
   }
 </script>
 
@@ -47,9 +48,3 @@
     {/if}
   </div>
 </figure>
-
-{#if showModal}
-  <div class="absolute">
-    <UserModal on:close={() => (showModal = false)} userId={user.id} />
-  </div>
-{/if}

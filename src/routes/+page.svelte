@@ -16,6 +16,8 @@
   import { goto } from '$app/navigation';
   import NotificationsContainer from '$lib/components/Notification/NotificationsContainer.svelte';
   import useError from '$lib/useError';
+  import useUserModal from '$lib/useUserModal';
+  import UserModal from '$lib/components/Modals/UserModal.svelte';
 
   $: title = 'ChattyBox';
   $: {
@@ -135,3 +137,7 @@
 </div>
 
 <NotificationsContainer bind:notifications />
+
+{#if $useUserModal}
+  <UserModal on:close={() => ($useUserModal = null)} user={$useUserModal} />
+{/if}
