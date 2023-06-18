@@ -71,6 +71,20 @@ interface LockoutInfo {
   permanent?: boolean;
 }
 
+interface AdminActionRequest {
+  reportId: string;
+  permanentLockout?: boolean;
+  lockoutEnd?: Date;
+  violationFound?: boolean;
+}
+
+interface AdminActionPartial {
+  admin: UserPartialResponse;
+  action: string;
+  enactedOn: Date;
+  revoked: boolean;
+}
+
 export type {
   MessagePreview,
   UserPartialResponse,
@@ -81,4 +95,6 @@ export type {
   ClientConnectionPartialInfo,
   UserConnectionCallInfo,
   LockoutInfo,
+  AdminActionRequest,
+  AdminActionPartial,
 };

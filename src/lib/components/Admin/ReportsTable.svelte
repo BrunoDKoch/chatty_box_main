@@ -14,6 +14,7 @@
       <th>Chat</th>
       <th>Message</th>
       <th>Sent at</th>
+      <th>Action</th>
       <th/>
     </tr>
   </thead>

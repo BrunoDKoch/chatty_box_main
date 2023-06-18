@@ -15,7 +15,7 @@
   ];
 </script>
 
-<ul class="menu">
+<ul class="menu uppercase">
   {#each links as link}
     <li>
       <a href={link.link}>

@@ -1,5 +1,5 @@
 import type { Chat, ChatNotificationSettings, Message, ReadMessage, User } from '@prisma/client';
-import type { UserPartialResponse } from './partialTypes';
+import type { AdminActionPartial, UserPartialResponse } from './partialTypes';
 
 type MessageResponse = {
   id: string;
@@ -40,6 +40,7 @@ interface UserReportPartial {
 
 interface ReportUserResponse extends UserPartialResponse {
   pastViolations: UserReportPartial[];
+  lockoutEnd: string;
 }
 
 interface UserReportResponse extends UserReportPartial {
@@ -47,7 +48,7 @@ interface UserReportResponse extends UserReportPartial {
   reportedUser: ReportUserResponse;
   message: MessageResponse;
   chat: CompleteChat;
-  adminAction?: string;
+  adminActions: AdminActionPartial[];
 }
 
 export type {

@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { UserReportResponse } from '$lib/types/combinationTypes';
-  import { date, time } from 'svelte-i18n';
+  import { date, t, time } from 'svelte-i18n';
   import MessageComponent from '$lib/components/Messages/MessageComponent.svelte';
   import ReportUserComponent from './ReportUserComponent.svelte';
   import Button from '../Custom/Button.svelte';
@@ -8,34 +8,21 @@
   import type { UiType } from '$lib/types/daisyUiTypes';
 
   export let report: UserReportResponse;
+  console.log(report);
   const dispatch = createEventDispatcher();
-  let { buttonUIType, text } = getButton();
-  function getButton(): { buttonUIType: UiType; text: string } {
-    if (report.violationFound === null)
-      return {
-        buttonUIType: 'info',
-        text: 'Check',
-      };
+  let actionResult = getActionText();
 
-    if (!report.violationFound)
-      return {
-        buttonUIType: 'neutral',
-        text: 'No violation (review)',
-      };
-    if (!report.adminAction)
-      return {
-        buttonUIType: 'error',
-        text: 'Violation found, action pending',
-      };
-    return {
-      buttonUIType: 'neutral',
-      text: `Action: ${report.adminAction}`,
-    };
+  function getActionText(): string {
+    if (report.violationFound === null || !report.adminActions.length) return 'Pending';
+
+    if (!report.violationFound) return 'No violation found';
+
+    return report.adminActions.find((a) => !a.revoked)!.action;
   }
 </script>
 
 <tr>
-  <td>{report.reportReason}</td>
+  <td>{$t(report.reportReason)}</td>
   <td>{report.reportingUser.userName}</td>
   <td>
     <ReportUserComponent user={report.reportedUser} />
@@ -45,9 +32,18 @@
     <MessageComponent message={report.message} hideOptions displayOnly />
   </td>
   <td>
-    {$date(new Date(`${report.sentAt}Z`), { timeStyle: 'short', hour12: false, dateStyle: 'medium' })}
+    {$date(new Date(`${report.sentAt}Z`), {
+      timeStyle: 'short',
+      hour12: false,
+      dateStyle: 'medium',
+    })}
   </td>
   <td>
-    <Button bind:buttonUIType on:click={() => dispatch('openModal', report)}>{text}</Button>
+    {actionResult}
+  </td>
+  <td>
+    <Button buttonUIType="neutral" on:click={() => dispatch('openModal', report)}>
+      {report.adminActions && report.adminActions.length ? 'Review' : 'Check'}
+    </Button>
   </td>
 </tr>

@@ -108,6 +108,7 @@ model User {
   reportsAgainstUser          UserReport[]               @relation("reportedUser")
   markedForDeletion           Boolean                    @default(false)
   deletionRequestedIn         DateTime?
+  adminActions                AdminAction[]
 
   @@index([normalizedEmail], map: "EmailIndex")
   @@index([normalizedUserName], map: "UserNameIndex")
@@ -260,17 +261,29 @@ model ChatNotificationSettings {
 
 // Admin stuff
 model UserReport {
-  id              String   @id @default(uuid())
-  reportingUser   User     @relation("reportingUser", fields: [reportingUserId], references: [id], onUpdate: NoAction, onDelete: NoAction)
-  reportingUserId String   @db.NVarChar(450)
-  reportedUser    User     @relation("reportedUser", fields: [reportedUserId], references: [id], onUpdate: NoAction, onDelete: NoAction)
-  reportedUserId  String   @db.NVarChar(450)
+  id              String        @id @default(uuid())
+  reportingUser   User          @relation("reportingUser", fields: [reportingUserId], references: [id], onUpdate: NoAction, onDelete: NoAction)
+  reportingUserId String        @db.NVarChar(450)
+  reportedUser    User          @relation("reportedUser", fields: [reportedUserId], references: [id], onUpdate: NoAction, onDelete: NoAction)
+  reportedUserId  String        @db.NVarChar(450)
   reportReason    String
-  chat            Chat?    @relation(fields: [chatId], references: [id], onUpdate: NoAction, onDelete: NoAction)
+  chat            Chat?         @relation(fields: [chatId], references: [id], onUpdate: NoAction, onDelete: NoAction)
   chatId          String?
-  message         Message? @relation(fields: [messageId], references: [id])
+  message         Message?      @relation(fields: [messageId], references: [id])
   messageId       String?
-  sentAt          DateTime @default(now())
+  sentAt          DateTime      @default(now())
   violationFound  Boolean?
-  adminAction     String?
+  adminActions    AdminAction[]
+}
+
+model AdminAction {
+  report    UserReport @relation(fields: [reportId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  reportId  String
+  admin     User       @relation(fields: [adminId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  adminId   String     @db.NVarChar(450)
+  action    String
+  enactedOn DateTime   @default(now())
+  revoked   Boolean    @default(false)
+
+  @@id([reportId, adminId])
 }

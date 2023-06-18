@@ -11,7 +11,7 @@
   import Checkbox from '../Custom/Checkbox.svelte';
   import TextInput from '../Custom/TextInput.svelte';
   import Button from '../Custom/Button.svelte';
-    import { lockUserOut } from '$lib/useAdminFetch';
+  import { postAdminAction } from '$lib/useAdminFetch';
   export let report: UserReportResponse;
   const dispatch = createEventDispatcher();
 
@@ -36,13 +36,13 @@
     await connection.invoke('UpdateReport', report.id, violationFound);
     if (!violationFound) dispatch('close');
   }
-  async function handleLockout() {
-    await lockUserOut(report.id, {
-      lockout: true,
-      lockoutReason: violatedRule,
-      lockoutEnd: suspensionExpiry,
-      permanent: permanentSuspension,
-    })
+  async function handleLockout(violationFound: boolean) {
+    await postAdminAction({
+      reportId: report.id,
+      violationFound,
+      permanentLockout: permanentSuspension,
+      lockoutEnd: suspensionExpiry < new Date() ? undefined : suspensionExpiry,
+    });
   }
 </script>
 
@@ -53,11 +53,7 @@
       <form action="">
         <label for="">Does this violate the rules?</label>
         <div class="join">
-          <Button
-            on:click={async () => await handleViolation(false)}
-            joinItem
-            buttonUIType="error"
-          >
+          <Button on:click={async () => await handleViolation(false)} joinItem buttonUIType="error">
             {$t('common.no')}
           </Button>
           <Button
@@ -71,7 +67,7 @@
       </form>
     </div>
   {:else if report.violationFound}
-    <form on:submit|preventDefault={async() => await handleLockout()} action="" method="post">
+    <form on:submit|preventDefault={async () => await handleLockout(true)} action="" method="post">
       <Select
         {options}
         bind:value={violatedRule}
