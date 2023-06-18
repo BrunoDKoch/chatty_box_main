@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { MessageResponse, SystemMessagePartial } from '$lib/types/combinationTypes';
-  import AutoScroller from './AutoScroller.svelte';
+  import AutoScroller from '$lib/components/MainScreen/Chat/AutoScroller.svelte';
   import { date, t } from 'svelte-i18n';
   import MessageComponent from './MessageComponent.svelte';
   import Pagination from '$lib/components/Pagination/Pagination.svelte';

@@ -9,7 +9,7 @@
   import TextInput from '$lib/components/Custom/TextInput.svelte';
   import MessageRepliedTo from './MessageRepliedTo.svelte';
   import { hostedImagesRegex, urlRegex } from '$lib/useLinkCheck';
-    import Button from '$lib/components/Custom/Button.svelte';
+  import Button from '$lib/components/Custom/Button.svelte';
   export let message: MessageResponse;
   export let focusOn: boolean = false;
   export let hideBottomInfo = false;
@@ -126,11 +126,7 @@
   {#if showOptions && !hideOptions && !displayOnly && message.text !== 'messageFlagged'}
     <div class="absolute join {message.isFromCaller ? 'right-14' : 'left-14'} z-50">
       {#each options as option}
-        <Button
-          on:click={() => option.action()}
-          tooltip={option.name}
-          joinItem
-        >
+        <Button on:click={() => option.action()} tooltip={option.name} joinItem>
           <iconify-icon icon={option.icon} />
         </Button>
       {/each}

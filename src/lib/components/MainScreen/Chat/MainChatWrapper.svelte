@@ -5,7 +5,7 @@
   import { chat, chatId } from '$lib/useActiveChat';
   import ChatNameComponent from './ChatNameComponent.svelte';
   import ChatSubmitter from './ChatSubmitter.svelte';
-  import MessagesWrapper from './MessagesWrapper.svelte';
+  import MessagesWrapper from '$lib/components/Messages/MessagesWrapper.svelte';
   export let loading: boolean;
   export let searchResults: { messages: MessageResponse[]; messageCount: number };
 

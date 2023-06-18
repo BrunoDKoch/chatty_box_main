@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { UserReportResponse } from '$lib/types/combinationTypes';
   import { date, time } from 'svelte-i18n';
-  import MessageComponent from '../MainScreen/Chat/MessageComponent.svelte';
+  import MessageComponent from '$lib/components/Messages/MessageComponent.svelte';
   import ReportUserComponent from './ReportUserComponent.svelte';
   import Button from '../Custom/Button.svelte';
   import { createEventDispatcher } from 'svelte';

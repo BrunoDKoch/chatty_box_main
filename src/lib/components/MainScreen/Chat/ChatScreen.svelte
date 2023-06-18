@@ -2,7 +2,7 @@
   import type { CompleteChat, MessageResponse } from '$lib/types/combinationTypes';
   import { chat, chatId } from '$lib/useActiveChat';
   import ChatNameComponent from './ChatNameComponent.svelte';
-  import MessagesWrapper from './MessagesWrapper.svelte';
+  import MessagesWrapper from '$lib/components/Messages/MessagesWrapper.svelte';
   import MainChatWrapper from './MainChatWrapper.svelte';
   import UserSearchModal from '$lib/components/Modals/UserSearchModal.svelte';
   import UserRemovalModal from '$lib/components/Modals/UserRemovalModal.svelte';

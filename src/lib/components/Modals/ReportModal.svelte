@@ -2,7 +2,7 @@
   import type { MessageResponse } from '$lib/types/combinationTypes';
   import { locale, t } from 'svelte-i18n';
   import Modal from './Modal.svelte';
-  import MessageComponent from '../MainScreen/Chat/MessageComponent.svelte';
+  import MessageComponent from '$lib/components/Messages/MessageComponent.svelte';
   import TitleAndIcon from './Titles/TitleAndIcon.svelte';
   import Select from '../Custom/Select.svelte';
   import { reportOptions, type ReportOption } from '$lib/types/otherTypes';

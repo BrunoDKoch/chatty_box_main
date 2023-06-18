@@ -3,7 +3,7 @@
   import { reportOptions, type ReportOption } from '$lib/types/otherTypes';
   import { createEventDispatcher } from 'svelte';
   import Select from '../Custom/Select.svelte';
-  import MessageComponent from '../MainScreen/Chat/MessageComponent.svelte';
+  import MessageComponent from '$lib/components/Messages/MessageComponent.svelte';
   import Modal from '../Modals/Modal.svelte';
   import { t } from 'svelte-i18n';
   import { connection } from '$lib/useSignalR';
