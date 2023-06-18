@@ -53,7 +53,7 @@
   });
 </script>
 
-<div in:fade={{ delay: 150, duration: 100 }}>
+<div out:fade={{ duration: 100 }} in:fade={{ delay: 150, duration: 100 }}>
   {#each buttonLinks as buttonLink}
     <AsideLink {...buttonLink} />
     <div class="divider" />

@@ -23,7 +23,7 @@
 >
   {#if chat.lastMessage && !chat.lastMessage.read}
     <span
-      transition:scale={{ start: 0, easing: quintInOut }}
+      transition:scale={{ start: 0, easing: quintInOut, duration: 100 }}
       class="indicator-item indicator-middle right-5 badge badge-warning">!</span
     >
   {/if}
