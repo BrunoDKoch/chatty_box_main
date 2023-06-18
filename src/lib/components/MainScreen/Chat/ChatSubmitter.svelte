@@ -104,7 +104,8 @@
   }
   // Message logic
   async function sendMessage() {
-    if (!newMessage) return;
+    // Checking for 'messageFlagged' because that's how messages flagged by admins are returned
+    if (!newMessage || newMessage === 'messageFlagged') return;
     submitting = true;
     await connection.invoke('StopTyping', $chat.id);
     await connection.invoke('SendMessage', $chat.id, newMessage, replyTo?.id ?? undefined);

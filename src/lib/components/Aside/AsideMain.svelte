@@ -7,34 +7,57 @@
   import { fetchingInitialCallInfo, friendRequests } from '$lib/useSignalR';
   import { previews } from '$lib/useSignalR';
   import SkeletonPreview from './SkeletonPreview.svelte';
+  import AsideLink from './AsideLink.svelte';
+  import { onMount } from 'svelte';
+  import { checkIfAdmin, isAdmin } from '$lib/useAdminFetch';
   let showNewChatModal = false;
+  let buttonLinks = [
+    {
+      action() {
+        $useActiveScreen = 'friends';
+      },
+      icon: 'material-symbols:person',
+      text: $t('friends.friend', { values: { count: 2 } }),
+      condition: !!($friendRequests && $friendRequests.length),
+      extraText: $friendRequests.length.toString(),
+    },
+    {
+      action() {
+        showNewChatModal = !showNewChatModal;
+      },
+      icon: 'mdi:chat-plus',
+      text: `${$t('common.new.m')} ${$t('common.groupChat')}`,
+      condition: false,
+    },
+  ] as {
+    action?: () => void;
+    icon: string;
+    text: string;
+    condition: boolean;
+    extraText?: string;
+    link?: string;
+  }[];
+  async function runAdminCheck() {
+    if (!$isAdmin) return;
+    buttonLinks.push({
+      icon: 'mdi:shield',
+      text: $t('admin.title'),
+      link: '/admin',
+      condition: false,
+    });
+    buttonLinks = buttonLinks;
+  }
+  onMount(async () => {
+    await runAdminCheck();
+    console.log(buttonLinks);
+  });
 </script>
 
 <div in:fade={{ delay: 150, duration: 100 }}>
-  <button
-    on:click={() => ($useActiveScreen = 'friends')}
-    class="flex w-full py-2 gap-3 items-center cursor-pointer custom-hover {$friendRequests &&
-    $friendRequests.length
-      ? 'indicator'
-      : ''} "
-  >
-    <iconify-icon class="text-2xl ml-2" icon="material-symbols:person" />
-    <p class="capitalize">{$t('friends.friend', { values: { count: 2 } })}</p>
-    {#if $friendRequests && $friendRequests.length}
-      <div class="indicator-item indicator-middle right-5 badge badge-info">
-        {$friendRequests.length}
-      </div>
-    {/if}
-  </button>
-  <div class="divider" />
-  <button
-    on:click={() => (showNewChatModal = !showNewChatModal)}
-    class="flex w-full py-2 gap-3 items-center cursor-pointer custom-hover"
-  >
-    <iconify-icon class="text-2xl ml-2" icon="mdi:chat-plus" />
-    <p class="first-letter:capitalize">{$t('common.new.m')} {$t('common.groupChat')}</p>
-  </button>
-  <div class="divider" />
+  {#each buttonLinks as buttonLink}
+    <AsideLink {...buttonLink} />
+    <div class="divider" />
+  {/each}
   <div class="flex flex-col gap-4 even:bg-base-300">
     {#if $fetchingInitialCallInfo}
       {#each [0, 1, 2, 3, 4, 5, 6] as _}

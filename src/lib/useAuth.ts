@@ -53,10 +53,7 @@ async function logOut() {
     credentials: 'include',
     async onResponse() {
       await connection.stop();
-      await goto('/auth/login', {
-        invalidateAll: true,
-        replaceState: true,
-      });
+      return await goto('/auth/login');
     },
   });
   return { data, error };

@@ -220,5 +220,6 @@
   },
   "admin": {
     "title": "Restricted area"
-  }
+  },
+  "messageFlagged": "Message retained for violating the terms of usage"
 }

@@ -1,20 +1,15 @@
 import {
   HubConnectionBuilder,
   HubConnectionState,
-  type IHttpConnectionOptions,
 } from '@microsoft/signalr';
 import { PUBLIC_AUTH_URL_DEV as baseURL } from '$env/static/public';
 import { logOut } from '$lib/useAuth';
 import type {
-  FriendRequest,
   Message,
-  ReadMessage,
-  User,
   UserNotificationSettings,
 } from '@prisma/client';
 import { get, writable, type Writable } from 'svelte/store';
 import type {
-  MessagePreview,
   FriendResponse,
   ChatPreview,
   UserPartialResponse,
@@ -22,9 +17,7 @@ import type {
 } from '$lib/types/partialTypes';
 import { chat, chatId, chatNotificationSettings } from './useActiveChat';
 import type { CompleteChat, MessageResponse, SystemMessagePartial } from './types/combinationTypes';
-import { t } from 'svelte-i18n';
 import useUserNotificationSettings from './useUserNotificationSettings';
-import { goto } from '$app/navigation';
 import useActiveScreen from './useActiveScreen';
 
 export const messagesCount = writable(0);

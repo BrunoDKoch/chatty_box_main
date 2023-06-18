@@ -2,6 +2,8 @@
   import { t } from 'svelte-i18n';
   import notificationSettings from '$lib/useUserNotificationSettings';
   import { connection } from '$lib/useSignalR';
+  import { onMount } from 'svelte';
+  import type { UserNotificationSettings } from '@prisma/client';
   const checkableOptions = [
     {
       text: $t('common.sound'),
@@ -26,13 +28,19 @@
     if (!$notificationSettings) return;
     $notificationSettings[change] = !$notificationSettings[change];
     $notificationSettings = $notificationSettings;
-    await connection.invoke(
+    $notificationSettings = await connection.invoke(
       'UpdateNotificationSettings',
       $notificationSettings.playSound,
       $notificationSettings.showOSNotification,
       $notificationSettings.showAlert,
     );
   }
+  onMount(
+    async () =>
+      ($notificationSettings = await connection.invoke<UserNotificationSettings>(
+        'GetNotificationSettings',
+      )),
+  );
 </script>
 
 {#if $notificationSettings}

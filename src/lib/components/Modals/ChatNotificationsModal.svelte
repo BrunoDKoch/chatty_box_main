@@ -30,7 +30,6 @@
 </script>
 
 <Modal on:close>
-  <CloseButton on:close />
   {#if activePreview}
     <form action="">
         <div class="form-control">

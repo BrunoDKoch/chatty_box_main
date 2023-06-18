@@ -32,7 +32,7 @@
 </script>
 
 <div class="w-fit flex items-center justify-center">
-  <div class="relative w-96">
+  <div class="relative">
     <Select name="privacyLevel" labelText={$t('privacyLevel.who')} {options} bind:value={privacyLevel} />
   </div>
 </div>

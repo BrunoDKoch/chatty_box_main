@@ -122,7 +122,7 @@
   on:touchstart={() => (showOptions = !showOptions)}
   on:mouseleave={() => (showOptions = !showOptions)}
 >
-  {#if showOptions && !hideOptions && !displayOnly}
+  {#if showOptions && !hideOptions && !displayOnly && message.text !== 'messageFlagged'}
     <div class="absolute join {message.isFromCaller ? 'right-14' : 'left-14'} z-50">
       {#each options as option}
         <button
@@ -166,9 +166,13 @@
         </form>
       {:else}
         <div
-          class="chat-bubble {message.isFromCaller ? 'chat-bubble-success' : 'chat-bubble-primary'}"
+          class="chat-bubble {message.text === 'messageFlagged'
+            ? 'opacity-50 italic'
+            : 'opacity-100'} {message.isFromCaller ? 'chat-bubble-success' : 'chat-bubble-primary'}"
         >
-          {#if links && links.length}
+          {#if message.text === 'messageFlagged'}
+            {$t(message.text)}
+          {:else if links && links.length}
             {#each links as link}
               <MessageLinkPreview bind:link />
             {/each}
@@ -185,7 +189,10 @@
             </p>
             {#if message.editedAt}
               <time>
-                {$date(new Date(`${message.editedAt}Z`), { dateStyle: 'medium', timeStyle: 'short' })}
+                {$date(new Date(`${message.editedAt}Z`), {
+                  dateStyle: 'medium',
+                  timeStyle: 'short',
+                })}
               </time>
             {/if}
           </div>

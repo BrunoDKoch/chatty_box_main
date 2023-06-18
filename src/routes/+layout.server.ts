@@ -1,3 +1,4 @@
+export const ssr = false;
 import type { Cookies } from '@sveltejs/kit';
 import type { LayoutServerLoad } from './$types';
 import { locales, waitLocale } from 'svelte-i18n';

@@ -216,5 +216,6 @@
   },
   "admin": {
     "title": "Área restringida"
-  }
+  },
+  "messageFlagged": "Mensaje retenido por violar los términos de uso"
 }

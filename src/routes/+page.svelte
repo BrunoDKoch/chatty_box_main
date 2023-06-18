@@ -108,9 +108,6 @@
   onMount(async () => {
     await Notification.requestPermission();
   });
-  onDestroy(async () => {
-    await connection.stop();
-  });
 </script>
 
 <title>{title}</title>
