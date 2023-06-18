@@ -1,13 +1,14 @@
 <script lang="ts">
-  import type { UiType } from '$lib/types/daisyUiTypes';
-  export let buttonType: 'button' | 'reset' | 'submit' | null | undefined = 'submit';
+  import type { ButtonFormat, UiSize, UiType, ButtonType } from '$lib/types/daisyUiTypes';
+  export let buttonType: ButtonType = 'submit';
   export let buttonUIType: UiType = 'neutral';
-  export let format: 'block' | 'square' | 'ghost' | 'wide' | 'link' | 'circle' | undefined =
-    undefined;
+  export let format: ButtonFormat = undefined;
   export let loading: boolean = false;
   export let disabled: boolean = false;
-  export let size: 'xs' | 'sm' | 'md' | 'lg' | undefined = undefined;
+  export let size: UiSize = undefined;
   export let className = '';
+  export let tooltip: string | null = null;
+  export let joinItem: boolean = false;
 
   $: buttonSize = getSize();
   $: buttonFormat = getButtonFormat();
@@ -26,7 +27,10 @@
   on:click
   type={buttonType}
   disabled={disabled || loading}
-  class="btn {buttonFormat} {buttonSize} btn-{buttonUIType} {className}"
+  data-tip={tooltip}
+  class="btn {buttonFormat} {joinItem ? 'join-item' : ''} {tooltip
+    ? 'tooltip'
+    : ''} {buttonSize} btn-{buttonUIType} {className}"
 >
   {#if loading}
     <iconify-icon icon="svg-spinners:6-dots-scale" />

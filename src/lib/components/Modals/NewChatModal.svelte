@@ -9,6 +9,7 @@
   import { connection, previews } from '$lib/useSignalR';
   import useActiveScreen from '$lib/useActiveScreen';
   import TextInput from '../Custom/TextInput.svelte';
+    import Button from '../Custom/Button.svelte';
   const dispatch = createEventDispatcher();
   let selection: UserPartialResponse | null = null;
   let currentlySelectedUsers: UserPartialResponse[] = [];
@@ -41,13 +42,13 @@
       <div class="divider" />
       <div class="flex items-center justify-between">
         <UserAvatarAndName {user} size="half" />
-        <button
-          class="btn btn-warning"
+        <Button
+          buttonUIType="warning"
           on:click={() =>
             (currentlySelectedUsers = currentlySelectedUsers.filter((u) => u !== user))}
         >
           {$t('common.remove', { values: { item: 'chatter' } })}
-        </button>
+        </Button>
       </div>
     {/each}
   </div>
@@ -57,12 +58,12 @@
   </div>
   <div class="modal-action">
     <div class="join">
-      <button on:click={() => dispatch('close')} class="btn join-item btn-error">
+      <Button joinItem buttonUIType="error" on:click={() => dispatch('close')}>
         {$t('common.cancel')}
-      </button>
-      <button on:click={async () => await handleNewChat()} class="btn join-item btn-success">
+      </Button>
+      <Button joinItem buttonUIType="success" on:click={async () => await handleNewChat()}>
         {$t('common.proceed')}
-      </button>
+      </Button>
     </div>
   </div>
 </Modal>

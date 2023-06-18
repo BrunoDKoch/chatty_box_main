@@ -3,6 +3,7 @@
   import QRCode from 'qrcode';
   import Modal from './Modal.svelte';
   import { t } from 'svelte-i18n';
+    import Button from '../Custom/Button.svelte';
   export let token: string;
   export let recoveryCodes: string[];
   const dispatch = createEventDispatcher();
@@ -14,7 +15,7 @@
   <div class="flex flex-col items-center justify-center">
     <img bind:this={codeElement} alt="QR Code" />
     <h3 class="text-lg font-semibold text-center">Scan the code above</h3>
-    <button on:click={() => dispatch('close')} class="btn">Done</button>
+    <Button on:click={() => dispatch('close')}>Done</Button>
   </div>
   <div>
     <h2 class="font-bold text-2xl">

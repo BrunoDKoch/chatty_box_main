@@ -1,4 +1,5 @@
 <script lang="ts">
+    import Button from '$lib/components/Custom/Button.svelte';
   import { chat } from '$lib/useActiveChat';
   import { createEventDispatcher } from 'svelte';
   import { t } from 'svelte-i18n';
@@ -38,9 +39,9 @@
 </script>
 
 <div class="dropdown z-50 {open ? 'dropdown-open' : ''}">
-  <button class="btn btn-ghost">
+  <Button format="ghost">
     <iconify-icon icon="mdi:dots-vertical" />
-  </button>
+  </Button>
   <ul class="dropdown-content menu bg-base-300 z-50">
     {#each options as option}
       <li class="z-50">

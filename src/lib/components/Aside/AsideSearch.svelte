@@ -1,6 +1,7 @@
 <script lang="ts">
   import { onMount } from 'svelte';
   import { t } from 'svelte-i18n';
+    import Button from '../Custom/Button.svelte';
   export let search = '';
   let searchIcon: HTMLElement;
   let loadingIcon: HTMLElement;
@@ -15,12 +16,12 @@
       bind:value={search}
       placeholder={$t('aside.searchChats', { values: { search: ($t('common.search')) } })}
     />
-    <button on:click={() => (searching = !searching)} class="btn join-item btn-square btn-sm">
+    <Button on:click={() => (searching = !searching)} joinItem size="sm" format="square">
       <label class="swap swap-rotate" for="submit">
         <input type="checkbox" bind:checked={searching} name="submit" />
         <iconify-icon icon="mdi:archive-search-outline" bind:this={searchIcon} class="swap-off" height="1.4rem" />
         <iconify-icon icon="svg-spinners:6-dots-scale" bind:this={loadingIcon} class="swap-on" height="1.4rem" />
       </label>
-    </button>
+    </Button>
   </div>
 </div>

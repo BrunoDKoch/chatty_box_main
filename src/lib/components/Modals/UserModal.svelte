@@ -10,11 +10,13 @@
   import useBlockToggle from '$lib/useBlockToggle';
   import useActiveScreen from '$lib/useActiveScreen';
   import { chatId } from '$lib/useActiveChat';
+  import { updateUser } from '$lib/useUserModal';
+    import type { ActionButton } from '$lib/types/otherTypes';
+    import Button from '../Custom/Button.svelte';
 
-  export let userId: string;
+  export let user: UserDetailedResponse;
   const dispatch = createEventDispatcher();
 
-  $: user = null as null | UserDetailedResponse;
   let innerWidth: number;
 
   // Sort chats in common by name
@@ -23,6 +25,26 @@
       sortChats(user);
     }
   }
+  const actionButtons: ActionButton[] = [
+    {
+      async action() {
+        await handleBlockToggle()
+      },
+      uiType: 'error',
+      icon: user.isBlocked ? 'mdi:account-lock-open' : 'mdi:block-helper',
+      tooltip: $t(user.isBlocked ? 'common.unblock' : 'common.block'),
+    },
+    {
+async      action() {
+        await handleAddOrRemoveClick()
+      },
+      uiType: user.isFriend ? 'warning' : 'success',
+      tooltip: $t(user.isFriend ? 'common.remove' : 'common.add', {
+                values: { item: $t('friends.friend', { values: { count: 1 } }) },
+              }),
+      icon: user.isFriend ? 'mdi:account-minus' : 'mdi:account-plus'
+    }
+  ]
   function sortChats(user: UserDetailedResponse) {
     user.chatsInCommon.sort((a, b) => {
       if (a.chatName! < b.chatName!) {
@@ -40,11 +62,11 @@
     if (!user.isFriend) {
       await connection.invoke('SendFriendRequest', user.id);
     } else await connection.invoke('RemoveFriend', user.id);
-    setTimeout(async () => await updateUser(), 100);
+    setTimeout(async () => await updateUser(user), 100);
   }
   async function handleBlockToggle() {
     try {
-      const userResponse = await useBlockToggle(userId);
+      const userResponse = await useBlockToggle(user.id);
       if (userResponse.isBlocked) {
         $friends = $friends.filter((f) => f.id !== userResponse.id);
         $blockedUsers.push(userResponse);
@@ -54,15 +76,9 @@
     } catch (err) {
       throw error((err as any).status, err as any);
     } finally {
-      setTimeout(async () => await updateUser(), 100);
+      setTimeout(async () => await updateUser(user), 100);
     }
   }
-  async function updateUser() {
-    user = await connection.invoke<UserDetailedResponse>('GetUserDetails', userId);
-    user = user;
-    console.log(user);
-  }
-  onMount(async () => await updateUser());
 </script>
 
 <svelte:window bind:innerWidth />
@@ -73,32 +89,18 @@
       <div class="flex items-center">
         <UserAvatarAndName disableModal {user} size={innerWidth > 1024 ? 'full' : 'half'}>
           <div class="join">
-            <button
+            {#each actionButtons as actionButton}
+            <Button
+              joinItem
               disabled={user.isBlocking}
-              on:click={async () => await handleBlockToggle()}
-              class="btn join-item tooltip max-md:btn-md max-md:text-xl lg:text-3xl btn-error {user.isBlocking
-                ? 'btn-disabled'
-                : ''}"
-              data-tip={$t(user.isBlocked ? 'common.unblock' : 'common.block')}
-              aria-label={$t(user.isBlocked ? 'common.unblock' : 'common.block')}
+              on:click={async () => await actionButton.action()}
+              buttonUIType={actionButton.uiType}
+              className="max-md:btn-md max-md:text-xl lg:text-3xl"
+              tooltip={actionButton.tooltip}
             >
-              <iconify-icon icon={user.isBlocked ? 'mdi:account-lock-open' : 'mdi:block-helper'} />
-            </button>
-            <button
-              disabled={user.isBlocking}
-              on:click={async () => await handleAddOrRemoveClick()}
-              class="btn join-item tooltip max-md:btn-md max-md:text-xl lg:text-3xl {user.isFriend
-                ? 'btn-warning'
-                : 'btn-success'} {user.isBlocking ? 'btn-disabled' : ''}"
-              data-tip={$t(user.isFriend ? 'common.remove' : 'common.add', {
-                values: { item: $t('friends.friend', { values: { count: 1 } }) },
-              })}
-              aria-label={$t(user.isFriend ? 'common.remove' : 'common.add', {
-                values: { item: $t('friends.friend', { values: { count: 1 } }) },
-              })}
-            >
-              <iconify-icon icon={user.isFriend ? 'mdi:account-minus' : 'mdi:account-plus'} />
-            </button>
+              <iconify-icon icon={actionButton.icon} />
+            </Button>
+            {/each}
           </div>
         </UserAvatarAndName>
       </div>

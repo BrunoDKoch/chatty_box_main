@@ -6,6 +6,7 @@
   import { ofetch } from 'ofetch';
   import { createEventDispatcher } from 'svelte';
   import { t } from 'svelte-i18n';
+    import Button from '../Custom/Button.svelte';
   $: uploadSuccessful = false;
   $: uploading = false;
   const dispatch = createEventDispatcher();
@@ -24,10 +25,12 @@
   <DragNDrop isAvatar on:updateFile {uploading} {uploadSuccessful} />
   <div class="modal-action">
     <div class="join">
-      <button on:click={async () => await handleCancellation()} class="btn join-item btn-error"
-        >{$t('common.cancel')}</button
-      >
-      <button on:click={() => dispatch('close')} class="btn join-item btn-success">OK</button>
+      <Button joinItem buttonUIType="error" on:click={async () => await handleCancellation()}>
+        {$t('common.cancel')}
+      </Button>
+      <Button joinItem buttonUIType="success" on:click={() => dispatch('close')}>
+        OK
+      </Button>
     </div>
   </div>
 </Modal>

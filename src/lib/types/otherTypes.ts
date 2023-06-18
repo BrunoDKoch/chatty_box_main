@@ -1,3 +1,5 @@
+import type { UiSize, UiType } from './daisyUiTypes';
+
 const settingOptions = [
   'settings.status.status',
   'settings.privacy',
@@ -37,6 +39,22 @@ const reportOptions = [
   'report.other',
 ] as const;
 
-type ReportOption = typeof reportOptions[number];
+type ReportOption = (typeof reportOptions)[number];
 
-export { settingOptions, type SettingOptions, statusOptions, reportOptions, type ReportOption };
+interface MockActionButton {
+  uiType: UiType;
+  tooltip?: string;
+  icon?: string;
+  text?: string;
+  size?: UiSize;
+  joinItem?: boolean;
+  disabled?: boolean;
+}
+
+interface ActionButton extends MockActionButton {
+  action(): void | Promise<void>;
+}
+
+export { settingOptions, statusOptions, reportOptions };
+
+export type { SettingOptions, ReportOption, ActionButton };

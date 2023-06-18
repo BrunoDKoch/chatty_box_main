@@ -9,6 +9,7 @@
   import TextInput from '$lib/components/Custom/TextInput.svelte';
   import MessageRepliedTo from './MessageRepliedTo.svelte';
   import { hostedImagesRegex, urlRegex } from '$lib/useLinkCheck';
+    import Button from '$lib/components/Custom/Button.svelte';
   export let message: MessageResponse;
   export let focusOn: boolean = false;
   export let hideBottomInfo = false;
@@ -125,13 +126,13 @@
   {#if showOptions && !hideOptions && !displayOnly && message.text !== 'messageFlagged'}
     <div class="absolute join {message.isFromCaller ? 'right-14' : 'left-14'} z-50">
       {#each options as option}
-        <button
+        <Button
           on:click={() => option.action()}
-          data-tip={option.name}
-          class="btn join-item tooltip"
+          tooltip={option.name}
+          joinItem
         >
           <iconify-icon icon={option.icon} />
-        </button>
+        </Button>
       {/each}
     </div>
   {/if}
@@ -160,9 +161,9 @@
           action=""
         >
           <input type="text" class="input w-full" name="edit" bind:value={message.text} />
-          <button class="btn">
+          <Button>
             <iconify-icon icon="mdi:send" />
-          </button>
+          </Button>
         </form>
       {:else}
         <div

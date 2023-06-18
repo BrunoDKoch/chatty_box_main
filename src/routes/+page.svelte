@@ -18,6 +18,7 @@
   import useError from '$lib/useError';
   import useUserModal from '$lib/useUserModal';
   import UserModal from '$lib/components/Modals/UserModal.svelte';
+    import Button from '$lib/components/Custom/Button.svelte';
 
   $: title = 'ChattyBox';
   $: {
@@ -119,12 +120,13 @@
     <Aside />
   </aside>
   <div class="lg:hidden flex items-center bg-base-200 z-50">
-    <button
+    <Button
       on:click={() => ($useActiveScreen = $useActiveScreen === 'aside' ? 'friends' : 'aside')}
-      class="btn btn-ghost text-4xl"
+      format="ghost"
+      className="text-4xl"
     >
       <iconify-icon icon="mdi:menu" />
-    </button>
+    </Button>
     {#if $useActiveScreen === 'chat' && $chat}
       <h1 class="font-bold text-2xl">
         {$chat.chatName ?? $chat.users.map((u) => u.userName).join(', ')}

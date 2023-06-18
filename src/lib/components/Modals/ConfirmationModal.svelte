@@ -3,6 +3,7 @@
   import Modal from './Modal.svelte';
   import { createEventDispatcher } from 'svelte';
   import TitleAndIcon from './Titles/TitleAndIcon.svelte';
+  import Button from '../Custom/Button.svelte';
   export let action: string;
   const dispatch = createEventDispatcher();
 </script>
@@ -25,11 +26,11 @@
     </p>
   </div>
   <div class="modal-action join">
-    <button class="btn join-item btn-success" on:click={() => dispatch('confirm')}
-      >{$t('common.yes')}</button
-    >
-    <button class="btn join-item btn-error" on:click={() => dispatch('deny')}
-      >{$t('common.no')}</button
-    >
+    <Button joinItem buttonUIType="success" on:click={() => dispatch('confirm')}>
+      {$t('common.yes')}
+    </Button>
+    <Button joinItem buttonUIType="error" on:click={() => dispatch('deny')}>
+      {$t('common.no')}
+    </Button>
   </div>
 </Modal>

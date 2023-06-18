@@ -55,14 +55,14 @@
         <div class="join">
           <Button
             on:click={async () => await handleViolation(false)}
-            className="join-item"
+            joinItem
             buttonUIType="error"
           >
             {$t('common.no')}
           </Button>
           <Button
             on:click={async () => await handleViolation(true)}
-            className="join-item"
+            joinItem
             buttonUIType="success"
           >
             {$t('common.yes')}
@@ -107,14 +107,14 @@
           buttonType="button"
           on:click={async () => await handleViolation(false)}
           buttonUIType="error"
-          className="join-item"
+          joinItem
         >
           No violation found
         </Button>
-        <Button buttonType="button" buttonUIType="warning" className="join-item">
+        <Button buttonType="button" buttonUIType="warning" joinItem>
           {$t('common.cancel')}
         </Button>
-        <Button buttonType="submit" buttonUIType="success" className="join-item">
+        <Button buttonType="submit" buttonUIType="success" joinItem>
           {$t('common.proceed')}
         </Button>
       </div>

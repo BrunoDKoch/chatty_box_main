@@ -3,6 +3,7 @@
   import SingleTab from './SingleTab.svelte';
   import { tabs } from '$lib/friendsTab';
   import FriendsModal from '$lib/components/Modals/FriendsModal.svelte';
+    import Button from '../Custom/Button.svelte';
   let showModal = false;
 </script>
 
@@ -17,9 +18,9 @@
       <SingleTab name={tab} />
     {/each}
   </div>
-  <button data-tip={$t('friends.add')} on:click={() => (showModal = true)} class="btn btn-success btn-sm text-xl tooltip">
+  <Button tooltip={$t('friends.add')} on:click={() => (showModal = true)} buttonUIType="success" size="sm" className="text-xl">
     <iconify-icon icon="material-symbols:person-add" />
-  </button>
+  </Button>
 </div>
 
 {#if showModal}

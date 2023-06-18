@@ -5,6 +5,7 @@
   import TextInput from './TextInput.svelte';
   import TextInputWithButton from './TextInputWithButton.svelte';
   import { chat } from '$lib/useActiveChat';
+    import Button from './Button.svelte';
   const dispatch = createEventDispatcher();
 
   // These handle the search
@@ -82,7 +83,7 @@
   class="join"
 >
   <TextInputWithButton name="chatSearch" type="search" size="small" bind:value={search}>
-    <button type="submit" class="btn join-item btn-square btn-sm">
+    <Button buttonType="submit" format="square" size="sm" joinItem>
       <label class="swap swap-rotate" for="submit">
         <input type="checkbox" bind:checked={fetching} name="submit" />
         <iconify-icon
@@ -98,6 +99,6 @@
           height="1.4rem"
         />
       </label>
-    </button>
+    </Button>
   </TextInputWithButton>
 </form>

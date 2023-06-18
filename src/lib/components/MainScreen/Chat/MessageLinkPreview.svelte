@@ -4,6 +4,7 @@
   import ImageModal from '$lib/components/Modals/ImageModal.svelte';
   import { PUBLIC_IMAGES_URL } from '$env/static/public';
   import { getLinkType } from '$lib/useLinkCheck';
+    import Button from '$lib/components/Custom/Button.svelte';
   export let link: string;
   let showImageModal = false;
   $: linkType = getLinkType(link);
@@ -18,13 +19,13 @@
     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
   />
 {:else if linkType === 'image'}
-  <button on:click={() => (showImageModal = !showImageModal)}>
+  <Button format="ghost" on:click={() => (showImageModal = !showImageModal)}>
     <img
       class="max-w-52 max-h-52"
       src={link.startsWith('static/images') ? `${PUBLIC_IMAGES_URL}/${link}?width=200` : link}
       alt=""
     />
-  </button>
+  </Button>
 {:else if linkType === 'video'}
   <video controls>
     <track kind="captions" />

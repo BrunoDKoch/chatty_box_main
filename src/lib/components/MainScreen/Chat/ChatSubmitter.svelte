@@ -5,6 +5,7 @@
   import { createEventDispatcher, onMount } from 'svelte';
   import type { MessageResponse } from '$lib/types/combinationTypes';
   import CloseButton from '$lib/components/Custom/CloseButton.svelte';
+    import Button from '$lib/components/Custom/Button.svelte';
   export let loading = true;
   export let replyTo: MessageResponse | undefined = undefined;
 
@@ -132,13 +133,13 @@
     {/if}
   </label>
   <div class="join px-4">
-    <button
-      type="button"
-      on:click|preventDefault={() => dispatch('toggleAttachmentsModal')}
-      class="btn join-item text-2xl"
+    <Button
+      buttonType="button"
+      on:click={() => dispatch('toggleAttachmentsModal')}
+      className="join-item text-2xl"
     >
       <iconify-icon icon="mdi:attachment" />
-    </button>
+    </Button>
     <input
       bind:this={messageComposer}
       bind:value={newMessage}
@@ -150,9 +151,9 @@
         : ''} w-full box-border"
       {disabled}
     />
-    <button {disabled} class="btn text-2xl join-item">
+    <Button {disabled} className="text-2xl join-item">
       <iconify-icon icon={submitting ? 'svg-spinners:6-dots-scale' : 'mdi:send'} />
-    </button>
+    </Button>
   </div>
   <label class="label" for="">
     {#if otherUsersTyping.length}

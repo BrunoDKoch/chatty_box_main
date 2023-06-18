@@ -9,6 +9,7 @@
   import { createEventDispatcher } from 'svelte';
   import Select from '../Custom/Select.svelte';
   import ConfirmationModal from './ConfirmationModal.svelte';
+  import Button from '../Custom/Button.svelte';
   let selection = '';
   let showConfirmationModal = false;
   const dispatch = createEventDispatcher();
@@ -39,16 +40,17 @@
   </div>
   <div class="modal-action">
     <div class="join">
-      <button class="btn join-item btn-warning" on:click={() => (selection = '')}>
+      <Button buttonUIType="warning" joinItem on:click={() => (selection = '')}>
         {$t('common.clear')}
-      </button>
-      <button
-        class="btn join-item btn-success"
+      </Button>
+      <Button
+        joinItem
+        buttonUIType="error"
         disabled={!selection}
         on:click={() => (showConfirmationModal = !showConfirmationModal)}
       >
         {$t('common.submit')}
-      </button>
+      </Button>
     </div>
   </div>
 </Modal>

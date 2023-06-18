@@ -9,6 +9,7 @@
   import type { FriendResponse } from '$lib/types/partialTypes';
   import UserSearch from '../UserSearch.svelte';
   import UserAvatarAndName from '../UserAvatarAndName.svelte';
+  import Button from '../Custom/Button.svelte';
   const dispatch = createEventDispatcher();
 
   let selection: FriendResponse | null = null;
@@ -36,16 +37,17 @@
   </div>
   <div class="modal-action">
     <div class="join">
-      <button class="join-item btn btn-warning" on:click={() => (selection = null)}>
+      <Button joinItem buttonUIType="warning" on:click={() => (selection = null)}>
         {$t('common.clear')}
-      </button>
-      <button
-        class="join-item btn btn-success"
+      </Button>
+      <Button
+        joinItem
+        buttonUIType="success"
         disabled={!selection}
         on:click={async () => await handleSubmit()}
       >
         {$t('common.submit')}
-      </button>
+      </Button>
     </div>
   </div>
 </Modal>

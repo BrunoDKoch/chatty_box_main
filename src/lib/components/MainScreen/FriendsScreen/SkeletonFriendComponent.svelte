@@ -2,32 +2,43 @@
   import { t } from 'svelte-i18n';
   import { createEventDispatcher } from 'svelte';
   import SkeletonUserAvatarAndName from '$lib/components/SkeletonUserAvatarAndName.svelte';
+  import type { UiType } from '$lib/types/daisyUiTypes';
+  import Button from '$lib/components/Custom/Button.svelte';
+  const actionButtons: {
+    icon: string;
+    uiType: UiType;
+    tooltip: string;
+  }[] = [
+    {
+      icon: 'mdi:chat-plus',
+      uiType: 'neutral',
+      tooltip: $t('friends.newChat'),
+    },
+    {
+      icon: 'mdi:close',
+      uiType: 'error',
+      tooltip: $t('common.remove', {
+        values: { item: $t('common.friend', { values: { count: 1 } }) },
+      }),
+    },
+  ];
 </script>
 
 <div class="py-5">
   <div class="grid grid-cols-2 indicator lg:gap-3">
     <SkeletonUserAvatarAndName size="half">
       <div class="join">
-        <button
-          disabled
-          aria-label={$t('friends.newChat')}
-          data-tip={$t('friends.newChat')}
-          class="btn max-md:btn-md lg:text-3xl max-md:text-xl join-item tooltip"
-        >
-          <iconify-icon icon="mdi:message-plus" />
-        </button>
-        <button
-          disabled
-          data-tip={$t('common.remove', {
-            values: { item: $t('common.friend', { values: { count: 1 } }) },
-          })}
-          aria-label={$t('common.remove', {
-            values: { item: $t('common.friend', { values: { count: 1 } }) },
-          })}
-          class="btn max-md:btn-md lg:text-3xl max-md:text-xl btn-outline join-item tooltip"
-        >
-          <iconify-icon icon="mdi:close" />
-        </button>
+        {#each actionButtons as actionButton}
+          <Button
+            format="outline"
+            className="max-md:btn-md lg:text-3xl max-md:text-xl join-item"
+            loading
+            tooltip={actionButton.tooltip}
+            buttonUIType={actionButton.uiType}
+          >
+            <iconify-icon icon={actionButton.icon} />
+          </Button>
+        {/each}
       </div>
     </SkeletonUserAvatarAndName>
   </div>

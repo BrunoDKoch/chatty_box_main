@@ -8,8 +8,35 @@
   import UserAvatar from '$lib/components/UserAvatar.svelte';
   import { createEventDispatcher } from 'svelte';
   import StatusIndicator from '$lib/components/Status/StatusIndicator.svelte';
+  import Button from '$lib/components/Custom/Button.svelte';
+  import type { UiType } from '$lib/types/daisyUiTypes';
   export let friend: FriendResponse;
   const dispatch = createEventDispatcher();
+  const actionButtons: {
+    action: (() => Promise<void>) | (() => void);
+    icon: string;
+    uiType: UiType;
+    tooltip: string;
+  }[] = [
+    {
+      async action() {
+        await handleNewChat();
+      },
+      icon: 'mdi:chat-plus',
+      uiType: 'neutral',
+      tooltip: $t('friends.newChat'),
+    },
+    {
+      action() {
+        dispatch('remove', friend);
+      },
+      icon: 'mdi:close',
+      uiType: 'error',
+      tooltip: $t('common.remove', {
+        values: { item: $t('common.friend', { values: { count: 1 } }) },
+      }),
+    },
+  ];
   async function handleNewChat() {
     await connection.invoke('CreateNewChat', [friend.id], undefined, undefined);
     $useActiveScreen = 'chat';
@@ -27,26 +54,17 @@
       lowerOpacity={!friend.isOnline}
     >
       <div class="join {friend.isOnline ? 'opacity-100' : 'opacity-50'}">
-        <button
-          on:click={async () => await handleNewChat()}
-          aria-label={$t('friends.newChat')}
-          data-tip={$t('friends.newChat')}
-          class="btn max-md:btn-md lg:text-3xl max-md:text-xl join-item tooltip"
-        >
-          <iconify-icon icon="mdi:message-plus" />
-        </button>
-        <button
-          on:click={() => dispatch('remove', friend)}
-          data-tip={$t('common.remove', {
-            values: { item: $t('common.friend', { values: { count: 1 } }) },
-          })}
-          aria-label={$t('common.remove', {
-            values: { item: $t('common.friend', { values: { count: 1 } }) },
-          })}
-          class="btn max-md:btn-md lg:text-3xl max-md:text-xl btn-outline btn-error join-item tooltip"
-        >
-          <iconify-icon icon="mdi:close" />
-        </button>
+        {#each actionButtons as actionButton}
+          <Button
+            on:click={async () => await actionButton.action()}
+            tooltip={actionButton.tooltip}
+            buttonUIType={actionButton.uiType}
+            format="outline"
+            className="max-md:btn-md lg:text-3xl max-md:text-xl join-item"
+          >
+            <iconify-icon icon={actionButton.icon} />
+          </Button>
+        {/each}
       </div>
     </UserAvatarAndName>
   </div>

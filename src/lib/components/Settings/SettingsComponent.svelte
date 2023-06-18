@@ -10,6 +10,7 @@
   import SecuritySettings from './SecuritySettings.svelte';
   import PrivacySettings from './PrivacySettings.svelte';
   import StatusSettings from './StatusSettings.svelte';
+  import Button from '../Custom/Button.svelte';
   let user: { userName: string; avatar?: string };
   let show = false;
   show = true;
@@ -22,9 +23,14 @@
   <div transition:fly={{ delay: 100, duration: 75, x: -150 }}>
     {#if activeScreen !== 'main'}
       <div class="flex items-center">
-        <button class="btn btn-ghost btn-xl text-3xl" on:click={() => (activeScreen = 'main')}>
+        <Button
+          format="ghost"
+          size="lg"
+          className="text-3xl"
+          on:click={() => (activeScreen = 'main')}
+        >
           <iconify-icon icon="mdi:arrow-left" />
-        </button>
+        </Button>
         <h1 class="uppercase">{$t(activeScreen)}</h1>
       </div>
     {/if}

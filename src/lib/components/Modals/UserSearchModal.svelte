@@ -8,6 +8,7 @@
   import { chatId } from '$lib/useActiveChat';
   import { createEventDispatcher } from 'svelte';
   import UserAvatarAndName from '../UserAvatarAndName.svelte';
+    import Button from '../Custom/Button.svelte';
   let selection: UserPartialResponse | null = null;
   const dispatch = createEventDispatcher();
   async function handleSubmit() {
@@ -35,16 +36,17 @@
   </div>
   <div class="modal-action">
     <div class="join">
-      <button class="btn join-item btn-warning" on:click={() => (selection = null)}>
+      <Button joinItem buttonUIType="warning" on:click={() => (selection = null)}>
         {$t('common.clear')}
-      </button>
-      <button
-        class="btn join-item btn-success"
+      </Button>
+      <Button
+        joinItem
+        buttonUIType="success"
         disabled={!selection}
         on:click={async () => await handleSubmit()}
       >
         {$t('common.submit')}
-      </button>
+      </Button>
     </div>
   </div>
 </Modal>

@@ -1,4 +1,5 @@
 <script lang="ts">
+    import Button from '$lib/components/Custom/Button.svelte';
   import UserAvatarAndName from '$lib/components/UserAvatarAndName.svelte';
   import useBlockToggle from '$lib/useBlockToggle';
   import { blockedUsers } from '$lib/useSignalR';
@@ -12,13 +13,15 @@
 <div class="flex flex-col gap-3">
   {#each $blockedUsers as user}
     <UserAvatarAndName {user} size="half" extraText={$t('friends.blocked')}>
-      <button
+      <Button
         on:click={async () => await handleClick(user.id)}
-        class="btn btn-warning text-xl btn-square tooltip"
-        data-tip={$t('common.unblock')}
+        buttonUIType="warning"
+        tooltip={$t('common.unblock')}
+        format="square"
+        className="text-xl"
       >
         <iconify-icon icon="mdi:account-lock-open" />
-      </button>
+      </Button>
     </UserAvatarAndName>
   {/each}
 </div>
