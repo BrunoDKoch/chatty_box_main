@@ -116,7 +116,9 @@
     "admin": "administrador(a)",
     "video": "video",
     "youtubeLink": "Link del YouTube",
-    "groupChat": "grupo de chat"
+    "groupChat": "grupo de chat",
+    "return": "volver",
+    "suspension": "suspensión"
   },
   "aside": {
     "searchChats": "{search} chats"
@@ -215,7 +217,11 @@
     "other": "Otro (por favor, especifique)"
   },
   "admin": {
-    "title": "Área restringida"
+    "title": "Área restringida",
+    "pending": "informes pendientes",
+    "past": "informes anteriores",
+    "suspended": "usuarios suspendidos",
+    "independent": "acción independiente"
   },
   "messageFlagged": "Mensaje retenido por violar los términos de uso"
 }

@@ -5,6 +5,7 @@ import {
 import { PUBLIC_AUTH_URL_DEV as baseURL } from '$env/static/public';
 import { logOut } from '$lib/useAuth';
 import type {
+  AdminAction,
   Message,
   UserNotificationSettings,
 } from '@prisma/client';
@@ -14,11 +15,13 @@ import type {
   ChatPreview,
   UserPartialResponse,
   UserConnectionCallInfo,
+  AdminActionPartial,
 } from '$lib/types/partialTypes';
 import { chat, chatId, chatNotificationSettings } from './useActiveChat';
 import type { CompleteChat, MessageResponse, SystemMessagePartial } from './types/combinationTypes';
 import useUserNotificationSettings from './useUserNotificationSettings';
 import useActiveScreen from './useActiveScreen';
+import { reports } from './useAdminFetch';
 
 export const messagesCount = writable(0);
 export const previews = writable([]) as Writable<ChatPreview[]>;
@@ -268,6 +271,23 @@ connection.on('blockToggle', (data: { id: string; blocked: boolean }) => {
 
 // Force log out
 connection.on('forceLogOut', async () => await logOut());
+
+// Handle reports
+connection.on('updateReport', (data: {id: string, violationFound: boolean}) => {
+  reports.update((r) => {
+    const relevantReport = r.find((report) => report.id === data.id);
+    if (!relevantReport) return r;
+    relevantReport.violationFound = data.violationFound;
+    return r;
+  })
+})
+
+connection.on('action', (data: {reportId: string, actionPartial: AdminActionPartial}) => {
+  reports.update((r) => {
+    r.find((report) => report.id === data.reportId)?.adminActions.push(data.actionPartial);
+    return r;
+  })
+})
 
 export const online = writable(connection.state === HubConnectionState.Connected);
 connection.onreconnected(() => online.set(true));

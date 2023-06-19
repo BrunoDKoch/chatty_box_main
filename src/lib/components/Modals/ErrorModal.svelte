@@ -42,10 +42,8 @@
   }
   let brokenUpMessage = [] as string[];
   onMount(() => {
-    console.log(error);
     if (error.message.includes('\n')) {
       brokenUpMessage = error.message.split('\n');
-      console.log(brokenUpMessage);
     }
   });
 </script>

@@ -3,24 +3,27 @@
   import type { UserReportResponse } from '$lib/types/combinationTypes';
 
   export let reports: UserReportResponse[];
+  let innerWidth: number;
 </script>
 
-<table class="table table-pin-rows max-md:table-sm">
+<svelte:window bind:innerWidth />
+
+<table class="table table-pin-rows max-md:table-xs">
   <thead>
     <tr>
       <th>Reason</th>
-      <th>Reporting user</th>
+      <th class="max-md:hidden" >Reporting user</th>
       <th>Reported user</th>
-      <th>Chat</th>
+      <th class="max-md:hidden" >Chat</th>
       <th>Message</th>
-      <th>Sent at</th>
-      <th>Action</th>
-      <th/>
+      <th class="max-md:hidden">Sent at</th>
+      <th class="max-sm:hidden">Action</th>
+      <th />
     </tr>
   </thead>
   <tbody>
     {#each reports as report}
-      <ReportRow on:openModal bind:report />
+      <ReportRow showAvatar={innerWidth > 1024} on:openModal bind:report />
     {/each}
   </tbody>
 </table>

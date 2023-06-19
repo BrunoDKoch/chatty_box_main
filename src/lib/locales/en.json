@@ -120,7 +120,9 @@
     "admin": "administrator",
     "video": "video",
     "youtubeLink": "YouTube link",
-    "groupChat": "group chat"
+    "groupChat": "group chat",
+    "return": "return",
+    "suspension": "suspension"
   },
   "aside": {
     "searchChats": "{search} chats"
@@ -219,7 +221,11 @@
     "other": "Other (please specify)"
   },
   "admin": {
-    "title": "Restricted area"
+    "title": "Restricted area",
+    "pending": "pending reports",
+    "past": "past reports",
+    "suspended": "suspended users",
+    "independent": "independent action"
   },
   "messageFlagged": "Message retained for violating the terms of usage"
 }

@@ -1,10 +1,13 @@
 <script lang="ts">
   import type { ReportUserResponse } from '$lib/types/combinationTypes';
-    import { t } from 'svelte-i18n';
+  import { t } from 'svelte-i18n';
   import UserAvatarAndName from '../UserAvatarAndName.svelte';
+  import Button from '../Custom/Button.svelte';
+  import { createEventDispatcher } from 'svelte';
 
   export let user: ReportUserResponse;
-  const violations = user.pastViolations.map((p) => p.reportReason).join(', ')
+  const dispatch = createEventDispatcher();
+  const violations = user.pastViolations.map((p) => p.reportReason).join(', ');
 </script>
 
 <td>
@@ -15,4 +18,9 @@
 </td>
 <td>
   {$t(violations)}
+</td>
+<td>
+  <Button on:click={() => dispatch('removeSuspension', user)}>
+    {$t('common.remove', { values: { item: $t('common.suspension') } })}
+  </Button>
 </td>

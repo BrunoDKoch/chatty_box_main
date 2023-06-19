@@ -1,26 +1,39 @@
 <script lang="ts">
+  import { createEventDispatcher } from 'svelte';
+  import { t } from 'svelte-i18n';
+
+  const dispatch = createEventDispatcher();
   const links = [
     {
-      name: 'Pending reports',
+      name: $t('admin.pending'),
       link: '/admin',
     },
     {
-      name: 'Past reports',
+      name: $t('admin.past'),
       link: '/admin/past',
     },
     {
-      name: 'Suspended users',
+      name: $t('admin.suspended'),
       link: '/admin/suspensions',
+    },
+    {
+      name: $t('admin.independent'),
     },
   ];
 </script>
 
-<ul class="menu uppercase">
+<ul class="menu bg-base-200 h-screen uppercase">
   {#each links as link}
     <li>
-      <a href={link.link}>
-        {link.name}
-      </a>
+      {#if link.link}
+        <a href={link.link}>
+          {link.name}
+        </a>
+      {:else}
+        <a href="." on:click|preventDefault={() => dispatch('action')}>
+          {link.name}
+        </a>
+      {/if}
     </li>
   {/each}
 </ul>

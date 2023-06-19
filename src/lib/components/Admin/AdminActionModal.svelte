@@ -12,18 +12,14 @@
   import TextInput from '../Custom/TextInput.svelte';
   import Button from '../Custom/Button.svelte';
   import { postAdminAction } from '$lib/useAdminFetch';
+  import ViolationForm from './ViolationForm.svelte';
   export let report: UserReportResponse;
   const dispatch = createEventDispatcher();
 
-  // Handle suspension
-  let suspendUser = false;
-  let permanentSuspension = false;
-  let suspensionExpiry = new Date();
-
   // Get rule value
-  let violatedRule = reportOptions.includes(report.reportReason as ReportOption)
-    ? report.reportReason
-    : 'report.other';
+  let violatedRule: ReportOption = reportOptions.includes(report.reportReason as ReportOption)
+    ? report.reportReason as ReportOption
+    : 'report.other' as ReportOption;
 
   // Map options
   const options = reportOptions.map((o) => {
@@ -36,7 +32,12 @@
     await connection.invoke('UpdateReport', report.id, violationFound);
     if (!violationFound) dispatch('close');
   }
-  async function handleLockout(violationFound: boolean) {
+  async function handleLockout(data: {
+    permanentSuspension: boolean;
+    suspensionExpiry: Date;
+    violationFound: boolean;
+  }) {
+    const { permanentSuspension, suspensionExpiry, violationFound } = data;
     await postAdminAction({
       reportId: report.id,
       violationFound,
@@ -67,53 +68,28 @@
       </form>
     </div>
   {:else if report.violationFound}
-    <form on:submit|preventDefault={async () => await handleLockout(true)} action="" method="post">
-      <Select
-        {options}
-        bind:value={violatedRule}
-        labelText="What rules were violated?"
-        name="violation"
-      />
-      {#if violatedRule === 'report.other'}
-        <TextInput
-          bind:value={report.reportReason}
-          labelText="{$t('common.please')} {$t('common.specify')}"
-          name="otherValue"
-        />
-      {/if}
-
-      <Checkbox labelText="Suspend user?" bind:checked={suspendUser} name="lockout" />
-      {#if suspendUser}
-        <TextInput
-          type="datetime-local"
-          labelText="Until when?"
-          name="lockoutDate"
-          disabled={permanentSuspension}
-          bind:value={suspensionExpiry}
-        />
-        <Checkbox
-          name="lockoutPermanent"
-          labelText="Suspend permanently?"
-          bind:checked={permanentSuspension}
-        />
-      {/if}
-      <div class="divider" />
-      <div class="join flex items-center justify-center min-w-full">
-        <Button
-          buttonType="button"
-          on:click={async () => await handleViolation(false)}
-          buttonUIType="error"
-          joinItem
-        >
-          No violation found
-        </Button>
-        <Button buttonType="button" buttonUIType="warning" joinItem>
-          {$t('common.cancel')}
-        </Button>
-        <Button buttonType="submit" buttonUIType="success" joinItem>
-          {$t('common.proceed')}
-        </Button>
-      </div>
-    </form>
+    <ViolationForm
+      on:submit={async ({ detail }) => await handleLockout(detail)}
+      bind:violatedRule
+      {options}
+      bind:reason={report.reportReason}
+    />
+    <div class="divider" />
+    <div class="join flex items-center justify-center min-w-full">
+      <Button
+        buttonType="button"
+        on:click={async () => await handleViolation(false)}
+        buttonUIType="error"
+        joinItem
+      >
+        No violation found
+      </Button>
+      <Button buttonType="button" buttonUIType="warning" joinItem>
+        {$t('common.cancel')}
+      </Button>
+      <Button buttonType="submit" buttonUIType="success" joinItem>
+        {$t('common.proceed')}
+      </Button>
+    </div>
   {/if}
 </Modal>

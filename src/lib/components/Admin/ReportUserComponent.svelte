@@ -4,15 +4,20 @@
   import UserAvatarAndName from '../UserAvatarAndName.svelte';
 
   export let user: ReportUserResponse;
-  console.log(user)
+  export let showAvatar: boolean;
+  console.log(user);
 </script>
 
-<div class="collapse collapse-arrow">
+<div class="collapse max-w-fit collapse-arrow">
   <input type="checkbox" class="peer" />
   <div class="collapse-title">
-    <UserAvatarAndName {user} size="half" disableModal />
+    {#if showAvatar}
+      <UserAvatarAndName {user} size="half" disableModal />
+    {:else}
+      <h2>{user.userName}</h2>
+    {/if}
   </div>
-  <div class="collapse-content">
+  <div class="collapse-content max-w-fit">
     {#if user.pastViolations && user.pastViolations.length}
       {#each user.pastViolations as violation}
         <p>{$t(violation.reportReason)} - {$date(new Date(`${violation.sentAt}Z`))}</p>

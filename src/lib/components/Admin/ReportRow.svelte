@@ -8,6 +8,7 @@
   import type { UiType } from '$lib/types/daisyUiTypes';
 
   export let report: UserReportResponse;
+  export let showAvatar: boolean;
   console.log(report);
   const dispatch = createEventDispatcher();
   let actionResult = getActionText();
@@ -23,22 +24,26 @@
 
 <tr>
   <td>{$t(report.reportReason)}</td>
-  <td>{report.reportingUser.userName}</td>
+  <td class="max-md:hidden" >{report.reportingUser.userName}</td>
   <td>
-    <ReportUserComponent user={report.reportedUser} />
+    <ReportUserComponent {showAvatar} user={report.reportedUser} />
   </td>
-  <td>{report.chat.chatName ?? report.chat.users.map((u) => u.userName).join(', ')}</td>
+  <td class="max-md:hidden" >{report.chat.chatName ?? report.chat.users.map((u) => u.userName).join(', ')}</td>
   <td>
-    <MessageComponent message={report.message} hideOptions displayOnly />
+    {#if showAvatar}
+      <MessageComponent message={report.message} hideOptions displayOnly />
+      {:else}
+      <p>{report.message.text}</p>
+    {/if}
   </td>
-  <td>
+  <td class="max-md:hidden">
     {$date(new Date(`${report.sentAt}Z`), {
       timeStyle: 'short',
       hour12: false,
       dateStyle: 'medium',
     })}
   </td>
-  <td>
+  <td class="max-sm:hidden">
     {actionResult}
   </td>
   <td>

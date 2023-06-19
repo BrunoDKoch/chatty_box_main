@@ -8,7 +8,7 @@
   import { chatId } from '$lib/useActiveChat';
   import { createEventDispatcher } from 'svelte';
   import UserAvatarAndName from '../UserAvatarAndName.svelte';
-    import Button from '../Custom/Button.svelte';
+  import Button from '../Custom/Button.svelte';
   let selection: UserPartialResponse | null = null;
   const dispatch = createEventDispatcher();
   async function handleSubmit() {
