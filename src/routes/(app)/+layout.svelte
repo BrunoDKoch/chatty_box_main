@@ -1,5 +1,5 @@
 <script lang="ts">
-  import '../app.css';
+  import '../../app.css';
   import 'iconify-icon';
   import { onDestroy, onMount } from 'svelte';
   import type { LayoutServerData } from './$types';
@@ -69,10 +69,6 @@
       document ? document.getElementsByTagName('html')[0].setAttribute('lang', l ? l : 'en') : null,
     );
     await checkConnection();
-  });
-  onDestroy(async () => {
-    if (connection.state !== HubConnectionState.Connected) return;
-    await connection.stop();
   });
 </script>
 
