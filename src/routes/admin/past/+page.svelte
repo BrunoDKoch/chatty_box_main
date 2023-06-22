@@ -4,19 +4,29 @@
   import { connection } from '$lib/useSignalR';
   import type { UserReportResponse } from '$lib/types/combinationTypes';
   import AdminActionModal from '$lib/components/Admin/AdminActionModal.svelte';
+  import { page } from '$app/stores';
+  import Pagination from '$lib/components/Pagination/Pagination.svelte';
+  import {
+    getAdminData,
+    reports,
+    totalReports,
+    activeAdminPage,
+    fetchedReports,
+  } from '$lib/useAdminFetch';
+  import { onMount } from 'svelte';
 
-  export let data: PageServerData;
-  let { reports } = data;
   let reportOpenedForAction = null as null | UserReportResponse;
-  connection.on('updateReport', (data: { id: string; violationFound: boolean }) => {
-    const { id, violationFound } = data;
-    const report = reports.find((r) => r.id === id);
-    if (!report) return;
-    report.violationFound = violationFound;
+  onMount(async () => {
+    await getAdminData('reports', { activePage: $activeAdminPage, page: $page });
   });
 </script>
 
-<ReportsTable on:openModal={({ detail }) => (reportOpenedForAction = detail)} bind:reports />
+<div class="flex flex-col overflow-auto">
+  <ReportsTable
+    on:openModal={({ detail }) => (reportOpenedForAction = detail)}
+    bind:reports={$fetchedReports.reports}
+  />
+</div>
 
 {#if reportOpenedForAction}
   <AdminActionModal

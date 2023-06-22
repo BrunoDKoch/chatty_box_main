@@ -1,26 +1,25 @@
 <script lang="ts">
-  import { t } from 'svelte-i18n';
   import type { PageServerData } from './$types';
-  import { onMount } from 'svelte';
-  import { error } from '@sveltejs/kit';
   import ReportsTable from '$lib/components/Admin/ReportsTable.svelte';
   import { connection } from '$lib/useSignalR';
-  import { HubConnectionState } from '@microsoft/signalr';
   import type { UserReportResponse } from '$lib/types/combinationTypes';
   import AdminActionModal from '$lib/components/Admin/AdminActionModal.svelte';
+  import { activeAdminPage, fetchedReports, getAdminData, reports, totalReports } from '$lib/useAdminFetch';
+  import { onMount } from 'svelte';
+  import { page } from '$app/stores';
 
-  export let data: PageServerData;
-  let { reports } = data;
   let reportOpenedForAction = null as null | UserReportResponse;
-  connection.on('updateReport', (data: { id: string; violationFound: boolean }) => {
-    const { id, violationFound } = data;
-    const report = reports.find((r) => r.id === id);
-    if (!report) return;
-    report.violationFound = violationFound;
+  onMount(async () => {
+    await getAdminData('reports', { activePage: $activeAdminPage, page: $page });
   });
 </script>
 
-<ReportsTable on:openModal={({ detail }) => (reportOpenedForAction = detail)} bind:reports />
+{#if $reports}
+  <ReportsTable
+    on:openModal={({ detail }) => (reportOpenedForAction = detail)}
+    bind:reports={$fetchedReports.reports}
+  />
+{/if}
 
 {#if reportOpenedForAction}
   <AdminActionModal

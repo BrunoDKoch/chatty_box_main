@@ -1,14 +1,12 @@
 <script lang="ts">
-  import type { PageServerData } from './$types';
-  import ReportsTable from '$lib/components/Admin/ReportsTable.svelte';
-  import { connection } from '$lib/useSignalR';
-  import type { UserReportResponse } from '$lib/types/combinationTypes';
-  import AdminActionModal from '$lib/components/Admin/AdminActionModal.svelte';
+  import { page } from '$app/stores';
   import SuspensionsTable from '$lib/components/Admin/SuspensionsTable.svelte';
+  import { activeAdminPage, fetchedSuspensions, getAdminData } from '$lib/useAdminFetch';
+  import { onMount } from 'svelte';
 
-  export let data: PageServerData;
-  let { suspensions } = data;
-  console.log(suspensions);
+  onMount(
+    async () => await getAdminData('suspensions', { activePage: $activeAdminPage, page: $page }),
+  );
 </script>
 
-<SuspensionsTable users={suspensions} />
+<SuspensionsTable users={$fetchedSuspensions.users} />

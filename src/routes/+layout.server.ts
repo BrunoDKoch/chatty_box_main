@@ -1,7 +1,7 @@
 export const ssr = false;
 import type { Cookies } from '@sveltejs/kit';
 import type { LayoutServerLoad } from './$types';
-import { locales, waitLocale } from 'svelte-i18n';
+import { locale, locales, waitLocale } from 'svelte-i18n';
 import { get } from 'svelte/store';
 
 function getTheme(cookies: Cookies) {
@@ -24,6 +24,7 @@ function getLanguage(data: { cookies: Cookies; request: Request }) {
     path: '/',
     expires: new Date(new Date().setFullYear(9999)),
   });
+  locale.set(existingLocale ?? 'en');
   return lang;
 }
 
