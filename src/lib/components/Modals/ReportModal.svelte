@@ -39,6 +39,7 @@
         chatId: message.chatId,
         reportReason: value === 'report.other' ? other : value,
       });
+      success = true;
     } catch (err) {
       $useError = err as App.Error;
     } finally {

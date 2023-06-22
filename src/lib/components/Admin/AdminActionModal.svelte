@@ -11,15 +11,15 @@
   import Checkbox from '../Custom/Checkbox.svelte';
   import TextInput from '../Custom/TextInput.svelte';
   import Button from '../Custom/Button.svelte';
-  import { postAdminAction } from '$lib/useAdminFetch';
+  import { postAdminAction, reports } from '$lib/useAdminFetch';
   import ViolationForm from './ViolationForm.svelte';
   export let report: UserReportResponse;
   const dispatch = createEventDispatcher();
 
   // Get rule value
   let violatedRule: ReportOption = reportOptions.includes(report.reportReason as ReportOption)
-    ? report.reportReason as ReportOption
-    : 'report.other' as ReportOption;
+    ? (report.reportReason as ReportOption)
+    : ('report.other' as ReportOption);
 
   // Map options
   const options = reportOptions.map((o) => {
@@ -30,7 +30,11 @@
   });
   async function handleViolation(violationFound: boolean) {
     await connection.invoke('UpdateReport', report.id, violationFound);
-    if (!violationFound) dispatch('close');
+    if (!violationFound) {
+      $reports = $reports.filter((r) => r !== report);
+      $reports = $reports;
+      dispatch('close');
+    }
   }
   async function handleLockout(data: {
     permanentSuspension: boolean;
@@ -44,6 +48,8 @@
       permanentLockout: permanentSuspension,
       lockoutEnd: suspensionExpiry < new Date() ? undefined : suspensionExpiry,
     });
+    $reports = $reports.filter((r) => r !== report);
+    $reports = $reports;
   }
 </script>
 

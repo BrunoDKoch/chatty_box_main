@@ -9,32 +9,52 @@
   export let className = '';
   export let tooltip: string | null = null;
   export let joinItem: boolean = false;
+  export let link = '';
 
   $: buttonSize = getSize();
   $: buttonFormat = getButtonFormat();
+  if (link) console.log({link})
 
   function getButtonFormat() {
-    if (!format) return;
+    if (!format) return '';
     return `btn-${format}`;
   }
   function getSize() {
-    if (!size) return;
+    if (!size) return '';
     return `btn-${size}`;
   }
 </script>
 
-<button
-  on:click
-  type={buttonType}
-  disabled={disabled || loading}
-  data-tip={tooltip}
-  class="btn {buttonFormat} {joinItem ? 'join-item' : ''} {tooltip
-    ? 'tooltip'
-    : ''} {buttonSize} btn-{buttonUIType} {className}"
->
-  {#if loading}
-    <iconify-icon icon="svg-spinners:6-dots-scale" />
-  {:else}
-    <slot />
-  {/if}
-</button>
+{#if !link}
+  <button
+    on:click
+    type={buttonType}
+    disabled={disabled || loading}
+    data-tip={tooltip}
+    class="btn {buttonFormat} {joinItem ? 'join-item' : ''} {tooltip
+      ? 'tooltip'
+      : ''} {buttonSize} btn-{buttonUIType} {className}"
+  >
+    {#if loading}
+      <iconify-icon icon="svg-spinners:6-dots-scale" />
+    {:else}
+      <slot />
+    {/if}
+  </button>
+{:else}
+  <a
+    href={link}
+    on:click
+    type={buttonType}
+    data-tip={tooltip}
+    class="btn {buttonFormat} {joinItem ? 'join-item' : ''} {tooltip
+      ? 'tooltip'
+      : ''} {buttonSize} btn-{buttonUIType} {className}"
+  >
+    {#if loading}
+      <iconify-icon icon="svg-spinners:6-dots-scale" />
+    {:else}
+      <slot />
+    {/if}
+  </a>
+{/if}

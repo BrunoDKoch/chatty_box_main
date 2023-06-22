@@ -9,12 +9,11 @@
 
   export let report: UserReportResponse;
   export let showAvatar: boolean;
-  console.log(report);
   const dispatch = createEventDispatcher();
   let actionResult = getActionText();
 
   function getActionText(): string {
-    if (report.violationFound === null || !report.adminActions.length) return 'Pending';
+    if (report.violationFound === null || !report.adminActions.length) return $t('admin.pending');
 
     if (!report.violationFound) return 'No violation found';
 
@@ -43,12 +42,12 @@
       dateStyle: 'medium',
     })}
   </td>
-  <td class="max-sm:hidden">
+  <td class="max-sm:hidden first-letter:uppercase">
     {actionResult}
   </td>
   <td>
-    <Button buttonUIType="neutral" on:click={() => dispatch('openModal', report)}>
-      {report.adminActions && report.adminActions.length ? 'Review' : 'Check'}
+    <Button buttonType="button" buttonUIType="neutral" on:click={() => dispatch('openModal', report)}>
+      {report.adminActions && report.adminActions.length ? $t('admin.review') : $t('admin.check')}
     </Button>
   </td>
 </tr>

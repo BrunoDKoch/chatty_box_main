@@ -218,10 +218,20 @@
   },
   "admin": {
     "title": "Área restringida",
-    "pending": "informes pendientes",
+    "pendingReports": "informes pendientes",
     "past": "informes anteriores",
     "suspended": "usuarios suspendidos",
-    "independent": "acción independiente"
+    "independent": "acción independiente",
+    "reason": "razón",
+    "reporting": "{item} denunciante",
+    "reported": "{item} denunciado",
+    "sentAt": "enviado en",
+    "action": "acción",
+    "pending": "pendiente",
+    "check": "verificar",
+    "review": "revisar",
+    "noViolation": "sin violación",
+    "nothingNew": "nada nuevo aquí"
   },
   "messageFlagged": "Mensaje retenido por violar los términos de uso"
 }

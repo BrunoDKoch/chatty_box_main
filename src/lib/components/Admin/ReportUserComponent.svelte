@@ -5,7 +5,6 @@
 
   export let user: ReportUserResponse;
   export let showAvatar: boolean;
-  console.log(user);
 </script>
 
 <div class="collapse max-w-fit collapse-arrow">

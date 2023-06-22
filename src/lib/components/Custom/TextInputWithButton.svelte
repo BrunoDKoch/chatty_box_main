@@ -25,6 +25,7 @@
   export let disabled: boolean = false;
   export let name: string | undefined;
   export let size: 'base' | 'small' | 'large' = 'base';
+  export let placeholder = '';
   let { inputSize } = getSize();
   $: errorClass = '';
   $: ruleText = '';
@@ -58,15 +59,16 @@
   }
 </script>
 
-<div class="join">
+<div class="join items-center overflow-hidden">
   <input
     id={name}
     use:getType
-    class="input join-item input-bordered {inputSize} {!disabled ? errorClass : 'input-disabled'}"
+    class="input capitalize join-item input-bordered {inputSize} {!disabled ? errorClass : 'input-disabled'}"
     bind:value
     {required}
     {name}
     {disabled}
+    {placeholder}
     on:input={() => {
       checkRules();
       dispatch('update');

@@ -222,10 +222,20 @@
   },
   "admin": {
     "title": "Restricted area",
-    "pending": "pending reports",
+    "pendingReports": "pending reports",
     "past": "past reports",
     "suspended": "suspended users",
-    "independent": "independent action"
+    "independent": "independent action",
+    "reason": "reason",
+    "reporting": "reporting {item}",
+    "reported": "reported {item}",
+    "sentAt": "sent at",
+    "action": "action",
+    "pending": "pending",
+    "check": "check",
+    "review": "review",
+    "noViolation": "no violation",
+    "nothingNew": "nothing new here"
   },
   "messageFlagged": "Message retained for violating the terms of usage"
 }
