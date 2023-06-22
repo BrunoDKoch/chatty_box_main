@@ -49,7 +49,6 @@
   }
   onMount(async () => {
     await runAdminCheck();
-    console.log(buttonLinks);
   });
 </script>
 

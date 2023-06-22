@@ -4,13 +4,40 @@
   import Button from '../Custom/Button.svelte';
   import TextInput from '../Custom/TextInput.svelte';
   import TextInputWithButton from '../Custom/TextInputWithButton.svelte';
+  import { connection, previews } from '$lib/useSignalR';
+  import type { ChatPreview } from '$lib/types/partialTypes';
   export let search = '';
   let searchIcon: HTMLElement;
   let loadingIcon: HTMLElement;
   let searching = false;
+
+  async function handleSubmit() {
+    if (!search) {
+      await connection.invoke('GetChatPreviews');
+      return;
+    }
+    searching = true;
+    const splitSearch = search.split(`${$t('common.user')}:`);
+    let chatName;
+    let userName;
+    if (splitSearch.length < 2) {
+      chatName = search;
+      userName = undefined;
+    } else {
+      chatName = undefined;
+      userName = splitSearch[1];
+    }
+    console.log({ search, splitSearch, userName, chatName });
+    $previews = await connection.invoke<ChatPreview[]>('SearchForChat', chatName, userName);
+    $previews = $previews;
+    searching = false;
+  }
 </script>
 
-<div class="form-control overflow-hidden">
+<form
+  on:submit|preventDefault={async () => await handleSubmit()}
+  class="form-control overflow-hidden"
+>
   <TextInputWithButton
     type="search"
     bind:value={search}
@@ -18,7 +45,7 @@
     name="chatSearch"
     size="small"
   >
-    <Button on:click={() => (searching = !searching)} joinItem size="sm">
+    <Button joinItem size="sm">
       <label class="swap swap-rotate" for="submit">
         <input type="checkbox" bind:checked={searching} name="submit" />
         <iconify-icon
@@ -36,4 +63,4 @@
       </label>
     </Button>
   </TextInputWithButton>
-</div>
+</form>
