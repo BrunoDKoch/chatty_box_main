@@ -27,7 +27,6 @@
       chatName = undefined;
       userName = splitSearch[1];
     }
-    console.log({ search, splitSearch, userName, chatName });
     $previews = await connection.invoke<ChatPreview[]>('SearchForChat', chatName, userName);
     $previews = $previews;
     searching = false;

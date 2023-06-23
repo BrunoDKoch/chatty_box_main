@@ -37,7 +37,6 @@
   }
 
   async function handleTimer() {
-    console.log(timerHasStarted);
     if (!timerHasStarted) return;
     if (results.length) results.length = 0;
     fetching = true;

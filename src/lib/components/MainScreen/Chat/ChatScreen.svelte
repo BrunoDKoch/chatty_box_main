@@ -65,7 +65,6 @@
   >
     <MainChatWrapper
       on:delete={({ detail }) => {
-        console.log({ detail });
         messageToDelete = detail;
         showConfirmDeletionModal = !showConfirmDeletionModal;
       }}

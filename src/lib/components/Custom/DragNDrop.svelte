@@ -1,6 +1,7 @@
 <script lang="ts">
   import { PUBLIC_AUTH_URL_DEV } from '$env/static/public';
   import { chatId } from '$lib/useActiveChat';
+    import useError from '$lib/useError';
   import Dropzone from 'dropzone';
   import { ofetch } from 'ofetch';
   import { createEventDispatcher, onMount } from 'svelte';
@@ -120,7 +121,11 @@
       hiddenInputContainer: document.getElementById('drop-container')!,
       init() {
         this.on('error', (file, message) => {
-          console.log(message);
+          $useError = {
+            status: 500,
+            cause: $t('error.cause.500'),
+            message: message as string,
+          }
           if (!file.accepted) this.removeFile(file);
           showCheck = false;
           uploading = false;

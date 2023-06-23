@@ -25,7 +25,6 @@ function isAudioLink(link: string) {
 }
 
 function getLinkType(link: string): 'image' | 'video' | 'audio' | 'YouTube' | null {
-  console.log(link);
   if (isYouTubeLink(link)) return 'YouTube';
   if (isImageLink(link)) return 'image';
   if (isVideoLink(link)) return 'video';

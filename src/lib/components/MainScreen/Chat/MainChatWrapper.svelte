@@ -16,19 +16,15 @@
   let uploading = false;
   let uploadSuccessful = false;
 
-  let showFileInput = false;
-
   // Used to dynamically change layout
   // In mobile, the main chat should be hidden if search results are open
   $: searchResultsAreOpen = searchResults.messages && !!searchResults.messages.length;
   $: replyTo = undefined as MessageResponse | undefined;
-  $: showFileInput, console.log(showFileInput)
 </script>
 
 <DragNDropWrapper
   bind:uploading
   bind:uploadSuccessful
-  bind:showFileInput
   wrapperClass="flex w-full {searchResultsAreOpen
     ? 'max-md:hidden lg:col-span-2'
     : 'col-span-1'} flex-col h-[91vh] max-md:h-[82vh]"
@@ -46,7 +42,6 @@
       bind:total={$chat.messageCount}
     />
     <ChatSubmitter
-      on:showFileInput={() => (showFileInput = !showFileInput)}
       bind:loading
       bind:replyTo
     />

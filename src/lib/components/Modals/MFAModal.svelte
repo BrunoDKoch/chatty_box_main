@@ -30,7 +30,6 @@
     token = data.token;
     recoveryCodes = data.recoveryCodes;
     recoveryCodes = recoveryCodes;
-    console.log(token);
     setTimeout(() => {
       showQRCode = true;
     }),

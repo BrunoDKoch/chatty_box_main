@@ -4,11 +4,12 @@
   import { getRecoveryToken, recoverPassword } from '$lib/useAuth';
   import { goto } from '$app/navigation';
   import { page } from '$app/stores';
-    import Button from '../Custom/Button.svelte';
-  export let errorMsg: { status: number; message: string; cause: string } | null = null
+  import Button from '../Custom/Button.svelte';
+    import useError from '$lib/useError';
+
   export let email: string = '';
   export let token: string = '';
-  
+
   let password = '';
   let confirmPassword = '';
   $: rules = {
@@ -67,14 +68,13 @@
       const res = await recoverPassword({ password, email, token });
       console.log(res);
     } catch (err) {
-      errorMsg = {
+      $useError = {
         status: (err as any).status,
         message: (err as any).error.message,
         cause: $t(`error.cause.${(err as any).status}`),
-      }
+      };
     }
   }
-  console.log(email);
 </script>
 
 <form

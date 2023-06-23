@@ -14,7 +14,6 @@
 
   $: buttonSize = getSize();
   $: buttonFormat = getButtonFormat();
-  if (link) console.log({link})
 
   function getButtonFormat() {
     if (!format) return '';

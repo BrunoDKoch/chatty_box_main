@@ -5,7 +5,6 @@
   export let activePage: number;
   export let pageNumber: number;
   export let useLinks = false;
-  console.log({ activePage, pageNumber });
 </script>
 
 <Button

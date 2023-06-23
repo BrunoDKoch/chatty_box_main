@@ -77,7 +77,6 @@ async function validateEmail(body: { email: string; code: string }) {
     credentials: 'include',
     body,
     onResponseError({ response }) {
-      console.log(response);
       if (response.ok) return goto('/');
     },
   });
@@ -100,9 +99,6 @@ async function recoverPassword(body: { password: string; email: string; token: s
     method: 'PUT',
     mode: 'cors',
     credentials: 'include',
-    onResponse({ response }) {
-      console.log(response);
-    },
   });
 }
 
@@ -112,9 +108,6 @@ async function startMFADisabling() {
     method: 'PUT',
     mode: 'cors',
     credentials: 'include',
-    onResponse({ response }) {
-      console.log(response);
-    },
   });
 }
 

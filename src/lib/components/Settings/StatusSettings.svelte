@@ -14,7 +14,6 @@
   let status = connection.invoke<string | null>('GetStatus').then((data) => data ?? '');
   async function handleChange(target: EventTarget) {
     const { value } = target as HTMLSelectElement;
-    console.log(value)
     status = connection
       .invoke<string | null>('UpdateStatus', value ? value : undefined)
       .then((data) => data ?? '');

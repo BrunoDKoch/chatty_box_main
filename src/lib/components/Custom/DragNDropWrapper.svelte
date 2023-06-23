@@ -1,8 +1,8 @@
 <script lang="ts">
   import { PUBLIC_AUTH_URL_DEV } from '$env/static/public';
   import { chatId } from '$lib/useActiveChat';
+    import useError from '$lib/useError';
   import Dropzone from 'dropzone';
-  import { ofetch } from 'ofetch';
   import { createEventDispatcher, onMount } from 'svelte';
   import { t } from 'svelte-i18n';
 
@@ -10,9 +10,6 @@
   export let uploading: boolean;
   export let isAvatar = false;
   export let wrapperClass = '';
-  export let showFileInput = false;
-
-  let clickable = isAvatar;
 
   // If it's an avatar, only accept one image
   const settingsObject = isAvatar
@@ -54,7 +51,6 @@
   // Handle drop icon
   let dropIcon: HTMLElement;
   function setShowDropIcon(option: 'show' | 'hide') {
-    console.log(option)
     if (option === 'hide') return dropIcon.classList.replace('hidden', 'flex-col');
     return dropIcon.className.replace('flex-col', 'hidden');
   }
@@ -118,7 +114,11 @@
       hiddenInputContainer: document.getElementById('drop-container')!,
       init() {
         this.on('error', (file, message) => {
-          console.log(message);
+          $useError = {
+            status: 500,
+            cause: $t('error.cause.500'),
+            message: message as string,
+          }
           if (!file.accepted) this.removeFile(file);
           showCheck = false;
           uploading = false;

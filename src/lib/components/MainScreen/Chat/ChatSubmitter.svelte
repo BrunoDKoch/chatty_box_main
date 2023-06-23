@@ -9,8 +9,6 @@
   export let loading = true;
   export let replyTo: MessageResponse | undefined = undefined;
 
-  const dispatch = createEventDispatcher();
-
   // Message handling
   $: newMessage = '';
   $: submitting = false;
@@ -136,7 +134,6 @@
     <Button
       id="file-input-toggle"
       buttonType="button"
-      on:click={() => dispatch('showFileInput')}
       className="join-item text-2xl"
     >
       <iconify-icon icon="mdi:attachment" />

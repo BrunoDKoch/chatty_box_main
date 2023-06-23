@@ -91,7 +91,6 @@ connection.on('pendingRequests', (data: { userAdding: UserPartialResponse }[]) =
 
 connection.on('friends', (data: FriendResponse[]) => {
   online.set(true);
-  console.log(data);
   friends.update((f) => {
     data.forEach((user) => {
       if (!f.find((u) => u.userName === user.userName)) f.push(user);
@@ -131,7 +130,6 @@ connection.on('blockedUsers', (data: UserPartialResponse[]) => {
 // Get new user status (friends on others in chat)
 connection.on('updateStatus', (data: { id: string; online: boolean; status?: string }) => {
   friends.update((f) => {
-    console.log(data);
     const { id, online, status } = data;
     f = f.map((u) => {
       if (u.id === id) {
@@ -184,7 +182,6 @@ connection.on('chat', (data: CompleteChat) => {
     }
     // Sort messages properly
     ch.messages.sort((a, b) => Number(new Date(a.sentAt)) - Number(new Date(b.sentAt)));
-    console.log(ch);
     return ch;
   });
 });
