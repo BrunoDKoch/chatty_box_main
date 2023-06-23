@@ -6,7 +6,7 @@
   import { scale } from 'svelte/transition';
   import { quintInOut } from 'svelte/easing';
   import UserAvatar from '../UserAvatar.svelte';
-  import { hostedImagesRegex, urlRegex } from '$lib/useLinkCheck';
+  import { hostedFilesRegex, urlRegex } from '$lib/useLinkCheck';
   import AsidePreviewLink from './AsidePreviewLink.svelte';
   export let chat: ChatPreview;
 </script>
@@ -35,7 +35,7 @@
           <UserAvatar user={chat.lastMessage.from} size={25} />
         </div>
         <div class="col-span-7">
-          {#if chat.lastMessage.text.match(urlRegex) || chat.lastMessage.text.match(hostedImagesRegex)}
+          {#if chat.lastMessage.text.match(urlRegex) || chat.lastMessage.text.match(hostedFilesRegex)}
             <AsidePreviewLink link={chat.lastMessage.text} />
           {:else}
             <p>

@@ -10,6 +10,7 @@
   export let tooltip: string | null = null;
   export let joinItem: boolean = false;
   export let link = '';
+  export let id = crypto.randomUUID() as string;
 
   $: buttonSize = getSize();
   $: buttonFormat = getButtonFormat();
@@ -28,6 +29,7 @@
 {#if !link}
   <button
     on:click
+    {id}
     type={buttonType}
     disabled={disabled || loading}
     data-tip={tooltip}

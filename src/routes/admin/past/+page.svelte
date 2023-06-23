@@ -16,9 +16,7 @@
   import { onMount } from 'svelte';
 
   let reportOpenedForAction = null as null | UserReportResponse;
-  onMount(async () => {
-    await getAdminData('reports', { activePage: $activeAdminPage, page: $page });
-  });
+
 </script>
 
 <div class="flex flex-col overflow-auto">

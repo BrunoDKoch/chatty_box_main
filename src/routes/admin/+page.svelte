@@ -9,9 +9,6 @@
   import { page } from '$app/stores';
 
   let reportOpenedForAction = null as null | UserReportResponse;
-  onMount(async () => {
-    await getAdminData('reports', { activePage: $activeAdminPage, page: $page });
-  });
 </script>
 
 {#if $reports}

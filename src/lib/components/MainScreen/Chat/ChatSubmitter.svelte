@@ -5,7 +5,7 @@
   import { createEventDispatcher, onMount } from 'svelte';
   import type { MessageResponse } from '$lib/types/combinationTypes';
   import CloseButton from '$lib/components/Custom/CloseButton.svelte';
-    import Button from '$lib/components/Custom/Button.svelte';
+  import Button from '$lib/components/Custom/Button.svelte';
   export let loading = true;
   export let replyTo: MessageResponse | undefined = undefined;
 
@@ -134,8 +134,9 @@
   </label>
   <div class="join px-4">
     <Button
+      id="file-input-toggle"
       buttonType="button"
-      on:click={() => dispatch('toggleAttachmentsModal')}
+      on:click={() => dispatch('showFileInput')}
       className="join-item text-2xl"
     >
       <iconify-icon icon="mdi:attachment" />

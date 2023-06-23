@@ -8,7 +8,7 @@
   import MessageLinkPreview from './MessageLinkPreview.svelte';
   import TextInput from '$lib/components/Custom/TextInput.svelte';
   import MessageRepliedTo from './MessageRepliedTo.svelte';
-  import { hostedImagesRegex, urlRegex } from '$lib/useLinkCheck';
+  import { hostedFilesRegex, urlRegex } from '$lib/useLinkCheck';
   import Button from '$lib/components/Custom/Button.svelte';
   export let message: MessageResponse;
   export let focusOn: boolean = false;
@@ -70,7 +70,7 @@
   function messageContainsLink() {
     return message.text.match(urlRegex)?.length
       ? message.text.match(urlRegex)
-      : message.text.match(hostedImagesRegex);
+      : message.text.match(hostedFilesRegex);
   }
   $: message, (links = messageContainsLink()); // Sadly necessary to avoid the wrong link showing
 
