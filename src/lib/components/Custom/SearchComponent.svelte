@@ -83,7 +83,7 @@
   class="join"
 >
   <TextInputWithButton name="chatSearch" type="search" size="small" bind:value={search}>
-    <Button buttonType="submit" format="square" size="sm" joinItem>
+    <Button buttonType="submit" format="square" size="small" joinItem>
       <label class="swap swap-rotate" for="submit">
         <input type="checkbox" bind:checked={fetching} name="submit" />
         <iconify-icon

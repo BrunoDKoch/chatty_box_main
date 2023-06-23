@@ -25,8 +25,8 @@
       <div class="flex items-center">
         <Button
           format="ghost"
-          size="lg"
-          className="text-3xl"
+          size="large"
+          additionalClasses="text-3xl"
           on:click={() => (activeScreen = 'main')}
         >
           <iconify-icon icon="mdi:arrow-left" />

@@ -6,7 +6,7 @@
 </script>
 
 <div class="flex justify-end">
-  <Button on:click={() => dispatch('close')} size="sm" format="circle">
+  <Button on:click={() => dispatch('close')} size="small" format="circle">
     <iconify-icon icon="mdi:close" />
   </Button>
 </div>

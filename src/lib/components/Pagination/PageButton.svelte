@@ -11,7 +11,7 @@
   link={useLinks ? `${$page.url.pathname}?p=${pageNumber}` : ''}
   on:click={() => (activePage = pageNumber)}
   joinItem
-  className={pageNumber === activePage ? 'btn-active' : ''}
+  additionalClasses={pageNumber === activePage ? 'btn-active' : ''}
 >
   {pageNumber}
 </Button>

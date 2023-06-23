@@ -60,7 +60,8 @@
             tooltip={actionButton.tooltip}
             buttonUIType={actionButton.uiType}
             format="outline"
-            className="max-md:btn-md lg:text-3xl max-md:text-xl join-item"
+            additionalClasses="max-md:btn-md lg:text-3xl max-md:text-xl"
+            joinItem
           >
             <iconify-icon icon={actionButton.icon} />
           </Button>

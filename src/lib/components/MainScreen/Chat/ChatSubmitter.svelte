@@ -134,7 +134,7 @@
     <Button
       id="file-input-toggle"
       buttonType="button"
-      className="join-item text-2xl"
+      additionalClasses="join-item text-2xl"
     >
       <iconify-icon icon="mdi:attachment" />
     </Button>
@@ -149,7 +149,7 @@
         : ''} w-full box-border"
       {disabled}
     />
-    <Button {disabled} className="text-2xl join-item">
+    <Button {disabled} additionalClasses="text-2xl join-item">
       <iconify-icon icon={submitting ? 'svg-spinners:6-dots-scale' : 'mdi:send'} />
     </Button>
   </div>

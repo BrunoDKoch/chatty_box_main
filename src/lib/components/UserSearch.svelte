@@ -68,7 +68,7 @@
                   selection = result;
                   search = '';
                 }}
-                className="flex gap-3"
+                additionalClasses="flex gap-3"
               >
                 <UserAvatarAndName user={result} size={25} />
               </Button>

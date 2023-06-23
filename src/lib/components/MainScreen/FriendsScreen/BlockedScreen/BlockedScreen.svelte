@@ -18,7 +18,7 @@
         buttonUIType="warning"
         tooltip={$t('common.unblock')}
         format="square"
-        className="text-xl"
+        additionalClasses="text-xl"
       >
         <iconify-icon icon="mdi:account-lock-open" />
       </Button>

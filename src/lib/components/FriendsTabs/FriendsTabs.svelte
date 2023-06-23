@@ -18,7 +18,7 @@
       <SingleTab name={tab} />
     {/each}
   </div>
-  <Button tooltip={$t('friends.add')} on:click={() => (showModal = true)} buttonUIType="success" size="sm" className="text-xl">
+  <Button tooltip={$t('friends.add')} on:click={() => (showModal = true)} buttonUIType="success" size="small" additionalClasses="text-xl">
     <iconify-icon icon="material-symbols:person-add" />
   </Button>
 </div>

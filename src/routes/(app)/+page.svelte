@@ -123,7 +123,7 @@
     <Button
       on:click={() => ($useActiveScreen = $useActiveScreen === 'aside' ? 'friends' : 'aside')}
       format="ghost"
-      className="text-4xl"
+      additionalClasses="text-4xl"
     >
       <iconify-icon icon="mdi:menu" />
     </Button>

@@ -8,9 +8,9 @@ type ButtonFormat =
   | 'link'
   | 'circle'
   | 'outline'
-  | undefined;
+  | 'regular';
 
-type UiSize = 'xs' | 'sm' | 'md' | 'lg' | undefined;
+type UiSize = 'base' | 'small' | 'extra-small' | 'large';
 
 type ButtonType = 'button' | 'reset' | 'submit' | null | undefined;
 

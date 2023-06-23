@@ -44,7 +44,7 @@
     name="chatSearch"
     size="small"
   >
-    <Button joinItem size="sm">
+    <Button joinItem size="small">
       <label class="swap swap-rotate" for="submit">
         <input type="checkbox" bind:checked={searching} name="submit" />
         <iconify-icon
