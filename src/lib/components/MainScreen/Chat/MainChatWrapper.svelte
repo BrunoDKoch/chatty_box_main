@@ -41,10 +41,7 @@
       bind:messages={$chat.messages}
       bind:total={$chat.messageCount}
     />
-    <ChatSubmitter
-      bind:loading
-      bind:replyTo
-    />
+    <ChatSubmitter bind:loading bind:replyTo />
   {:else}
     <div class="text-9xl flex w-full h-full items-center justify-center">
       <iconify-icon icon="svg-spinners:6-dots-scale" />

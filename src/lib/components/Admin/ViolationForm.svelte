@@ -2,11 +2,10 @@
   import Select from '../Custom/Select.svelte';
   import TextInput from '../Custom/TextInput.svelte';
   import Checkbox from '../Custom/Checkbox.svelte';
-  import type { UserReportResponse } from '$lib/types/combinationTypes';
   import { t } from 'svelte-i18n';
   import { createEventDispatcher } from 'svelte';
   import type { ReportOption } from '$lib/types/otherTypes';
-    import Button from '../Custom/Button.svelte';
+  import Button from '../Custom/Button.svelte';
 
   export let options: { name: string; value: string | number }[];
   export let violatedRule: ReportOption;

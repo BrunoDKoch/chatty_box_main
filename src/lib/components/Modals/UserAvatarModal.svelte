@@ -6,7 +6,7 @@
   import { ofetch } from 'ofetch';
   import { createEventDispatcher } from 'svelte';
   import { t } from 'svelte-i18n';
-    import Button from '../Custom/Button.svelte';
+  import Button from '../Custom/Button.svelte';
   $: uploadSuccessful = false;
   $: uploading = false;
   const dispatch = createEventDispatcher();
@@ -28,9 +28,7 @@
       <Button joinItem buttonUIType="error" on:click={async () => await handleCancellation()}>
         {$t('common.cancel')}
       </Button>
-      <Button joinItem buttonUIType="success" on:click={() => dispatch('close')}>
-        OK
-      </Button>
+      <Button joinItem buttonUIType="success" on:click={() => dispatch('close')}>OK</Button>
     </div>
   </div>
 </Modal>

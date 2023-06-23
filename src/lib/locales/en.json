@@ -235,7 +235,8 @@
     "check": "check",
     "review": "review",
     "noViolation": "no violation",
-    "nothingNew": "nothing new here"
+    "nothingNew": "nothing new here",
+    "doesThisViolate": "does this violate the rules?"
   },
   "messageFlagged": "Message retained for violating the terms of usage"
 }

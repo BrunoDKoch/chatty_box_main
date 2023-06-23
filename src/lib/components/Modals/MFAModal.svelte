@@ -62,8 +62,12 @@
 </script>
 
 <Modal on:close>
-  <div class="flex items-center justify-center gap-3 lg:text-xl {enabled ? 'text-success' : 'text-warning'}">
-    <iconify-icon class="text-4xl" icon={enabled ? 'mdi:check' : 'material-symbols:warning'}></iconify-icon>
+  <div
+    class="flex items-center justify-center gap-3 lg:text-xl {enabled
+      ? 'text-success'
+      : 'text-warning'}"
+  >
+    <iconify-icon class="text-4xl" icon={enabled ? 'mdi:check' : 'material-symbols:warning'} />
     <h1 class="font-bold uppercase">
       {$t('security.mfa.mfa')}
       {$t('common.is.temp')}

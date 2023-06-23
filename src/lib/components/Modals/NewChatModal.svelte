@@ -9,7 +9,7 @@
   import { connection, previews } from '$lib/useSignalR';
   import useActiveScreen from '$lib/useActiveScreen';
   import TextInput from '../Custom/TextInput.svelte';
-    import Button from '../Custom/Button.svelte';
+  import Button from '../Custom/Button.svelte';
   const dispatch = createEventDispatcher();
   let selection: UserPartialResponse | null = null;
   let currentlySelectedUsers: UserPartialResponse[] = [];
@@ -32,7 +32,7 @@
       maxUsers,
     );
     $useActiveScreen = 'chat';
-    dispatch('close')
+    dispatch('close');
   }
 </script>
 

@@ -1,7 +1,7 @@
 <script lang="ts">
   export let options: {
-    name: string,
-    value: string | number
+    name: string;
+    value: string | number;
   }[];
   export let value: string | number;
   export let labelText: string;
@@ -21,7 +21,7 @@
     const brokenRule = rules.find((r) => !!!r.condition);
     if (brokenRule) {
       ruleText = brokenRule.text;
-      errorClass = ''
+      errorClass = '';
     } else {
       ruleText = '';
       errorClass = '';
@@ -31,12 +31,12 @@
 </script>
 
 <div class="form-control">
-  <label for="{name}" class="label">
+  <label for={name} class="label">
     <span class="label-text first-letter:uppercase">{required ? labelText + '*' : labelText}</span>
   </label>
   <select on:change on:input bind:value {disabled} class="select capitalize select-bordered" {name}>
     {#each options as opt}
-      <option class="capitalize" value="{opt.value}">{opt.name}</option>
+      <option class="capitalize" value={opt.value}>{opt.name}</option>
     {/each}
   </select>
   <p class="label">

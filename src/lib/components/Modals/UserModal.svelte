@@ -11,8 +11,8 @@
   import useActiveScreen from '$lib/useActiveScreen';
   import { chatId } from '$lib/useActiveChat';
   import { updateUser } from '$lib/useUserModal';
-    import type { ActionButton } from '$lib/types/otherTypes';
-    import Button from '../Custom/Button.svelte';
+  import type { ActionButton } from '$lib/types/otherTypes';
+  import Button from '../Custom/Button.svelte';
 
   export let user: UserDetailedResponse;
   const dispatch = createEventDispatcher();
@@ -28,23 +28,23 @@
   const actionButtons: ActionButton[] = [
     {
       async action() {
-        await handleBlockToggle()
+        await handleBlockToggle();
       },
       uiType: 'error',
       icon: user.isBlocked ? 'mdi:account-lock-open' : 'mdi:block-helper',
       tooltip: $t(user.isBlocked ? 'common.unblock' : 'common.block'),
     },
     {
-async      action() {
-        await handleAddOrRemoveClick()
+      async action() {
+        await handleAddOrRemoveClick();
       },
       uiType: user.isFriend ? 'warning' : 'success',
       tooltip: $t(user.isFriend ? 'common.remove' : 'common.add', {
-                values: { item: $t('friends.friend', { values: { count: 1 } }) },
-              }),
-      icon: user.isFriend ? 'mdi:account-minus' : 'mdi:account-plus'
-    }
-  ]
+        values: { item: $t('friends.friend', { values: { count: 1 } }) },
+      }),
+      icon: user.isFriend ? 'mdi:account-minus' : 'mdi:account-plus',
+    },
+  ];
   function sortChats(user: UserDetailedResponse) {
     user.chatsInCommon.sort((a, b) => {
       if (a.chatName! < b.chatName!) {
@@ -90,16 +90,16 @@ async      action() {
         <UserAvatarAndName disableModal {user} size={innerWidth > 1024 ? 'full' : 'half'}>
           <div class="join">
             {#each actionButtons as actionButton}
-            <Button
-              joinItem
-              disabled={user.isBlocking}
-              on:click={async () => await actionButton.action()}
-              buttonUIType={actionButton.uiType}
-              additionalClasses="max-md:btn-md max-md:text-xl lg:text-3xl"
-              tooltip={actionButton.tooltip}
-            >
-              <iconify-icon icon={actionButton.icon} />
-            </Button>
+              <Button
+                joinItem
+                disabled={user.isBlocking}
+                on:click={async () => await actionButton.action()}
+                buttonUIType={actionButton.uiType}
+                additionalClasses="max-md:btn-md max-md:text-xl lg:text-3xl"
+                tooltip={actionButton.tooltip}
+              >
+                <iconify-icon icon={actionButton.icon} />
+              </Button>
             {/each}
           </div>
         </UserAvatarAndName>

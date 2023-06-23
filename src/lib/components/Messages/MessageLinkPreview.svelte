@@ -29,10 +29,13 @@
 {:else if linkType === 'video'}
   <video controls>
     <track kind="captions" />
-    <source src={link.startsWith('static/video') ? `${PUBLIC_IMAGES_URL}/${link}` : link} type="video/{link.split('.').pop()}" />
+    <source
+      src={link.startsWith('static/video') ? `${PUBLIC_IMAGES_URL}/${link}` : link}
+      type="video/{link.split('.').pop()}"
+    />
   </video>
 {:else if linkType === 'audio'}
-  <audio controls src={link.startsWith('static/audio') ? `${PUBLIC_IMAGES_URL}/${link}` : link}></audio>
+  <audio controls src={link.startsWith('static/audio') ? `${PUBLIC_IMAGES_URL}/${link}` : link} />
 {:else}
   <a class="link" rel="external" href={link}>{link}</a>
 {/if}

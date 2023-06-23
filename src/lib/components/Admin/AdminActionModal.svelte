@@ -58,7 +58,9 @@
     <div out:slide={{ axis: 'y' }}>
       <MessageComponent message={report.message} displayOnly />
       <form action="">
-        <label for="">Does this violate the rules?</label>
+        <label for="" class="first-letter:uppercase">
+          {$t('admin.doesThisViolate')}
+        </label>
         <div class="join">
           <Button on:click={async () => await handleViolation(false)} joinItem buttonUIType="error">
             {$t('common.no')}

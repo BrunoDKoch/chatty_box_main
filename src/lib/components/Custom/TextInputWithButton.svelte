@@ -52,7 +52,7 @@
           inputSize: '',
         };
       case 'large':
-        return { inputSize: 'input-lg'};
+        return { inputSize: 'input-lg' };
       case 'small':
         return { inputSize: 'input-sm' };
     }
@@ -63,7 +63,9 @@
   <input
     id={name}
     use:getType
-    class="input capitalize join-item input-bordered {inputSize} {!disabled ? errorClass : 'input-disabled'}"
+    class="input capitalize join-item input-bordered {inputSize} {!disabled
+      ? errorClass
+      : 'input-disabled'}"
     bind:value
     {required}
     {name}

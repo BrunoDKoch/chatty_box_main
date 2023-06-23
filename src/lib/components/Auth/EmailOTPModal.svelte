@@ -4,8 +4,8 @@
   import TextInput from '../Custom/TextInput.svelte';
   import Modal from '$lib/components/Modals/Modal.svelte';
   import { createEventDispatcher } from 'svelte';
-    import useError from '$lib/useError';
-    import Button from '../Custom/Button.svelte';
+  import useError from '$lib/useError';
+  import Button from '../Custom/Button.svelte';
   export let email: string;
   let otp = '';
   $: rules = {
@@ -29,7 +29,7 @@
         status: (err as any).status,
         message: (err as any).error.message,
         cause: $t(`error.cause.${(err as any).status}`),
-      }
+      };
     }
   }
 </script>

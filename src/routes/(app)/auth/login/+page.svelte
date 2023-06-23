@@ -4,9 +4,6 @@
 </script>
 
 <title>
-  ChattyBox - {$t('auth.login').replace(
-    $t('auth.login')[0],
-    $t('auth.login')[0].toUpperCase(),
-  )}
-  </title>
+  ChattyBox - {$t('auth.login').replace($t('auth.login')[0], $t('auth.login')[0].toUpperCase())}
+</title>
 <Hero />

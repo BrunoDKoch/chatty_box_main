@@ -41,7 +41,10 @@
       ? 'material-symbols:phone-android-outline'
       : 'teenyicons:computer-outline';
     let osIcon = getIconFromObject('osIcons', info.os.toLowerCase().split(' ').at(0)!);
-    let browserIcon = getIconFromObject('browserIcons', info.browser.toLowerCase().split(' ').at(0)!);
+    let browserIcon = getIconFromObject(
+      'browserIcons',
+      info.browser.toLowerCase().split(' ').at(0)!,
+    );
     let activeIcon = info.active ? 'mdi:check' : 'mdi:close';
     let countryIcon = `twemoji:flag-${info.countryName.toLowerCase().replaceAll(' ', '-')}`;
     return { deviceIcon, browserIcon, osIcon, activeIcon, countryIcon };
@@ -65,7 +68,12 @@
         {#each data as session}
           <tr class="text-center {session.active ? 'bg-success-content' : 'bg-error-content'}">
             <th>
-              <input type="checkbox" class="checkbox-info" name="session{data.indexOf(session) + 1}" id="session{data.indexOf(session) + 1}">
+              <input
+                type="checkbox"
+                class="checkbox-info"
+                name="session{data.indexOf(session) + 1}"
+                id="session{data.indexOf(session) + 1}"
+              />
             </th>
             <td>
               <iconify-icon icon={getIcons(session).deviceIcon} />

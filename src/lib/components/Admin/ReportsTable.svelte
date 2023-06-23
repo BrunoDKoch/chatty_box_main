@@ -2,6 +2,7 @@
   import ReportRow from './ReportRow.svelte';
   import type { UserReportResponse } from '$lib/types/combinationTypes';
   import { t } from 'svelte-i18n';
+  import { scale } from 'svelte/transition';
 
   export let reports: UserReportResponse[];
   let innerWidth: number;
@@ -10,7 +11,7 @@
 <svelte:window bind:innerWidth />
 
 {#if reports.length}
-  <table class="table table-pin-rows max-md:table-xs mb-5">
+  <table transition:scale class="table table-pin-rows max-md:table-xs mb-5">
     <thead>
       <tr class="[&>th]:first-letter:uppercase">
         <th>{$t('admin.reason')}</th>
@@ -35,7 +36,6 @@
       {/each}
     </tbody>
   </table>
-  {:else}
+{:else}
   <h2 class="text-xl font-bold first-letter:uppercase">{$t('admin.nothingNew')}</h2>
 {/if}
-

@@ -19,7 +19,7 @@
           'common.admin',
         )}`
       : `${$t(`common.${action}`)} ${message.affectedUser.userName}`;
-    return translatedAction
+    return translatedAction;
   }
   onMount(() => getText());
 </script>

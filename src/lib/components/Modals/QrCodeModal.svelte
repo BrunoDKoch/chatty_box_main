@@ -3,7 +3,7 @@
   import QRCode from 'qrcode';
   import Modal from './Modal.svelte';
   import { t } from 'svelte-i18n';
-    import Button from '../Custom/Button.svelte';
+  import Button from '../Custom/Button.svelte';
   export let token: string;
   export let recoveryCodes: string[];
   const dispatch = createEventDispatcher();

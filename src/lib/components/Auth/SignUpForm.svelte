@@ -6,8 +6,8 @@
   import QrCodeModal from '$lib/components/Modals/QrCodeModal.svelte';
   import EmailOtpModal from './EmailOTPModal.svelte';
   import { t } from 'svelte-i18n';
-    import useError from '$lib/useError';
-    import Button from '../Custom/Button.svelte';
+  import useError from '$lib/useError';
+  import Button from '../Custom/Button.svelte';
   export let pending = false;
   const dispatch = createEventDispatcher();
   let qrCode: { content: string; height: number; width: number } | null = null;

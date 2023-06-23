@@ -2,7 +2,7 @@
   import { PUBLIC_IMAGES_URL } from '$env/static/public';
   import type { UserDetailedResponse, UserPartialResponse } from '$lib/types/partialTypes';
   import UserModal from '$lib/components/Modals/UserModal.svelte';
-    import useUserModal, { updateUser } from '$lib/useUserModal';
+  import useUserModal, { updateUser } from '$lib/useUserModal';
   export let user: UserDetailedResponse | UserPartialResponse;
   export let size: number | 'half' | 'full';
   export let isChatImage = false;
@@ -38,13 +38,15 @@
     : 'opacity-100'} {className} {isChatImage ? 'chat-image' : ''}
     {disableModal ? 'cursor-default' : 'cursor-pointer'}"
 >
-  <div class="w-[{rawSize}px] rounded-lg bg-blue-600 dark:bg-blue-800 font-bold text-white text-center text-{textSize}">
+  <div
+    class="w-[{rawSize}px] rounded-lg bg-blue-600 dark:bg-blue-800 font-bold text-white text-center text-{textSize}"
+  >
     {#if user.avatar}
       <img src="{PUBLIC_IMAGES_URL}/{user.avatar}?width={rawSize}" alt="{user.userName} avatar" />
     {:else}
-    <span class="">
-      {user.userName[0]}
-    </span>
+      <span class="">
+        {user.userName[0]}
+      </span>
     {/if}
   </div>
 </figure>

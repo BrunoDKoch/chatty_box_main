@@ -5,7 +5,7 @@
   import { goto } from '$app/navigation';
   import { page } from '$app/stores';
   import Button from '../Custom/Button.svelte';
-    import useError from '$lib/useError';
+  import useError from '$lib/useError';
 
   export let email: string = '';
   export let token: string = '';

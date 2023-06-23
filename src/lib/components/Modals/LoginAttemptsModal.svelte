@@ -19,8 +19,8 @@
     'security.loginAttempt.device',
     'security.loginAttempt.os',
     'security.loginAttempt.browser',
-    'security.loginAttempt.successful'
-  ]
+    'security.loginAttempt.successful',
+  ];
 
   connection.on('loginAttempts', (data: { attempts: UserLoginAttempt[]; count: number }) => {
     attempts = data.attempts;
@@ -51,8 +51,11 @@
             <tr class="text-center">
               <th>{attempts.indexOf(attempt) + 1}</th>
               <td>
-                {$date(new Date(`${attempt.attemptedAt}Z`), {dateStyle: 'short', timeStyle: 'short'})}
-                </td>
+                {$date(new Date(`${attempt.attemptedAt}Z`), {
+                  dateStyle: 'short',
+                  timeStyle: 'short',
+                })}
+              </td>
               <td>{countryNames.of(attempt.countryIsoCode)}</td>
               <td>{attempt.cityName}</td>
               <td>{attempt.device}</td>

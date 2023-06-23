@@ -2,23 +2,20 @@
   export let size: number | 'half' | 'full';
   export let isChatImage = false;
   export let lowerOpacity = false;
-  let { className, rawSize, textSize } = getWidthAndHeight();
-  let showModal = false;
+  let { className, rawSize } = getWidthAndHeight();
   function getWidthAndHeight() {
     switch (size) {
       case 'full':
-        return { className: 'w-24 h-24', rawSize: 150, textSize: '7xl' };
+        return { className: 'w-24 h-24', rawSize: 150 };
       case 'half':
-        return { className: 'w-12 h-12', rawSize: 75, textSize: '4xl' };
+        return { className: 'w-12 h-12', rawSize: 75 };
       default:
         return {
           className: size <= 25 ? 'w-6 h-6' : 'w-12 h-12',
           rawSize: size,
-          textSize: size <= 25 ? 'base' : '3xl',
         };
     }
   }
-
 </script>
 
 <figure

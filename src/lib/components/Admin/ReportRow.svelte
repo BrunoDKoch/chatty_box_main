@@ -13,9 +13,9 @@
   let actionResult = getActionText();
 
   function getActionText(): string {
-    if (report.violationFound === null || !report.adminActions.length) return $t('admin.pending');
+    if (report.violationFound === null) return $t('admin.pending');
 
-    if (!report.violationFound) return 'No violation found';
+    if (!report.violationFound) return $t('admin.noViolation');
 
     return report.adminActions.find((a) => !a.revoked)!.action;
   }
@@ -23,15 +23,17 @@
 
 <tr>
   <td>{$t(report.reportReason)}</td>
-  <td class="max-md:hidden" >{report.reportingUser.userName}</td>
+  <td class="max-md:hidden">{report.reportingUser.userName}</td>
   <td>
     <ReportUserComponent {showAvatar} user={report.reportedUser} />
   </td>
-  <td class="max-md:hidden" >{report.chat.chatName ?? report.chat.users.map((u) => u.userName).join(', ')}</td>
+  <td class="max-md:hidden"
+    >{report.chat.chatName ?? report.chat.users.map((u) => u.userName).join(', ')}</td
+  >
   <td>
     {#if showAvatar}
       <MessageComponent message={report.message} hideOptions displayOnly />
-      {:else}
+    {:else}
       <p>{report.message.text}</p>
     {/if}
   </td>
@@ -46,8 +48,12 @@
     {actionResult}
   </td>
   <td>
-    <Button buttonType="button" buttonUIType="neutral" on:click={() => dispatch('openModal', report)}>
-      {report.adminActions && report.adminActions.length ? $t('admin.review') : $t('admin.check')}
+    <Button
+      buttonType="button"
+      buttonUIType="neutral"
+      on:click={() => dispatch('openModal', report)}
+    >
+      {actionResult === $t('admin.noViolation') ? $t('admin.review') : $t('admin.check')}
     </Button>
   </td>
 </tr>

@@ -32,30 +32,30 @@
 <Modal on:close>
   {#if activePreview}
     <form action="">
-        <div class="form-control">
-          <label for="sound" class="label uppercase">
-            <span class="label-text">{$t('common.sound')}</span>
-            <input
-              on:change={async () => await handleChange('playSound')}
-              class="toggle"
-              bind:checked={activePreview.playSound}
-              type="checkbox"
-              name="sound"
-              id=""
-            />
-          </label>
-          <label for="osNotification" class="label uppercase">
-            <span class="label-text">{$t('common.osNotification')}</span>
-            <input
-              on:change={async () => await handleChange('showOSNotification')}
-              class="toggle"
-              bind:checked={activePreview.showOSNotification}
-              type="checkbox"
-              name="osNotification"
-              id=""
-            />
-          </label>
-        </div>
+      <div class="form-control">
+        <label for="sound" class="label uppercase">
+          <span class="label-text">{$t('common.sound')}</span>
+          <input
+            on:change={async () => await handleChange('playSound')}
+            class="toggle"
+            bind:checked={activePreview.playSound}
+            type="checkbox"
+            name="sound"
+            id=""
+          />
+        </label>
+        <label for="osNotification" class="label uppercase">
+          <span class="label-text">{$t('common.osNotification')}</span>
+          <input
+            on:change={async () => await handleChange('showOSNotification')}
+            class="toggle"
+            bind:checked={activePreview.showOSNotification}
+            type="checkbox"
+            name="osNotification"
+            id=""
+          />
+        </label>
+      </div>
     </form>
   {/if}
 </Modal>

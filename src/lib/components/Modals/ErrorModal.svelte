@@ -2,7 +2,7 @@
   import { createEventDispatcher, onMount } from 'svelte';
   import Modal from './Modal.svelte';
   import { date, t, time } from 'svelte-i18n';
-    import Button from '../Custom/Button.svelte';
+  import Button from '../Custom/Button.svelte';
 
   export let error: { status: number; cause: string; message: string };
   $: icon = getIcon(error.status);
@@ -62,7 +62,10 @@
         {#each brokenUpMessage as portion}
           {#if portion.includes('/') && portion.includes(':')}
             <time class="first-letter:uppercase">
-              {$date(new Date(portion.toString().endsWith('Z') ? portion : `${portion}Z`), { dateStyle: 'medium', timeStyle: 'short' })}
+              {$date(new Date(portion.toString().endsWith('Z') ? portion : `${portion}Z`), {
+                dateStyle: 'medium',
+                timeStyle: 'short',
+              })}
             </time>
           {:else}
             <p>{portion}</p>

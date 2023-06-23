@@ -8,8 +8,8 @@
   import { goto } from '$app/navigation';
   import { t } from 'svelte-i18n';
   import MfaCodeModal from './MFACodeModal.svelte';
-    import useError from '$lib/useError';
-    import Button from '../Custom/Button.svelte';
+  import useError from '$lib/useError';
+  import Button from '../Custom/Button.svelte';
   export let pending = false;
   const dispatch = createEventDispatcher();
   let showMFACodeModal = false;
@@ -69,7 +69,7 @@
         showMFACodeModal = !showMFACodeModal;
         return;
       }
-      console.log(err)
+      console.log(err);
       $useError = {
         status: (err as any).status,
         message: (err as any).message,
@@ -127,4 +127,3 @@
     }}
   />
 {/if}
-

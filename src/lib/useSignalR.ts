@@ -1,14 +1,7 @@
-import {
-  HubConnectionBuilder,
-  HubConnectionState,
-} from '@microsoft/signalr';
+import { HubConnectionBuilder, HubConnectionState } from '@microsoft/signalr';
 import { PUBLIC_AUTH_URL_DEV as baseURL } from '$env/static/public';
 import { logOut } from '$lib/useAuth';
-import type {
-  AdminAction,
-  Message,
-  UserNotificationSettings,
-} from '@prisma/client';
+import type { AdminAction, Message, UserNotificationSettings } from '@prisma/client';
 import { get, writable, type Writable } from 'svelte/store';
 import type {
   FriendResponse,
@@ -270,21 +263,21 @@ connection.on('blockToggle', (data: { id: string; blocked: boolean }) => {
 connection.on('forceLogOut', async () => await logOut());
 
 // Handle reports
-connection.on('updateReport', (data: {id: string, violationFound: boolean}) => {
+connection.on('updateReport', (data: { id: string; violationFound: boolean }) => {
   reports.update((r) => {
     const relevantReport = r.find((report) => report.id === data.id);
     if (!relevantReport) return r;
     relevantReport.violationFound = data.violationFound;
     return r;
-  })
-})
+  });
+});
 
-connection.on('action', (data: {reportId: string, actionPartial: AdminActionPartial}) => {
+connection.on('action', (data: { reportId: string; actionPartial: AdminActionPartial }) => {
   reports.update((r) => {
     r.find((report) => report.id === data.reportId)?.adminActions.push(data.actionPartial);
     return r;
-  })
-})
+  });
+});
 
 export const online = writable(connection.state === HubConnectionState.Connected);
 connection.onreconnected(() => online.set(true));

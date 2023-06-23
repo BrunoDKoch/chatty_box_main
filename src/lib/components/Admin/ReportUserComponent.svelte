@@ -22,7 +22,7 @@
         <p>{$t(violation.reportReason)} - {$date(new Date(`${violation.sentAt}Z`))}</p>
       {/each}
     {:else}
-      <p>No violations on record</p>
+      <p class="first-letter:uppercase">{$t('admin.noViolation')}</p>
     {/if}
   </div>
 </div>

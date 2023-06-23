@@ -3,7 +3,7 @@
   import { t } from 'svelte-i18n';
   import Modal from '$lib/components/Modals/Modal.svelte';
   import TextInput from '../Custom/TextInput.svelte';
-    import Button from '../Custom/Button.svelte';
+  import Button from '../Custom/Button.svelte';
   export let MFACode: string;
   export let rememberMultiFactor: boolean;
   const dispatch = createEventDispatcher();
@@ -18,7 +18,7 @@
     <TextInput
       type="text"
       bind:value={MFACode}
-      labelText={$t('common.code', { values: { codeCount: 1, item: $t('security.mfa.mfa')} })}
+      labelText={$t('common.code', { values: { codeCount: 1, item: $t('security.mfa.mfa') } })}
       required
       name="MFA"
     />

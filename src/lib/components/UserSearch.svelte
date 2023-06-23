@@ -5,7 +5,7 @@
   import { createEventDispatcher } from 'svelte';
   import { t } from 'svelte-i18n';
   import UserAvatarAndName from './UserAvatarAndName.svelte';
-    import Button from './Custom/Button.svelte';
+  import Button from './Custom/Button.svelte';
   export let selection: null | UserPartialResponse;
 
   const dispatch = createEventDispatcher();

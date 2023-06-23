@@ -11,6 +11,5 @@
     $t('auth.recovery')[0],
     $t('auth.recovery')[0].toUpperCase(),
   )}
-  </title>
+</title>
 <Hero {email} {token} />
-

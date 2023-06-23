@@ -1,5 +1,5 @@
 <script lang="ts">
-    import Button from '$lib/components/Custom/Button.svelte';
+  import Button from '$lib/components/Custom/Button.svelte';
   import UserAvatarAndName from '$lib/components/UserAvatarAndName.svelte';
   import useBlockToggle from '$lib/useBlockToggle';
   import { blockedUsers } from '$lib/useSignalR';

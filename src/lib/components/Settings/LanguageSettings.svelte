@@ -11,7 +11,7 @@
   $: $locale,
     ofetch('/api/lang', {
       body: { lang: $locale },
-      method: 'PUT'
+      method: 'PUT',
     }).then((data) => data);
 </script>
 

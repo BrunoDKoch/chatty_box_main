@@ -1,6 +1,6 @@
 <script lang="ts">
   import { page } from '$app/stores';
-    import useError from '$lib/useError';
+  import useError from '$lib/useError';
   import LogInForm from './LogInForm.svelte';
   import PasswordRecoveryForm from './PasswordRecoveryForm.svelte';
   import SignUpForm from './SignUpForm.svelte';

@@ -18,7 +18,7 @@
   import useError from '$lib/useError';
   import useUserModal from '$lib/useUserModal';
   import UserModal from '$lib/components/Modals/UserModal.svelte';
-    import Button from '$lib/components/Custom/Button.svelte';
+  import Button from '$lib/components/Custom/Button.svelte';
 
   $: title = 'ChattyBox';
   $: {

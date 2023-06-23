@@ -4,7 +4,13 @@
   import { connection } from '$lib/useSignalR';
   import type { UserReportResponse } from '$lib/types/combinationTypes';
   import AdminActionModal from '$lib/components/Admin/AdminActionModal.svelte';
-  import { activeAdminPage, fetchedReports, getAdminData, reports, totalReports } from '$lib/useAdminFetch';
+  import {
+    activeAdminPage,
+    fetchedReports,
+    getAdminData,
+    reports,
+    totalReports,
+  } from '$lib/useAdminFetch';
   import { onMount } from 'svelte';
   import { page } from '$app/stores';
 

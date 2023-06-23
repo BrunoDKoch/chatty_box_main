@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { page } from '$app/stores';
+  import { page } from '$app/stores';
   import { createEventDispatcher } from 'svelte';
   import { t } from 'svelte-i18n';
 
@@ -7,15 +7,15 @@
   const links = [
     {
       name: $t('admin.pendingReports'),
-      link: '/admin?p=1',
+      link: '/admin',
     },
     {
       name: $t('admin.past'),
-      link: '/admin/past?p=1',
+      link: '/admin/past',
     },
     {
       name: $t('admin.suspended'),
-      link: '/admin/suspensions?p=1',
+      link: '/admin/suspensions',
     },
     {
       name: $t('admin.independent'),
@@ -27,7 +27,7 @@
   {#each links as link}
     <li>
       {#if link.link}
-        <a class="{$page.url.pathname === link.link ? 'active' : ''}" href={link.link}>
+        <a class={$page.url.pathname.split('?')[0] === link.link ? 'active' : ''} href={link.link}>
           {link.name}
         </a>
       {:else}

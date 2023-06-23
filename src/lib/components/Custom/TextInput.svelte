@@ -33,7 +33,7 @@
       const brokenRule = rules.find((r) => !!!r.condition);
       if (brokenRule) {
         ruleText = brokenRule.text;
-        inputElement.setAttribute('isvalid', 'false')
+        inputElement.setAttribute('isvalid', 'false');
       } else {
         ruleText = '';
       }

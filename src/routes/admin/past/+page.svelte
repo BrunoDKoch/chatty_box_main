@@ -16,7 +16,6 @@
   import { onMount } from 'svelte';
 
   let reportOpenedForAction = null as null | UserReportResponse;
-
 </script>
 
 <div class="flex flex-col overflow-auto">

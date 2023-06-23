@@ -1,7 +1,7 @@
 <script lang="ts">
   import { PUBLIC_AUTH_URL_DEV } from '$env/static/public';
   import { chatId } from '$lib/useActiveChat';
-    import useError from '$lib/useError';
+  import useError from '$lib/useError';
   import Dropzone from 'dropzone';
   import { createEventDispatcher, onMount } from 'svelte';
   import { t } from 'svelte-i18n';
@@ -118,7 +118,7 @@
             status: 500,
             cause: $t('error.cause.500'),
             message: message as string,
-          }
+          };
           if (!file.accepted) this.removeFile(file);
           showCheck = false;
           uploading = false;
@@ -150,12 +150,15 @@
 <div class={wrapperClass} id="drop-container">
   <form class="dropzone" id="file-drop">
     <div
-      on:click={() => isAvatar ? dropzone.hiddenFileInput?.click() : null}
-      on:keypress={() => isAvatar ? dropzone.hiddenFileInput?.click() : null}
+      on:click={() => (isAvatar ? dropzone.hiddenFileInput?.click() : null)}
+      on:keypress={() => (isAvatar ? dropzone.hiddenFileInput?.click() : null)}
       on:dragover={() => setShowDropIcon('show')}
       on:drop={() => setShowDropIcon('hide')}
     >
-      <div bind:this={dropIcon} class="hidden absolute z-50 gap-3 opacity-50 backdrop:bg-base-200 backdrop:opacity-50">
+      <div
+        bind:this={dropIcon}
+        class="hidden absolute z-50 gap-3 opacity-50 backdrop:bg-base-200 backdrop:opacity-50"
+      >
         <iconify-icon icon="mdi:upload" />
         <span>{$t('files.dragHere')}</span>
       </div>

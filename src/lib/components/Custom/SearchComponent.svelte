@@ -5,7 +5,7 @@
   import TextInput from './TextInput.svelte';
   import TextInputWithButton from './TextInputWithButton.svelte';
   import { chat } from '$lib/useActiveChat';
-    import Button from './Button.svelte';
+  import Button from './Button.svelte';
   const dispatch = createEventDispatcher();
 
   // These handle the search
@@ -78,10 +78,7 @@
   }
 </script>
 
-<form
-  on:submit|preventDefault={async () => await handleSubmit()}
-  class="join"
->
+<form on:submit|preventDefault={async () => await handleSubmit()} class="join">
   <TextInputWithButton name="chatSearch" type="search" size="small" bind:value={search}>
     <Button buttonType="submit" format="square" size="small" joinItem>
       <label class="swap swap-rotate" for="submit">

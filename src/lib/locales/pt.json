@@ -231,7 +231,8 @@
     "check": "verificar",
     "review": "revisar",
     "noViolation": "sem violação",
-    "nothingNew": "nada novo aqui"
+    "nothingNew": "nada novo aqui",
+    "doesThisViolate": "isto viola as regras?"
   },
   "messageFlagged": "Mensagem retida por violar os termos de uso"
 }
