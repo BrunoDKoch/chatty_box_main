@@ -81,6 +81,8 @@
 
 <svelte:body use:setTheme />
 
+<title>ChattyBox</title>
+
 {#if $online || $page.url.pathname.includes('auth')}
   <slot />
 {:else}

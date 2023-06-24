@@ -5,8 +5,6 @@
   import ErrorModal from '$lib/components/Modals/ErrorModal.svelte';
 </script>
 
-<title>ChattyBox</title>
-
 <main class="dark:bg-black h-screen w-screen overflow-hidden">
   <slot />
 </main>
