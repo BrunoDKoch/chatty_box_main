@@ -24,6 +24,11 @@
           icon: 'mdi:video',
           text: $t('common.video'),
         };
+      case 'audio':
+        return {
+          icon: 'mdi:music',
+          text: $t('common.audio'),
+        };
       default:
         return {
           icon: 'mdi:link',

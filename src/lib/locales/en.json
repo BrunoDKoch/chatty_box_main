@@ -122,7 +122,8 @@
     "youtubeLink": "YouTube link",
     "groupChat": "group chat",
     "return": "return",
-    "suspension": "suspension"
+    "suspension": "suspension",
+    "audio": "audio"
   },
   "aside": {
     "searchChats": "{search} chats"
