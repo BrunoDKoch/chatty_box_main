@@ -30,8 +30,10 @@
   }
 </script>
 
-<span class="indicator-item indicator-start rounded-full max-w-fit max-h-fit {className}">
-  {#if icon}
-    <iconify-icon {icon} />
-  {/if}
-</span>
+{#if isOnline}
+  <span class="indicator-item indicator-start rounded-full max-w-fit max-h-fit {className}">
+    {#if icon}
+      <iconify-icon {icon} />
+    {/if}
+  </span>
+{/if}

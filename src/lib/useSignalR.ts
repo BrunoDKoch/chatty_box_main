@@ -136,13 +136,18 @@ connection.on('updateStatus', (data: { id: string; online: boolean; status?: str
 });
 
 // New chat created (by user or another member)
-connection.on('newChat', (data: CompleteChat) => {
-  chat.set({ ...data, hasFetched: false, hasMore: false });
-  chatId.set(data.id);
+connection.on('newChat', (data: ChatPreview) => {
   const { playSound, showOSNotification } = get(useUserNotificationSettings)!;
   const { id, createdAt, chatName, users } = data;
+  chatNotificationSettings.update((cn) => {
+    cn.push({
+      chatId: id,
+      playSound,
+      showOSNotification,
+    });
+    return cn;
+  })
   previews.update((p) => {
-    if (p.find((preview) => preview.id === id)) return p;
     p.push({
       id,
       chatName: chatName ?? undefined,

@@ -54,12 +54,11 @@
         $online = connection.state === HubConnectionState.Connected;
       }, 100);
     } catch (err) {
-      if ((err as { message: string }).message.endsWith("Error: Unauthorized: Status code '401'"))
-        throw error(401, {
-          status: 401,
-          cause: $t('error.cause.401'),
-          message: $t('error.cause.401'),
-        });
+      if (
+        (err as { message: string }).message.endsWith("Error: Unauthorized: Status code '401'") &&
+        !$page.url.pathname.startsWith('/auth')
+      )
+        return goto('/auth/login');
       $useError = {
         status: 503,
         cause: $t('error.cause.503'),

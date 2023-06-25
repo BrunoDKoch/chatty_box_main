@@ -16,12 +16,17 @@
 
   // Handle pages
   $: $activeAdminPage = Number($page.url.searchParams.get('p')) || 1;
+  $: total = $page.url.pathname.endsWith('suspensions')
+    ? $fetchedSuspensions.total
+    : $fetchedReports.total;
 
   $: $page,
     getAdminData($page.url.pathname.endsWith('suspensions') ? 'suspensions' : 'reports', {
       activePage: $activeAdminPage,
       page: $page,
     }).then((data) => data);
+
+  $: total, console.log(total)
 </script>
 
 <title>ChattyBox - {$t('admin.title')}</title>
@@ -40,14 +45,7 @@
       {:else}
         <div class="flex flex-col items-center justify-between">
           <slot />
-          <Pagination
-            useLinks
-            itemsPerPage={15}
-            total={$page.url.pathname.endsWith('suspensions')
-              ? $fetchedSuspensions.total
-              : $fetchedReports.total}
-            bind:activePage={$activeAdminPage}
-          />
+          <Pagination useLinks itemsPerPage={15} bind:total bind:activePage={$activeAdminPage} />
         </div>
       {/if}
     </main>

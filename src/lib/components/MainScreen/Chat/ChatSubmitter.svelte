@@ -2,7 +2,6 @@
   import { connection } from '$lib/useSignalR';
   import { chat, chatId } from '$lib/useActiveChat';
   import { t } from 'svelte-i18n';
-  import { createEventDispatcher, onMount } from 'svelte';
   import type { MessageResponse } from '$lib/types/combinationTypes';
   import CloseButton from '$lib/components/Custom/CloseButton.svelte';
   import Button from '$lib/components/Custom/Button.svelte';
@@ -138,7 +137,7 @@
       bind:this={messageComposer}
       bind:value={newMessage}
       type="text"
-      id="messageComposer"
+      id="message-composer"
       placeholder={singleChatUserBlocked ? $t('message.cannotCommunicate') : ''}
       class="input join-item {messageError ? 'input-error' : 'input-bordered'} {disabled
         ? 'input-disabled'

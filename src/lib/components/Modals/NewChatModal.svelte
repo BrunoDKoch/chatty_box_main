@@ -10,6 +10,9 @@
   import useActiveScreen from '$lib/useActiveScreen';
   import TextInput from '../Custom/TextInput.svelte';
   import Button from '../Custom/Button.svelte';
+  import { chat, chatId } from '$lib/useActiveChat';
+  import type { CompleteChat } from '$lib/types/combinationTypes';
+  import useUserNotificationSettings from '$lib/useUserNotificationSettings';
   const dispatch = createEventDispatcher();
   let selection: UserPartialResponse | null = null;
   let currentlySelectedUsers: UserPartialResponse[] = [];
@@ -25,13 +28,25 @@
     selection = null;
   }
   async function handleNewChat() {
-    await connection.invoke(
+    $chat = await connection.invoke<CompleteChat & { hasMore: boolean; hasFetched: boolean }>(
       'CreateNewChat',
       currentlySelectedUsers.map((u) => u.id),
       chatName,
       maxUsers,
     );
+    $chat.hasFetched = false;
+    $chat.hasMore = false;
+    $chatId = $chat.id;
     $useActiveScreen = 'chat';
+    $previews.push({
+      users: $chat.users,
+      id: $chatId,
+      showOSNotification: $useUserNotificationSettings?.showOSNotification ?? null,
+      playSound: $useUserNotificationSettings?.playSound ?? null,
+      createdAt: $chat.createdAt,
+      chatName: $chat.chatName ?? undefined,
+    });
+    $previews = $previews;
     dispatch('close');
   }
 </script>
