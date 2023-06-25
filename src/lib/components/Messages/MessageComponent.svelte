@@ -24,13 +24,14 @@
   let values = {
     item: `${$t('common.the.f', { values: { prepositions: 1 } })} ${messageTranslation}`,
   };
-  const options: { name: string; icon: string; action: () => void }[] = [
+  const options: { name: string; icon: string; action: () => void; id: string }[] = [
     {
       name: $t('common.replyTo', { values }),
       icon: 'mdi:reply',
       action() {
         dispatch('replyTo', message);
       },
+      id: 'reply',
     },
   ];
 
@@ -92,6 +93,7 @@
         action() {
           dispatch('delete', message);
         },
+        id: 'remove',
       });
     if (message.isFromCaller)
       options.push({
@@ -100,6 +102,7 @@
         action() {
           isEditing = !isEditing;
         },
+        id: 'edit',
       });
     if (!message.isFromCaller)
       options.push({
@@ -110,6 +113,7 @@
         action() {
           dispatch('report', message);
         },
+        id: 'report',
       });
   });
   onDestroy(() => observer.unobserve(thisElement));
@@ -125,9 +129,9 @@
 >
   {#if showOptions && !hideOptions && !displayOnly && message.text !== 'messageFlagged'}
     <div class="absolute join {message.isFromCaller ? 'right-14' : 'left-14'} z-50">
-      {#each options as option}
-        <Button on:click={() => option.action()} tooltip={option.name} joinItem>
-          <iconify-icon icon={option.icon} />
+      {#each options as { action, name, icon, id }}
+        <Button {id} on:click={() => action()} tooltip={name} joinItem>
+          <iconify-icon {icon} />
         </Button>
       {/each}
     </div>
@@ -157,7 +161,7 @@
           action=""
         >
           <input type="text" class="input w-full" name="edit" bind:value={message.text} />
-          <Button>
+          <Button id="send-message">
             <iconify-icon icon="mdi:send" />
           </Button>
         </form>

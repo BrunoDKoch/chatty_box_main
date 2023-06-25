@@ -11,7 +11,7 @@
     </a>
   </div>
   <div class="flex-1 lg:hidden">
-    <Button format="ghost" on:click>
+    <Button id="menu-toggle" format="ghost" on:click>
       <iconify-icon class="text-xl" icon="mdi:menu" />
     </Button>
   </div>

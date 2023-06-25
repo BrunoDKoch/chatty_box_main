@@ -39,7 +39,7 @@
 </script>
 
 <div class="dropdown z-50 {open ? 'dropdown-open' : ''}">
-  <Button format="ghost">
+  <Button id="chat-dropdown-toggle" format="ghost">
     <iconify-icon icon="mdi:dots-vertical" />
   </Button>
   <ul class="dropdown-content menu bg-base-300 z-50">

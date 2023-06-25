@@ -26,10 +26,10 @@
     </p>
   </div>
   <div class="modal-action join">
-    <Button joinItem buttonUIType="success" on:click={() => dispatch('confirm')}>
+    <Button id="yes" joinItem buttonUIType="success" on:click={() => dispatch('confirm')}>
       {$t('common.yes')}
     </Button>
-    <Button joinItem buttonUIType="error" on:click={() => dispatch('deny')}>
+    <Button id="no" joinItem buttonUIType="error" on:click={() => dispatch('deny')}>
       {$t('common.no')}
     </Button>
   </div>

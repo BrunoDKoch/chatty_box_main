@@ -24,6 +24,7 @@
     {#if activeScreen !== 'main'}
       <div class="flex items-center">
         <Button
+          id="back"
           format="ghost"
           size="large"
           additionalClasses="text-3xl"

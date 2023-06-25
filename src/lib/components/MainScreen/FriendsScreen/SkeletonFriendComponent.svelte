@@ -4,15 +4,13 @@
   import SkeletonUserAvatarAndName from '$lib/components/SkeletonUserAvatarAndName.svelte';
   import type { UiType } from '$lib/types/daisyUiTypes';
   import Button from '$lib/components/Custom/Button.svelte';
-  const actionButtons: {
-    icon: string;
-    uiType: UiType;
-    tooltip: string;
-  }[] = [
+  import type { MockActionButton } from '$lib/types/otherTypes';
+  const actionButtons: MockActionButton[] = [
     {
       icon: 'mdi:chat-plus',
       uiType: 'neutral',
       tooltip: $t('friends.newChat'),
+      id: 'new-chat',
     },
     {
       icon: 'mdi:close',
@@ -20,6 +18,7 @@
       tooltip: $t('common.remove', {
         values: { item: $t('common.friend', { values: { count: 1 } }) },
       }),
+      id: 'remove-friend',
     },
   ];
 </script>
@@ -30,6 +29,7 @@
       <div class="join">
         {#each actionButtons as actionButton}
           <Button
+            id={actionButton.id}
             format="outline"
             additionalClasses="max-md:btn-md lg:text-3xl max-md:text-xl join-item"
             loading

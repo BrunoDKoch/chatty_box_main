@@ -10,14 +10,10 @@
   import StatusIndicator from '$lib/components/Status/StatusIndicator.svelte';
   import Button from '$lib/components/Custom/Button.svelte';
   import type { UiType } from '$lib/types/daisyUiTypes';
+    import type { ActionButton } from '$lib/types/otherTypes';
   export let friend: FriendResponse;
   const dispatch = createEventDispatcher();
-  const actionButtons: {
-    action: (() => Promise<void>) | (() => void);
-    icon: string;
-    uiType: UiType;
-    tooltip: string;
-  }[] = [
+  const actionButtons: ActionButton[] = [
     {
       async action() {
         await handleNewChat();
@@ -25,6 +21,7 @@
       icon: 'mdi:chat-plus',
       uiType: 'neutral',
       tooltip: $t('friends.newChat'),
+      id: 'new-chat'
     },
     {
       action() {
@@ -35,6 +32,7 @@
       tooltip: $t('common.remove', {
         values: { item: $t('common.friend', { values: { count: 1 } }) },
       }),
+      id: 'remove-friend'
     },
   ];
   async function handleNewChat() {
@@ -54,16 +52,17 @@
       lowerOpacity={!friend.isOnline}
     >
       <div class="join {friend.isOnline ? 'opacity-100' : 'opacity-50'}">
-        {#each actionButtons as actionButton}
+        {#each actionButtons as {id, action, tooltip, uiType: buttonUIType, icon}}
           <Button
-            on:click={async () => await actionButton.action()}
-            tooltip={actionButton.tooltip}
-            buttonUIType={actionButton.uiType}
+            {id}
+            on:click={async () => await action()}
+            {tooltip}
+            {buttonUIType}
             format="outline"
             additionalClasses="max-md:btn-md lg:text-3xl max-md:text-xl"
             joinItem
           >
-            <iconify-icon icon={actionButton.icon} />
+            <iconify-icon {icon} />
           </Button>
         {/each}
       </div>

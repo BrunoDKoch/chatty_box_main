@@ -125,7 +125,7 @@
       <span class="label-text first-letter:uppercase">
         {$t('common.replyingTo', { values: { item: replyTo.user.userName } })}
       </span>
-      <CloseButton on:close={() => (replyTo = undefined)} />
+      <CloseButton id="cancel-reply" on:close={() => (replyTo = undefined)} />
     {:else}
       <span> &nbsp;&nbsp;&nbsp;&nbsp; </span>
     {/if}
@@ -145,7 +145,7 @@
         : ''} w-full box-border"
       {disabled}
     />
-    <Button {disabled} additionalClasses="text-2xl join-item">
+    <Button id="chat-submit" {disabled} additionalClasses="text-2xl join-item">
       <iconify-icon icon={submitting ? 'svg-spinners:6-dots-scale' : 'mdi:send'} />
     </Button>
   </div>

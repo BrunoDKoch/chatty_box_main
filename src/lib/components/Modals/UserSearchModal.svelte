@@ -36,10 +36,11 @@
   </div>
   <div class="modal-action">
     <div class="join">
-      <Button joinItem buttonUIType="warning" on:click={() => (selection = null)}>
+      <Button id="clear" joinItem buttonUIType="warning" on:click={() => (selection = null)}>
         {$t('common.clear')}
       </Button>
       <Button
+        id="submit"
         joinItem
         buttonUIType="success"
         disabled={!selection}

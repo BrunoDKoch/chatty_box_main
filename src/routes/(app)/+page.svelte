@@ -121,6 +121,7 @@
   </aside>
   <div class="lg:hidden flex items-center bg-base-200 z-50">
     <Button
+      id="change-screen"
       on:click={() => ($useActiveScreen = $useActiveScreen === 'aside' ? 'friends' : 'aside')}
       format="ghost"
       additionalClasses="text-4xl"

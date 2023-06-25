@@ -27,7 +27,7 @@
   <dialog on:close bind:this={modalElement} class="modal w-screen h-screen">
     {#if show}
       <div transition:scale class="modal-box lg:min-w-max overflow-x-hidden {bgClass}">
-        <CloseButton on:close />
+        <CloseButton id="modal-close" on:close />
         <slot />
       </div>
     {/if}

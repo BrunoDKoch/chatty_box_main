@@ -30,6 +30,6 @@
         <input class="checkbox" bind:checked={rememberMultiFactor} type="checkbox" name="" id="" />
       </label>
     </div>
-    <Button>{$t('common.submit')}</Button>
+    <Button id="modal-submit">{$t('common.submit')}</Button>
   </form>
 </Modal>

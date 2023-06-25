@@ -110,5 +110,5 @@
       labelText="{$t('auth.confirm')} {$t('common.your.f')} {$t('auth.password')}"
     />
   {/if}
-  <Button>{$t('common.submit')}</Button>
+  <Button id="recovery-submit">{$t('common.submit')}</Button>
 </form>

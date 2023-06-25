@@ -5,6 +5,7 @@
   import type { ClientConnectionPartialInfo } from '$lib/types/partialTypes';
   import CloseButton from '../Custom/CloseButton.svelte';
   import { locale } from 'svelte-i18n';
+  import { toKebabCase } from '$lib/useCaseConversion';
   let sessions = connection
     .invoke<ClientConnectionPartialInfo[]>('GetConnections')
     .then((data) => data);
@@ -46,7 +47,7 @@
       info.browser.toLowerCase().split(' ').at(0)!,
     );
     let activeIcon = info.active ? 'mdi:check' : 'mdi:close';
-    let countryIcon = `twemoji:flag-${info.countryName.toLowerCase().replaceAll(' ', '-')}`;
+    let countryIcon = `twemoji:flag-${toKebabCase(info.countryName)}`;
     return { deviceIcon, browserIcon, osIcon, activeIcon, countryIcon };
   }
 </script>

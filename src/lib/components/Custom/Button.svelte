@@ -11,7 +11,7 @@
   export let tooltip: string | null = null;
   export let joinItem: boolean = false;
   export let link = '';
-  export let id = crypto.randomUUID() as string;
+  export let id: string;
 
   let className = 'btn';
 

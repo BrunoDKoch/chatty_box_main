@@ -43,6 +43,7 @@
       <div class="flex items-center justify-between">
         <UserAvatarAndName {user} size="half" />
         <Button
+          id="remove-chatter"
           buttonUIType="warning"
           on:click={() =>
             (currentlySelectedUsers = currentlySelectedUsers.filter((u) => u !== user))}
@@ -58,10 +59,15 @@
   </div>
   <div class="modal-action">
     <div class="join">
-      <Button joinItem buttonUIType="error" on:click={() => dispatch('close')}>
+      <Button id="cancel" joinItem buttonUIType="error" on:click={() => dispatch('close')}>
         {$t('common.cancel')}
       </Button>
-      <Button joinItem buttonUIType="success" on:click={async () => await handleNewChat()}>
+      <Button
+        id="proceed"
+        joinItem
+        buttonUIType="success"
+        on:click={async () => await handleNewChat()}
+      >
         {$t('common.proceed')}
       </Button>
     </div>

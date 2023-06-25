@@ -17,7 +17,7 @@
       bind:value={password}
       required
     />
-    <Button buttonType="submit" bind:loading>
+    <Button id="submit" buttonType="submit" bind:loading>
       {$t('common.submit')}
     </Button>
   </form>

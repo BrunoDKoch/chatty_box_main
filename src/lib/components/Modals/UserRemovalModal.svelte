@@ -40,10 +40,11 @@
   </div>
   <div class="modal-action">
     <div class="join">
-      <Button buttonUIType="warning" joinItem on:click={() => (selection = '')}>
+      <Button id="clear" buttonUIType="warning" joinItem on:click={() => (selection = '')}>
         {$t('common.clear')}
       </Button>
       <Button
+        id="submit"
         joinItem
         buttonUIType="error"
         disabled={!selection}

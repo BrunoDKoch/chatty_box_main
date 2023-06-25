@@ -2,19 +2,14 @@
   import Button from '$lib/components/Custom/Button.svelte';
   import UserAvatarAndName from '$lib/components/UserAvatarAndName.svelte';
   import type { ButtonFormat, UiType } from '$lib/types/daisyUiTypes';
+  import type { ActionButton } from '$lib/types/otherTypes';
   import type { UserPartialResponse } from '$lib/types/partialTypes';
   import { createEventDispatcher } from 'svelte';
   import { t } from 'svelte-i18n';
   export let request: { userAdding: UserPartialResponse };
   const { userAdding } = request;
   const { id } = userAdding;
-  const actionButtons: {
-    action: () => void;
-    format: ButtonFormat;
-    uiType: UiType;
-    tooltip: string;
-    icon: string;
-  }[] = [
+  const actionButtons: ActionButton[] = [
     {
       action() {
         dispatch('decision', { id, accept: true });
@@ -25,6 +20,7 @@
         values: { item: $t('friends.request', { values: { count: 1 } }) },
       }),
       icon: 'mdi:check',
+      id: 'accept-friend-request',
     },
     {
       action() {
@@ -36,6 +32,7 @@
         values: { item: $t('friends.request', { values: { count: 1 } }) },
       }),
       icon: 'mdi:close',
+      id: 'decline-friend-request',
     },
   ];
 
@@ -44,15 +41,9 @@
 
 <UserAvatarAndName user={request.userAdding} size="half">
   <div class="join items-center justify-center">
-    {#each actionButtons as actionButton}
-      <Button
-        tooltip={actionButton.tooltip}
-        on:click={() => actionButton.action()}
-        buttonUIType={actionButton.uiType}
-        format={actionButton.format}
-        joinItem
-      >
-        <iconify-icon icon={actionButton.icon} />
+    {#each actionButtons as { id, tooltip, action, uiType, format, icon }}
+      <Button {id} {tooltip} on:click={() => action()} buttonUIType={uiType} {format} joinItem>
+        <iconify-icon {icon} />
       </Button>
     {/each}
   </div>

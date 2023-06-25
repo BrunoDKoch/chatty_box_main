@@ -19,6 +19,7 @@
     {/each}
   </div>
   <Button
+    id="add-friend"
     tooltip={$t('friends.add')}
     on:click={() => (showModal = true)}
     buttonUIType="success"

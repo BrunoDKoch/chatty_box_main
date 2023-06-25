@@ -33,6 +33,7 @@
       uiType: 'error',
       icon: user.isBlocked ? 'mdi:account-lock-open' : 'mdi:block-helper',
       tooltip: $t(user.isBlocked ? 'common.unblock' : 'common.block'),
+      id: 'block-toggle',
     },
     {
       async action() {
@@ -43,6 +44,7 @@
         values: { item: $t('friends.friend', { values: { count: 1 } }) },
       }),
       icon: user.isFriend ? 'mdi:account-minus' : 'mdi:account-plus',
+      id: 'friend-toggle',
     },
   ];
   function sortChats(user: UserDetailedResponse) {
@@ -89,16 +91,17 @@
       <div class="flex items-center">
         <UserAvatarAndName disableModal {user} size={innerWidth > 1024 ? 'full' : 'half'}>
           <div class="join">
-            {#each actionButtons as actionButton}
+            {#each actionButtons as { action, uiType: buttonUIType, icon, tooltip, id }}
               <Button
+                {id}
                 joinItem
                 disabled={user.isBlocking}
-                on:click={async () => await actionButton.action()}
-                buttonUIType={actionButton.uiType}
+                on:click={async () => await action()}
+                {buttonUIType}
                 additionalClasses="max-md:btn-md max-md:text-xl lg:text-3xl"
-                tooltip={actionButton.tooltip}
+                {tooltip}
               >
-                <iconify-icon icon={actionButton.icon} />
+                <iconify-icon {icon} />
               </Button>
             {/each}
           </div>

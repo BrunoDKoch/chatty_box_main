@@ -77,6 +77,6 @@
     {/if}
   </div>
   <div class="modal-action">
-    <Button on:click={() => dispatch('close')}>Ok</Button>
+    <Button id="ok" on:click={() => dispatch('close')}>Ok</Button>
   </div>
 </Modal>

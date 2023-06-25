@@ -64,6 +64,7 @@
           {#each results as result}
             <li>
               <Button
+                id="submit-search"
                 on:click={() => {
                   selection = result;
                   search = '';

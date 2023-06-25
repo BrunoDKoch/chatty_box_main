@@ -192,7 +192,7 @@
     />
   </div>
   <div class="lg:col-span-2 lg:row-span-2 flex flex-col items-center justify-center">
-    <Button>{$t('common.submit')}</Button>
+    <Button id="signup-submit">{$t('common.submit')}</Button>
     <a class="link first-letter:uppercase" href="/auth/login">
       <span>{$t('common.already')} {$t('auth.have')} {$t('auth.anAccount')}?</span>
       <span class="capitalize">{$t('common.clickHere')}!</span>

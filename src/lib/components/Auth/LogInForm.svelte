@@ -106,7 +106,7 @@
     bind:value={password}
   />
   <Checkbox bind:checked={remember} name="remember" labelText={$t('auth.remember')} />
-  <Button bind:loading={pending}>{$t('common.submit')}</Button>
+  <Button id="login-submit" bind:loading={pending}>{$t('common.submit')}</Button>
   <div class="flex flex-col gap-4">
     <a class="link first-letter:uppercase" href="/auth/signup">
       <span>{$t('common.negatory')} {$t('auth.have')} {$t('auth.anAccount')}?</span>

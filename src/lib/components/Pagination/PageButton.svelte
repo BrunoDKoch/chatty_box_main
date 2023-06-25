@@ -8,6 +8,7 @@
 </script>
 
 <Button
+  id="page-{pageNumber}"
   link={useLinks ? `${$page.url.pathname}?p=${pageNumber}` : ''}
   on:click={() => (activePage = pageNumber)}
   joinItem

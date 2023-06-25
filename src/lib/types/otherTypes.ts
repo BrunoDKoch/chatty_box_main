@@ -1,4 +1,4 @@
-import type { UiSize, UiType } from './daisyUiTypes';
+import type { ButtonFormat, UiSize, UiType } from './daisyUiTypes';
 
 const settingOptions = [
   'settings.status.status',
@@ -42,7 +42,9 @@ const reportOptions = [
 type ReportOption = (typeof reportOptions)[number];
 
 interface MockActionButton {
+  id: string;
   uiType: UiType;
+  format?: ButtonFormat;
   tooltip?: string;
   icon?: string;
   text?: string;
@@ -57,4 +59,4 @@ interface ActionButton extends MockActionButton {
 
 export { settingOptions, statusOptions, reportOptions };
 
-export type { SettingOptions, ReportOption, ActionButton };
+export type { SettingOptions, ReportOption, MockActionButton, ActionButton };

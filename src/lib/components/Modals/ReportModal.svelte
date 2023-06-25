@@ -78,7 +78,7 @@
         {/if}
       </div>
       <div class="modal-action">
-        <Button bind:loading>{$t('common.submit')}</Button>
+        <Button id="submit-report" bind:loading>{$t('common.submit')}</Button>
       </div>
     </form>
   {/if}

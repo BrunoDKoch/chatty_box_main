@@ -15,7 +15,7 @@
   <div class="flex flex-col items-center justify-center">
     <img bind:this={codeElement} alt="QR Code" />
     <h3 class="text-lg font-semibold text-center">Scan the code above</h3>
-    <Button on:click={() => dispatch('close')}>Done</Button>
+    <Button id="done" on:click={() => dispatch('close')}>Done</Button>
   </div>
   <div>
     <h2 class="font-bold text-2xl">

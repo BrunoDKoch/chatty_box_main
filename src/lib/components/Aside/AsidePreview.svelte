@@ -16,6 +16,7 @@
   class="custom-hover {$chatId === chat.id
     ? 'bg-gray-400 dark:bg-gray-600'
     : ''} cursor-pointer pl-2 indicator w-full"
+  id={chat.id}
   on:click|preventDefault={() => {
     $chatId = chat.id;
     $useActiveScreen = 'chat';

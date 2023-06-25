@@ -78,6 +78,7 @@
     {$t('security.mfa.mfaNotice')}
   </p>
   <Button
+    id="mfa-toggle"
     buttonUIType={enabled ? 'error' : 'neutral'}
     bind:loading
     on:click={async () => await handleChange(!enabled)}

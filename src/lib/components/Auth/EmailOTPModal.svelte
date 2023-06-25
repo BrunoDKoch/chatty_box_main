@@ -44,6 +44,6 @@
       name="otp"
       labelText={$t('auth.typeCode')}
     />
-    <Button>{$t('common.submit')}</Button>
+    <Button id="modal-submit">{$t('common.submit')}</Button>
   </form>
 </Modal>

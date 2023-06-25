@@ -25,10 +25,10 @@
   <DragNDrop isAvatar on:updateFile {uploading} {uploadSuccessful} />
   <div class="modal-action">
     <div class="join">
-      <Button joinItem buttonUIType="error" on:click={async () => await handleCancellation()}>
+      <Button id="cancel" joinItem buttonUIType="error" on:click={async () => await handleCancellation()}>
         {$t('common.cancel')}
       </Button>
-      <Button joinItem buttonUIType="success" on:click={() => dispatch('close')}>OK</Button>
+      <Button id="ok" joinItem buttonUIType="success" on:click={() => dispatch('close')}>OK</Button>
     </div>
   </div>
 </Modal>
