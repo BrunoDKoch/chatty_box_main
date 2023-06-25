@@ -6,7 +6,9 @@
   import { t } from 'svelte-i18n';
   import UserAvatarAndName from './UserAvatarAndName.svelte';
   import Button from './Custom/Button.svelte';
+  import TextInput from './Custom/TextInput.svelte';
   export let selection: null | UserPartialResponse;
+  export let chatId: string | null = null;
 
   const dispatch = createEventDispatcher();
 
@@ -19,11 +21,6 @@
 
   // Shows a spinner if fetching
   let fetching = false;
-
-  connection.on('searchResults', (data: UserPartialResponse[]) => {
-    results = data;
-    fetching = false;
-  });
 
   $: search, startTimer(search);
   $: {
@@ -41,7 +38,7 @@
     if (results.length) results.length = 0;
     fetching = true;
     setTimeout(async () => {
-      await connection.invoke('SearchUser', search);
+      results = await connection.invoke<UserPartialResponse[]>('SearchUser', { userName: search, chatId });
       fetching = false;
       timerHasStarted = false;
     }, 500);
@@ -54,7 +51,7 @@
       {$t('auth.userName')}
     </span>
   </label>
-  <input type="search" class="input input-bordered" bind:value={search} />
+  <TextInput type="search" name="userSearch" bind:value={search} />
   {#if fetching || results.length}
     <div class="dropdown dropdown-open">
       <ul class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-full">

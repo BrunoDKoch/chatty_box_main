@@ -39,6 +39,7 @@
     {disableModal ? 'cursor-default' : 'cursor-pointer'}"
 >
   <div
+    id="user-avatar"
     class="w-[{rawSize}px] rounded-lg bg-blue-600 dark:bg-blue-800 font-bold text-white text-center text-{textSize}"
   >
     {#if user.avatar}

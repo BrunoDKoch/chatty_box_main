@@ -12,7 +12,7 @@
 
 <div class="grid max-md:grid-cols-3 lg:grid-cols-5 lg:gap-3 items-center">
   <UserAvatar {user} {size} {isChatImage} {lowerOpacity} {disableModal} />
-  <div class="lg:col-span-3 flex flex-col {lowerOpacity ? 'opacity-50' : 'opacity-100'}">
+  <div id="user-name" class="lg:col-span-3 flex flex-col {lowerOpacity ? 'opacity-50' : 'opacity-100'}">
     <p>{user.userName}</p>
     {#if extraText}
       <p class="first-letter:uppercase">{extraText}</p>

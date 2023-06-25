@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { toKebabCase } from '$lib/useCaseConversion';
   import { createEventDispatcher } from 'svelte';
 
   export let value: string | Date;
@@ -16,7 +17,7 @@
     | 'week'
     | 'number'
     | 'phone' = 'text';
-  export let labelText: string;
+  export let labelText: string = '';
   export let rules:
     | {
         condition: boolean;
@@ -25,7 +26,7 @@
     | null = null;
   export let required: boolean = false;
   export let disabled: boolean = false;
-  export let name: string | undefined;
+  export let name: string;
   let inputElement: HTMLInputElement | HTMLTextAreaElement;
   $: ruleText = '';
   $: {
@@ -46,13 +47,17 @@
 </script>
 
 <div class="form-control">
-  <label for={name} class="label">
-    <span class="label-text first-letter:uppercase">{required ? labelText + '*' : labelText}</span>
-  </label>
+  {#if labelText}
+    <label for={name} class="label">
+      <span class="label-text first-letter:uppercase">
+        {required ? labelText + '*' : labelText}
+      </span>
+    </label>
+  {/if}
   {#if type !== 'area'}
     <input
       bind:this={inputElement}
-      id={name}
+      id={toKebabCase(name)}
       use:getType
       class="input input-bordered disabled:input-disabled invalid:input-error invalid:transition-all invalid:duration-300"
       bind:value

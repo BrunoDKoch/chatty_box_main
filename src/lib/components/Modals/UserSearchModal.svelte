@@ -29,7 +29,7 @@
       {$t('common.add', { values: { item: 'chatter' } })}
     </h1>
     {#if !selection}
-      <UserSearch bind:selection />
+      <UserSearch chatId={$chatId} bind:selection />
     {:else}
       <UserAvatarAndName user={selection} size="half" />
     {/if}
@@ -40,7 +40,7 @@
         {$t('common.clear')}
       </Button>
       <Button
-        id="submit"
+        id=
         joinItem
         buttonUIType="success"
         disabled={!selection}

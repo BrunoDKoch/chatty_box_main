@@ -54,5 +54,5 @@
       bind:checked={permanentSuspension}
     />
   {/if}
-  <Button>{$t('common.submit')}</Button>
+  <Button id="submit">{$t('common.submit')}</Button>
 </form>

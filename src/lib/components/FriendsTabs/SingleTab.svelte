@@ -7,6 +7,7 @@
 </script>
 
 <button
+  id={name.replace('.', '-')}
   on:click={() => ($friendsTab = name)}
   class="tab max-md:tab-sm capitalize {active ? 'tab-active tab-bordered' : 'hover:tab-bordered '}"
 >
