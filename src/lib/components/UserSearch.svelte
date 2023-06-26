@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { PUBLIC_IMAGES_URL } from '$env/static/public';
   import type { UserPartialResponse } from '$lib/types/partialTypes';
   import { connection } from '$lib/useSignalR';
   import { createEventDispatcher } from 'svelte';

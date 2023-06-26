@@ -1,9 +1,7 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
   import Modal from './Modal.svelte';
   import { connection } from '$lib/useSignalR';
   import type { ClientConnectionPartialInfo } from '$lib/types/partialTypes';
-  import CloseButton from '../Custom/CloseButton.svelte';
   import { locale } from 'svelte-i18n';
   import { toKebabCase } from '$lib/useCaseConversion';
   let sessions = connection

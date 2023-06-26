@@ -4,7 +4,7 @@
   import { onMount } from 'svelte';
   import { t } from 'svelte-i18n';
   export let skip: number;
-  export let hasMore: boolean = false;
+  export let hasMore = false;
   let thisElement: HTMLElement;
   let fetching = false;
   const observer = new IntersectionObserver(async (entries) => {

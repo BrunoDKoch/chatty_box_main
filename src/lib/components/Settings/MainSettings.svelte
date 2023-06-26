@@ -3,7 +3,7 @@
   import { theme } from '$lib/theme';
   import { createEventDispatcher } from 'svelte';
   import UserGeneralSettings from './UserGeneralSettings.svelte';
-  import { type SettingOptions, settingOptions } from '$lib/types/otherTypes';
+  import { settingOptions } from '$lib/types/otherTypes';
   import LogOut from './LogOut.svelte';
   export let user: { userName: string; avatar?: string };
   const dispatch = createEventDispatcher();

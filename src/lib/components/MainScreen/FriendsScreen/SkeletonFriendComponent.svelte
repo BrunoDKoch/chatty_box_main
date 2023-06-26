@@ -1,8 +1,6 @@
 <script lang="ts">
   import { t } from 'svelte-i18n';
-  import { createEventDispatcher } from 'svelte';
   import SkeletonUserAvatarAndName from '$lib/components/SkeletonUserAvatarAndName.svelte';
-  import type { UiType } from '$lib/types/daisyUiTypes';
   import Button from '$lib/components/Custom/Button.svelte';
   import type { MockActionButton } from '$lib/types/otherTypes';
   const actionButtons: MockActionButton[] = [

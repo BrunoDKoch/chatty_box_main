@@ -7,8 +7,8 @@
   import Button from '../Custom/Button.svelte';
   import useError from '$lib/useError';
 
-  export let email: string = '';
-  export let token: string = '';
+  export let email = '';
+  export let token = '';
 
   let password = '';
   let confirmPassword = '';

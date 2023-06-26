@@ -2,7 +2,6 @@
   import friendsTab from '$lib/friendsTab';
   import { chatId } from '$lib/useActiveChat';
   import useActiveScreen from '$lib/useActiveScreen';
-  import { friends } from '$lib/useSignalR';
   import { createEventDispatcher, onDestroy } from 'svelte';
 
   export let notificationType: 'message' | 'friend request';

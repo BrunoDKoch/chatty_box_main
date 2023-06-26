@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { createEventDispatcher, onMount } from 'svelte';
+  import { createEventDispatcher } from 'svelte';
   import QRCode from 'qrcode';
   import Modal from './Modal.svelte';
   import { t } from 'svelte-i18n';

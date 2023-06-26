@@ -1,7 +1,6 @@
 <script lang="ts">
   import Button from '$lib/components/Custom/Button.svelte';
   import UserAvatarAndName from '$lib/components/UserAvatarAndName.svelte';
-  import type { ButtonFormat, UiType } from '$lib/types/daisyUiTypes';
   import type { ActionButton } from '$lib/types/otherTypes';
   import type { UserPartialResponse } from '$lib/types/partialTypes';
   import { createEventDispatcher } from 'svelte';

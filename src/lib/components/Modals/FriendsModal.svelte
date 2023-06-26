@@ -1,11 +1,8 @@
 <script lang="ts">
-  import { scale } from 'svelte/transition';
   import { t } from 'svelte-i18n';
   import { createEventDispatcher } from 'svelte';
   import { connection } from '$lib/useSignalR';
-  import type { User } from '@prisma/client';
   import Modal from './Modal.svelte';
-  import CloseButton from '../Custom/CloseButton.svelte';
   import type { FriendResponse } from '$lib/types/partialTypes';
   import UserSearch from '../UserSearch.svelte';
   import UserAvatarAndName from '../UserAvatarAndName.svelte';

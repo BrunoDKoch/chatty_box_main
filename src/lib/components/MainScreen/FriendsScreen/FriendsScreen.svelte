@@ -4,12 +4,10 @@
   import PendingScreen from './PendingScreen/PendingScreen.svelte';
   import { connection, fetchingInitialCallInfo, friendRequests } from '$lib/useSignalR';
   import FriendComponent from './FriendComponent.svelte';
-  import type { FriendResponse } from '$lib/types/partialTypes';
   import FriendsTabs from '$lib/components/FriendsTabs/FriendsTabs.svelte';
   import { friends } from '$lib/useSignalR';
   import BlockedScreen from './BlockedScreen/BlockedScreen.svelte';
   import ConfirmationModal from '$lib/components/Modals/ConfirmationModal.svelte';
-  import SkeletonUserAvatarAndName from '$lib/components/SkeletonUserAvatarAndName.svelte';
   import SkeletonFriendComponent from './SkeletonFriendComponent.svelte';
   let showConfirmationModal = false;
   $: friendToRemove = null as (typeof $friends)[number] | null;

@@ -1,7 +1,5 @@
 <script lang="ts">
-  import type { FriendRequest, User } from '@prisma/client';
   import { connection } from '$lib/useSignalR';
-  import UserAvatarAndName from '$lib/components/UserAvatarAndName.svelte';
   import type { UserPartialResponse } from '$lib/types/partialTypes';
   import PendingRequestComponent from './PendingRequestComponent.svelte';
   export let requests: { userAdding: UserPartialResponse }[];

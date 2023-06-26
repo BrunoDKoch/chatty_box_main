@@ -4,7 +4,7 @@
   import { onMount } from 'svelte';
   import MainSettings from './MainSettings.svelte';
   import LanguageSettings from './LanguageSettings.svelte';
-  import { fly, slide } from 'svelte/transition';
+  import { fly } from 'svelte/transition';
   import UserNotifSettings from './UserNotifSettings.svelte';
   import type { SettingOptions } from '$lib/types/otherTypes';
   import SecuritySettings from './SecuritySettings.svelte';

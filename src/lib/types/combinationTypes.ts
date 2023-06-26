@@ -1,4 +1,4 @@
-import type { Chat, ChatNotificationSettings, Message, ReadMessage, User } from '@prisma/client';
+import type { Chat } from '@prisma/client';
 import type { AdminActionPartial, UserPartialResponse } from './partialTypes';
 
 type MessageResponse = {
@@ -52,9 +52,6 @@ interface UserReportResponse extends UserReportPartial {
 }
 
 export type {
-  CompleteChat,
-  SystemMessagePartial,
-  MessageResponse,
-  ReportUserResponse,
-  UserReportResponse,
+  CompleteChat, MessageResponse,
+  ReportUserResponse, SystemMessagePartial, UserReportResponse
 };

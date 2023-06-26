@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { onDestroy, onMount } from 'svelte';
+  import { onMount } from 'svelte';
   import { scale } from 'svelte/transition';
   import CloseButton from '../Custom/CloseButton.svelte';
 

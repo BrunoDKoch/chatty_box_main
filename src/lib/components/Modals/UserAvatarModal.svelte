@@ -1,6 +1,5 @@
 <script lang="ts">
   import { PUBLIC_AUTH_URL_DEV } from '$env/static/public';
-  import CloseButton from '$lib/components/Custom/CloseButton.svelte';
   import DragNDrop from '$lib/components/Custom/DragNDrop.svelte';
   import Modal from '$lib/components/Modals/Modal.svelte';
   import { ofetch } from 'ofetch';

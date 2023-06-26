@@ -1,19 +1,14 @@
 <script lang="ts">
   import Aside from '$lib/components/Aside/Aside.svelte';
-  import { HubConnectionState } from '@microsoft/signalr';
   import { connection, previews, messagesCount, online } from '$lib/useSignalR';
-  import { onDestroy, onMount } from 'svelte';
+  import { onMount } from 'svelte';
   import ActiveScreen from '$lib/components/MainScreen/ActiveScreen.svelte';
   import type { MessageResponse } from '$lib/types/combinationTypes';
   import { locale, t } from 'svelte-i18n';
-  import NotificationToast from '$lib/components/Notification/NotificationToast.svelte';
   import useUserNotificationSettings from '$lib/useUserNotificationSettings';
-  import ConnectingComponent from '$lib/components/ConnectingComponent.svelte';
   import useActiveScreen from '$lib/useActiveScreen';
   import { chat } from '$lib/useActiveChat';
   import type { UserPartialResponse } from '$lib/types/partialTypes';
-  import ErrorModal from '$lib/components/Modals/ErrorModal.svelte';
-  import { goto } from '$app/navigation';
   import NotificationsContainer from '$lib/components/Notification/NotificationsContainer.svelte';
   import useError from '$lib/useError';
   import useUserModal from '$lib/useUserModal';

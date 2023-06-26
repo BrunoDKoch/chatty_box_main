@@ -1,8 +1,6 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
   import { t } from 'svelte-i18n';
   import Button from '../Custom/Button.svelte';
-  import TextInput from '../Custom/TextInput.svelte';
   import TextInputWithButton from '../Custom/TextInputWithButton.svelte';
   import { connection, previews } from '$lib/useSignalR';
   import type { ChatPreview } from '$lib/types/partialTypes';

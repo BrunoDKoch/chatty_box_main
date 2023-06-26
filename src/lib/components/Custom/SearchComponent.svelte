@@ -1,12 +1,8 @@
 <script lang="ts">
-  import { connection } from '$lib/useSignalR';
-  import { createEventDispatcher } from 'svelte';
-  import { t } from 'svelte-i18n';
-  import TextInput from './TextInput.svelte';
-  import TextInputWithButton from './TextInputWithButton.svelte';
   import { chat } from '$lib/useActiveChat';
+  import { connection } from '$lib/useSignalR';
   import Button from './Button.svelte';
-  const dispatch = createEventDispatcher();
+  import TextInputWithButton from './TextInputWithButton.svelte';
 
   // These handle the search
   export let search = '';

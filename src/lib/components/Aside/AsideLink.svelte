@@ -7,7 +7,7 @@
   export let extraText: string | undefined = undefined;
   export let condition: boolean;
   export let action: (() => any) | undefined = undefined;
-  export let link: string = '';
+  export let link = '';
 </script>
 
 <a

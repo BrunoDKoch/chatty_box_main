@@ -1,6 +1,5 @@
 <script lang="ts">
-  import { PUBLIC_AUTH_URL_DEV, PUBLIC_IMAGES_URL } from '$env/static/public';
-  import CloseButton from '$lib/components/Custom/CloseButton.svelte';
+  import { PUBLIC_IMAGES_URL } from '$env/static/public';
   import Modal from '$lib/components/Modals/Modal.svelte';
   export let link: string;
 </script>

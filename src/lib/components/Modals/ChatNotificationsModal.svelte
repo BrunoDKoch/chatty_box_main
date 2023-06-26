@@ -3,7 +3,6 @@
   import { connection } from '$lib/useSignalR';
   import { t } from 'svelte-i18n';
   import Modal from './Modal.svelte';
-  import CloseButton from '../Custom/CloseButton.svelte';
   import { onMount } from 'svelte';
   import useUserNotificationSettings from '$lib/useUserNotificationSettings';
   import { previews } from '$lib/useSignalR';

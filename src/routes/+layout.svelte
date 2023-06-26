@@ -1,6 +1,4 @@
 <script lang="ts">
-  import 'iconify-icon';
-  import '../app.css';
   import { goto } from '$app/navigation';
   import { page } from '$app/stores';
   import ConnectingComponent from '$lib/components/ConnectingComponent.svelte';
@@ -8,10 +6,11 @@
   import useError from '$lib/useError';
   import { connection, online } from '$lib/useSignalR';
   import { HubConnectionState } from '@microsoft/signalr';
+  import 'iconify-icon';
+  import { ofetch } from 'ofetch';
   import { onDestroy, onMount } from 'svelte';
   import { locale, t } from 'svelte-i18n';
-  import { error } from '@sveltejs/kit';
-  import { ofetch } from 'ofetch';
+  import '../app.css';
   import type { LayoutServerData } from './$types';
 
   export let data: LayoutServerData;

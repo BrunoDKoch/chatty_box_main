@@ -1,7 +1,6 @@
 <script lang="ts">
   import { PUBLIC_IMAGES_URL } from '$env/static/public';
   import type { UserDetailedResponse, UserPartialResponse } from '$lib/types/partialTypes';
-  import UserModal from '$lib/components/Modals/UserModal.svelte';
   import useUserModal, { updateUser } from '$lib/useUserModal';
   export let user: UserDetailedResponse | UserPartialResponse;
   export let size: number | 'half' | 'full';

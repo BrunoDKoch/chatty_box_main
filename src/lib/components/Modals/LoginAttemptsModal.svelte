@@ -1,13 +1,12 @@
 <script lang="ts">
-  import { t, date, time, locale } from 'svelte-i18n';
+  import { t, date, locale } from 'svelte-i18n';
   import type { UserLoginAttempt } from '@prisma/client';
   import { onMount } from 'svelte';
   import { connection } from '$lib/useSignalR';
   import Pagination from '$lib/components/Pagination/Pagination.svelte';
   import Modal from '$lib/components/Modals/Modal.svelte';
-  import CloseButton from '$lib/components/Custom/CloseButton.svelte';
-
-  $: attempts = [] as UserLoginAttempt[];
+  
+$: attempts = [] as UserLoginAttempt[];
   $: activePage = 1;
   let total: number;
   const countryNames = new Intl.DisplayNames([$locale!], { type: 'region' });

@@ -5,12 +5,10 @@
   import useActiveScreen from '$lib/useActiveScreen';
   import { chat, chatId } from '$lib/useActiveChat';
   import UserAvatarAndName from '$lib/components/UserAvatarAndName.svelte';
-  import UserAvatar from '$lib/components/UserAvatar.svelte';
   import { createEventDispatcher } from 'svelte';
   import StatusIndicator from '$lib/components/Status/StatusIndicator.svelte';
   import Button from '$lib/components/Custom/Button.svelte';
-  import type { UiType } from '$lib/types/daisyUiTypes';
-    import type { ActionButton } from '$lib/types/otherTypes';
+  import type { ActionButton } from '$lib/types/otherTypes';
   export let friend: FriendResponse;
   const dispatch = createEventDispatcher();
   const actionButtons: ActionButton[] = [

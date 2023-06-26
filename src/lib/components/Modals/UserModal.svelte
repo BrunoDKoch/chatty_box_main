@@ -4,8 +4,7 @@
   import { t } from 'svelte-i18n';
   import Modal from './Modal.svelte';
   import UserAvatarAndName from '../UserAvatarAndName.svelte';
-  import { createEventDispatcher, onMount } from 'svelte';
-  import CloseButton from '../Custom/CloseButton.svelte';
+  import { createEventDispatcher } from 'svelte';
   import { error } from '@sveltejs/kit';
   import useBlockToggle from '$lib/useBlockToggle';
   import useActiveScreen from '$lib/useActiveScreen';

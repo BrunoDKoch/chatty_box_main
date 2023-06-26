@@ -9,7 +9,6 @@
   import Button from '../Custom/Button.svelte';
   import { connection } from '$lib/useSignalR';
   import useError from '$lib/useError';
-  import { createEventDispatcher, onMount } from 'svelte';
   import TextInput from '../Custom/TextInput.svelte';
   export let message: MessageResponse;
 

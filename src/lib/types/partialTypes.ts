@@ -1,5 +1,3 @@
-import type { Chat, FriendRequest, User } from '@prisma/client';
-
 type MessagePreview = {
   from: UserPartialResponse;
   sentAt: Date;
@@ -86,15 +84,15 @@ interface AdminActionPartial {
 }
 
 export type {
-  MessagePreview,
-  UserPartialResponse,
-  FriendResponse,
+  AdminActionPartial,
+  AdminActionRequest,
   ChatBasicInfo,
-  UserDetailedResponse,
   ChatPreview,
   ClientConnectionPartialInfo,
-  UserConnectionCallInfo,
+  FriendResponse,
   LockoutInfo,
-  AdminActionRequest,
-  AdminActionPartial,
+  MessagePreview,
+  UserConnectionCallInfo,
+  UserDetailedResponse,
+  UserPartialResponse,
 };

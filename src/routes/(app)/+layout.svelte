@@ -1,6 +1,4 @@
 <script lang="ts">
-  import '../../app.css';
-  import 'iconify-icon';
   import useError from '$lib/useError';
   import ErrorModal from '$lib/components/Modals/ErrorModal.svelte';
 </script>

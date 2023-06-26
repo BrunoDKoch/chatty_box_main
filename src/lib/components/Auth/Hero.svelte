@@ -5,8 +5,8 @@
   import PasswordRecoveryForm from './PasswordRecoveryForm.svelte';
   import SignUpForm from './SignUpForm.svelte';
   import { t } from 'svelte-i18n';
-  export let email: string = '';
-  export let token: string = '';
+  export let email = '';
+  export let token = '';
   $: pending = false;
   $: showSpinner = false;
   $: {

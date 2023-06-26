@@ -1,6 +1,5 @@
 <script lang="ts">
   import { connection } from '$lib/useSignalR';
-  import { onMount } from 'svelte';
   import Select from '../Custom/Select.svelte';
   import { statusOptions } from '$lib/types/otherTypes';
   import { t } from 'svelte-i18n';

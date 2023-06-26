@@ -2,14 +2,11 @@
   import type { UserReportResponse } from '$lib/types/combinationTypes';
   import { reportOptions, type ReportOption } from '$lib/types/otherTypes';
   import { createEventDispatcher } from 'svelte';
-  import Select from '../Custom/Select.svelte';
   import MessageComponent from '$lib/components/Messages/MessageComponent.svelte';
   import Modal from '../Modals/Modal.svelte';
   import { t } from 'svelte-i18n';
   import { connection } from '$lib/useSignalR';
   import { slide } from 'svelte/transition';
-  import Checkbox from '../Custom/Checkbox.svelte';
-  import TextInput from '../Custom/TextInput.svelte';
   import Button from '../Custom/Button.svelte';
   import { postAdminAction, reports } from '$lib/useAdminFetch';
   import ViolationForm from './ViolationForm.svelte';

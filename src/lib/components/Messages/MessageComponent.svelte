@@ -4,14 +4,13 @@
   import { chat } from '$lib/useActiveChat';
   import { connection, previews } from '$lib/useSignalR';
   import { createEventDispatcher, onDestroy, onMount } from 'svelte';
-  import { date, t, time } from 'svelte-i18n';
+  import { date, t } from 'svelte-i18n';
   import MessageLinkPreview from './MessageLinkPreview.svelte';
-  import TextInput from '$lib/components/Custom/TextInput.svelte';
   import MessageRepliedTo from './MessageRepliedTo.svelte';
   import { hostedFilesRegex, urlRegex } from '$lib/useLinkCheck';
   import Button from '$lib/components/Custom/Button.svelte';
   export let message: MessageResponse;
-  export let focusOn: boolean = false;
+  export let focusOn = false;
   export let hideBottomInfo = false;
   export let hideOptions = false;
   export let displayOnly = false;

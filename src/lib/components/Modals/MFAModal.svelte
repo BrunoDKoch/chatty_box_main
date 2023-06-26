@@ -4,9 +4,7 @@
   import { connection } from '$lib/useSignalR';
   import { createEventDispatcher, onMount } from 'svelte';
   import { t } from 'svelte-i18n';
-  import { scale } from 'svelte/transition';
   import Button from '../Custom/Button.svelte';
-  import { ofetch } from 'ofetch';
   import { finishMFADisabling, startMFADisabling } from '$lib/useAuth';
   import PasswordModal from './PasswordModal.svelte';
   import useError from '$lib/useError';

@@ -1,7 +1,7 @@
 <script lang="ts">
   import { createEventDispatcher, onMount } from 'svelte';
   import Modal from './Modal.svelte';
-  import { date, t, time } from 'svelte-i18n';
+  import { date, t } from 'svelte-i18n';
   import Button from '../Custom/Button.svelte';
 
   export let error: { status: number; cause: string; message: string };

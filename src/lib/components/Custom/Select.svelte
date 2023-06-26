@@ -11,14 +11,15 @@
         text: string;
       }[]
     | null = null;
-  export let required: boolean = false;
-  export let disabled: boolean = false;
+  export let required = false;
+  export let disabled = false;
   export let name: string | undefined;
   $: errorClass = '';
   $: ruleText = '';
+  $: value, checkRules();
   function checkRules() {
     if (!rules || !rules.length) return;
-    const brokenRule = rules.find((r) => !!!r.condition);
+    const brokenRule = rules.find((r) => !r.condition);
     if (brokenRule) {
       ruleText = brokenRule.text;
       errorClass = '';
@@ -35,8 +36,8 @@
     <span class="label-text first-letter:uppercase">{required ? labelText + '*' : labelText}</span>
   </label>
   <select on:change on:input bind:value {disabled} class="select capitalize select-bordered" {name}>
-    {#each options as opt}
-      <option class="capitalize" value={opt.value}>{opt.name}</option>
+    {#each options as { value, name }}
+      <option class="first-letter:capitalize" {value}>{name}</option>
     {/each}
   </select>
   <p class="label">

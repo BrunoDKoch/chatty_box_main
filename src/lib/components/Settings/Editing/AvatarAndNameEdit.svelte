@@ -1,6 +1,5 @@
 <script lang="ts">
   import { PUBLIC_IMAGES_URL } from '$env/static/public';
-  import type { UserPartialResponse } from '$lib/types/partialTypes';
   import { connection } from '$lib/useSignalR';
   import { t } from 'svelte-i18n';
   export let showModal: boolean;

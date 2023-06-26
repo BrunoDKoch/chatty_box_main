@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { ChatPreview } from '$lib/types/partialTypes';
-  import { date, t, time } from 'svelte-i18n';
+  import { date, t } from 'svelte-i18n';
   import { chatId } from '$lib/useActiveChat';
   import useActiveScreen from '$lib/useActiveScreen';
   import { scale } from 'svelte/transition';

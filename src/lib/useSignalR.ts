@@ -1,20 +1,20 @@
-import { HubConnectionBuilder, HubConnectionState } from '@microsoft/signalr';
 import { PUBLIC_AUTH_URL_DEV as baseURL } from '$env/static/public';
-import { logOut } from '$lib/useAuth';
-import type { AdminAction, Message, UserNotificationSettings } from '@prisma/client';
-import { get, writable, type Writable } from 'svelte/store';
 import type {
-  FriendResponse,
-  ChatPreview,
-  UserPartialResponse,
-  UserConnectionCallInfo,
   AdminActionPartial,
+  ChatPreview,
+  FriendResponse,
+  UserConnectionCallInfo,
+  UserPartialResponse,
 } from '$lib/types/partialTypes';
-import { chat, chatId, chatNotificationSettings } from './useActiveChat';
+import { logOut } from '$lib/useAuth';
+import { HubConnectionBuilder, HubConnectionState } from '@microsoft/signalr';
+import type { Message, UserNotificationSettings } from '@prisma/client';
+import { get, writable, type Writable } from 'svelte/store';
 import type { CompleteChat, MessageResponse, SystemMessagePartial } from './types/combinationTypes';
-import useUserNotificationSettings from './useUserNotificationSettings';
+import { chat, chatId, chatNotificationSettings } from './useActiveChat';
 import useActiveScreen from './useActiveScreen';
 import { reports } from './useAdminFetch';
+import useUserNotificationSettings from './useUserNotificationSettings';
 
 export const messagesCount = writable(0);
 export const previews = writable([]) as Writable<ChatPreview[]>;
@@ -25,7 +25,7 @@ export const blockedUsers = writable([]) as Writable<UserPartialResponse[]>;
 // Store that establishes if we're still fetching the initial call info
 export const fetchingInitialCallInfo = writable(true);
 
-export let connection = new HubConnectionBuilder()
+export const connection = new HubConnectionBuilder()
   .withUrl(`${baseURL}/hub/messages`, {
     withCredentials: true,
   })
@@ -146,7 +146,7 @@ connection.on('newChat', (data: ChatPreview) => {
       showOSNotification,
     });
     return cn;
-  })
+  });
   previews.update((p) => {
     p.push({
       id,

@@ -1,8 +1,8 @@
 export const ssr = false;
 import type { Cookies } from '@sveltejs/kit';
-import type { LayoutServerLoad } from './$types';
 import { locale, locales, waitLocale } from 'svelte-i18n';
 import { get } from 'svelte/store';
+import type { LayoutServerLoad } from './$types';
 
 function getTheme(cookies: Cookies) {
   let theme = cookies.get('theme') as 'light' | 'dark';

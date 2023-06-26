@@ -20,7 +20,11 @@
   {$t(violations)}
 </td>
 <td>
-  <Button id="remove-suspension" buttonType="button" on:click={() => dispatch('removeSuspension', user)}>
+  <Button
+    id="remove-suspension-{user.id}"
+    buttonType="button"
+    on:click={() => dispatch('removeSuspension', user)}
+  >
     {$t('common.remove', { values: { item: $t('common.suspension') } })}
   </Button>
 </td>

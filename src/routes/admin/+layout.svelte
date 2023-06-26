@@ -10,7 +10,7 @@
     fetchedSuspensions,
     getAdminData,
   } from '$lib/useAdminFetch';
-  import { locale, t } from 'svelte-i18n';
+  import { t } from 'svelte-i18n';
   let showAsideInMain = false;
   let showIndependentActionModal = false;
 
@@ -43,7 +43,7 @@
       {#if showAsideInMain}
         <AdminAside on:action={() => (showIndependentActionModal = !showIndependentActionModal)} />
       {:else}
-        <div class="flex flex-col items-center justify-between">
+        <div class="flex flex-col h-full items-center justify-between">
           <slot />
           <Pagination useLinks itemsPerPage={15} bind:total bind:activePage={$activeAdminPage} />
         </div>

@@ -17,21 +17,21 @@
     | 'week'
     | 'number'
     | 'phone' = 'text';
-  export let labelText: string = '';
+  export let labelText = '';
   export let rules:
     | {
         condition: boolean;
         text: string;
       }[]
     | null = null;
-  export let required: boolean = false;
-  export let disabled: boolean = false;
+  export let required = false;
+  export let disabled = false;
   export let name: string;
   let inputElement: HTMLInputElement | HTMLTextAreaElement;
   $: ruleText = '';
   $: {
     if (value && rules && rules.length) {
-      const brokenRule = rules.find((r) => !!!r.condition);
+      const brokenRule = rules.find((r) => !r.condition);
       if (brokenRule) {
         ruleText = brokenRule.text;
         inputElement.setAttribute('isvalid', 'false');
@@ -74,6 +74,7 @@
       bind:this={inputElement}
       bind:value
       {required}
+      id={toKebabCase(name)}
       {name}
       cols="80"
       rows="10"

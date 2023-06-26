@@ -1,6 +1,5 @@
 <script lang="ts">
   import type { MessageResponse } from '$lib/types/combinationTypes';
-  import { chat } from '$lib/useActiveChat';
   import { connection } from '$lib/useSignalR';
   import { createEventDispatcher, onMount } from 'svelte';
   export let replyToId: string;

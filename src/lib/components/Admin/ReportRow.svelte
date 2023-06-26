@@ -1,11 +1,10 @@
 <script lang="ts">
   import type { UserReportResponse } from '$lib/types/combinationTypes';
-  import { date, t, time } from 'svelte-i18n';
+  import { date, t } from 'svelte-i18n';
   import MessageComponent from '$lib/components/Messages/MessageComponent.svelte';
   import ReportUserComponent from './ReportUserComponent.svelte';
   import Button from '../Custom/Button.svelte';
   import { createEventDispatcher } from 'svelte';
-  import type { UiType } from '$lib/types/daisyUiTypes';
 
   export let report: UserReportResponse;
   export let showAvatar: boolean;
@@ -49,6 +48,7 @@
   </td>
   <td>
     <Button
+      id="check-violation-{report.id}"
       buttonType="button"
       buttonUIType="neutral"
       on:click={() => dispatch('openModal', report)}

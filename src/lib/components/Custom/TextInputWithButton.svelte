@@ -21,8 +21,8 @@
         text: string;
       }[]
     | null = null;
-  export let required: boolean = false;
-  export let disabled: boolean = false;
+  export let required = false;
+  export let disabled = false;
   export let name: string | undefined;
   export let size: 'base' | 'small' | 'large' = 'base';
   export let placeholder = '';
@@ -31,7 +31,7 @@
   $: ruleText = '';
   function checkRules() {
     if (!rules || !rules.length) return;
-    const brokenRule = rules.find((r) => !!!r.condition);
+    const brokenRule = rules.find((r) => !r.condition);
     if (brokenRule) {
       ruleText = brokenRule.text;
       errorClass = 'input-error transition-all duration-300';

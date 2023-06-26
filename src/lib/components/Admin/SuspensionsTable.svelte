@@ -28,5 +28,7 @@
     {/each}
   </table>
 {:else}
-  <h2 class="text-xl font-bold first-letter:uppercase">{$t('admin.nothingNew')}</h2>
+  <div class="grid w-full h-full place-items-center">
+    <h2 class="text-xl font-bold first-letter:uppercase">{$t('admin.nothingNew')}</h2>
+  </div>
 {/if}

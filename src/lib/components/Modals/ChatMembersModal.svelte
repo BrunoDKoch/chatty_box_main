@@ -1,9 +1,6 @@
 <script lang="ts">
-  import type { UserPartialResponse } from '$lib/types/partialTypes';
   import { t } from 'svelte-i18n';
-  import CloseButton from '../Custom/CloseButton.svelte';
   import Modal from './Modal.svelte';
-  import UserSearch from '../UserSearch.svelte';
   import { connection } from '$lib/useSignalR';
   import { chat, chatId } from '$lib/useActiveChat';
   import { createEventDispatcher } from 'svelte';

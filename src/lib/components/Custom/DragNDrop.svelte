@@ -3,7 +3,6 @@
   import { chatId } from '$lib/useActiveChat';
   import useError from '$lib/useError';
   import Dropzone from 'dropzone';
-  import { ofetch } from 'ofetch';
   import { createEventDispatcher, onMount } from 'svelte';
   import { t } from 'svelte-i18n';
 

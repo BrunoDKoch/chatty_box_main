@@ -130,7 +130,7 @@
     {/if}
   </label>
   <div class="join px-4">
-    <Button id="file-input-toggle" buttonType="button" additionalClasses="join-item text-2xl">
+    <Button id="file-input-toggle" buttonType="button" joinItem additionalClasses="text-2xl">
       <iconify-icon icon="mdi:attachment" />
     </Button>
     <input
