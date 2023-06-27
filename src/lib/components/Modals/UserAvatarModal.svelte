@@ -6,25 +6,35 @@
   import { createEventDispatcher } from 'svelte';
   import { t } from 'svelte-i18n';
   import Button from '../Custom/Button.svelte';
+  export let avatar = '';
   $: uploadSuccessful = false;
   $: uploading = false;
   const dispatch = createEventDispatcher();
   async function handleCancellation() {
-    await ofetch('/avatar', {
-      baseURL: PUBLIC_AUTH_URL_DEV,
-      credentials: 'include',
-      method: 'DELETE',
-      mode: 'cors',
-    });
-    dispatch('updateFile', null);
+    try {
+      await ofetch('/avatar', {
+        baseURL: PUBLIC_AUTH_URL_DEV,
+        credentials: 'include',
+        method: 'DELETE',
+        mode: 'cors',
+      });
+    } finally {
+      dispatch('updateFile', avatar ?? null);
+      dispatch('close');
+    }
   }
 </script>
 
 <Modal on:close>
-  <DragNDrop isAvatar on:updateFile {uploading} {uploadSuccessful} />
+  <DragNDrop bind:avatar isAvatar on:updateFile {uploading} {uploadSuccessful} />
   <div class="modal-action">
     <div class="join">
-      <Button id="cancel" joinItem buttonUIType="error" on:click={async () => await handleCancellation()}>
+      <Button
+        id="cancel"
+        joinItem
+        buttonUIType="error"
+        on:click={async () => await handleCancellation()}
+      >
         {$t('common.cancel')}
       </Button>
       <Button id="ok" joinItem buttonUIType="success" on:click={() => dispatch('close')}>OK</Button>
