@@ -7,7 +7,7 @@
   let settingsMenuActive = false;
 </script>
 
-<div class="flex flex-col gap-3">
+<div class="flex flex-col gap-3 h-screen">
   <div class="flex items-center">
     <Button id="settings-toggle" on:click={() => (settingsMenuActive = !settingsMenuActive)} format="ghost">
       <iconify-icon icon="mdi:cog" height="1.4rem" />

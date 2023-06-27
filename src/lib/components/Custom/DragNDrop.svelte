@@ -9,6 +9,7 @@
   export let uploadSuccessful: boolean;
   export let uploading: boolean;
   export let isAvatar = false;
+  export let avatar = '';
 
   let preview: HTMLImageElement;
   let fileName: HTMLElement;
@@ -150,6 +151,16 @@
         });
       },
     });
+    if (avatar) {
+      let mockFile = { name: avatar, size: 20 };
+      dropzone.displayExistingFile(
+        mockFile,
+        `${PUBLIC_AUTH_URL_DEV}/${avatar}`,
+        undefined,
+        'use-credentials',
+      );
+      if (preview.classList.contains('opacity-10')) preview.classList.remove('opacity-10');
+    }
   });
 </script>
 
@@ -166,7 +177,7 @@
       <iconify-icon class="relative" bind:this={previewIcon} {icon} height="10rem" />
     </div>
     <div id="preview-template" class="flex justify-center items-center flex-col gap-2">
-      <div class="dz-preview dz-file-preview text-lg font-semibold" />
+      <div class="dz-preview first-letter:uppercase dz-file-preview text-lg font-semibold" />
 
       <figure id="img-container" class="hidden items-center m-auto justify-center">
         <div
