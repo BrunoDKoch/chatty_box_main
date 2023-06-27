@@ -163,21 +163,20 @@ connection.on('newChat', (data: ChatPreview) => {
 // Get chat info
 connection.on('chat', (data: CompleteChat) => {
   chat.update((ch) => {
-    const hasMore = data.messageCount > ch.messages.length;
     // If chat isn't loaded, fetch full data. Else, grab messages
     if (!ch.messages || !ch.messages.length) {
-      ch = { ...data, hasFetched: false, hasMore };
+      ch = { ...data, hasFetched: false, hasMore: false };
     } else if (ch.id !== data.id) {
       chatId.set(data.id);
-      ch = { ...data, hasFetched: false, hasMore };
+      ch = { ...data, hasFetched: false, hasMore: false };
     } else {
       // This loop is not super efficient (O(n)?), but it prevents duplicates
       data.messages.forEach((message) => {
         if (!ch.messages.find((m) => m.id === message.id)) ch.messages.push(message);
       });
       ch.hasFetched = true;
-      ch.hasMore = hasMore;
     }
+    ch.hasMore = ch.messageCount > ch.messages.length;
     // Sort messages properly
     ch.messages.sort((a, b) => Number(new Date(a.sentAt)) - Number(new Date(b.sentAt)));
     return ch;
@@ -304,19 +303,19 @@ connection.on('newAvatar', (data: { userId: string; avatar: string }) => {
       return m;
     });
     return c;
-  })
+  });
   friends.update((f) => {
     const friendToUpdate = f.find((friend) => friend.id === userId);
     if (!friendToUpdate) return f;
     friendToUpdate.avatar = avatar;
     return f;
-  })
+  });
   blockedUsers.update((b) => {
     const userToUpdate = b.find((u) => u.id === userId);
     if (!userToUpdate) return b;
     userToUpdate.avatar = avatar;
     return b;
-  })
+  });
 });
 
 connection.on('newUserName', (data: { userId: string; userName: string }) => {
@@ -338,19 +337,19 @@ connection.on('newUserName', (data: { userId: string; userName: string }) => {
       return m;
     });
     return c;
-  })
+  });
   friends.update((f) => {
     const friendToUpdate = f.find((friend) => friend.id === userId);
     if (!friendToUpdate) return f;
     friendToUpdate.userName = userName;
     return f;
-  })
+  });
   blockedUsers.update((b) => {
     const userToUpdate = b.find((u) => u.id === userId);
     if (!userToUpdate) return b;
     userToUpdate.userName = userName;
     return b;
-  })
+  });
 });
 
 export const online = writable(connection.state === HubConnectionState.Connected);
