@@ -16,13 +16,13 @@
       action: () => (showMFAModal = !showMFAModal),
     },
     {
-      text: 'Sessions',
+      text: $t('common.session', { values: { count: 2 } }),
       action: () => (showSessionsModal = !showSessionsModal),
     },
   ];
 </script>
 
-<menu class="menu menu-lg uppercase">
+<menu class="menu 2xl:menu-lg uppercase">
   {#each securitySettings as setting}
     <li>
       <a href="/" on:click|preventDefault={() => setting.action()}>

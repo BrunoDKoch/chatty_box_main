@@ -32,12 +32,18 @@
 </script>
 
 <div class="form-control">
-  <label for={name} class="label">
-    <span class="label-text first-letter:uppercase">{required ? labelText + '*' : labelText}</span>
-  </label>
+  {#if labelText}
+    <label for={name} class="label">
+      <span class="label-text first-letter:uppercase">
+        {required ? labelText + '*' : labelText}
+      </span>
+    </label>
+  {/if}
   <select on:change on:input bind:value {disabled} class="select capitalize select-bordered" {name}>
     {#each options as { value, name }}
-      <option class="first-letter:capitalize" {value}>{name}</option>
+      <option class="first-letter:capitalize" {value}>
+        {name.replace(name[0], name[0].toUpperCase())}
+      </option>
     {/each}
   </select>
   <p class="label">

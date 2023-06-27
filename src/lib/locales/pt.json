@@ -119,7 +119,8 @@
     "groupChat": "grupo de chat",
     "return": "retornar",
     "suspension": "suspensão",
-    "audio": "áudio"
+    "audio": "áudio",
+    "session": "{count, plural, one {sessão} other {sessões}}"
   },
   "aside": {
     "searchChats": "{search} chats"

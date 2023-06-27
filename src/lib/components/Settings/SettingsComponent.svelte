@@ -20,7 +20,7 @@
 </script>
 
 {#if show}
-  <div transition:fly={{ delay: 100, duration: 75, x: -150 }}>
+  <div class="h-full" transition:fly={{ delay: 100, duration: 75, x: -150 }}>
     {#if activeScreen !== 'main'}
       <div class="flex items-center">
         <Button

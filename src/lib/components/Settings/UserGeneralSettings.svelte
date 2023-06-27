@@ -20,6 +20,7 @@
 </div>
 {#if showModal}
   <UserAvatarModal
+    bind:avatar={user.avatar}
     on:updateFile={async ({ detail }) => await handleFileUpdate(detail)}
     on:close={() => (showModal = !showModal)}
   />

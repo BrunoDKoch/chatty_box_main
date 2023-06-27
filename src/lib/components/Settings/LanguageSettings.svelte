@@ -1,10 +1,12 @@
 <script lang="ts">
   import { ofetch } from 'ofetch';
   import { locale, locales } from 'svelte-i18n';
+  import Select from '../Custom/Select.svelte';
+
   $: languageNameParser = new Intl.DisplayNames([$locale!], { type: 'language' });
   $: languageNames = $locales.map((l) => {
     return {
-      name: languageNameParser.of(l),
+      name: languageNameParser.of(l)!,
       value: l,
     };
   });
@@ -15,12 +17,8 @@
     }).then((data) => data);
 </script>
 
-<div class="flex items-center justify-center">
-  <select bind:value={$locale} class="select capitalize" name="lang" id="lang">
-    {#each languageNames as lang}
-      <option value={lang.value}>
-        <span>{lang.name}</span>
-      </option>
-    {/each}
-  </select>
-</div>
+{#if $locale}
+  <div class="flex items-center justify-center">
+    <Select labelText="" bind:value={$locale} name="lang" options={languageNames} />
+  </div>
+{/if}

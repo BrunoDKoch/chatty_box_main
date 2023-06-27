@@ -31,8 +31,8 @@
   });
 </script>
 
-<div class="w-fit flex items-center justify-center">
-  <div class="relative">
+<div class="flex items-center justify-center">
+  <div class="relative max-w-[80%]">
     <Select
       name="privacyLevel"
       labelText={$t('privacyLevel.who')}
