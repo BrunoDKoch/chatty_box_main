@@ -28,7 +28,7 @@
       fetching = false;
       setTimeout(() => {
         $chat.hasFetched = false;
-        observer.observe(thisElement);
+        if ($chat.hasMore) observer.observe(thisElement);
       }, 200);
     }
   }
@@ -36,7 +36,10 @@
   $: hasMore, setUpObserver();
 
   function setUpObserver() {
-    if (!hasMore) return;
+    if (!hasMore) {
+      observer.disconnect();
+      return;
+    }
     return setTimeout(() => observer.observe(thisElement), 1500);
   }
   onMount(() => setUpObserver());
