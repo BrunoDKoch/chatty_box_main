@@ -29,7 +29,7 @@
           <Button
             id={actionButton.id}
             format="outline"
-            additionalClasses="max-md:btn-md lg:text-3xl max-md:text-xl join-item"
+            additionalClasses="max-lg:btn-md lg:text-3xl max-lg:text-xl join-item"
             loading
             tooltip={actionButton.tooltip}
             buttonUIType={actionButton.uiType}

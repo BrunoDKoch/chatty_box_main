@@ -97,7 +97,7 @@
                 disabled={user.isBlocking}
                 on:click={async () => await action()}
                 {buttonUIType}
-                additionalClasses="max-md:btn-md max-md:text-xl lg:text-3xl"
+                additionalClasses="max-lg:btn-md max-lg:text-xl lg:text-3xl"
                 {tooltip}
               >
                 <iconify-icon {icon} />

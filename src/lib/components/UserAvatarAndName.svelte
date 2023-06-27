@@ -10,7 +10,7 @@
   export let disableModal = false;
 </script>
 
-<div class="grid max-md:grid-cols-3 lg:grid-cols-5 lg:gap-3 items-center">
+<div class="grid max-lg:grid-cols-3 lg:grid-cols-5 lg:gap-3 items-center">
   <UserAvatar {user} {size} {isChatImage} {lowerOpacity} {disableModal} />
   <div id="user-name" class="lg:col-span-3 flex flex-col {lowerOpacity ? 'opacity-50' : 'opacity-100'}">
     <p>{user.userName}</p>

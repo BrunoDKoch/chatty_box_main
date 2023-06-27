@@ -51,10 +51,10 @@
 <Modal on:close modalType="error">
   <div class="grid grid-cols-[1fr_3fr] max-w-[100vw]">
     <iconify-icon
-      class="row-span-2 self-center justify-self-center max-md:text-4xl lg:text-8xl"
+      class="row-span-2 self-center justify-self-center max-lg:text-4xl lg:text-8xl"
       {icon}
     />
-    <h1 class="font-bold max-md:text-xl lg:text-2xl">
+    <h1 class="font-bold max-lg:text-xl lg:text-2xl">
       {error.status ?? 500} - {error.cause ?? $t('error.cause.fallback')}
     </h1>
     {#if error.message && brokenUpMessage.length}

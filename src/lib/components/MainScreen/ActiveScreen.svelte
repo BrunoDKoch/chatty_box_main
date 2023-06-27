@@ -3,7 +3,13 @@
   import FriendsScreen from './FriendsScreen/FriendsScreen.svelte';
   import ChatScreen from './Chat/ChatScreen.svelte';
   import Aside from '../Aside/Aside.svelte';
+  let innerWidth: number;
+  $: {
+    if (innerWidth > 1024 && $useActiveScreen === 'aside') $useActiveScreen = 'friends';
+  }
 </script>
+
+<svelte:window bind:innerWidth />
 
 <div class="{$useActiveScreen !== 'aside' ? 'bg-base-300' : ''} overflow-hidden h-screen">
   {#if $useActiveScreen === 'friends'}

@@ -4,7 +4,7 @@
 </script>
 
 <header class="navbar navbar-center bg-base-300 text-center">
-  <div class="flex-1 max-md:hidden">
+  <div class="flex-1 max-lg:hidden">
     <a href="/" class="btn btn-ghost lg:text-xl">
       <iconify-icon icon="material-symbols:keyboard-backspace" />
       {$t('common.return')}

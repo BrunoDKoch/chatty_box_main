@@ -110,11 +110,11 @@
 
 <title>{title}</title>
 
-<div class="lg:grid lg:grid-cols-4 max-md:flex max-md:flex-col w-screen overflow-hidden">
-  <aside class="col-span-1 min-h-screen max-md:hidden">
+<div class="lg:grid lg:grid-cols-4 max-lg:flex max-lg:flex-col w-screen overflow-hidden">
+  <aside class="col-span-1 min-h-screen max-lg:hidden">
     <Aside />
   </aside>
-  <div class="lg:hidden flex items-center bg-base-200 z-50">
+  <header class="lg:hidden flex items-center bg-base-200 z-50">
     <Button
       id="change-screen"
       on:click={() => ($useActiveScreen = $useActiveScreen === 'aside' ? 'friends' : 'aside')}
@@ -128,7 +128,7 @@
         {$chat.chatName ?? $chat.users.map((u) => u.userName).join(', ')}
       </h1>
     {/if}
-  </div>
+  </header>
   <section class="lg:col-span-3 max-h-screen overflow-hidden">
     <ActiveScreen />
   </section>

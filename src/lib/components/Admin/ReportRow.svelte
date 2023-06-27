@@ -22,11 +22,11 @@
 
 <tr>
   <td>{$t(report.reportReason)}</td>
-  <td class="max-md:hidden">{report.reportingUser.userName}</td>
+  <td class="max-lg:hidden">{report.reportingUser.userName}</td>
   <td>
     <ReportUserComponent {showAvatar} user={report.reportedUser} />
   </td>
-  <td class="max-md:hidden"
+  <td class="max-lg:hidden"
     >{report.chat.chatName ?? report.chat.users.map((u) => u.userName).join(', ')}</td
   >
   <td>
@@ -36,7 +36,7 @@
       <p>{report.message.text}</p>
     {/if}
   </td>
-  <td class="max-md:hidden">
+  <td class="max-lg:hidden">
     {$date(new Date(`${report.sentAt}Z`), {
       timeStyle: 'short',
       hour12: false,

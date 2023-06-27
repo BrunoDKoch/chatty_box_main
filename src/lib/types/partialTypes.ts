@@ -39,6 +39,7 @@ interface ChatPreview extends ChatBasicInfo {
 }
 
 interface ClientConnectionPartialInfo {
+  id: string;
   browser: string;
   cityName: string;
   countryIsoCode: string;
@@ -49,6 +50,7 @@ interface ClientConnectionPartialInfo {
   os: string;
   active: boolean;
   createdAt: Date;
+  isCurrentConnection: boolean;
 }
 
 interface UserConnectionCallInfo {

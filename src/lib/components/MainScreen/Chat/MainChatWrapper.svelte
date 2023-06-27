@@ -24,8 +24,8 @@
   bind:uploading
   bind:uploadSuccessful
   wrapperClass="flex w-full {searchResultsAreOpen
-    ? 'max-md:hidden lg:col-span-2'
-    : 'col-span-1'} flex-col h-[91vh] max-md:h-[82vh]"
+    ? 'max-lg:hidden lg:col-span-2'
+    : 'col-span-1'} flex-col h-[91vh] max-lg:h-[82vh]"
 >
   {#if $chat && $chat.id === $chatId}
     <MessagesWrapper

@@ -35,7 +35,7 @@
   <AdminNavBar on:click={() => (showAsideInMain = !showAsideInMain)} />
 
   <div class="flex">
-    <aside class="max-md:hidden">
+    <aside class="max-lg:hidden">
       <AdminAside on:action={() => (showIndependentActionModal = !showIndependentActionModal)} />
     </aside>
 

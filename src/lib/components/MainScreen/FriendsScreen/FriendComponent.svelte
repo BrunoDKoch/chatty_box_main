@@ -57,7 +57,7 @@
             {tooltip}
             {buttonUIType}
             format="outline"
-            additionalClasses="max-md:btn-md lg:text-3xl max-md:text-xl"
+            additionalClasses="max-lg:btn-md lg:text-3xl max-lg:text-xl"
             joinItem
           >
             <iconify-icon {icon} />

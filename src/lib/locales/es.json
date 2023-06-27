@@ -120,7 +120,8 @@
     "return": "volver",
     "suspension": "suspensión",
     "audio": "audio",
-    "session": "{count, plural, one {sesión} other {sesiones}}"
+    "session": "{count, plural, one {sesión} other {sesiones}}",
+    "closeThing": "cerrar {item}"
   },
   "aside": {
     "searchChats": "{search} chats"

@@ -10,21 +10,21 @@
 <svelte:window bind:innerWidth />
 
 {#if reports.length}
-  <table class="table table-pin-rows max-md:table-xs mb-5">
+  <table class="table table-pin-rows max-lg:table-xs mb-5">
     <thead>
       <tr class="[&>th]:first-letter:uppercase">
         <th>{$t('admin.reason')}</th>
-        <th class="max-md:hidden">
+        <th class="max-lg:hidden">
           {$t('admin.reporting', { values: { item: $t('common.user') } })}
         </th>
         <th>
           {$t('admin.reported', { values: { item: $t('common.user') } })}
         </th>
-        <th class="max-md:hidden">Chat</th>
+        <th class="max-lg:hidden">Chat</th>
         <th>
           {$t('common.message', { values: { count: 1 } })}
         </th>
-        <th class="max-md:hidden">{$t('admin.sentAt')}</th>
+        <th class="max-lg:hidden">{$t('admin.sentAt')}</th>
         <th class="max-sm:hidden">{$t('admin.action')}</th>
         <th />
       </tr>
