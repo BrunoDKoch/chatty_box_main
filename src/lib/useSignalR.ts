@@ -284,6 +284,75 @@ connection.on('action', (data: { reportId: string; actionPartial: AdminActionPar
   });
 });
 
+// Handle user changes
+connection.on('newAvatar', (data: { userId: string; avatar: string }) => {
+  const { userId, avatar } = data;
+  previews.update((p) => {
+    p.map((preview) => {
+      if (!preview.lastMessage) return preview;
+      if (preview.lastMessage.from.id !== userId) return preview;
+      preview.lastMessage.from.avatar = avatar;
+      return preview;
+    });
+    return p;
+  });
+  chat.update((c) => {
+    if (!c.users.find((u) => u.id === userId)) return c;
+    c.messages.map((m) => {
+      if (m.user.id !== userId) return m;
+      m.user.avatar = avatar;
+      return m;
+    });
+    return c;
+  })
+  friends.update((f) => {
+    const friendToUpdate = f.find((friend) => friend.id === userId);
+    if (!friendToUpdate) return f;
+    friendToUpdate.avatar = avatar;
+    return f;
+  })
+  blockedUsers.update((b) => {
+    const userToUpdate = b.find((u) => u.id === userId);
+    if (!userToUpdate) return b;
+    userToUpdate.avatar = avatar;
+    return b;
+  })
+});
+
+connection.on('newUserName', (data: { userId: string; userName: string }) => {
+  const { userId, userName } = data;
+  previews.update((p) => {
+    p.map((preview) => {
+      if (!preview.lastMessage) return preview;
+      if (preview.lastMessage.from.id !== userId) return preview;
+      preview.lastMessage.from.userName = userName;
+      return preview;
+    });
+    return p;
+  });
+  chat.update((c) => {
+    if (!c.users.find((u) => u.id === userId)) return c;
+    c.messages.map((m) => {
+      if (m.user.id !== userId) return m;
+      m.user.userName = userName;
+      return m;
+    });
+    return c;
+  })
+  friends.update((f) => {
+    const friendToUpdate = f.find((friend) => friend.id === userId);
+    if (!friendToUpdate) return f;
+    friendToUpdate.userName = userName;
+    return f;
+  })
+  blockedUsers.update((b) => {
+    const userToUpdate = b.find((u) => u.id === userId);
+    if (!userToUpdate) return b;
+    userToUpdate.userName = userName;
+    return b;
+  })
+});
+
 export const online = writable(connection.state === HubConnectionState.Connected);
 connection.onreconnected(() => online.set(true));
 connection.onreconnecting(() => online.set(false));
