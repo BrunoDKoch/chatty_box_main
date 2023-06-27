@@ -57,7 +57,7 @@
     <AsideLink {...buttonLink} />
     <div class="divider" />
   {/each}
-  <section id="chats" class="flex flex-col gap-4 even:bg-base-300 overflow-y-auto max-lg:max-h-[57vh] lg:max-h-[65vh]">
+  <section id="chats" class="flex flex-col gap-4 even:bg-base-300 lg:overflow-y-auto max-lg:max-h-[57vh] lg:max-h-[65vh]">
     {#if $fetchingInitialCallInfo}
       {#each [0, 1, 2, 3, 4, 5, 6] as _}
         <SkeletonPreview />
