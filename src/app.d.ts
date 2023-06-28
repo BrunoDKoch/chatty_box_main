@@ -1,4 +1,7 @@
 // See https://kit.svelte.dev/docs/types#app
+
+import type { ChatPreview, FriendResponse } from '$lib/types/partialTypes';
+
 // for information about these interfaces
 declare global {
   namespace App {
@@ -13,6 +16,9 @@ declare global {
         email: string;
         userName: string;
         avatar?: string;
+        friends: FriendResponse[];
+        previews: ChatPreview[];
+        isAdmin: boolean;
       };
       language: string;
     }
