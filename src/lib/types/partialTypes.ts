@@ -50,7 +50,7 @@ interface ClientConnectionPartialInfo {
   os: string;
   active: boolean;
   createdAt: Date;
-  isCurrentConnection: boolean;
+  isCurrentSession: boolean;
 }
 
 interface UserConnectionCallInfo {

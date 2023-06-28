@@ -23,7 +23,7 @@
   ];
 </script>
 
-<ul class="menu bg-base-200 h-screen uppercase sticky top-0">
+<ul class="menu menu-lg bg-base-200 h-screen uppercase sticky top-0">
   {#each links as link}
     <li>
       {#if link.link}

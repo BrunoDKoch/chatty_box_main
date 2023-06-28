@@ -43,7 +43,7 @@
     otherUsers = otherUsers;
   });
 
-  // Because there's no other way to know if one should use "e" or "y0000000000000000"
+  // Because there's no other way to know if one should use "e" or "y"
   function getSpanishAnd(userName: string) {
     if (
       [
@@ -126,7 +126,7 @@
       </span>
       <CloseButton id="cancel-reply" on:close={() => (replyTo = undefined)} />
     {:else}
-      <span> &nbsp;&nbsp;&nbsp;&nbsp; </span>
+      <span class="label-text"> &nbsp;&nbsp;&nbsp;&nbsp; </span>
     {/if}
   </label>
   <div class="join px-4">

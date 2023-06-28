@@ -237,5 +237,14 @@
     "nothingNew": "nada nuevo aquí",
     "doesThisViolate": "¿Esto viola las reglas?"
   },
-  "messageFlagged": "Mensaje retenido por violar los términos de uso"
+  "messageFlagged": "Mensaje retenido por violar los términos de uso",
+  "session": {
+    "current": "sesión actual",
+    "device": "dispositivo",
+    "os": "sistema operativo",
+    "browser": "navegador",
+    "country": "país",
+    "city": "ciudad",
+    "active": "activa"
+  }
 }

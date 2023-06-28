@@ -59,6 +59,15 @@ async function logOut() {
   return { data, error };
 }
 
+async function getUser() {
+  return await ofetch('/user', {
+    baseURL,
+    method: 'GET',
+    mode: 'cors',
+    credentials: 'include',
+  });
+}
+
 async function suspendUser(body: { reason: string; until?: Date; id: string }) {
   await ofetch('/User/suspend', {
     baseURL,
@@ -125,6 +134,7 @@ export {
   logIn,
   logOut,
   signUp,
+  getUser,
   suspendUser,
   validateEmail,
   getRecoveryToken,

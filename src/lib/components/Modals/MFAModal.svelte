@@ -8,7 +8,7 @@
   import { finishMFADisabling, startMFADisabling } from '$lib/useAuth';
   import PasswordModal from './PasswordModal.svelte';
   import useError from '$lib/useError';
-  $: enabled = false;
+  let enabledPromise = connection.invoke<boolean>('GetMFASettings').then((data) => data);
   const dispatch = createEventDispatcher();
   let token = '';
   $: recoveryCodes = [] as string[];
@@ -21,9 +21,6 @@
   // For toggling loading button mode
   $: loading = false;
 
-  connection.on('currentMFAOptions', (data: { isEnabled: boolean; providers: string[] }) => {
-    enabled = data.isEnabled;
-  });
   connection.on('mfaToken', (data: { token: string; recoveryCodes: string[] }) => {
     token = data.token;
     recoveryCodes = data.recoveryCodes;
@@ -54,35 +51,50 @@
       loading = false;
     }
   }
-  onMount(async () => {
-    await connection.invoke('GetMFASettings');
-  });
 </script>
 
 <Modal on:close>
-  <div
-    class="flex items-center justify-center gap-3 lg:text-xl {enabled
-      ? 'text-success'
-      : 'text-warning'}"
-  >
-    <iconify-icon class="text-4xl" icon={enabled ? 'mdi:check' : 'material-symbols:warning'} />
-    <h1 class="font-bold uppercase">
-      {$t('security.mfa.mfa')}
-      {$t('common.is.temp')}
-      {enabled ? $t('common.enabled.f') : $t('common.disabled.f')}
-    </h1>
-  </div>
-  <p class="lg:w-[45rem]">
-    {$t('security.mfa.mfaNotice')}
-  </p>
-  <Button
-    id="mfa-toggle"
-    buttonUIType={enabled ? 'error' : 'neutral'}
-    bind:loading
-    on:click={async () => await handleChange(!enabled)}
-  >
-    {enabled ? $t('common.disable') : $t('common.enable')}
-  </Button>
+  {#await enabledPromise}
+    <iconify-icon icon="svg-spinners:6-dots-scale" />
+  {:then enabled}
+    <div
+      class="flex items-center justify-center gap-3 lg:text-xl {enabled
+        ? 'text-success'
+        : 'text-warning'}"
+    >
+      <iconify-icon class="text-4xl" icon={enabled ? 'mdi:check' : 'material-symbols:warning'} />
+      <h1 class="font-bold uppercase">
+        {$t('security.mfa.mfa')}
+        {$t('common.is.temp')}
+        {enabled ? $t('common.enabled.f') : $t('common.disabled.f')}
+      </h1>
+    </div>
+    <p class="lg:w-[45rem]">
+      {$t('security.mfa.mfaNotice')}
+    </p>
+    <div class="modal-action">
+      <div class="join">
+        <Button
+          id="mfa-toggle"
+          buttonUIType={enabled ? 'error' : 'info'}
+          bind:loading
+          on:click={async () => await handleChange(!enabled)}
+          joinItem
+        >
+          {enabled ? $t('common.disable') : $t('common.enable')}
+        </Button>
+        <Button
+          id="mfa-toggle"
+          buttonUIType="neutral"
+          bind:loading
+          on:click={() => dispatch('close')}
+          joinItem
+        >
+          {$t('common.cancel')}
+        </Button>
+      </div>
+    </div>
+  {/await}
 </Modal>
 
 {#if showQRCode}

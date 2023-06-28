@@ -44,7 +44,7 @@
 <div
   class="overflow-y-auto {isSearch
     ? 'lg:border-l-2'
-    : ''} overflow-x-hidden max-md:h-[75vh] lg:h-[82vh] box-border"
+    : ''} overflow-x-hidden max-md:h-[75vh] lg:h-[80vh] box-border"
 >
   {#if !pagination}
     <AutoScroller bind:hasMore={$chat.hasMore} skip={messages.length} />

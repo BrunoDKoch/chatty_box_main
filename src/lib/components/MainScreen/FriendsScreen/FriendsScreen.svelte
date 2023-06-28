@@ -21,7 +21,7 @@
 <FriendsTabs />
 <div class="px-10 my-4 even:bg-base-200">
   {#if $fetchingInitialCallInfo}
-    {#each [0, 1, 2, 3, 4, 5] as _}
+    {#each { length: 7 } as _}
       <SkeletonFriendComponent />
     {/each}
   {:else if $friendsTab === 'friends.available'}

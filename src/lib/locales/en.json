@@ -241,5 +241,14 @@
     "nothingNew": "nothing new here",
     "doesThisViolate": "does this violate the rules?"
   },
-  "messageFlagged": "Message retained for violating the terms of usage"
+  "messageFlagged": "Message retained for violating the terms of usage",
+  "session": {
+    "current": "current session",
+    "device": "device",
+    "os": "os",
+    "browser": "browser",
+    "country": "country",
+    "city": "city",
+    "active": "active"
+  }
 }
