@@ -57,7 +57,7 @@
     <tr>
       <th />
       {#each headers as header}
-        <th class="first-letter:uppercase">{header}</th>
+        <th class="text-center first-letter:uppercase">{header}</th>
       {/each}
     </tr>
   </thead>
@@ -65,7 +65,7 @@
     {#each sessions as session}
       <SessionsTableRow
         on:selectToggle
-        {session}
+        bind:session
         index={sessions.indexOf(session) + 1}
         icons={getIcons(session)}
         countryName={getCountryName(session)}

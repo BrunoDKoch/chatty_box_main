@@ -15,18 +15,20 @@
 
   const dispatch = createEventDispatcher();
   const { deviceIcon, browserIcon, osIcon, activeIcon, countryIcon } = icons;
-  console.log(session);
+  $: isCurrentSession = session.isCurrentSession;
 </script>
 
-<tr class="text-center {session.isCurrentConnection ? 'bg-success-content' : 'bg-error-content'}">
+<tr class="text-center {isCurrentSession ? 'bg-success-content' : 'bg-error-content'}">
   <th>
-    <input
-      on:change={() => dispatch('selectToggle', session.id)}
-      type="checkbox"
-      class="checkbox-info"
-      name="session-{index}"
-      id="session-{index}"
-    />
+    {#if !isCurrentSession}
+      <input
+        on:change={() => dispatch('selectToggle', session.id)}
+        type="checkbox"
+        class="checkbox-info {isCurrentSession ? 'tooltip' : ''}"
+        name="session-{index}"
+        id="session-{index}"
+      />
+    {/if}
   </th>
   <td>
     <div class="flex flex-col items-center justify-center">
