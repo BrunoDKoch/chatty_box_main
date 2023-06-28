@@ -26,34 +26,43 @@
       page: $page,
     }).then((data) => data);
 
-  $: total, console.log(total)
+  $: total, console.log(total);
+  $: title = $page.error
+    ? `${$page.status} - ${$t(`error.cause.${$page.status}`)}`
+    : `ChattyBox - ${$t('admin.title')}`;
 </script>
 
-<title>ChattyBox - {$t('admin.title')}</title>
+<title>{title}</title>
 
-<div class="h-screen overflow-y-auto">
-  <AdminNavBar on:click={() => (showAsideInMain = !showAsideInMain)} />
+{#if !$page.error}
+  <div class="h-screen overflow-y-auto">
+    <AdminNavBar on:click={() => (showAsideInMain = !showAsideInMain)} />
 
-  <div class="flex">
-    <aside class="max-lg:hidden">
-      <AdminAside on:action={() => (showIndependentActionModal = !showIndependentActionModal)} />
-    </aside>
-
-    <main class="w-fit flex-1">
-      {#if showAsideInMain}
+    <div class="flex">
+      <aside class="max-lg:hidden">
         <AdminAside on:action={() => (showIndependentActionModal = !showIndependentActionModal)} />
-      {:else}
-        <div class="flex flex-col h-full items-center justify-between">
-          <slot />
-          <Pagination useLinks itemsPerPage={15} bind:total bind:activePage={$activeAdminPage} />
-        </div>
-      {/if}
-    </main>
-  </div>
+      </aside>
 
-  {#if showIndependentActionModal}
-    <IndependentActionModal
-      on:close={() => (showIndependentActionModal = !showIndependentActionModal)}
-    />
-  {/if}
-</div>
+      <main class="w-fit flex-1">
+        {#if showAsideInMain}
+          <AdminAside
+            on:action={() => (showIndependentActionModal = !showIndependentActionModal)}
+          />
+        {:else}
+          <div class="flex flex-col h-full items-center justify-between">
+            <slot />
+            <Pagination useLinks itemsPerPage={15} bind:total bind:activePage={$activeAdminPage} />
+          </div>
+        {/if}
+      </main>
+    </div>
+
+    {#if showIndependentActionModal}
+      <IndependentActionModal
+        on:close={() => (showIndependentActionModal = !showIndependentActionModal)}
+      />
+    {/if}
+  </div>
+{:else}
+  <slot />
+{/if}
