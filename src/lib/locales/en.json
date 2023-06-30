@@ -125,7 +125,18 @@
     "suspension": "suspension",
     "audio": "audio",
     "session": "{count, plural, one {session} other {sessions}}",
-    "closeThing": "close {item}"
+    "closeThing": "close {item}",
+    "change": "change {item}",
+    "current": "current {item}",
+    "changed": {
+      "m": "{item} changed",
+      "f": "{item} changed"
+    },
+    "itemsCannot": "{items} cannot be {finalPart}",
+    "theSame": {
+      "m": "the same",
+      "f": "the same"
+    }
   },
   "aside": {
     "searchChats": "{search} chats"

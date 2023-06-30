@@ -9,6 +9,7 @@
   import MfaCodeModal from './MFACodeModal.svelte';
   import useError from '$lib/useError';
   import Button from '../Custom/Button.svelte';
+    import useFormValidation from '$lib/useFormValidation';
   export let pending = false;
   const dispatch = createEventDispatcher();
   let showMFACodeModal = false;
@@ -18,6 +19,7 @@
   let remember = false;
   let submitted = false;
   let rememberMultiFactor = false;
+  $: valid = false;
   $: rules = {
     emailRules: [
       {
@@ -40,20 +42,19 @@
       },
     ],
   };
+  $: email, password, checkIfValid();
   function checkIfValid() {
-    let totalConditions = 0;
-    let totalValid = 0;
-    Object.keys(rules).forEach((key) => {
-      rules[key as keyof typeof rules].forEach((condition) => {
-        totalConditions++;
-        condition.condition ? totalValid++ : null;
-      });
-    });
-    if (totalValid === totalConditions) return true;
-    return false;
+    for (const val of Object.values(rules)) {
+      const checkRules = useFormValidation(val);
+      if (!checkRules) {
+        valid = false;
+        return;
+      }
+    }
+    valid = true;
   }
   async function handleSubmit() {
-    const valid = checkIfValid();
+    checkIfValid();
     if (!valid) return;
     dispatch('showSpinner');
     pending = true;
@@ -105,7 +106,7 @@
     bind:value={password}
   />
   <Checkbox bind:checked={remember} name="remember" labelText={$t('auth.remember')} />
-  <Button id="login-submit" bind:loading={pending}>{$t('common.submit')}</Button>
+  <Button disabled={!valid} id="login-submit" bind:loading={pending}>{$t('common.submit')}</Button>
   <div class="flex flex-col gap-4">
     <a class="link first-letter:uppercase" href="/auth/signup">
       <span>{$t('common.negatory')} {$t('auth.have')} {$t('auth.anAccount')}?</span>

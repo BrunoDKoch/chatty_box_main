@@ -3,9 +3,13 @@
   import LoginAttemptsModal from '../Modals/LoginAttemptsModal.svelte';
   import MfaModal from '../Modals/MFAModal.svelte';
   import SessionsModal from '../Modals/SessionsModal.svelte';
+  import ChangeEmailModal from '../Modals/AuthChange/ChangeEmailModal.svelte';
+  import ChangePasswordModal from '../Modals/AuthChange/ChangePasswordModal.svelte';
   let showLoginAttempts = false;
   let showMFAModal = false;
   let showSessionsModal = false;
+  let showChangeEmailModal = false;
+  let showChangePasswordModal = false;
   const securitySettings: { text: string; action: Function }[] = [
     {
       text: $t('security.loginAttempt.loginAttempts'),
@@ -18,6 +22,14 @@
     {
       text: $t('common.session', { values: { count: 2 } }),
       action: () => (showSessionsModal = !showSessionsModal),
+    },
+    {
+      text: $t('common.change', { values: { item: $t('auth.email') } }),
+      action: () => (showChangeEmailModal = !showChangeEmailModal),
+    },
+    {
+      text: $t('common.change', { values: { item: $t('auth.password') } }),
+      action: () => (showChangePasswordModal = !showChangePasswordModal),
     },
   ];
 </script>
@@ -38,4 +50,8 @@
   <MfaModal on:close={() => (showMFAModal = !showMFAModal)} />
 {:else if showSessionsModal}
   <SessionsModal on:close={() => (showSessionsModal = !showSessionsModal)} />
+{:else if showChangeEmailModal}
+  <ChangeEmailModal on:close={() => (showChangeEmailModal = !showChangeEmailModal)} />
+{:else if showChangePasswordModal}
+  <ChangePasswordModal on:close={() => (showChangePasswordModal = !showChangePasswordModal)} />
 {/if}

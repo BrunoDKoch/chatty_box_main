@@ -1,22 +1,10 @@
 <script lang="ts">
+  import type { InputType } from '$lib/types/otherTypes';
   import { toKebabCase } from '$lib/useCaseConversion';
   import { createEventDispatcher } from 'svelte';
 
-  export let value: string | Date;
-  export let type:
-    | 'text'
-    | 'password'
-    | 'date'
-    | 'datetime'
-    | 'datetime-local'
-    | 'email'
-    | 'search'
-    | 'time'
-    | 'url'
-    | 'area'
-    | 'week'
-    | 'number'
-    | 'phone' = 'text';
+  export let value: string | Date | number;
+  export let type: InputType = 'text';
   export let labelText = '';
   export let rules:
     | {
@@ -86,7 +74,7 @@
   {/if}
   <p class="label">
     {#if ruleText}
-      <span class="label-text text-error first-letter:capitalize">{ruleText}</span>
+      <span class="label-text w-full text-error first-letter:capitalize">{ruleText}</span>
     {:else}
       <span class="label-text w-full"> &#160;&#160;&#160; </span>
     {/if}

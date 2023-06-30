@@ -1,6 +1,6 @@
 // See https://kit.svelte.dev/docs/types#app
 
-import type { ChatPreview, FriendResponse } from '$lib/types/partialTypes';
+import type { ChatPreview, FriendResponse, UserPartialResponse } from '$lib/types/partialTypes';
 
 // for information about these interfaces
 declare global {
@@ -17,6 +17,8 @@ declare global {
         userName: string;
         avatar?: string;
         friends: FriendResponse[];
+        friendRequests: {userAdding: UserPartialResponse}[];
+        blocks: UserPartialResponse[]
         previews: ChatPreview[];
         isAdmin: boolean;
       };

@@ -6,11 +6,13 @@
   import { t } from 'svelte-i18n';
   import useError from '$lib/useError';
   import Button from '../Custom/Button.svelte';
+    import useFormValidation from '$lib/useFormValidation';
   export let pending = false;
   const dispatch = createEventDispatcher();
   let qrCode: { content: string; height: number; width: number } | null = null;
   let token = '';
   let openOtpModal = false;
+  $: valid = false;
   $: email = '';
   $: password = '';
   $: userName = '';
@@ -108,21 +110,19 @@
       },
     ],
   };
-
+  $: email, password, confirmEmail, confirmPassword, userName, checkIfValid();
   function checkIfValid() {
-    let totalConditions = 0;
-    let totalValid = 0;
-    Object.keys(rules).forEach((key) => {
-      rules[key as keyof typeof rules].forEach((condition) => {
-        totalConditions++;
-        condition.condition ? totalValid++ : null;
-      });
-    });
-    if (totalValid === totalConditions) return true;
-    return false;
+    for (const val of Object.values(rules)) {
+      const checkRules = useFormValidation(val);
+      if (!checkRules) {
+        valid = false;
+        return;
+      }
+    }
+    valid = true;
   }
+
   async function handleSubmit() {
-    const valid = checkIfValid();
     if (!valid) return;
     pending = true;
     const body = { email, password, userName };

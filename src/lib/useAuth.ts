@@ -130,6 +130,26 @@ async function finishMFADisabling(body: { password: string }) {
   });
 }
 
+async function changeEmail(body: { currentEmail: string; newEmail: string; password: string }) {
+  return await ofetch('/user/change/email', {
+    baseURL,
+    method: 'POST',
+    body,
+    mode: 'cors',
+    credentials: 'include',
+  });
+}
+
+async function changePassword(body: { currentPassword: string; newPassword: string }) {
+  return await ofetch('/user/change/password', {
+    baseURL,
+    method: 'POST',
+    body,
+    mode: 'cors',
+    credentials: 'include',
+  });
+}
+
 export {
   logIn,
   logOut,
@@ -141,4 +161,6 @@ export {
   recoverPassword,
   startMFADisabling,
   finishMFADisabling,
+  changeEmail,
+  changePassword,
 };

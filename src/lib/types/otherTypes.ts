@@ -57,6 +57,45 @@ interface ActionButton extends MockActionButton {
   action(): void | Promise<void>;
 }
 
+type InputType =
+  | 'text'
+  | 'password'
+  | 'date'
+  | 'datetime'
+  | 'datetime-local'
+  | 'email'
+  | 'search'
+  | 'time'
+  | 'url'
+  | 'area'
+  | 'week'
+  | 'number'
+  | 'phone';
+
+interface InputInterface {
+  value: string | Date | number;
+  labelText: string;
+  type: InputType;
+  required: boolean;
+  disabled: boolean;
+  name: string;
+}
+
+interface InputRule<K extends string> {
+  K: {
+    condition: boolean;
+    text: string;
+  }[];
+}
+
 export { settingOptions, statusOptions, reportOptions };
 
-export type { SettingOptions, ReportOption, MockActionButton, ActionButton };
+export type {
+  SettingOptions,
+  ReportOption,
+  MockActionButton,
+  ActionButton,
+  InputType,
+  InputInterface,
+  InputRule,
+};
