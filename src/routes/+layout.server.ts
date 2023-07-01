@@ -33,5 +33,6 @@ export const load = (async ({ cookies, request, url, locals, fetch }) => {
   const lang = getLanguage({ cookies, request });
   await waitLocale(lang);
   locals.language = getLanguage({ cookies, request });
-  return { theme, lang };
+  const { user } = locals;
+  return { theme, lang, user };
 }) satisfies LayoutServerLoad;

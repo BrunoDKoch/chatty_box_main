@@ -153,7 +153,8 @@
   },
   "message": {
     "readBy": "read by",
-    "cannotCommunicate": "Cannot communicate with someone you blocked, or whom blocked you"
+    "cannotCommunicate": "Cannot communicate with someone you blocked, or whom blocked you",
+    "tooLarge": "message too large (max size: 1000 characters)"
   },
   "settings": {
     "theme": "theme",
@@ -217,7 +218,7 @@
   },
   "files": {
     "tooBig": "File too big! Please limit your upload size to 20MB",
-    "dragHere": "Drag an image here or click to select one (limited to 20 MB)"
+    "dragHere": "Drag a file here or click to select one (limited to 20 MB)"
   },
   "report": {
     "report": "report {item}",

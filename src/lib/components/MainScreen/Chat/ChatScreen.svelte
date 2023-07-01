@@ -37,7 +37,16 @@
   }
   async function handleMessageDeletion(message: MessageResponse | null) {
     if (!message) return;
-    await connection.invoke('DeleteMessage', message.id, message.chatId);
+    const deletionResult = await connection.invoke<boolean>(
+      'DeleteMessage',
+      message.id,
+      message.chatId,
+    );
+    if (deletionResult) {
+      await connection.invoke('GetChatPreviews');
+      $chat.messages = $chat.messages.filter((m) => m.id !== messageToDelete?.id);
+      $chat.messages = $chat.messages;
+    }
     messageToDelete = null;
   }
 </script>
@@ -47,44 +56,46 @@
     <iconify-icon icon="svg-spinners:6-dots-scale" />
   </div>
 {:else}
-  <ChatNameComponent
-    bind:activeSearchPage
-    bind:searchResults
-    bind:search
-    on:openUserSearchModal={() => (showUserSearchModal = !showUserSearchModal)}
-    on:openUserRemovalModal={() => (showUserRemovalModal = !showUserRemovalModal)}
-    on:openNotificationsModal={() => (showNotificationsModal = !showNotificationsModal)}
-    on:openConfirmLeaveModal={() => (showConfirmLeaveModal = !showConfirmLeaveModal)}
-    on:openAddAdminModal={() => (showAddAdminModal = !showAddAdminModal)}
-  />
-  <div
-    class="grid {searchResults.messages && searchResults.messages.length
-      ? 'lg:grid-cols-3'
-      : 'grid-cols-1'}"
-  >
-    <MainChatWrapper
-      on:delete={({ detail }) => {
-        messageToDelete = detail;
-        showConfirmDeletionModal = !showConfirmDeletionModal;
-      }}
+  <div class="h-fit overflow-hidden">
+    <ChatNameComponent
+      bind:activeSearchPage
       bind:searchResults
-      bind:loading
+      bind:search
+      on:openUserSearchModal={() => (showUserSearchModal = !showUserSearchModal)}
+      on:openUserRemovalModal={() => (showUserRemovalModal = !showUserRemovalModal)}
+      on:openNotificationsModal={() => (showNotificationsModal = !showNotificationsModal)}
+      on:openConfirmLeaveModal={() => (showConfirmLeaveModal = !showConfirmLeaveModal)}
+      on:openAddAdminModal={() => (showAddAdminModal = !showAddAdminModal)}
     />
-    {#if searchResults.messages && searchResults.messages.length}
-      <MessagesWrapper
-        replyTo={undefined}
-        on:close={() => {
-          searchResults.messages.length = 0;
-          search = '';
+    <div
+      class="grid overflow-hidden h-fit {searchResults.messages && searchResults.messages.length
+        ? 'lg:grid-cols-3'
+        : 'grid-cols-1'}"
+    >
+      <MainChatWrapper
+        on:delete={({ detail }) => {
+          messageToDelete = detail;
+          showConfirmDeletionModal = !showConfirmDeletionModal;
         }}
-        isSearch
-        systemMessages={[]}
-        bind:messages={searchResults.messages}
-        bind:total={searchResults.messageCount}
-        bind:activePage={activeSearchPage}
-        pagination
+        bind:searchResults
+        bind:loading
       />
-    {/if}
+      {#if searchResults.messages && searchResults.messages.length}
+        <MessagesWrapper
+          replyTo={undefined}
+          on:close={() => {
+            searchResults.messages.length = 0;
+            search = '';
+          }}
+          isSearch
+          systemMessages={[]}
+          bind:messages={searchResults.messages}
+          bind:total={searchResults.messageCount}
+          bind:activePage={activeSearchPage}
+          pagination
+        />
+      {/if}
+    </div>
   </div>
 {/if}
 

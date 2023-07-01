@@ -5,14 +5,24 @@
   import type { MessageResponse } from '$lib/types/combinationTypes';
   import CloseButton from '$lib/components/Custom/CloseButton.svelte';
   import Button from '$lib/components/Custom/Button.svelte';
+  import { createEventDispatcher } from 'svelte';
+  import { page } from '$app/stores';
   export let loading = true;
   export let replyTo: MessageResponse | undefined = undefined;
 
+  const dispatch = createEventDispatcher();
+
   // Message handling
   $: newMessage = '';
+  let messageError = '';
   $: submitting = false;
-  let messageError = false;
-  connection.on('msgError', () => (messageError = true));
+  connection.on('msgError', (data: string) => (messageError = data));
+  $: {
+    if (newMessage.length > 1000) {
+      messageError = $t('message.tooLarge');
+    }
+  }
+  $: rows = Math.ceil(newMessage.length / 150) || 1;
 
   // Typing handling
   $: otherUsers = [] as { userName: string; isTyping: boolean }[];
@@ -21,7 +31,7 @@
 
   let singleChatUserBlocked =
     !$chat.isGroupChat && !!$chat.users.find((u) => u.isBlocked || u.isBlocking);
-  let messageComposer: HTMLInputElement;
+  let messageComposer: HTMLTextAreaElement;
   $: disabled = loading || submitting || singleChatUserBlocked;
 
   $: {
@@ -102,13 +112,23 @@
   }
   // Message logic
   async function sendMessage() {
+    if (newMessage.length > 1000) return;
     // Checking for 'messageFlagged' because that's how messages flagged by admins are returned
     if (!newMessage || newMessage === 'messageFlagged') return;
+    dispatch('sendingMessage', newMessage);
     submitting = true;
     await connection.invoke('StopTyping', $chat.id);
-    await connection.invoke('SendMessage', $chat.id, newMessage, replyTo?.id ?? undefined);
+
+    const success = await connection.invoke(
+      'SendMessage',
+      $chat.id,
+      newMessage,
+      replyTo?.id ?? undefined,
+    );
+    if (success) {
+      newMessage = '';
+    }
     submitting = false;
-    newMessage = '';
     // Input won't focus without the timeout, likely because of the scrolling to the new message
     setTimeout(() => messageComposer.focus({ preventScroll: true }), 100);
   }
@@ -117,10 +137,14 @@
 <form
   on:keydown={async () => await handleTyping()}
   on:submit|preventDefault={async () => await sendMessage()}
-  class="box-border relative form-control overflow-hidden max-h-fit"
+  class="box-border relative form-control overflow-hidden"
 >
   <label class="label justify-between" for="">
-    {#if replyTo}
+    {#if messageError}
+      <span class="label-text text-error first-letter:uppercase">
+        {messageError}
+      </span>
+    {:else if replyTo}
       <span class="label-text first-letter:uppercase">
         {$t('common.replyingTo', { values: { item: replyTo.user.userName } })}
       </span>
@@ -133,18 +157,18 @@
     <Button id="file-input-toggle" buttonType="button" joinItem additionalClasses="text-2xl">
       <iconify-icon icon="mdi:attachment" />
     </Button>
-    <input
+    <textarea
       bind:this={messageComposer}
       bind:value={newMessage}
-      type="text"
       id="message-composer"
+      {rows}
       placeholder={singleChatUserBlocked ? $t('message.cannotCommunicate') : ''}
-      class="input join-item {messageError ? 'input-error' : 'input-bordered'} {disabled
-        ? 'input-disabled'
+      class="textarea resize-y join-item {messageError ? 'textarea-error' : 'textarea-bordered'} {disabled
+        ? 'textarea-disabled'
         : ''} w-full box-border"
       {disabled}
     />
-    <Button id="chat-submit" {disabled} additionalClasses="text-2xl join-item">
+    <Button id="chat-submit" {disabled} joinItem additionalClasses="text-2xl">
       <iconify-icon icon={submitting ? 'svg-spinners:6-dots-scale' : 'mdi:send'} />
     </Button>
   </div>

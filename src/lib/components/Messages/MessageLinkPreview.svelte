@@ -17,7 +17,7 @@
     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
   />
 {:else if linkType === 'image'}
-  <Button id={link} format="ghost" on:click={() => (showImageModal = !showImageModal)}>
+  <Button id={link} format="ghost" additionalClasses="h-52" on:click={() => (showImageModal = !showImageModal)}>
     <img
       class="max-w-52 max-h-52"
       src={link.startsWith('static/images') ? `${PUBLIC_IMAGES_URL}/${link}?width=200` : link}

@@ -11,7 +11,7 @@
 
 <svelte:window bind:innerWidth />
 
-<div class="{$useActiveScreen !== 'aside' ? 'bg-base-300' : ''} overflow-hidden h-screen">
+<div class="{$useActiveScreen !== 'aside' ? 'bg-base-300' : ''} overflow-hidden h-full max-h-screen">
   {#if $useActiveScreen === 'friends'}
     <FriendsScreen />
   {:else if $useActiveScreen === 'chat'}

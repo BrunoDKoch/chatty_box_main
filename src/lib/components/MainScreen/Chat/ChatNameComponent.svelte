@@ -12,12 +12,12 @@
   $: userNamesJoined = $chat.users.map((u) => u.userName).join(', ');
 </script>
 
-<div class="bg-base-200 px-2 max-lg:w-full lg:w-[75vw] z-50 py-5">
-  <div class="grid max-lg:grid-cols-1 lg:grid-cols-2 items-center justify-evenly">
-    <div class="font-semibold text-lg">
-      <h1 class="max-lg:hidden">{$chat.chatName ?? userNamesJoined}</h1>
+<div class="bg-base-200 px-2 max-lg:w-full lg:w-[75vw] min-h-max overflow-hidden z-50 py-5">
+  <div class="grid max-lg:grid-cols-1 lg:grid-cols-2 items-center overflow-hidden justify-evenly">
+    <div class="font-semibold overflow-hidden text-lg">
+      <h1 class="max-lg:hidden overflow-hidden">{$chat.chatName ?? userNamesJoined}</h1>
     </div>
-    <div class="flex items-center max-lg:w-[100vw] lg:place-self-end z-50">
+    <div class="flex overflow-hidden items-center max-lg:w-[100vw] lg:place-self-end z-50">
       <ChatDropdown
         on:openConfirmLeaveModal
         on:openNotificationsModal

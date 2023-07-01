@@ -110,8 +110,8 @@
 
 <title>{title}</title>
 
-<div class="lg:grid lg:grid-cols-4 max-lg:flex max-lg:flex-col w-screen overflow-hidden">
-  <aside class="col-span-1 min-h-screen max-lg:hidden">
+<div class="lg:grid lg:grid-cols-4 max-lg:flex max-lg:flex-col w-screen h-full overflow-hidden">
+  <aside class="col-span-1 max-h-full max-lg:hidden">
     <Aside />
   </aside>
   <header class="lg:hidden flex items-center bg-base-200 z-50">
@@ -129,7 +129,7 @@
       </h1>
     {/if}
   </header>
-  <section class="lg:col-span-3 max-h-screen overflow-hidden">
+  <section class="lg:col-span-3 h-full overflow-hidden">
     <ActiveScreen />
   </section>
 </div>

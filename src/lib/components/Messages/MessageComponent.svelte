@@ -14,6 +14,11 @@
   export let hideBottomInfo = false;
   export let hideOptions = false;
   export let displayOnly = false;
+
+  // Handle message being sent
+  export let beingSent = false;
+  export let msgError = false;
+
   let thisElement: HTMLElement;
   const dispatch = createEventDispatcher();
 
@@ -84,7 +89,7 @@
   onMount(() => {
     observer.observe(thisElement);
     if (focusOn)
-      thisElement.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' });
+      thisElement.scrollIntoView({ behavior: 'instant', block: 'center', inline: 'center' });
     if (message.isFromCaller || $chat.userIsAdmin)
       options.push({
         name: $t('common.remove', { values }),
@@ -143,7 +148,11 @@
         replyToId={message.replyToId}
       />
     {/if}
-    <div class="chat px-4 {message.isFromCaller ? 'chat-end' : 'chat-start'}">
+    <div
+      class="chat px-4 {message.isFromCaller ? 'chat-end' : 'chat-start'} {beingSent
+        ? 'opacity-70'
+        : 'opacity-100'}"
+    >
       <UserAvatar
         disableModal={message.isFromCaller || displayOnly}
         user={message.user}
@@ -159,8 +168,8 @@
           class="join w-full"
           action=""
         >
-          <input type="text" class="input w-full" name="edit" bind:value={message.text} />
-          <Button id="send-message">
+          <input type="text" class="input w-full join-item" name="edit" bind:value={message.text} />
+          <Button id="send-message" joinItem>
             <iconify-icon icon="mdi:send" />
           </Button>
         </form>
@@ -168,7 +177,8 @@
         <div
           class="chat-bubble {message.text === 'messageFlagged'
             ? 'opacity-50 italic'
-            : 'opacity-100'} {message.isFromCaller ? 'chat-bubble-success' : 'chat-bubble-primary'}"
+            : 'opacity-100'} {message.isFromCaller ? 'chat-bubble-success' : 'chat-bubble-primary'}
+            {msgError ? 'chat-bubble-error' : ''}"
         >
           {#if message.text === 'messageFlagged'}
             {$t(message.text)}

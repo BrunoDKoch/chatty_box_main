@@ -20,7 +20,15 @@
   function handleThemeClass(node: HTMLElement, theme: 'light' | 'dark') {
     if (!theme) return;
     node.setAttribute('data-theme', theme);
-    node.className = theme;
+    if (node.classList.contains('light')) {
+      node.classList.replace('light', theme);
+      return;
+    }
+    if (node.classList.contains('dark')) {
+      node.classList.replace('dark', theme);
+      return;
+    }
+    node.classList.add(theme);
   }
 
   async function changeThemeCookie(theme: 'light' | 'dark' | null) {

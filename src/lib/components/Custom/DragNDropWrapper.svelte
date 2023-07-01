@@ -11,6 +11,15 @@
   export let isAvatar = false;
   export let wrapperClass = '';
 
+  $: {
+    if (
+      document.getElementsByClassName('dz-default') &&
+      document.getElementsByClassName('dz-default').length
+    ) {
+      document.getElementsByClassName('dz-default')[0].classList.add('hidden');
+    }
+  }
+
   // If it's an avatar, only accept one image
   const settingsObject = isAvatar
     ? {
@@ -33,6 +42,9 @@
   let fileType = '';
   let loadingContainer: HTMLElement;
   let progressElement: HTMLProgressElement;
+  let dropContainer: HTMLElement;
+  let fileDrop: HTMLFormElement;
+  let dropIconWrapper: HTMLElement;
   let uploadPercentage: number;
 
   // Use new variable to show checkmark, and then hide loading contents
@@ -63,12 +75,13 @@
       previewTemplate: document.getElementById('preview-template')!.innerHTML,
       parallelUploads,
       acceptedFiles,
+      dictDefaultMessage: '',
+      dictFallbackMessage: '',
       maxFilesize: 20,
       withCredentials: true,
       dictFileTooBig: $t('files.tooBig'),
       filesizeBase: 1000,
       thumbnailHeight: 800,
-      dictDefaultMessage: $t('files.dragHere'),
       thumbnailWidth: 800,
       thumbnailMethod: 'contain',
       maxFiles: parallelUploads,
@@ -132,6 +145,9 @@
             this.previewsContainer.removeChild(this.previewsContainer.lastChild!);
           }
           this.files = [file];
+          dropContainer.className = wrapperClass;
+          dropIcon.classList.replace('grid', 'hidden');
+          dropIcon.classList.remove('place-items-center');
         });
         this.on('success', (file) => {
           uploading = false;
@@ -142,31 +158,42 @@
             if (preview.classList.contains('opacity-10')) preview.classList.remove('opacity-10');
           }, 2000);
         });
+        this.on('dragenter', () => {
+          dropContainer.classList.add('bg-black', 'bg-opacity-10');
+          dropIconWrapper.classList.add('w-full', 'h-full');
+          dropIcon.classList.replace('hidden', 'grid');
+          dropIcon.classList.add('place-items-center');
+        });
+        this.on('dragleave', () => {
+          dropContainer.classList.remove('bg-black', 'bg-opacity-10');
+          dropIcon.classList.replace('grid', 'hidden');
+          dropIcon.classList.remove('place-items-center');
+        });
       },
     });
   });
 </script>
 
-<div class={wrapperClass} id="drop-container">
-  <form class="dropzone" id="file-drop">
-    <div
-      on:click={() => (isAvatar ? dropzone.hiddenFileInput?.click() : null)}
-      on:keypress={() => (isAvatar ? dropzone.hiddenFileInput?.click() : null)}
-      on:dragover={() => setShowDropIcon('show')}
-      on:drop={() => setShowDropIcon('hide')}
-    >
+<div bind:this={dropContainer} class={wrapperClass} id="drop-container">
+  <form bind:this={fileDrop} class="dropzone overflow-hidden max-h-[inherit] h-[inherit]" id="file-drop">
+    <div class="w-full h-full overflow-hidden" bind:this={dropIconWrapper}>
       <div
         bind:this={dropIcon}
-        class="hidden absolute z-50 gap-3 opacity-50 backdrop:bg-base-200 backdrop:opacity-50"
+        class="bg-black overflow-hidden hidden absolute max-md:h-[75vh] lg:h-[82vh] max-md:w-full lg:w-[75vw] z-50 gap-3 opacity-50"
       >
-        <iconify-icon icon="mdi:upload" />
-        <span>{$t('files.dragHere')}</span>
+        <div
+          on:dragenter
+          on:dragleave
+          class="rounded-lg flex flex-col gap-2 bg-base-300 items-center p-40"
+        >
+          <iconify-icon class="text-9xl" icon="mdi:upload" />
+          <span>{$t('files.dragHere')}</span>
+        </div>
       </div>
       <slot />
     </div>
-    <div id="preview-template" class="flex justify-center items-center flex-col gap-2">
-      <div class="dz-preview dz-file-preview text-lg font-semibold" />
-
+    <div id="preview-template" class="hidden justify-center items-center flex-col gap-2">
+      <div class="dz-preview dz-file-preview text-lg hidden font-semibold" />
       <figure id="img-container" class="hidden items-center m-auto justify-center">
         <div
           bind:this={loadingContainer}

@@ -149,7 +149,8 @@
   },
   "message": {
     "readBy": "leído por",
-    "cannotCommunicate": "No puede comunicarse con alguien que usted bloqueó o que lo bloqueó"
+    "cannotCommunicate": "No puede comunicarse con alguien que usted bloqueó o que lo bloqueó",
+    "tooLarge": "mensaje demasiado grande (tamaño máximo: 1000 caracteres)"
   },
   "settings": {
     "theme": "tema",
@@ -213,7 +214,7 @@
   },
   "files": {
     "tooBig": "Archivo muy grande! Por favor, envíe archivos hasta 20 MB",
-    "dragHere": "Drag the image here or click here to select it (max size: 20MB)"
+    "dragHere": "Arrastre un archivo aquí o haga clic aquí para seleccionarlo (tamaño máximo: 20 MB)"
   },
   "report": {
     "report": "reportar {item}",

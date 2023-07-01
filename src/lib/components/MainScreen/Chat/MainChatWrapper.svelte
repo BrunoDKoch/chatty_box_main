@@ -21,25 +21,30 @@
 </script>
 
 <DragNDropWrapper
+  wrapperClass="overflow-hidden max-h-[98vh] max-lg:max-h-[85vh]"
   bind:uploading
   bind:uploadSuccessful
-  wrapperClass="flex w-full {searchResultsAreOpen
-    ? 'max-md:hidden lg:col-span-2'
-    : 'col-span-1'} flex-col h-[91vh] max-md:h-[82vh]"
 >
   {#if $chat && $chat.id === $chatId}
-    <MessagesWrapper
-      on:delete
-      bind:replyTo
-      on:report={({ detail }) => {
-        showReportingModal = true;
-        reportingMessage = detail;
-      }}
-      bind:systemMessages={$chat.systemMessages}
-      bind:messages={$chat.messages}
-      bind:total={$chat.messageCount}
-    />
-    <ChatSubmitter bind:loading bind:replyTo />
+    <div
+      class="flex w-full relative overflow-hidden {searchResultsAreOpen
+        ? 'max-md:hidden lg:col-span-2'
+        : 'col-span-1'} flex-col h-[98vh] max-h-[98vh] max-lg:h-[85vh] max-lg:max-h-[85vh]"
+    >
+      <MessagesWrapper
+        on:delete
+        bind:replyTo
+        on:report={({ detail }) => {
+          showReportingModal = true;
+          reportingMessage = detail;
+        }}
+        bind:systemMessages={$chat.systemMessages}
+        bind:messages={$chat.messages}
+        bind:total={$chat.messageCount}
+      />
+
+      <ChatSubmitter bind:loading bind:replyTo />
+    </div>
   {:else}
     <div class="text-9xl flex w-full h-full items-center justify-center">
       <iconify-icon icon="svg-spinners:6-dots-scale" />
