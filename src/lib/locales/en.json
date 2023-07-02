@@ -154,7 +154,8 @@
   "message": {
     "readBy": "read by",
     "cannotCommunicate": "Cannot communicate with someone you blocked, or whom blocked you",
-    "tooLarge": "message too large (max size: 1000 characters)"
+    "tooLarge": "message too large (max size: 1000 characters)",
+    "empty": "message is empty"
   },
   "settings": {
     "theme": "theme",

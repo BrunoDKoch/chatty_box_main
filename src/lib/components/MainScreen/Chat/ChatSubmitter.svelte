@@ -30,6 +30,11 @@
     ),
     10,
   );
+  $: {
+    if (messageError === $t('message.empty') && (newMessage.trim() || !newMessage)) {
+      messageError = '';
+    }
+  }
 
   // Typing handling
   $: otherUsers = [] as { userName: string; isTyping: boolean }[];
@@ -129,6 +134,10 @@
   // Message logic
   async function sendMessage() {
     if (newMessage.length > 1000) return;
+    if (!newMessage.trim()) {
+      messageError = $t('message.empty');
+      return;
+    }
     // Checking for 'messageFlagged' because that's how messages flagged by admins are returned
     if (!newMessage || newMessage === 'messageFlagged') return;
     dispatch('sendingMessage', newMessage);
@@ -152,7 +161,7 @@
 
 <form
   on:submit|preventDefault={async () => await sendMessage()}
-  class="box-border bg-transparent relative form-control overflow-hidden"
+  class="box-border bg-transparent fixed lg:w-[75vw] w-full bottom-0 form-control overflow-hidden"
 >
   <label class="label {messageError || replyTo ? 'bg-base-300' : ''} justify-between" for="">
     {#if messageError}
@@ -168,7 +177,7 @@
       <span class="label-text"> &nbsp;&nbsp;&nbsp;&nbsp; </span>
     {/if}
   </label>
-  <div class="join px-4">
+  <div class="join box-border bg-base-300 px-4">
     <Button id="file-input-toggle" buttonType="button" joinItem additionalClasses="text-2xl">
       <iconify-icon icon="mdi:attachment" />
     </Button>

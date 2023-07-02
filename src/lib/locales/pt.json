@@ -150,7 +150,8 @@
   "message": {
     "readBy": "lida por",
     "cannotCommunicate": "Você não pode se comunicar com alguém que você bloqueou ou bloqueou você",
-    "tooLarge": "mensagem muito grande (tamanho máximo: 1000 caracteres)"
+    "tooLarge": "mensagem muito grande (tamanho máximo: 1000 caracteres)",
+    "empty": "a mensagem está vazia"
   },
   "settings": {
     "theme": "tema",
