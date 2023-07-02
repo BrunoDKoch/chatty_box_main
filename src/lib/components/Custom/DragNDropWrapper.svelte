@@ -171,12 +171,13 @@
         });
       },
     });
+    document.getElementsByClassName('dz-message')[0].classList.add('hidden')
   });
 </script>
 
 <div bind:this={dropContainer} class={wrapperClass} id="drop-container">
   <form bind:this={fileDrop} class="dropzone overflow-hidden max-h-[inherit] h-[inherit]" id="file-drop">
-    <div class="w-full h-full overflow-hidden" bind:this={dropIconWrapper}>
+    <div class="h-[90vh] max-lg:h-[85vh] overflow-hidden" bind:this={dropIconWrapper}>
       <div
         bind:this={dropIcon}
         class="bg-black overflow-hidden hidden absolute max-md:h-[75vh] lg:h-[82vh] max-md:w-full lg:w-[75vw] z-50 gap-3 opacity-50"

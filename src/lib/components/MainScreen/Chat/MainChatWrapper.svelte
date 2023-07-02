@@ -21,27 +21,29 @@
 </script>
 
 <DragNDropWrapper
-  wrapperClass="overflow-hidden max-h-[98vh] max-lg:max-h-[85vh]"
+  wrapperClass="overflow-hidden h-[90vh] max-lg:h-[85vh]"
   bind:uploading
   bind:uploadSuccessful
 >
   {#if $chat && $chat.id === $chatId}
     <div
-      class="flex w-full relative overflow-hidden {searchResultsAreOpen
-        ? 'max-md:hidden lg:col-span-2'
-        : 'col-span-1'} flex-col h-[98vh] max-h-[98vh] max-lg:h-[85vh] max-lg:max-h-[85vh]"
+      class="grid grid-cols-1 grid-rows-6 w-full relative overflow-hidden {searchResultsAreOpen
+        ? 'hidden lg:col-span-2'
+        : 'col-span-1'} h-[90vh] max-h-[90vh] max-lg:h-[85vh] max-lg:max-h-[85vh]"
     >
-      <MessagesWrapper
-        on:delete
-        bind:replyTo
-        on:report={({ detail }) => {
-          showReportingModal = true;
-          reportingMessage = detail;
-        }}
-        bind:systemMessages={$chat.systemMessages}
-        bind:messages={$chat.messages}
-        bind:total={$chat.messageCount}
-      />
+      <div class="row-span-5 min-h-[88vh] max-lg:min-h-[85vh] overflow-hidden">
+        <MessagesWrapper
+          on:delete
+          bind:replyTo
+          on:report={({ detail }) => {
+            showReportingModal = true;
+            reportingMessage = detail;
+          }}
+          bind:systemMessages={$chat.systemMessages}
+          bind:messages={$chat.messages}
+          bind:total={$chat.messageCount}
+        />
+      </div>
 
       <ChatSubmitter bind:loading bind:replyTo />
     </div>

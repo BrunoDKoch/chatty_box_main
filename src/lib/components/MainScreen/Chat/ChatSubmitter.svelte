@@ -22,7 +22,14 @@
       messageError = $t('message.tooLarge');
     }
   }
-  $: rows = Math.ceil(newMessage.length / 150) || 1;
+  $: rows = Math.min(
+    Math.max(
+      Math.ceil(newMessage.length / 150),
+      newMessage.split('').filter((a) => a === '\n').length,
+      1,
+    ),
+    10,
+  );
 
   // Typing handling
   $: otherUsers = [] as { userName: string; isTyping: boolean }[];
@@ -110,6 +117,15 @@
     await connection.invoke('StartTyping', $chat.id);
     setTimeout(async () => await compareInput(), 3000);
   }
+
+  async function handleKeyPress(e: KeyboardEvent) {
+    await handleTyping();
+    if (e.code === '13' && !e.shiftKey) {
+      e.preventDefault();
+      await sendMessage();
+    }
+  }
+
   // Message logic
   async function sendMessage() {
     if (newMessage.length > 1000) return;
@@ -135,7 +151,6 @@
 </script>
 
 <form
-  on:keydown={async () => await handleTyping()}
   on:submit|preventDefault={async () => await sendMessage()}
   class="box-border relative form-control overflow-hidden"
 >
@@ -158,14 +173,15 @@
       <iconify-icon icon="mdi:attachment" />
     </Button>
     <textarea
+      on:keydown={async (e) => await handleKeyPress(e)}
       bind:this={messageComposer}
       bind:value={newMessage}
       id="message-composer"
       {rows}
       placeholder={singleChatUserBlocked ? $t('message.cannotCommunicate') : ''}
-      class="textarea resize-y join-item {messageError ? 'textarea-error' : 'textarea-bordered'} {disabled
-        ? 'textarea-disabled'
-        : ''} w-full box-border"
+      class="textarea join-item resize-none {messageError
+        ? 'textarea-error'
+        : 'textarea-bordered'} {disabled ? 'textarea-disabled' : ''} w-full box-border"
       {disabled}
     />
     <Button id="chat-submit" {disabled} joinItem additionalClasses="text-2xl">

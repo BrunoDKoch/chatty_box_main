@@ -56,7 +56,7 @@
     <iconify-icon icon="svg-spinners:6-dots-scale" />
   </div>
 {:else}
-  <div class="h-fit overflow-hidden">
+  <div class="overflow-hidden max-h-screen lg:h-screen">
     <ChatNameComponent
       bind:activeSearchPage
       bind:searchResults
@@ -68,7 +68,7 @@
       on:openAddAdminModal={() => (showAddAdminModal = !showAddAdminModal)}
     />
     <div
-      class="grid overflow-hidden h-fit {searchResults.messages && searchResults.messages.length
+      class="grid h-[90vh] max-lg:h-[85vh] overflow-hidden {searchResults.messages && searchResults.messages.length
         ? 'lg:grid-cols-3'
         : 'grid-cols-1'}"
     >
