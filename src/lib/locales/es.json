@@ -135,7 +135,8 @@
     },
     "externalLink": "link externo",
     "thisIsAnExternalLink": "Este es un enlace externo. ¿Estás seguro de que deseas navegar a {item}?",
-    "file": "archivo"
+    "file": "archivo",
+    "download": "descargar"
   },
   "aside": {
     "searchChats": "{search} chats"
