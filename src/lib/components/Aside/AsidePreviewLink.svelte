@@ -29,6 +29,11 @@
           icon: 'mdi:music',
           text: $t('common.audio'),
         };
+      case 'file':
+        return {
+          icon: 'mdi:file',
+          text: $t('common.file')
+        }
       default:
         return {
           icon: 'mdi:link',

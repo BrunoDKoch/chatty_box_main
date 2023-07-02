@@ -138,7 +138,8 @@
       "f": "the same"
     },
     "externalLink": "external link",
-    "thisIsAnExternalLink": "This is an external link. Are you sure you wish to navigate to {item}?"
+    "thisIsAnExternalLink": "This is an external link. Are you sure you wish to navigate to {item}?",
+    "file": "file"
   },
   "aside": {
     "searchChats": "{search} chats"

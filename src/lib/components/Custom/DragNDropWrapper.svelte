@@ -8,7 +8,6 @@
 
   export let uploadSuccessful: boolean;
   export let uploading: boolean;
-  export let isAvatar = false;
   export let wrapperClass = '';
 
   $: {
@@ -20,20 +19,8 @@
     }
   }
 
-  // If it's an avatar, only accept one image
-  const settingsObject = isAvatar
-    ? {
-        acceptedFiles: 'image/*',
-        parallelUploads: 1,
-        url: `${PUBLIC_AUTH_URL_DEV}/User/Avatar`,
-      }
-    : {
-        acceptedFiles: 'image/*,audio/*,video/*',
-        parallelUploads: 4,
-        url: `${PUBLIC_AUTH_URL_DEV}/User/Upload/${$chatId}`,
-      };
-
-  const { acceptedFiles, parallelUploads, url } = settingsObject;
+  const parallelUploads = 4;
+  const url = `${PUBLIC_AUTH_URL_DEV}/User/Upload/${$chatId}` 
 
   // HTML Elements
   let preview: HTMLImageElement;
@@ -74,7 +61,6 @@
       clickable: document.getElementById('file-input-toggle')!,
       previewTemplate: document.getElementById('preview-template')!.innerHTML,
       parallelUploads,
-      acceptedFiles,
       dictDefaultMessage: '',
       dictFallbackMessage: '',
       maxFilesize: 20,

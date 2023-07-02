@@ -1,7 +1,10 @@
 const urlRegex = /((?:https?|ftp):\/\/[^\s/$.?#].[^\s]*)/gi;
 const hostedFilesRegex =
-  /^static\/(images|audio|video)\/[(\w+)+-]+\/[(\w+)+-]+\/[(\w+)+-]+.\w{3,4}/gi;
+  /^static\/(images|audio|video|files)\/[(\w+)+-]+\/[(\w+)+-]+\/[(\w+)+-]+.\w{3,4}/gi;
 
+function isFileLink(link: string) {
+  return link.match(hostedFilesRegex);
+}
 function isYouTubeLink(link: string) {
   return link.match(/^https:\/\/(www.)?youtube.\S+/gi);
 }
@@ -24,11 +27,12 @@ function isAudioLink(link: string) {
   return audioExtensions.includes(extension.toLowerCase());
 }
 
-function getLinkType(link: string): 'image' | 'video' | 'audio' | 'YouTube' | null {
+function getLinkType(link: string): 'image' | 'video' | 'audio' | 'YouTube' | 'file' | null {
   if (isYouTubeLink(link)) return 'YouTube';
   if (isImageLink(link)) return 'image';
   if (isVideoLink(link)) return 'video';
   if (isAudioLink(link)) return 'audio';
+  if (isFileLink(link)) return 'file';
   return null;
 }
 

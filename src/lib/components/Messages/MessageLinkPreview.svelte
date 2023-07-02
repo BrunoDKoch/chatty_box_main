@@ -4,6 +4,7 @@
   import { getLinkType } from '$lib/useLinkCheck';
   import Button from '$lib/components/Custom/Button.svelte';
   import { createEventDispatcher } from 'svelte';
+  import MessageFilePreview from './MessageFilePreview.svelte';
   export let link: string;
 
   const dispatch = createEventDispatcher();
@@ -47,6 +48,8 @@
     controls
     src={link.startsWith('static/audio') ? `${PUBLIC_IMAGES_URL}/${link}` : link}
   />
+{:else if linkType === 'file'}
+  <MessageFilePreview {link} />
 {:else}
   <a
     on:click|preventDefault={() => dispatch('showExternalLink', link)}

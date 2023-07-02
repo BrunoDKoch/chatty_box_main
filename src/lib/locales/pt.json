@@ -134,7 +134,8 @@
       "f": "idênticas"
     },
     "externalLink": "link externo",
-    "thisIsAnExternalLink": "Este é um link externo. Tem certeza que deseja navegar a {item}?"
+    "thisIsAnExternalLink": "Este é um link externo. Tem certeza que deseja navegar a {item}?",
+    "file": "arquivo"
   },
   "aside": {
     "searchChats": "{search} chats"
