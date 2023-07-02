@@ -39,8 +39,7 @@
         {$t('common.clear')}
       </Button>
       <Button
-        id=
-        joinItem
+        id="joinItem"
         buttonUIType="success"
         disabled={!selection}
         on:click={async () => await handleSubmit()}

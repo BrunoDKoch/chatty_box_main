@@ -20,7 +20,7 @@
   }
 
   const parallelUploads = 4;
-  const url = `${PUBLIC_AUTH_URL_DEV}/User/Upload/${$chatId}` 
+  const url = `${PUBLIC_AUTH_URL_DEV}/User/Upload/${$chatId}`;
 
   // HTML Elements
   let preview: HTMLImageElement;
@@ -157,12 +157,16 @@
         });
       },
     });
-    document.getElementsByClassName('dz-message')[0].classList.add('hidden')
+    document.getElementsByClassName('dz-message')[0].classList.add('hidden');
   });
 </script>
 
 <div bind:this={dropContainer} class={wrapperClass} id="drop-container">
-  <form bind:this={fileDrop} class="dropzone overflow-hidden max-h-[inherit] h-[inherit]" id="file-drop">
+  <form
+    bind:this={fileDrop}
+    class="dropzone overflow-hidden max-h-[inherit] h-[inherit]"
+    id="file-drop"
+  >
     <div class="h-[90vh] max-lg:h-[85vh] overflow-hidden" bind:this={dropIconWrapper}>
       <div
         bind:this={dropIcon}

@@ -35,9 +35,10 @@
     return relevantObject.unknown;
   }
   function getIcons(info: ClientConnectionPartialInfo) {
-    let deviceIcon = info.os.toLowerCase().includes('android') || info.os.toLowerCase().includes('ios')
-      ? 'material-symbols:phone-android-outline'
-      : 'teenyicons:computer-outline';
+    let deviceIcon =
+      info.os.toLowerCase().includes('android') || info.os.toLowerCase().includes('ios')
+        ? 'material-symbols:phone-android-outline'
+        : 'teenyicons:computer-outline';
     let osIcon = getIconFromObject('osIcons', info.os.toLowerCase().split(' ').at(0)!);
     let browserIcon = getIconFromObject(
       'browserIcons',
@@ -48,7 +49,7 @@
     return { deviceIcon, browserIcon, osIcon, activeIcon, countryIcon };
   }
   function getCountryName(info: ClientConnectionPartialInfo) {
-    return countryNames.of(info.countryIsoCode) ?? 'unknown'
+    return countryNames.of(info.countryIsoCode) ?? 'unknown';
   }
 </script>
 

@@ -19,7 +19,7 @@
       icon: 'mdi:chat-plus',
       uiType: 'neutral',
       tooltip: $t('friends.newChat'),
-      id: 'new-chat'
+      id: 'new-chat',
     },
     {
       action() {
@@ -30,7 +30,7 @@
       tooltip: $t('common.remove', {
         values: { item: $t('common.friend', { values: { count: 1 } }) },
       }),
-      id: 'remove-friend'
+      id: 'remove-friend',
     },
   ];
   async function handleNewChat() {
@@ -50,7 +50,7 @@
       lowerOpacity={!friend.isOnline}
     >
       <div class="join {friend.isOnline ? 'opacity-100' : 'opacity-50'}">
-        {#each actionButtons as {id, action, tooltip, uiType: buttonUIType, icon}}
+        {#each actionButtons as { id, action, tooltip, uiType: buttonUIType, icon }}
           <Button
             {id}
             on:click={async () => await action()}

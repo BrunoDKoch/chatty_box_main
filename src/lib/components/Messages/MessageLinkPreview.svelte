@@ -1,5 +1,4 @@
 <script lang="ts">
-  import ImageModal from '$lib/components/Modals/ImageModal.svelte';
   import { PUBLIC_IMAGES_URL } from '$env/static/public';
   import { getLinkType } from '$lib/useLinkCheck';
   import Button from '$lib/components/Custom/Button.svelte';

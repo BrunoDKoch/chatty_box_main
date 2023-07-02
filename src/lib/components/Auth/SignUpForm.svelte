@@ -6,7 +6,7 @@
   import { t } from 'svelte-i18n';
   import useError from '$lib/useError';
   import Button from '../Custom/Button.svelte';
-    import useFormValidation from '$lib/useFormValidation';
+  import useFormValidation from '$lib/useFormValidation';
   export let pending = false;
   const dispatch = createEventDispatcher();
   let qrCode: { content: string; height: number; width: number } | null = null;

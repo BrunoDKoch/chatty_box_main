@@ -1,4 +1,4 @@
-type UiType = 'neutral'| 'warning'| 'error'| 'info'| 'success';
+type UiType = 'neutral' | 'warning' | 'error' | 'info' | 'success';
 
 type ButtonFormat =
   | 'block'
@@ -10,9 +10,9 @@ type ButtonFormat =
   | 'outline'
   | 'regular';
 
-type UiSize = 'base'| 'small'| 'extra-small'| 'large';
+type UiSize = 'base' | 'small' | 'extra-small' | 'large';
 
-type ButtonType = 'button'| 'reset'| 'submit'| null | undefined;
+type ButtonType = 'button' | 'reset' | 'submit' | null | undefined;
 
 const sizeClasses = {
   base: 'btn-md',

@@ -17,8 +17,8 @@ declare global {
         userName: string;
         avatar?: string;
         friends: FriendResponse[];
-        friendRequests: {userAdding: UserPartialResponse}[];
-        blocks: UserPartialResponse[]
+        friendRequests: { userAdding: UserPartialResponse }[];
+        blocks: UserPartialResponse[];
         previews: ChatPreview[];
         isAdmin: boolean;
       };

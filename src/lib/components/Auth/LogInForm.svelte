@@ -9,7 +9,7 @@
   import MfaCodeModal from './MFACodeModal.svelte';
   import useError from '$lib/useError';
   import Button from '../Custom/Button.svelte';
-    import useFormValidation from '$lib/useFormValidation';
+  import useFormValidation from '$lib/useFormValidation';
   export let pending = false;
   const dispatch = createEventDispatcher();
   let showMFACodeModal = false;

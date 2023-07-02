@@ -5,8 +5,8 @@
   import { connection } from '$lib/useSignalR';
   import Pagination from '$lib/components/Pagination/Pagination.svelte';
   import Modal from '$lib/components/Modals/Modal.svelte';
-  
-$: attempts = [] as UserLoginAttempt[];
+
+  $: attempts = [] as UserLoginAttempt[];
   $: activePage = 1;
   let total: number;
   const countryNames = new Intl.DisplayNames([$locale!], { type: 'region' });

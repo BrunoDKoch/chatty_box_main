@@ -25,7 +25,7 @@
   }
   async function closeConnection() {
     try {
-      console.log(selection)
+      console.log(selection);
       await connection.invoke('CloseConnection', selection);
       sessionsData = connection.invoke('GetConnections').then((data) => data);
       selection.length = 0;
@@ -49,13 +49,13 @@
       {headers}
     />
     {#if selection && selection.length}
-    <div class="modal-action">
-      <Button id="close-session" on:click={async () => await closeConnection()}>
-        {$t('common.closeThing', {
-          values: { item: $t('common.session', { values: { count: selection.length } }) },
-        })}
-      </Button>
-    </div>
+      <div class="modal-action">
+        <Button id="close-session" on:click={async () => await closeConnection()}>
+          {$t('common.closeThing', {
+            values: { item: $t('common.session', { values: { count: selection.length } }) },
+          })}
+        </Button>
+      </div>
     {/if}
   {/await}
 </Modal>

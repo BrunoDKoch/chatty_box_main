@@ -6,7 +6,6 @@
   import CloseButton from '$lib/components/Custom/CloseButton.svelte';
   import Button from '$lib/components/Custom/Button.svelte';
   import { createEventDispatcher } from 'svelte';
-  import { page } from '$app/stores';
   export let loading = true;
   export let replyTo: MessageResponse | undefined = undefined;
 

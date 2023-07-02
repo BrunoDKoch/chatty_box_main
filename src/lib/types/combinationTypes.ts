@@ -52,6 +52,9 @@ interface UserReportResponse extends UserReportPartial {
 }
 
 export type {
-  CompleteChat, MessageResponse,
-  ReportUserResponse, SystemMessagePartial, UserReportResponse
+  CompleteChat,
+  MessageResponse,
+  ReportUserResponse,
+  SystemMessagePartial,
+  UserReportResponse,
 };

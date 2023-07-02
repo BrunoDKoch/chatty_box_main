@@ -32,8 +32,8 @@
       case 'file':
         return {
           icon: 'mdi:file',
-          text: $t('common.file')
-        }
+          text: $t('common.file'),
+        };
       default:
         return {
           icon: 'mdi:link',

@@ -3,7 +3,7 @@
   import { t } from 'svelte-i18n';
   import Modal from '../Modal.svelte';
   import Button from '$lib/components/Custom/Button.svelte';
-  import { changeEmail, changePassword } from '$lib/useAuth';
+  import { changePassword } from '$lib/useAuth';
   import useError from '$lib/useError';
   import { createEventDispatcher } from 'svelte';
   import useFormValidation from '$lib/useFormValidation';

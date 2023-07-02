@@ -37,7 +37,10 @@
     if (results.length) results.length = 0;
     fetching = true;
     setTimeout(async () => {
-      results = await connection.invoke<UserPartialResponse[]>('SearchUser', { userName: search, chatId });
+      results = await connection.invoke<UserPartialResponse[]>('SearchUser', {
+        userName: search,
+        chatId,
+      });
       fetching = false;
       timerHasStarted = false;
     }, 500);

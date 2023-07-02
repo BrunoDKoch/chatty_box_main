@@ -2,7 +2,7 @@
   import Modal from '$lib/components/Modals/Modal.svelte';
   import QrCodeModal from '$lib/components/Modals/QrCodeModal.svelte';
   import { connection } from '$lib/useSignalR';
-  import { createEventDispatcher, onMount } from 'svelte';
+  import { createEventDispatcher } from 'svelte';
   import { t } from 'svelte-i18n';
   import Button from '../Custom/Button.svelte';
   import { finishMFADisabling, startMFADisabling } from '$lib/useAuth';

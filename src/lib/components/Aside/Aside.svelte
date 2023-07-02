@@ -9,7 +9,11 @@
 
 <div class="flex flex-col gap-3 h-full max-lg:overflow-y-auto">
   <div class="flex items-center">
-    <Button id="settings-toggle" on:click={() => (settingsMenuActive = !settingsMenuActive)} format="ghost">
+    <Button
+      id="settings-toggle"
+      on:click={() => (settingsMenuActive = !settingsMenuActive)}
+      format="ghost"
+    >
       <iconify-icon icon="mdi:cog" height="1.4rem" />
     </Button>
     {#if settingsMenuActive}
