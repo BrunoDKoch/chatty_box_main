@@ -33,7 +33,7 @@
     />
   </video>
 {:else if linkType === 'audio'}
-  <audio controls src={link.startsWith('static/audio') ? `${PUBLIC_IMAGES_URL}/${link}` : link} />
+  <audio class="relative max-lg:w-52" controls src={link.startsWith('static/audio') ? `${PUBLIC_IMAGES_URL}/${link}` : link} />
 {:else}
   <a class="link" rel="external" href={link}>{link}</a>
 {/if}

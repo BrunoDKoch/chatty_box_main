@@ -17,6 +17,7 @@
 
 {#if message}
   <a
+    id="link-to-{replyToId}"
     href="/"
     on:click|preventDefault|stopPropagation={() => dispatch('scrollTo', replyToId)}
     class="label opacity-70 {isFromCaller ? 'border-r-2 justify-end' : 'border-l-2'}"

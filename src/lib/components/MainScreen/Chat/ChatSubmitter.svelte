@@ -152,9 +152,9 @@
 
 <form
   on:submit|preventDefault={async () => await sendMessage()}
-  class="box-border relative form-control overflow-hidden"
+  class="box-border bg-transparent relative form-control overflow-hidden"
 >
-  <label class="label justify-between" for="">
+  <label class="label {messageError || replyTo ? 'bg-base-300' : ''} justify-between" for="">
     {#if messageError}
       <span class="label-text text-error first-letter:uppercase">
         {messageError}
