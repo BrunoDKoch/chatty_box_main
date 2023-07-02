@@ -132,7 +132,9 @@
     "theSame": {
       "m": "idénticos",
       "f": "idénticas"
-    }
+    },
+    "externalLink": "link externo",
+    "thisIsAnExternalLink": "Este es un enlace externo. ¿Estás seguro de que deseas navegar a {item}?"
   },
   "aside": {
     "searchChats": "{search} chats"

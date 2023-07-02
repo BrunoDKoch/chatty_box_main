@@ -184,7 +184,7 @@
             {$t(message.text)}
           {:else if links && links.length}
             {#each links as link}
-              <MessageLinkPreview bind:link />
+              <MessageLinkPreview on:showImage on:showExternalLink bind:link />
             {/each}
           {:else}
             {message.text}

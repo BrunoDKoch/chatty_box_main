@@ -11,6 +11,8 @@
   import useActiveScreen from '$lib/useActiveScreen';
   import { connection, previews } from '$lib/useSignalR';
   import ChatMembersModal from '$lib/components/Modals/ChatMembersModal.svelte';
+  import ImageModal from '$lib/components/Modals/ImageModal.svelte';
+  import ExternalLinkModal from '$lib/components/Modals/ExternalLinkModal.svelte';
 
   let loading = true;
   let searchResults: { messages: MessageResponse[]; messageCount: number } = {
@@ -29,6 +31,11 @@
   let showNotificationsModal = false;
   let showConfirmDeletionModal = false;
   let showAddAdminModal = false;
+
+  // These use string because they require a link
+  let showImageModal = '';
+  let showExternalLink = '';
+
   async function handleLeaveChat() {
     await connection.invoke('LeaveChat', $chatId);
     $useActiveScreen = 'friends';
@@ -68,7 +75,8 @@
       on:openAddAdminModal={() => (showAddAdminModal = !showAddAdminModal)}
     />
     <div
-      class="grid h-[90vh] max-lg:h-[85vh] overflow-hidden {searchResults.messages && searchResults.messages.length
+      class="grid h-[90vh] max-lg:h-[85vh] overflow-hidden {searchResults.messages &&
+      searchResults.messages.length
         ? 'lg:grid-cols-3'
         : 'grid-cols-1'}"
     >
@@ -77,6 +85,8 @@
           messageToDelete = detail;
           showConfirmDeletionModal = !showConfirmDeletionModal;
         }}
+        on:showImage={({ detail }) => (showImageModal = detail)}
+        on:showExternalLink={({ detail }) => (showExternalLink = detail)}
         bind:searchResults
         bind:loading
       />
@@ -126,4 +136,8 @@
     modalType="add admin"
     on:close={() => (showAddAdminModal = !showAddAdminModal)}
   />
+{:else if showImageModal}
+  <ImageModal on:close={() => (showImageModal = '')} link={showImageModal} />
+{:else if showExternalLink}
+  <ExternalLinkModal on:close={() => (showExternalLink = '')} link={showExternalLink} />
 {/if}

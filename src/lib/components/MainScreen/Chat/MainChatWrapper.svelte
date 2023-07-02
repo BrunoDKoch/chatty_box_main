@@ -34,6 +34,8 @@
       <div class="row-span-5 min-h-[88vh] max-lg:min-h-[85vh] overflow-hidden">
         <MessagesWrapper
           on:delete
+          on:showImage
+          on:showExternalLink
           bind:replyTo
           on:report={({ detail }) => {
             showReportingModal = true;

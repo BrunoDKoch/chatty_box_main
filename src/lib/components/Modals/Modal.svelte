@@ -10,9 +10,9 @@
   function getBgClass() {
     switch (modalType) {
       case 'error':
-        return 'bg-error dark:bg-error-content';
+        return 'bg-error text-error-content dark:bg-error-content dark:text-error';
       case 'warning':
-        return 'bg-warning dark:bg-warning-content';
+        return 'bg-warning text-warning-content dark:bg-warning-content dark:text-warning';
       default:
         return 'bg-base';
     }

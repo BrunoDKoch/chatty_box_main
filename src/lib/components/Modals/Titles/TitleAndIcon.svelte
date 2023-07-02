@@ -6,7 +6,7 @@
   export let textColor: UiType = 'neutral';
 </script>
 
-<div class="flex max-w-[100vw] text-{textColor} items-center justify-evenly">
+<div class="flex text-{textColor} items-center gap-2">
   <iconify-icon class="row-span-2 self-center justify-self-center" {icon} height="5rem" />
   <h1 class="font-bold uppercase text-2xl">
     {title}

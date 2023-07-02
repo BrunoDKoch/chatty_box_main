@@ -3,7 +3,11 @@
   import { PUBLIC_IMAGES_URL } from '$env/static/public';
   import { getLinkType } from '$lib/useLinkCheck';
   import Button from '$lib/components/Custom/Button.svelte';
+  import { createEventDispatcher } from 'svelte';
   export let link: string;
+
+  const dispatch = createEventDispatcher();
+
   let showImageModal = false;
   $: linkType = getLinkType(link);
 </script>
@@ -17,7 +21,12 @@
     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
   />
 {:else if linkType === 'image'}
-  <Button id={link} format="ghost" additionalClasses="h-52" on:click={() => (showImageModal = !showImageModal)}>
+  <Button
+    id={link}
+    format="ghost"
+    additionalClasses="h-52"
+    on:click={() => dispatch('showImage', link)}
+  >
     <img
       class="max-w-52 max-h-52"
       src={link.startsWith('static/images') ? `${PUBLIC_IMAGES_URL}/${link}?width=200` : link}
@@ -33,11 +42,17 @@
     />
   </video>
 {:else if linkType === 'audio'}
-  <audio class="relative max-lg:w-52" controls src={link.startsWith('static/audio') ? `${PUBLIC_IMAGES_URL}/${link}` : link} />
+  <audio
+    class="relative max-lg:w-52"
+    controls
+    src={link.startsWith('static/audio') ? `${PUBLIC_IMAGES_URL}/${link}` : link}
+  />
 {:else}
-  <a class="link" rel="external" href={link}>{link}</a>
-{/if}
-
-{#if showImageModal}
-  <ImageModal on:close={() => (showImageModal = !showImageModal)} {link} />
+  <a
+    on:click|preventDefault={() => dispatch('showExternalLink', link)}
+    on:touchstart|preventDefault={() => dispatch('showExternalLink', link)}
+    class="link"
+    rel="external"
+    href={link}>{link}</a
+  >
 {/if}

@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { ButtonFormat, UiSize, UiType, ButtonType } from '$lib/types/daisyUiTypes';
   import { btnBackground, btnFormat, sizeClasses } from '$lib/types/daisyUiTypes';
-    import { createEventDispatcher } from 'svelte';
+  import { createEventDispatcher } from 'svelte';
   export let buttonType: ButtonType = 'submit';
   export let buttonUIType: UiType = 'neutral';
   export let format: ButtonFormat = 'regular';
@@ -13,8 +13,9 @@
   export let joinItem = false;
   export let link = '';
   export let id: string;
+  export let target: string | undefined = undefined;
 
-  const dispatch = createEventDispatcher()
+  const dispatch = createEventDispatcher();
 
   function getClassName(button: HTMLButtonElement | HTMLAnchorElement) {
     button.classList.add('btn', btnBackground[buttonUIType], sizeClasses[size]);
@@ -42,7 +43,15 @@
     {/if}
   </button>
 {:else}
-  <a href={link} on:click on:touchstart={() => dispatch('click')} type={buttonType} data-tip={tooltip} use:getClassName>
+  <a
+    href={link}
+    on:click
+    on:touchstart={() => dispatch('click')}
+    {target}
+    type={buttonType}
+    data-tip={tooltip}
+    use:getClassName
+  >
     {#if loading}
       <iconify-icon icon="svg-spinners:6-dots-scale" />
     {:else}

@@ -136,7 +136,9 @@
     "theSame": {
       "m": "the same",
       "f": "the same"
-    }
+    },
+    "externalLink": "external link",
+    "thisIsAnExternalLink": "This is an external link. Are you sure you wish to navigate to {item}?"
   },
   "aside": {
     "searchChats": "{search} chats"
