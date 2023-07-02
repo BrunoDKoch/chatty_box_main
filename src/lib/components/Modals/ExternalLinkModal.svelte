@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { t, locale } from 'svelte-i18n';
+  import { t } from 'svelte-i18n';
   import Modal from './Modal.svelte';
   import Button from '../Custom/Button.svelte';
   import { createEventDispatcher } from 'svelte';
