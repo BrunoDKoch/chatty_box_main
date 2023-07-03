@@ -31,12 +31,13 @@
     const index = messages.indexOf(message);
     const nextMessage = messages[index + 1];
     if (!nextMessage) return;
+    const resultingDate = new Date(
+      new Date(`${nextMessage.sentAt}Z`).getTime() - new Date(`${message.sentAt}Z`).getTime(),
+    );
     return (
       index !== messages.length - 1 &&
       nextMessage.user.id === message.user.id &&
-      new Date(
-        new Date(`${nextMessage.sentAt}Z`).getTime() - new Date(`${message.sentAt}Z`).getTime(),
-      ).getMinutes() < 10
+      resultingDate.getTime() < 10 * 60 * 1000
     );
   }
 </script>
@@ -69,6 +70,7 @@
           on:report
           on:showImage
           on:showExternalLink
+          on:fileClick
           bind:message
           hideBottomInfo={checkUserAndTime(message)}
           focusOn={messages.indexOf(message) === messages.length - 1 && messages.length <= 15}

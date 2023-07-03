@@ -136,7 +136,8 @@
     "externalLink": "link externo",
     "thisIsAnExternalLink": "Este é um link externo. Tem certeza que deseja navegar a {item}?",
     "file": "arquivo",
-    "download": "baixar"
+    "download": "baixar",
+    "warning": "atenção"
   },
   "aside": {
     "searchChats": "{search} chats"
@@ -263,5 +264,25 @@
     "country": "país",
     "city": "cidade",
     "active": "ativa"
+  },
+  "file": {
+    "thisIs": {
+      "a": "este é um {item}",
+      "an": "este é um {item}"
+    },
+    "aboutToDownload": "Você está prestes a baixar o seguinte arquivo:",
+    "fileType": {
+      "executable": "arquivo executável",
+      "wordLike": "arquivo de texto em formato rico do MS Word ou similar",
+      "powerPointLike": "arquivo de apresentação do MS PowerPoint ou similar",
+      "text": "arquivo de texto simples",
+      "pdf": "PDF",
+      "compressed": "arquivo compactado ou zipado",
+      "code": "arquivo de código",
+      "unknown": "arquivo de tipo desconhecido"
+    },
+    "compressedWarning": "arquivos desse tipo frequentemente não podem ser verificados em busca de malware antes da extração e podem conter código malicioso",
+    "executableWarning": "arquivos desse tipo podem conter código executável que pode ser prejudicial ao seu dispositivo"
   }
+  
 }

@@ -4,6 +4,7 @@
   import CloseButton from '../Custom/CloseButton.svelte';
 
   export let modalType: 'base' | 'error' | 'warning' = 'base';
+  export let additionalClasses: string = '';
   let show = false;
   let modalElement: HTMLDialogElement;
   let bgClass = getBgClass();
@@ -26,7 +27,7 @@
 <div>
   <dialog on:close bind:this={modalElement} class="modal w-screen h-screen">
     {#if show}
-      <div transition:scale class="modal-box lg:min-w-max overflow-x-hidden {bgClass}">
+      <div transition:scale class="modal-box overflow-x-hidden w-full {bgClass} {additionalClasses}">
         <CloseButton id="modal-close" on:close />
         <slot />
       </div>

@@ -36,6 +36,7 @@
           on:delete
           on:showImage
           on:showExternalLink
+          on:fileClick
           bind:replyTo
           on:report={({ detail }) => {
             showReportingModal = true;

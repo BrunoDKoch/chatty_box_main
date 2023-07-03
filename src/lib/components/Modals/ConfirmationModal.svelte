@@ -25,12 +25,14 @@
       </span>
     </p>
   </div>
-  <div class="modal-action join">
-    <Button id="yes" joinItem buttonUIType="success" on:click={() => dispatch('confirm')}>
-      {$t('common.yes')}
-    </Button>
-    <Button id="no" joinItem buttonUIType="error" on:click={() => dispatch('deny')}>
-      {$t('common.no')}
-    </Button>
+  <div class="modal-action">
+    <div class="join">
+      <Button id="yes" joinItem buttonUIType="success" on:click={() => dispatch('confirm')}>
+        {$t('common.yes')}
+      </Button>
+      <Button id="no" joinItem buttonUIType="error" on:click={() => dispatch('deny')}>
+        {$t('common.no')}
+      </Button>
+    </div>
   </div>
 </Modal>

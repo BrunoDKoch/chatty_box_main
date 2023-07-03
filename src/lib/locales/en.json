@@ -140,7 +140,8 @@
     "externalLink": "external link",
     "thisIsAnExternalLink": "This is an external link. Are you sure you wish to navigate to {item}?",
     "file": "file",
-    "download": "download"
+    "download": "download",
+    "warning": "warning"
   },
   "aside": {
     "searchChats": "{search} chats"
@@ -267,5 +268,24 @@
     "country": "country",
     "city": "city",
     "active": "active"
+  },
+  "file": {
+    "thisIs": {
+      "a": "this is a {item}",
+      "an": "this is an {item}"
+    },
+    "aboutToDownload": "You are about to download the following file:",
+    "fileType": {
+      "executable": "executable file",
+      "wordLike": "MS Word or MS Word-like rich text file",
+      "powerPointLike": "MS PowerPoint or MS PowerPoint-like presentation file",
+      "text": "plain text file",
+      "pdf": "PDF",
+      "compressed": "compressed or zipped file",
+      "code": "code file",
+      "unknown": "file of unknown type"
+    },
+    "compressedWarning": "files of this type often cannot be checked for malware before extraction, and may contain malicious code",
+    "executableWarning": "files of this type may contain executable which can be harmful to your device"
   }
 }

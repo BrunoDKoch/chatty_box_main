@@ -84,7 +84,7 @@
 
 <svelte:window bind:innerWidth />
 
-<Modal on:close>
+<Modal additionalClasses="min-w-fit" on:close>
   {#if user}
     <div>
       <div class="flex items-center">

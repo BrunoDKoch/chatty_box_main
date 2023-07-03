@@ -13,6 +13,7 @@
   import ChatMembersModal from '$lib/components/Modals/ChatMembersModal.svelte';
   import ImageModal from '$lib/components/Modals/ImageModal.svelte';
   import ExternalLinkModal from '$lib/components/Modals/ExternalLinkModal.svelte';
+  import FileModal from '$lib/components/Modals/FileModal.svelte';
 
   let loading = true;
   let searchResults: { messages: MessageResponse[]; messageCount: number } = {
@@ -35,6 +36,7 @@
   // These use string because they require a link
   let showImageModal = '';
   let showExternalLink = '';
+  let showFileModal = '';
 
   async function handleLeaveChat() {
     await connection.invoke('LeaveChat', $chatId);
@@ -87,6 +89,7 @@
         }}
         on:showImage={({ detail }) => (showImageModal = detail)}
         on:showExternalLink={({ detail }) => (showExternalLink = detail)}
+        on:fileClick={({ detail }) => (showFileModal = detail)}
         bind:searchResults
         bind:loading
       />
@@ -140,4 +143,6 @@
   <ImageModal on:close={() => (showImageModal = '')} link={showImageModal} />
 {:else if showExternalLink}
   <ExternalLinkModal on:close={() => (showExternalLink = '')} link={showExternalLink} />
+{:else if showFileModal}
+  <FileModal link={showFileModal} on:close={() => (showFileModal = '')} />
 {/if}

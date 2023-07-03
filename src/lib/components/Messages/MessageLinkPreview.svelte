@@ -48,7 +48,7 @@
     src={link.startsWith('static/audio') ? `${PUBLIC_IMAGES_URL}/${link}` : link}
   />
 {:else if linkType === 'file'}
-  <MessageFilePreview {link} />
+  <MessageFilePreview on:fileClick {link} />
 {:else}
   <a
     on:click|preventDefault={() => dispatch('showExternalLink', link)}
