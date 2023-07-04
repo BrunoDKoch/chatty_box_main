@@ -37,18 +37,20 @@
       <iconify-icon class="text-4xl grayscale" {icon} />
       <p class="italic font-bold">{fileName}</p>
     </div>
-    <p class="first-letter:uppercase">
-      {$t(`file.thisIs.${vowels.includes(fileType[0]) ? 'an' : 'a'}`, {
-        values: { item: $t(`file.fileType.${fileType}`) },
-      })}
-    </p>
-    {#if showWarning}
-      <strong>
-        <p class="font-bold first-letter:uppercase">
-          {$t(`file.${fileType}Warning`)}
-        </p>
-      </strong>
-    {/if}
+    <div class="flex flex-col gap-4">
+      <p class="first-letter:uppercase">
+        {$t(`file.thisIs.${vowels.includes(fileType[0]) ? 'an' : 'a'}`, {
+          values: { item: $t(`file.fileType.${fileType}`) },
+        })}.
+      </p>
+      {#if showWarning}
+        <strong>
+          <p class="font-bold first-letter:uppercase">
+            {$t(`file.${fileType}Warning`)}.
+          </p>
+        </strong>
+      {/if}
+    </div>
     <div class="divider" />
   </div>
   <div class="modal-bottom text-end">

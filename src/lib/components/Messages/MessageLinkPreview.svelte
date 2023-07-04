@@ -8,7 +8,6 @@
 
   const dispatch = createEventDispatcher();
 
-  let showImageModal = false;
   $: linkType = getLinkType(link);
 </script>
 
@@ -55,6 +54,8 @@
     on:touchstart|preventDefault={() => dispatch('showExternalLink', link)}
     class="link"
     rel="external"
-    href={link}>{link}</a
+    href={link}
   >
+    {link}
+  </a>
 {/if}

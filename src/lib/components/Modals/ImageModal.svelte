@@ -4,7 +4,7 @@
   export let link: string;
 </script>
 
-<Modal on:close>
+<Modal additionalClasses="min-w-fit" on:close>
   <div class="flex items-center justify-center">
     <img
       class="max-h-[70vh] max-w-[70vw]"

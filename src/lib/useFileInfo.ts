@@ -20,6 +20,8 @@ const fileTypes = [
   'unknown',
 ] as const;
 
+export type FileType = (typeof fileTypes)[number];
+
 const fileTypesAndExtensions: Record<FileType, string[]> = {
   executable: [
     'exe',
@@ -80,8 +82,6 @@ const fileTypesAndExtensions: Record<FileType, string[]> = {
   unknown: [],
 };
 
-export type FileType = (typeof fileTypes)[number];
-
 const programmingFileIcons = {
   c: 'vscode-icons:file-type-c3',
   cpp: 'vscode-icons:file-type-cpp3',
@@ -126,10 +126,12 @@ function getFileType(extension?: string): FileType {
 }
 
 export default function (link: string) {
-  const extension = link.split('.').pop();
+  console.log(link)
+  const finalPartOfLink = link.split('.').pop();
+  const extension = finalPartOfLink === link ? undefined : finalPartOfLink;
   const fileName = link.split('/').pop();
   const fileType = getFileType(extension);
   const icon = getFileIcon(fileType, extension);
-  console.log(extension)
+  console.log({ extension, fileName, icon, fileType });
   return { extension, fileName, icon, fileType };
 }

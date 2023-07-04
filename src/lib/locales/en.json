@@ -286,6 +286,6 @@
       "unknown": "file of unknown type"
     },
     "compressedWarning": "files of this type often cannot be checked for malware before extraction, and may contain malicious code",
-    "executableWarning": "files of this type may contain executable which can be harmful to your device"
+    "executableWarning": "files of this type may contain executable instructions which can be harmful to your device"
   }
 }
