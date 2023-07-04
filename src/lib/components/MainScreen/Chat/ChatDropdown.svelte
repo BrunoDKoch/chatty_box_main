@@ -38,7 +38,7 @@
   }
 </script>
 
-<menu class="dropdown z-50 {open ? 'dropdown-open' : ''}">
+<menu class="dropdown static z-50 {open ? 'dropdown-open' : ''}">
   <Button buttonType="button" on:click={() => (open = !open)} id="chat-dropdown-toggle" format="ghost">
     <iconify-icon icon="mdi:dots-vertical" />
   </Button>

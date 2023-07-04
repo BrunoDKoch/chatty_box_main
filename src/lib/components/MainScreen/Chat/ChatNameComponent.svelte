@@ -12,8 +12,8 @@
   $: userNamesJoined = $chat.users.map((u) => u.userName).join(', ');
 </script>
 
-<div class="bg-base-200 px-2 max-lg:w-full lg:w-[75vw] min-h-max overflow-hidden z-50 py-5">
-  <div class="grid max-lg:grid-cols-1 lg:grid-cols-2 items-center overflow-hidden justify-evenly">
+<div class="bg-base-200 box-border px-2 max-lg:w-full lg:w-[75vw] min-h-max overflow-hidden z-50">
+  <div class="grid py-5 box-border max-lg:grid-cols-1 lg:grid-cols-2 items-center overflow-hidden justify-evenly">
     <div class="font-semibold overflow-hidden text-lg">
       <h1 class="max-lg:hidden overflow-hidden">{$chat.chatName ?? userNamesJoined}</h1>
     </div>

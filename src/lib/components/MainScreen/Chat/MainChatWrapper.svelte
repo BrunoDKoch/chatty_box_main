@@ -21,7 +21,7 @@
 </script>
 
 <DragNDropWrapper
-  wrapperClass="overflow-hidden h-[90vh] z-10 max-lg:h-[85vh] {searchResultsAreOpen
+  wrapperClass="overflow-hidden h-[90vh] max-lg:h-[85vh] {searchResultsAreOpen
     ? 'max-lg:hidden lg:col-span-2'
     : 'col-span-1'}"
   bind:uploading
