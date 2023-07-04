@@ -98,7 +98,7 @@ const programmingFileIcons = {
   bat: 'vscode-icons:file-type-bat',
   css: 'vscode-icons:file-type-css',
   html: 'vscode-icons:file-type-html',
-  xml: 'mdi:file-xml-box',
+  xml: 'vscode-icons:file-type-xml',
   h: 'vscode-icons:file-type-c',
   yaml: 'vscode-icons:file-type-yaml',
   php: 'vscode-icons:file-type-php',
@@ -126,12 +126,10 @@ function getFileType(extension?: string): FileType {
 }
 
 export default function (link: string) {
-  console.log(link)
   const finalPartOfLink = link.split('.').pop();
   const extension = finalPartOfLink === link ? undefined : finalPartOfLink;
   const fileName = link.split('/').pop();
   const fileType = getFileType(extension);
   const icon = getFileIcon(fileType, extension);
-  console.log({ extension, fileName, icon, fileType });
   return { extension, fileName, icon, fileType };
 }
