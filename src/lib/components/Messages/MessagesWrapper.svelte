@@ -7,6 +7,7 @@
   import SystemMessageComponent from './SystemMessageComponent.svelte';
   import CloseButton from '$lib/components/Custom/CloseButton.svelte';
   import { chat } from '$lib/useActiveChat';
+  import { createEventDispatcher } from 'svelte';
   export let pagination = false;
   export let total: number;
   export let messages: MessageResponse[];
@@ -17,6 +18,8 @@
   $: combinedMessages = [...messages, ...systemMessages];
   $: combinedMessages,
     combinedMessages.sort((a, b) => Number(new Date(getDate(a))) - Number(new Date(getDate(b))));
+
+  const dispatch = createEventDispatcher();
 
   function getDate(message: MessageResponse | SystemMessagePartial) {
     if ('sentAt' in message) return message.sentAt;
@@ -44,7 +47,7 @@
 
 <div
   class="overflow-y-auto {isSearch
-    ? 'lg:border-l-2'
+    ? 'lg:border-l-2 col-span-1'
     : ''} overflow-x-hidden h-[80vh] max-h-[80vh] box-border"
 >
   {#if !pagination}

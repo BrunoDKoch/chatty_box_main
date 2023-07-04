@@ -51,7 +51,6 @@
 {:else}
   <a
     on:click|preventDefault={() => dispatch('showExternalLink', link)}
-    on:touchstart|preventDefault={() => dispatch('showExternalLink', link)}
     class="link"
     rel="external"
     href={link}

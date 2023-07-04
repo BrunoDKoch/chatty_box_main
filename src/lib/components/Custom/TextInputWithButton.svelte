@@ -63,7 +63,7 @@
   <input
     id={name}
     use:getType
-    class="input capitalize join-item input-bordered {inputSize} {!disabled
+    class="input join-item input-bordered {inputSize} {!disabled
       ? errorClass
       : 'input-disabled'}"
     bind:value

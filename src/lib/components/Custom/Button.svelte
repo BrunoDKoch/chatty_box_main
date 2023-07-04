@@ -29,7 +29,7 @@
 {#if !link}
   <button
     on:click
-    on:touchstart={() => dispatch('click')}
+    on:contextmenu
     {id}
     type={buttonType}
     disabled={disabled || loading}
@@ -46,7 +46,7 @@
   <a
     href={link}
     on:click
-    on:touchstart={() => dispatch('click')}
+    on:contextmenu
     {target}
     type={buttonType}
     data-tip={tooltip}

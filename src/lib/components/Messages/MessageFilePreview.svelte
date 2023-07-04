@@ -9,11 +9,11 @@
   const { fileName, icon } = useFileInfo(link);
 </script>
 
-<a on:click|preventDefault={() => dispatch('fileClick', link)} href="{PUBLIC_IMAGES_URL}/{link}">
-  <div class="items-center hover:link p-4 grid grid-cols-5">
-    <iconify-icon class="text-4xl grayscale" {icon} />
+<a class="max-w-fit" on:click|preventDefault={() => dispatch('fileClick', link)} href="{PUBLIC_IMAGES_URL}/{link}">
+  <div class="items-center w-fit hover:link p-4 grid grid-cols-5">
+    <iconify-icon class="text-3xl lg:text-4xl grayscale" {icon} />
     <div class="flex col-span-4 flex-col">
-      <p class="italic font-bold">{fileName}</p>
+      <span class="italic font-bold">{fileName}</span>
       <div class="flex items-center gap-2">
         <iconify-icon icon="mdi:download" />
         <p class="capitalize">{$t('common.download')}</p>

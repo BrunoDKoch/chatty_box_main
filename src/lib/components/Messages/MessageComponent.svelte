@@ -86,6 +86,23 @@
     isEditing = false;
   }
 
+  // Handle touch
+  function handleTouchStart() {
+    setTimeout(() => {
+      showOptions = true;
+    }, 100);
+  }
+
+  function handleGlobalTouchStart(event: TouchEvent) {
+    if (!event.target) return;
+    const clickedElement = event.target as HTMLElement;
+    if (clickedElement === thisElement || options.map((o) => o.id).includes(clickedElement.id))
+      return;
+    showOptions = false;
+  }
+
+  window.addEventListener('touchstart', handleGlobalTouchStart);
+
   onMount(() => {
     observer.observe(thisElement);
     if (focusOn)
@@ -127,9 +144,9 @@
   class="relative {displayOnly ? '' : 'hover:bg-base-300'}"
   id={message.id}
   bind:this={thisElement}
-  on:mouseenter={() => (showOptions = !showOptions)}
-  on:touchstart={() => (showOptions = !showOptions)}
-  on:mouseleave={() => (showOptions = !showOptions)}
+  on:mouseenter={() => (showOptions = !hideOptions && !displayOnly)}
+  on:mouseleave={() => (showOptions = false)}
+  on:touchstart={handleTouchStart}
 >
   {#if showOptions && !hideOptions && !displayOnly && message.text !== 'messageFlagged'}
     <div class="absolute join {message.isFromCaller ? 'right-14' : 'left-14'} z-50">

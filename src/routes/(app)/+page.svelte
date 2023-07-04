@@ -14,6 +14,7 @@
   import useUserModal from '$lib/useUserModal';
   import UserModal from '$lib/components/Modals/UserModal.svelte';
   import Button from '$lib/components/Custom/Button.svelte';
+  import MainHeader from '$lib/components/Header/MainHeader.svelte';
 
   $: title = 'ChattyBox';
   $: {
@@ -114,21 +115,7 @@
   <aside class="col-span-1 max-h-full max-lg:hidden">
     <Aside />
   </aside>
-  <header class="lg:hidden flex items-center bg-base-200 z-50">
-    <Button
-      id="change-screen"
-      on:click={() => ($useActiveScreen = $useActiveScreen === 'aside' ? 'friends' : 'aside')}
-      format="ghost"
-      additionalClasses="text-4xl"
-    >
-      <iconify-icon icon="mdi:menu" />
-    </Button>
-    {#if $useActiveScreen === 'chat' && $chat}
-      <h1 class="font-bold text-2xl">
-        {$chat.chatName ?? $chat.users.map((u) => u.userName).join(', ')}
-      </h1>
-    {/if}
-  </header>
+  <MainHeader />
   <section class="lg:col-span-3 h-full overflow-hidden">
     <ActiveScreen />
   </section>

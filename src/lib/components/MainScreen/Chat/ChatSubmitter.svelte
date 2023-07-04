@@ -162,20 +162,20 @@
   on:submit|preventDefault={async () => await sendMessage()}
   class="box-border bg-transparent fixed lg:w-[75vw] w-full bottom-0 form-control overflow-hidden"
 >
-  <label class="label {messageError || replyTo ? 'bg-base-300' : ''} justify-between" for="">
-    {#if messageError}
-      <span class="label-text text-error first-letter:uppercase">
-        {messageError}
-      </span>
-    {:else if replyTo}
-      <span class="label-text first-letter:uppercase">
-        {$t('common.replyingTo', { values: { item: replyTo.user.userName } })}
-      </span>
-      <CloseButton id="cancel-reply" on:close={() => (replyTo = undefined)} />
-    {:else}
-      <span class="label-text"> &nbsp;&nbsp;&nbsp;&nbsp; </span>
-    {/if}
-  </label>
+  {#if messageError || replyTo}
+    <label class="label {messageError || replyTo ? 'bg-base-300' : ''} justify-between" for="">
+      {#if messageError}
+        <span class="label-text text-error first-letter:uppercase">
+          {messageError}
+        </span>
+      {:else if replyTo}
+        <span class="label-text first-letter:uppercase">
+          {$t('common.replyingTo', { values: { item: replyTo.user.userName } })}
+        </span>
+        <CloseButton id="cancel-reply" on:close={() => (replyTo = undefined)} />
+      {/if}
+    </label>
+  {/if}
   <div class="join box-border bg-base-300 px-4">
     <Button id="file-input-toggle" buttonType="button" joinItem additionalClasses="text-2xl">
       <iconify-icon icon="mdi:attachment" />
@@ -196,7 +196,7 @@
       <iconify-icon icon={submitting ? 'svg-spinners:6-dots-scale' : 'mdi:send'} />
     </Button>
   </div>
-  <label class="label" for="">
+  <label class="label bg-base-300" for="">
     {#if otherUsersTyping.length}
       <span class="label-text">
         {#if otherUsersTyping.length <= 4}

@@ -21,15 +21,15 @@
 </script>
 
 <DragNDropWrapper
-  wrapperClass="overflow-hidden h-[90vh] max-lg:h-[85vh]"
+  wrapperClass="overflow-hidden h-[90vh] z-10 max-lg:h-[85vh] {searchResultsAreOpen
+    ? 'max-lg:hidden lg:col-span-2'
+    : 'col-span-1'}"
   bind:uploading
   bind:uploadSuccessful
 >
   {#if $chat && $chat.id === $chatId}
     <div
-      class="grid grid-cols-1 grid-rows-6 w-full relative overflow-hidden {searchResultsAreOpen
-        ? 'hidden lg:col-span-2'
-        : 'col-span-1'} h-[90vh] max-h-[90vh] max-lg:h-[85vh] max-lg:max-h-[85vh]"
+      class="grid grid-cols-1 grid-rows-6 w-full relative overflow-hidden  h-[90vh] max-h-[90vh] max-lg:h-[85vh] max-lg:max-h-[85vh]"
     >
       <div class="row-span-5 min-h-[88vh] max-lg:min-h-[85vh] overflow-hidden">
         <MessagesWrapper

@@ -38,8 +38,8 @@
   }
 </script>
 
-<div class="dropdown z-50 {open ? 'dropdown-open' : ''}">
-  <Button id="chat-dropdown-toggle" format="ghost">
+<menu class="dropdown z-50 {open ? 'dropdown-open' : ''}">
+  <Button buttonType="button" on:click={() => (open = !open)} id="chat-dropdown-toggle" format="ghost">
     <iconify-icon icon="mdi:dots-vertical" />
   </Button>
   <ul class="dropdown-content menu bg-base-300 z-50">
@@ -53,4 +53,4 @@
       </li>
     {/each}
   </ul>
-</div>
+</menu>
