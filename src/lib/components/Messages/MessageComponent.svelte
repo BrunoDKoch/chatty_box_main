@@ -106,7 +106,7 @@
   onMount(() => {
     observer.observe(thisElement);
     if (focusOn)
-      thisElement.scrollIntoView({ behavior: 'instant', block: 'center', inline: 'center' });
+      thisElement.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'center' });
     if (message.isFromCaller || $chat.userIsAdmin)
       options.push({
         name: $t('common.remove', { values }),
