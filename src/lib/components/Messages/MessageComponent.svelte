@@ -194,7 +194,7 @@
         <div
           class="chat-bubble {message.text === 'messageFlagged'
             ? 'opacity-50 italic'
-            : 'opacity-100'} {message.isFromCaller ? 'chat-bubble-success' : 'chat-bubble-primary'}
+            : 'opacity-100'} {message.isFromCaller ? 'chat-bubble-success' : 'chat-bubble-info'}
             {msgError ? 'chat-bubble-error' : ''}"
         >
           {#if message.text === 'messageFlagged'}
