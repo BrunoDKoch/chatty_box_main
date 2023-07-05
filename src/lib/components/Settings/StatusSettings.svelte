@@ -3,6 +3,7 @@
   import Select from '../Custom/Select.svelte';
   import { statusOptions } from '$lib/types/otherTypes';
   import { t } from 'svelte-i18n';
+  export let status: '' | 'busy' | 'away';
   const options = statusOptions.map((so) => {
     const { name, value } = so;
     return {
@@ -10,26 +11,24 @@
       name: $t(name),
     };
   });
-  let status = connection.invoke<string | null>('GetStatus').then((data) => data ?? '');
   async function handleChange(target: EventTarget) {
     const { value } = target as HTMLSelectElement;
-    status = connection
-      .invoke<string | null>('UpdateStatus', value ? value : undefined)
-      .then((data) => data ?? '');
+    status = ((await connection.invoke<string | null>('UpdateStatus', value ? value : undefined)) ??
+      '') as typeof status;
   }
 </script>
 
-{#await status}
+{#if status === null}
   <iconify-icon icon="svg-spinners:6-dots-scale" />
-{:then value}
+{:else}
   <Select
     on:change={async (e) => {
       if (!e || !e.target) return;
       await handleChange(e.target);
     }}
-    {value}
+    bind:value={status}
     labelText="status"
     name="status"
     {options}
   />
-{/await}
+{/if}

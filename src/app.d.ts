@@ -21,6 +21,7 @@ declare global {
         blocks: UserPartialResponse[];
         previews: ChatPreview[];
         isAdmin: boolean;
+        status: '' | 'busy' | 'away';
       };
       language: string;
     }

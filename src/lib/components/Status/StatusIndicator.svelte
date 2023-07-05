@@ -1,6 +1,7 @@
 <script lang="ts">
   export let status: string | undefined = undefined;
   export let isOnline = false;
+  export let direction: 'start' | 'end' = 'start'
   let { icon, className } = getIconAndClass();
   $: status, ({ icon, className } = getIconAndClass());
   $: isOnline, ({ icon, className } = getIconAndClass());
@@ -31,7 +32,7 @@
 </script>
 
 {#if isOnline}
-  <span class="indicator-item indicator-start rounded-full max-w-fit max-h-fit {className}">
+  <span class="indicator-item indicator-{direction} rounded-full max-w-fit max-h-fit z-50 {className}">
     {#if icon}
       <iconify-icon {icon} />
     {/if}

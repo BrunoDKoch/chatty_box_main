@@ -11,12 +11,11 @@
   import PrivacySettings from './PrivacySettings.svelte';
   import StatusSettings from './StatusSettings.svelte';
   import Button from '../Custom/Button.svelte';
-  let user: { userName: string; avatar?: string };
+  import { page } from '$app/stores';
+  let user: { userName: string; avatar?: string; status: '' | 'away' | 'busy' } = $page.data.user;
   let show = false;
   show = true;
   $: activeScreen = 'main' as 'main' | SettingOptions[number];
-  connection.on('userInfo', (data: typeof user) => (user = data));
-  onMount(async () => await connection.invoke('GetCallerInfo'));
 </script>
 
 {#if show}
@@ -36,7 +35,7 @@
       </div>
     {/if}
     {#if activeScreen === 'main'}
-      <MainSettings on:changeActive={({ detail }) => (activeScreen = detail)} {user} />
+      <MainSettings on:changeActive={({ detail }) => (activeScreen = detail)} bind:user />
     {:else if activeScreen === 'settings.language'}
       <LanguageSettings />
     {:else if activeScreen === 'settings.notifications'}
@@ -46,7 +45,7 @@
     {:else if activeScreen === 'settings.privacy'}
       <PrivacySettings />
     {:else if activeScreen === 'settings.status.status'}
-      <StatusSettings />
+      <StatusSettings bind:status={user.status} />
     {/if}
   </div>
 {/if}
