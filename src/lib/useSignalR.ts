@@ -3,7 +3,6 @@ import type {
   AdminActionPartial,
   ChatPreview,
   FriendResponse,
-  UserConnectionCallInfo,
   UserPartialResponse,
 } from '$lib/types/partialTypes';
 import { logOut } from '$lib/useAuth';
@@ -37,14 +36,8 @@ chatId.subscribe(async (cId) => {
   await connection.invoke('GetChat', cId, 0);
 });
 
-// Initial call to user
-connection.on('connectionInfo', (data: UserConnectionCallInfo) => {
-  friends.set(data.friends);
-  friendRequests.set(data.friendRequests);
-  blockedUsers.set(data.blocks);
-  previews.set(data.previews);
-  fetchingInitialCallInfo.set(false);
-});
+// Set connection as ok
+connection.on('connectionSuccessful', () => fetchingInitialCallInfo.set(false));
 
 connection.on('unread', (data) => {
   data.forEach((n: Message) => messagesCount.set(get(messagesCount) + 1));

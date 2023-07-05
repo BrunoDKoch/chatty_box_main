@@ -46,7 +46,7 @@
     <UserAvatarAndName
       user={friend}
       size="half"
-      extraText={!friend.isOnline ? 'Offline' : friend.status ?? 'Online'}
+      extraText={!friend.isOnline ? 'Offline' : friend.status || 'Online'}
       lowerOpacity={!friend.isOnline}
     >
       <div class="join {friend.isOnline ? 'opacity-100' : 'opacity-50'}">

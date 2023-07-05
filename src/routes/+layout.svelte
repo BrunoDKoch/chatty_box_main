@@ -4,7 +4,7 @@
   import ConnectingComponent from '$lib/components/ConnectingComponent.svelte';
   import { theme } from '$lib/theme';
   import useError from '$lib/useError';
-  import { connection, online } from '$lib/useSignalR';
+  import { connection, online, previews } from '$lib/useSignalR';
   import { HubConnectionState } from '@microsoft/signalr';
   import 'iconify-icon';
   import { ofetch } from 'ofetch';
@@ -12,6 +12,7 @@
   import { locale, t } from 'svelte-i18n';
   import '../app.css';
   import type { LayoutServerData } from './$types';
+  import useUserInfo from '$lib/useUserInfo';
 
   export let data: LayoutServerData;
   $theme = data.theme;
@@ -76,6 +77,7 @@
     }
   }
   onMount(async () => {
+    if (!$page.url.pathname.includes('auth') && data.user) useUserInfo(data.user);
     theme.subscribe(async (t) => await changeThemeCookie(t));
     locale.subscribe((l) =>
       document ? document.getElementsByTagName('html')[0].setAttribute('lang', l ? l : 'en') : null,

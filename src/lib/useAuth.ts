@@ -3,6 +3,8 @@ import type { LogInInfo, SignUpInfo } from '$lib/types/authTypes';
 import { ofetch } from 'ofetch';
 import { goto } from '$app/navigation';
 import { connection, online } from './useSignalR';
+import useUserInfo from '$lib/useUserInfo';
+import type { UserConnectionCallInfo } from './types/partialTypes';
 
 async function logIn(body: LogInInfo) {
   return await ofetch(`/User/login`, {
@@ -12,11 +14,8 @@ async function logIn(body: LogInInfo) {
     baseURL,
     credentials: 'include',
     async onResponse({ response }) {
-      if (response.ok) {
-        await connection.start();
-        online.set(true);
-        await goto('/');
-      }
+      if (!response.ok) return;
+      await connection.start();
     },
     onResponseError({ response }) {
       throw {
@@ -60,11 +59,16 @@ async function logOut() {
 }
 
 async function getUser() {
-  return await ofetch('/user', {
+  await ofetch<UserConnectionCallInfo>('/user', {
     baseURL,
     method: 'GET',
     mode: 'cors',
     credentials: 'include',
+    retry: 3,
+    onResponse({ response }) {
+      if (!response.ok) return;
+      useUserInfo(response._data);
+    },
   });
 }
 

@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { LogInInfo } from '$lib/types/authTypes';
-  import { logIn } from '$lib/useAuth';
+  import { getUser, logIn } from '$lib/useAuth';
   import Checkbox from '../Custom/Checkbox.svelte';
   import TextInput from '../Custom/TextInput.svelte';
   import { createEventDispatcher } from 'svelte';
@@ -63,6 +63,7 @@
     try {
       await logIn(body);
       showMFACodeModal = false;
+      await getUser();
       await goto('/');
     } catch (err) {
       if ((err as { status: number; error?: any }).status === 400) {

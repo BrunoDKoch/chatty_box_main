@@ -8,6 +8,7 @@
   let searchIcon: HTMLElement;
   let loadingIcon: HTMLElement;
   let searching = false;
+  let placeholder = $t('aside.searchChats', { values: { search: $t('common.search') } });
 
   async function handleSubmit() {
     if (!search) {
@@ -38,7 +39,7 @@
   <TextInputWithButton
     type="search"
     bind:value={search}
-    placeholder={$t('aside.searchChats', { values: { search: $t('common.search') } })}
+    placeholder={placeholder.replace(placeholder[0], placeholder[0].toUpperCase())}
     name="chatSearch"
     size="small"
   >
