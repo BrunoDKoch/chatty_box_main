@@ -10,7 +10,11 @@
 
 <Modal modalType="warning" on:close>
   <TitleAndIcon title={$t('common.externalLink')} icon="material-symbols:warning" />
-  <p>{$t('common.thisIsAnExternalLink', { values: { item: link } })}</p>
+  <p>
+    <span>{$t('common.thisIsAnExternalLink')}</span>
+    <span class="link italic"><strong>{link}</strong></span>
+    <span>?</span>
+  </p>
   <div class="modal-action">
     <div class="join">
       <Button buttonUIType="warning" joinItem target="_blank" {link} id="yes">{$t('common.yes')}</Button>

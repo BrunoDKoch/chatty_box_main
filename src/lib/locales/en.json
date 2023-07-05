@@ -138,7 +138,7 @@
       "f": "the same"
     },
     "externalLink": "external link",
-    "thisIsAnExternalLink": "This is an external link. Are you sure you wish to navigate to {item}?",
+    "thisIsAnExternalLink": "This is an external link. Are you sure you wish to navigate to",
     "file": "file",
     "download": "download",
     "warning": "warning"
@@ -282,7 +282,7 @@
       "text": "plain text file",
       "pdf": "PDF",
       "compressed": "compressed or zipped file",
-      "code": "code file",
+      "code": "code file. It cannot be executed without ",
       "unknown": "file of unknown type"
     },
     "compressedWarning": "files of this type often cannot be checked for malware before extraction, and may contain malicious code",
