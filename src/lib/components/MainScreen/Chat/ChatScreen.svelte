@@ -14,6 +14,7 @@
   import ImageModal from '$lib/components/Modals/ImageModal.svelte';
   import ExternalLinkModal from '$lib/components/Modals/ExternalLinkModal.svelte';
   import FileModal from '$lib/components/Modals/FileModal.svelte';
+  import ReadByModal from '$lib/components/Modals/ReadByModal.svelte';
 
   let loading = true;
   let searchResults: { messages: MessageResponse[]; messageCount: number } = {
@@ -37,6 +38,9 @@
   let showImageModal = '';
   let showExternalLink = '';
   let showFileModal = '';
+
+  // This one uses a message response
+  let showReadByModal: MessageResponse | null = null;
 
   async function handleLeaveChat() {
     await connection.invoke('LeaveChat', $chatId);
@@ -90,6 +94,7 @@
         on:showImage={({ detail }) => (showImageModal = detail)}
         on:showExternalLink={({ detail }) => (showExternalLink = detail)}
         on:fileClick={({ detail }) => (showFileModal = detail)}
+        on:showReadByModal={({ detail }) => (showReadByModal = detail)}
         bind:searchResults
         bind:loading
       />
@@ -145,4 +150,6 @@
   <ExternalLinkModal on:close={() => (showExternalLink = '')} link={showExternalLink} />
 {:else if showFileModal}
   <FileModal link={showFileModal} on:close={() => (showFileModal = '')} />
+{:else if showReadByModal}
+  <ReadByModal message={showReadByModal} on:close={() => (showReadByModal = null)} />
 {/if}

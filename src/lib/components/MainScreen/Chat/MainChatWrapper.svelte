@@ -37,6 +37,7 @@
           on:showImage
           on:showExternalLink
           on:fileClick
+          on:showReadByModal
           bind:replyTo
           on:report={({ detail }) => {
             showReportingModal = true;

@@ -1,5 +1,5 @@
 import type { Chat } from '@prisma/client';
-import type { AdminActionPartial, UserPartialResponse } from './partialTypes';
+import type { AdminActionPartial, ReadMessagePartialResponse, UserPartialResponse } from './partialTypes';
 
 type MessageResponse = {
   id: string;
@@ -8,7 +8,7 @@ type MessageResponse = {
   editedAt: Date;
   text: string;
   replyToId?: string;
-  readBy: { userName: string; avatar?: string; id: string; readAt: Date }[];
+  readBy: ReadMessagePartialResponse[];
   user: UserPartialResponse;
   isFromCaller: boolean;
 };

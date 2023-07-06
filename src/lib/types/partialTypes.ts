@@ -85,6 +85,10 @@ interface AdminActionPartial {
   revoked: boolean;
 }
 
+interface ReadMessagePartialResponse extends UserPartialResponse {
+  readAt: Date;
+}
+
 export type {
   AdminActionPartial,
   AdminActionRequest,
@@ -97,4 +101,5 @@ export type {
   UserConnectionCallInfo,
   UserDetailedResponse,
   UserPartialResponse,
+  ReadMessagePartialResponse,
 };

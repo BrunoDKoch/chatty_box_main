@@ -208,7 +208,7 @@
           {/if}
         </div>
       {/if}
-      {#if !hideBottomInfo}
+      {#if !hideBottomInfo && !displayOnly}
         <div class="chat-footer flex gap-1 opacity-50">
           <div class="flex-col flex">
             <p class={message.editedAt ? 'line-through' : ''}>
@@ -224,9 +224,8 @@
             {/if}
           </div>
           {#if message.isFromCaller && message.readBy.length}
-            <div
-              class="tooltip first-letter:capitalize"
-              data-tip="{$t('message.readBy')} {readByTooltip}"
+            <button
+              on:click={() => dispatch('showReadByModal', message)}
             >
               <iconify-icon
                 icon="mdi:check-all"
@@ -234,7 +233,7 @@
                   ? 'text-success'
                   : ''}
               />
-            </div>
+            </button>
           {/if}
         </div>
       {/if}

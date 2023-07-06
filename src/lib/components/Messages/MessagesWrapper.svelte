@@ -74,6 +74,7 @@
           on:showImage
           on:showExternalLink
           on:fileClick
+          on:showReadByModal
           bind:message
           hideBottomInfo={checkUserAndTime(message)}
           focusOn={messages.indexOf(message) === messages.length - 1 && messages.length <= 15}
