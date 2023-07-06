@@ -176,8 +176,8 @@
       {/if}
     </label>
   {/if}
-  <div class="join box-border bg-base-300 px-4">
-    <Button id="file-input-toggle" buttonType="button" joinItem additionalClasses="text-2xl">
+  <div class="box-border bg-base-300 px-4 relative">
+    <Button id="file-input-toggle" buttonType="button" format="ghost" additionalClasses="text-2xl z-50 absolute">
       <iconify-icon icon="mdi:attachment" />
     </Button>
     <textarea
@@ -187,12 +187,12 @@
       id="message-composer"
       {rows}
       placeholder={singleChatUserBlocked ? $t('message.cannotCommunicate') : ''}
-      class="textarea join-item resize-none {messageError
+      class="textarea px-12 join-item resize-none {messageError
         ? 'textarea-error'
         : 'textarea-bordered'} {disabled ? 'textarea-disabled' : ''} w-full box-border"
       {disabled}
     />
-    <Button id="chat-submit" {disabled} joinItem additionalClasses="text-2xl">
+    <Button id="chat-submit" format="ghost" {disabled} additionalClasses="text-2xl absolute right-4">
       <iconify-icon icon={submitting ? 'svg-spinners:6-dots-scale' : 'mdi:send'} />
     </Button>
   </div>
