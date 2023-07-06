@@ -177,7 +177,7 @@
     </label>
   {/if}
   <div class="box-border bg-base-300 px-4 relative">
-    <Button id="file-input-toggle" buttonType="button" format="ghost" additionalClasses="text-2xl z-50 absolute">
+    <Button id="file-input-toggle" buttonType="button" format="ghost" additionalClasses="text-2xl z-50 absolute bottom-0">
       <iconify-icon icon="mdi:attachment" />
     </Button>
     <textarea
@@ -192,7 +192,7 @@
         : 'textarea-bordered'} {disabled ? 'textarea-disabled' : ''} w-full box-border"
       {disabled}
     />
-    <Button id="chat-submit" format="ghost" {disabled} additionalClasses="text-2xl absolute right-4">
+    <Button id="chat-submit" format="ghost" {disabled} additionalClasses="text-2xl absolute right-4 bottom-0">
       <iconify-icon icon={submitting ? 'svg-spinners:6-dots-scale' : 'mdi:send'} />
     </Button>
   </div>
