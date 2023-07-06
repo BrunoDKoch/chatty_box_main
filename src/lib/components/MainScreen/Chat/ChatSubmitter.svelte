@@ -124,7 +124,7 @@
 
   async function handleKeyPress(e: KeyboardEvent) {
     await handleTyping();
-    if (e.code === 'Enter' && !e.shiftKey) {
+    if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
       await sendMessage();
     }
