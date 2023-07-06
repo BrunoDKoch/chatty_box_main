@@ -169,6 +169,7 @@ connection.on('chat', (data: CompleteChat) => {
       });
       ch.hasFetched = true;
     }
+    if (!data.systemMessages || !data.systemMessages.length) ch.systemMessages = [];
     ch.hasMore = ch.messageCount > ch.messages.length;
     // Sort messages properly
     ch.messages.sort((a, b) => Number(new Date(a.sentAt)) - Number(new Date(b.sentAt)));
