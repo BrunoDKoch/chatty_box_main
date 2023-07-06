@@ -7,6 +7,7 @@
   import useError from '$lib/useError';
   import Button from '../Custom/Button.svelte';
   import useFormValidation from '$lib/useFormValidation';
+    import { goto } from '$app/navigation';
   export let pending = false;
   const dispatch = createEventDispatcher();
   let qrCode: { content: string; height: number; width: number } | null = null;
@@ -201,7 +202,10 @@
 {#if openOtpModal}
   <EmailOtpModal
     bind:email
-    on:ok={async () =>
-      await logIn({ email, password, remember: false, rememberMultiFactor: false })}
+    on:close={() => (openOtpModal = false)}
+    on:ok={async () => {
+      await logIn({ email, password, remember: false, rememberMultiFactor: false });
+      await goto('/');
+    }}
   />
 {/if}

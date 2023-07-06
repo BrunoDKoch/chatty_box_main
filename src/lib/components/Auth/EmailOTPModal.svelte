@@ -6,6 +6,7 @@
   import { createEventDispatcher } from 'svelte';
   import useError from '$lib/useError';
   import Button from '../Custom/Button.svelte';
+    import { page } from '$app/stores';
   export let email: string;
   let otp = '';
   $: rules = {
@@ -35,6 +36,11 @@
 </script>
 
 <Modal on:close>
+  {#if $page.url.pathname === '/auth/login'}
+    <h1 class="text-3xl font-bold first-letter:uppercase">
+      {$t('auth.emailNotConfirmed')}
+    </h1>
+  {/if}
   <form on:submit|preventDefault={async () => await handleSubmit()} action="">
     <TextInput
       rules={rules.otpRules}

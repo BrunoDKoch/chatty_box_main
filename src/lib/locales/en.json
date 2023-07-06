@@ -31,7 +31,8 @@
     "youMustConfirm": "you must confirm {your} {thing}",
     "rememberMultiFactor": "do not ask for code in this device",
     "recovery": "recovery",
-    "letsRecover": "let's recover your account"
+    "letsRecover": "let's recover your account",
+    "emailNotConfirmed": "your email address has not yet been confirmed"
   },
   "common": {
     "is": {
