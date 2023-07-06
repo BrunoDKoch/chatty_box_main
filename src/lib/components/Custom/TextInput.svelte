@@ -2,7 +2,7 @@
   import type { InputType } from '$lib/types/otherTypes';
   import { toKebabCase } from '$lib/useCaseConversion';
   import { createEventDispatcher } from 'svelte';
-
+  export let noLabels = false;
   export let value: string | Date | number;
   export let type: InputType = 'text';
   export let labelText = '';
@@ -72,11 +72,13 @@
       }}
     />
   {/if}
-  <p class="label">
-    {#if ruleText}
-      <span class="label-text w-full text-error first-letter:capitalize">{ruleText}</span>
-    {:else}
-      <span class="label-text w-full"> &#160;&#160;&#160; </span>
-    {/if}
-  </p>
+  {#if !noLabels}
+    <p class="label">
+      {#if ruleText}
+        <span class="label-text w-full text-error first-letter:capitalize">{ruleText}</span>
+      {:else}
+        <span class="label-text w-full"> &#160;&#160;&#160; </span>
+      {/if}
+    </p>
+  {/if}
 </div>

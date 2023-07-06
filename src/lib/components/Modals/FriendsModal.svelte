@@ -29,7 +29,7 @@
     {#if !selection}
       <UserSearch bind:selection />
     {:else}
-      <UserAvatarAndName user={selection} size="half" />
+      <UserAvatarAndName disableModal user={selection} size="half" />
     {/if}
   </div>
   <div class="modal-action">

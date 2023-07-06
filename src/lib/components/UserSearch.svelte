@@ -53,10 +53,10 @@
       {$t('auth.userName')}
     </span>
   </label>
-  <TextInput type="search" name="userSearch" bind:value={search} />
+  <TextInput noLabels type="search" name="userSearch" bind:value={search} />
   {#if fetching || results.length}
     <div class="dropdown dropdown-open">
-      <ul class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-full">
+      <ul class="dropdown-content menu p-2 gap-3 shadow bg-base-100 max-h-48 rounded-box w-full">
         {#if fetching}
           <iconify-icon icon="svg-spinners:6-dots-scale" height="3rem" />
         {:else if results.length}
@@ -70,7 +70,7 @@
                 }}
                 additionalClasses="flex gap-3"
               >
-                <UserAvatarAndName user={result} size={25} />
+                <UserAvatarAndName disableModal user={result} size={25} />
               </Button>
             </li>
           {/each}
