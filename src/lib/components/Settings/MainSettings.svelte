@@ -12,7 +12,7 @@
 <UserGeneralSettings {user} />
 <menu class="menu menu-lg">
   {#each settingOptions as item}
-    <li class="uppercase {user ? '' : 'disabled'}">
+    <li class="uppercase" class:disabled={!user} >
       <a
         aria-disabled={!user}
         href="/"

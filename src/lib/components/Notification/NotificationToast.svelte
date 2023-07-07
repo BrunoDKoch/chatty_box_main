@@ -9,7 +9,6 @@
   export let text: string;
   export let action: string | undefined = undefined;
   const dispatch = createEventDispatcher();
-  let circleTimer: HTMLElement;
   $: elapsedSeconds = 0;
   $: countdownValue = 5 - elapsedSeconds;
   const interval = setInterval(() => {
@@ -36,9 +35,7 @@
 <div
   on:click={() => handleClick()}
   on:keypress={() => handleClick()}
-  class="alert {notificationType === 'message'
-    ? 'alert-info text-info-content'
-    : 'alert-success text-success-content'}"
+  class="alert {notificationType === 'message' ? 'toast-info' : 'toast-success'}"
 >
   <iconify-icon icon="mdi:information-outline" />
   <div class="flex gap-1">
@@ -69,7 +66,12 @@
   </div>
 </div>
 
-<style>
+<style lang="postcss">
+  .toast-info {
+    @apply alert-info text-info-content;
+  }
+  .toast-success {
+  }
   button:hover span {
     @apply opacity-0;
   }

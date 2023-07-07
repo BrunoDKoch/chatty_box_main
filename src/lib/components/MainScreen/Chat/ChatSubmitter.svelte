@@ -163,7 +163,7 @@
   class="box-border bg-transparent fixed lg:w-[75vw] w-full bottom-0 form-control overflow-hidden"
 >
   {#if messageError || replyTo}
-    <label class="label {messageError || replyTo ? 'bg-base-300' : ''} justify-between" for="">
+    <label class="label justify-between" class:bg-base-300={messageError || replyTo} for="">
       {#if messageError}
         <span class="label-text text-error first-letter:uppercase">
           {messageError}
