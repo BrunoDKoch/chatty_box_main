@@ -94,10 +94,7 @@
   onMount(() => {
     observer.observe(thisElement);
     if (focusOn) {
-      setTimeout(
-        () => thisElement.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'center' }),
-        75,
-      );
+      thisElement.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'center' });
       focusOn = false;
     }
     if (message.isFromCaller || $chat.userIsAdmin)

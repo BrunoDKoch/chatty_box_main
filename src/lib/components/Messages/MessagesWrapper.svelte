@@ -72,7 +72,7 @@
     </div>
   {/if}
   {#if combinedMessages.length}
-    {#each combinedMessages as message}
+    {#each combinedMessages as message (message.id)}
       {#if 'sentAt' in message}
         {#if combinedMessages.indexOf(message) !== 0 && isFromPreviousDate(message, messages[messages.indexOf(message) - 1])}
           <div class="divider">
