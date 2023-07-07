@@ -41,18 +41,6 @@
 
   // Tooltips for read messages
   $: readBy = message.readBy;
-  $: readByTooltip = readBy
-    .map((r) => {
-      if (r.id === message.user.id) return;
-      let baseDate = `${r.readAt ?? message.sentAt}`;
-      baseDate = baseDate.endsWith('Z') ? baseDate : baseDate + 'Z';
-      return `${r.userName} ${$t('common.at')} ${$date(new Date(baseDate), {
-        dateStyle: 'short',
-        timeStyle: 'short',
-      })}`;
-    })
-    .filter((a) => a)
-    .join(', ');
 
   // Marking messages as read
   const observer = new IntersectionObserver(async (entries) => {
@@ -105,8 +93,13 @@
 
   onMount(() => {
     observer.observe(thisElement);
-    if (focusOn)
-      thisElement.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'center' });
+    if (focusOn) {
+      setTimeout(
+        () => thisElement.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'center' }),
+        75,
+      );
+      focusOn = false;
+    }
     if (message.isFromCaller || $chat.userIsAdmin)
       options.push({
         name: $t('common.remove', { values }),
@@ -224,9 +217,7 @@
             {/if}
           </div>
           {#if message.isFromCaller && message.readBy.length}
-            <button
-              on:click={() => dispatch('showReadByModal', message)}
-            >
+            <button on:click={() => dispatch('showReadByModal', message)}>
               <iconify-icon
                 icon="mdi:check-all"
                 class={message.readBy.filter((r) => r.id !== message.user.id).length

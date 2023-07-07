@@ -19,6 +19,10 @@
   $: combinedMessages,
     combinedMessages.sort((a, b) => Number(new Date(getDate(a))) - Number(new Date(getDate(b))));
 
+  // For handling focus on fetched messages
+  $: oldLength = 0;
+  $: focusOn = messages.length - oldLength - 1
+
   const dispatch = createEventDispatcher();
 
   function getDate(message: MessageResponse | SystemMessagePartial) {
@@ -43,6 +47,10 @@
       resultingDate.getTime() < 10 * 60 * 1000
     );
   }
+  function shouldFocusOnElement(message: MessageResponse | SystemMessagePartial) {
+    if ('firedAt' in message) return;
+    return messages.indexOf(message) === focusOn;
+  }
 </script>
 
 <div
@@ -51,7 +59,13 @@
     : ''} overflow-x-hidden h-[80vh] max-h-[80vh] box-border"
 >
   {#if !pagination}
-    <AutoScroller bind:hasMore={$chat.hasMore} skip={messages.length} />
+    <AutoScroller
+      on:fetching={() => {
+        oldLength = messages.length;
+      }}
+      bind:hasMore={$chat.hasMore}
+      skip={messages.length}
+    />
   {:else if isSearch}
     <div class="fixed right-0 z-50">
       <CloseButton id="search-close" on:close />
@@ -77,7 +91,7 @@
           on:showReadByModal
           bind:message
           hideBottomInfo={checkUserAndTime(message)}
-          focusOn={messages.indexOf(message) === messages.length - 1 && messages.length <= 15}
+          focusOn={shouldFocusOnElement(message)}
         />
       {:else}
         <SystemMessageComponent {message} />
