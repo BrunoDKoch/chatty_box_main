@@ -2,12 +2,12 @@ import { PUBLIC_AUTH_URL_DEV as baseURL } from '$env/static/public';
 import type { LogInInfo, SignUpInfo } from '$lib/types/authTypes';
 import { ofetch } from 'ofetch';
 import { goto } from '$app/navigation';
-import { connection, online } from './useSignalR';
+import { connection } from './useSignalR';
 import useUserInfo from '$lib/useUserInfo';
 import type { UserConnectionCallInfo } from './types/partialTypes';
 
 async function logIn(body: LogInInfo) {
-  return await ofetch(`/User/login`, {
+  return await ofetch(`/user/login`, {
     body,
     mode: 'cors',
     method: 'POST',
@@ -28,7 +28,7 @@ async function logIn(body: LogInInfo) {
 }
 
 async function signUp(body: SignUpInfo) {
-  return await ofetch(`/User/register`, {
+  return await ofetch(`/user/register`, {
     body,
     method: 'POST',
     mode: 'cors',
@@ -45,7 +45,7 @@ async function signUp(body: SignUpInfo) {
 }
 
 async function logOut() {
-  const { data, error } = await ofetch('/User/logout', {
+  const { data, error } = await ofetch('/user/logout', {
     baseURL,
     method: 'HEAD',
     mode: 'cors',
@@ -73,7 +73,7 @@ async function getUser() {
 }
 
 async function suspendUser(body: { reason: string; until?: Date; id: string }) {
-  await ofetch('/User/suspend', {
+  await ofetch('/user/suspend', {
     baseURL,
     method: 'PUT',
     mode: 'cors',
@@ -83,7 +83,7 @@ async function suspendUser(body: { reason: string; until?: Date; id: string }) {
 }
 
 async function validateEmail(body: { email: string; code: string }) {
-  await ofetch('/User/Validate/Email', {
+  await ofetch('/user/validate/email', {
     baseURL,
     method: 'POST',
     mode: 'cors',
