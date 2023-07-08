@@ -15,8 +15,6 @@
   export let id: string;
   export let target: string | undefined = undefined;
 
-  const dispatch = createEventDispatcher();
-
   function getClassName(button: HTMLButtonElement | HTMLAnchorElement) {
     button.classList.add('btn', btnBackground[buttonUIType], sizeClasses[size]);
     if (joinItem) button.classList.add('join-item');

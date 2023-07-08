@@ -10,7 +10,7 @@
   import useError from '$lib/useError';
   import Button from '../Custom/Button.svelte';
   import useFormValidation from '$lib/useFormValidation';
-    import EmailOtpModal from './EmailOTPModal.svelte';
+  import EmailOtpModal from './EmailOTPModal.svelte';
   export let pending = false;
   const dispatch = createEventDispatcher();
   let showMFACodeModal = false;
@@ -69,10 +69,12 @@
       await goto('/');
     } catch (err) {
       if ((err as { status: number; message: string; cause: number }).status === 400) {
-        (err as {message: string}).message.includes('emailNotConfirmed') ? showOTPModal = !showOTPModal : showMFACodeModal = !showMFACodeModal;
+        (err as { message: string }).message.includes('emailNotConfirmed')
+          ? (showOTPModal = !showOTPModal)
+          : (showMFACodeModal = !showMFACodeModal);
         return;
       }
-      console.log(err);
+      console.error(err);
       $useError = {
         status: (err as any).status,
         message: (err as any).message,
@@ -129,10 +131,10 @@
       await handleSubmit();
     }}
   />
-  {:else if showOTPModal}
+{:else if showOTPModal}
   <EmailOtpModal
     bind:email
-    on:close={() => showOTPModal = false}
+    on:close={() => (showOTPModal = false)}
     on:ok={async () => {
       await logIn({ email, password, remember: false, rememberMultiFactor: false });
       await goto('/');

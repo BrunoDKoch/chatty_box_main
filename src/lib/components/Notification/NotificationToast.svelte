@@ -32,9 +32,9 @@
   });
 </script>
 
-<div
-  on:click={() => handleClick()}
-  on:keypress={() => handleClick()}
+<a
+  href="/"
+  on:click|preventDefault={() => handleClick()}
   class="alert {notificationType === 'message' ? 'toast-info' : 'toast-success'}"
 >
   <iconify-icon icon="mdi:information-outline" />
@@ -64,7 +64,7 @@
       <iconify-icon icon="mdi:close" class="text-3xl opacity-0 absolute" />
     </button>
   </div>
-</div>
+</a>
 
 <style lang="postcss">
   .toast-info {
