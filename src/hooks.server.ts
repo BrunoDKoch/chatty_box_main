@@ -1,9 +1,9 @@
 import type { Handle, HandleServerError } from '@sveltejs/kit';
-import { PUBLIC_AUTH_URL_DEV as baseURL } from '$env/static/public';
+import { PUBLIC_AUTH_URL_DEV as baseURL, PUBLIC_SENTRY_URL_DEV } from '$env/static/public';
 import * as Sentry from '@sentry/sveltekit';
 
 Sentry.init({
-  dsn: 'http://a51c3be9ce9f4a44802466bb29be3fcf@localhost:9000/1',
+  dsn: PUBLIC_SENTRY_URL_DEV,
   tracesSampleRate: 1.0,
 });
 

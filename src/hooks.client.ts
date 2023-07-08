@@ -1,8 +1,9 @@
 import { handleErrorWithSentry, Replay } from '@sentry/sveltekit';
 import * as Sentry from '@sentry/sveltekit';
+import { PUBLIC_SENTRY_URL_DEV } from '$env/static/public';
 
 Sentry.init({
-  dsn: 'http://a51c3be9ce9f4a44802466bb29be3fcf@localhost:9000/1',
+  dsn: PUBLIC_SENTRY_URL_DEV,
   tracesSampleRate: 1.0,
 
   // This sets the sample rate to be 10%. You may want this to be 100% while
