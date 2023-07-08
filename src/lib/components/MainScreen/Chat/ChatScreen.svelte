@@ -65,7 +65,7 @@
 </script>
 
 {#if loading}
-  <div class=" flex items-center justify-center text-8xl">
+  <div class="grid w-full h-full place-items-center text-8xl">
     <iconify-icon icon="svg-spinners:6-dots-scale" />
   </div>
 {:else}

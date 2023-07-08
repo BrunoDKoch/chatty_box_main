@@ -7,7 +7,7 @@
   import SystemMessageComponent from './SystemMessageComponent.svelte';
   import CloseButton from '$lib/components/Custom/CloseButton.svelte';
   import { chat } from '$lib/useActiveChat';
-  import { createEventDispatcher } from 'svelte';
+  import { onMount } from 'svelte';
   export let pagination = false;
   export let total: number;
   export let messages: MessageResponse[];
@@ -21,9 +21,17 @@
 
   // For handling focus on fetched messages
   $: oldLength = 0;
-  $: focusOn = messages.length - oldLength - 1
+  $: focusOn = messages.length - oldLength - 1;
+  $: scrollOptions = {} as ScrollIntoViewOptions;
+  $: {
+    if (messages.length < 30) {
+      scrollOptions = { behavior: 'smooth', block: 'center', inline: 'center' };
+    } else {
+      scrollOptions = { behavior: 'instant', block: 'center', inline: 'start' };
+    }
+  }
 
-  const dispatch = createEventDispatcher();
+  const initialMessages = [] as typeof combinedMessages;
 
   function getDate(message: MessageResponse | SystemMessagePartial) {
     if ('sentAt' in message) return message.sentAt;
@@ -51,6 +59,7 @@
     if ('firedAt' in message) return;
     return messages.indexOf(message) === focusOn;
   }
+  onMount(() => initialMessages.push(...combinedMessages));
 </script>
 
 <div
@@ -90,6 +99,8 @@
           on:fileClick
           on:showReadByModal
           bind:message
+          bind:scrollOptions
+          animate={!initialMessages.includes(message)}
           hideBottomInfo={checkUserAndTime(message)}
           focusOn={shouldFocusOnElement(message)}
         />
