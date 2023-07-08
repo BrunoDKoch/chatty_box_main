@@ -184,6 +184,8 @@ model Message {
   readByUsers    ReadMessage[]
   userReports    UserReport[]
   flaggedByAdmin Boolean       @default(false)
+
+  @@index([chatId])
 }
 
 model ClientConnection {
@@ -203,6 +205,8 @@ model ClientConnection {
   browser        String   @default("unknown")
   active         Boolean  @default(true)
   createdAt      DateTime @default(now())
+
+  @@index([userId])
 }
 
 model ReadMessage {
@@ -236,6 +240,8 @@ model SystemMessage {
   eventType         String
   affectedUser      User?    @relation("affectedBy", fields: [affectedUserId], references: [id], onDelete: NoAction, onUpdate: NoAction)
   affectedUserId    String?  @db.NVarChar(450)
+
+  @@index([chatId])
 }
 
 // Notifications
@@ -274,6 +280,8 @@ model UserReport {
   sentAt          DateTime      @default(now())
   violationFound  Boolean?
   adminActions    AdminAction[]
+
+  @@index([chatId, messageId, reportedUserId])
 }
 
 model AdminAction {
