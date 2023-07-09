@@ -9,7 +9,7 @@
   }[];
 </script>
 
-<div class="toast toast-top toast-center w-[50vw] z-50">
+<div class="toast toast-top toast-center w-[50dvw] z-50">
   {#each notifications as notification}
     <NotificationToast
       on:close={() => {

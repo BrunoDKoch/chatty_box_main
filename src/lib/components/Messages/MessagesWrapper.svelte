@@ -65,7 +65,7 @@
 <div
   class="overflow-y-auto {isSearch
     ? 'lg:border-l-2 col-span-1'
-    : ''} overflow-x-hidden h-[80vh] max-h-[80vh] box-border"
+    : ''} overflow-x-hidden h-[80dvh] max-h-[80dvh] box-border"
 >
   {#if !pagination}
     <AutoScroller

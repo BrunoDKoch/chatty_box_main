@@ -167,10 +167,10 @@
     class="dropzone overflow-hidden max-h-[inherit] h-[inherit]"
     id="file-drop"
   >
-    <div class="h-[90vh] max-lg:h-[85vh] overflow-hidden" bind:this={dropIconWrapper}>
+    <div class="h-[90dvh] max-lg:h-[85dvh] overflow-hidden" bind:this={dropIconWrapper}>
       <div
         bind:this={dropIcon}
-        class="bg-black overflow-hidden hidden absolute max-md:h-[75vh] lg:h-[82vh] max-md:w-full lg:w-[75vw] z-50 gap-3 opacity-50"
+        class="bg-black overflow-hidden hidden absolute max-md:h-[75dvh] lg:h-[82dvh] max-md:w-full lg:w-[75dvw] z-50 gap-3 opacity-50"
       >
         <div
           on:dragenter

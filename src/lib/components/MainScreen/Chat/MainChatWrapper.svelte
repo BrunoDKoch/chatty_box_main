@@ -21,7 +21,7 @@
 </script>
 
 <DragNDropWrapper
-  wrapperClass="overflow-hidden h-[90vh] max-lg:h-[85vh] {searchResultsAreOpen
+  wrapperClass="overflow-hidden h-[90dvh] max-lg:h-[85dvh] {searchResultsAreOpen
     ? 'max-lg:hidden lg:col-span-2'
     : 'col-span-1'}"
   bind:uploading
@@ -29,9 +29,9 @@
 >
   {#if $chat && $chat.id === $chatId}
     <div
-      class="grid grid-cols-1 grid-rows-6 w-full relative overflow-hidden  h-[90vh] max-h-[90vh] max-lg:h-[85vh] max-lg:max-h-[85vh]"
+      class="grid grid-cols-1 grid-rows-6 w-full relative overflow-hidden  h-[90dvh] max-h-[90dvh] max-lg:h-[85dvh] max-lg:max-h-[85dvh]"
     >
-      <div class="row-span-5 min-h-[88vh] max-lg:min-h-[85vh] overflow-hidden">
+      <div class="row-span-5 min-h-[88dvh] max-lg:min-h-[80dvh] overflow-hidden">
         <MessagesWrapper
           on:delete
           on:showImage

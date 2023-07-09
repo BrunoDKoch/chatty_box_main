@@ -160,7 +160,7 @@
 
 <form
   on:submit|preventDefault={async () => await sendMessage()}
-  class="box-border bg-transparent fixed lg:w-[75vw] w-full bottom-0 form-control overflow-hidden"
+  class="box-border bg-transparent fixed lg:w-[75dvw] w-full bottom-0 form-control overflow-hidden"
 >
   {#if messageError || replyTo}
     <label class="label justify-between" class:bg-base-300={messageError || replyTo} for="">

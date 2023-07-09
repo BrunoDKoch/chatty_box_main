@@ -18,7 +18,7 @@
 </script>
 
 <Modal on:close modalType="error">
-  <div class="grid grid-cols-[1fr_3fr] max-w-[100vw]">
+  <div class="grid grid-cols-[1fr_3fr] max-w-[100dvw]">
     <iconify-icon
       class="row-span-2 self-center justify-self-center max-lg:text-4xl lg:text-8xl"
       {icon}

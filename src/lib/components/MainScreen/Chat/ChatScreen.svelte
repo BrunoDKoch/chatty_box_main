@@ -81,7 +81,7 @@
       on:openAddAdminModal={() => (showAddAdminModal = !showAddAdminModal)}
     />
     <div
-      class="grid h-[90vh] max-lg:h-[85vh] z-[1] overflow-hidden {searchResults.messages &&
+      class="grid h-[90dvh] max-lg:h-[85dvh] z-[1] overflow-hidden {searchResults.messages &&
       searchResults.messages.length
         ? 'lg:grid-cols-3'
         : 'grid-cols-1'}"

@@ -168,7 +168,7 @@
   class="flex p-2 items-center justify-center border border-dashed bg-slate-300 dark:bg-slate-900 hover:dark:bg-slate-700 hover:bg-slate-500"
   id="drop-container"
 >
-  <form class="dropzone w-[50vw] items-center justify-center flex flex-col" id="file-drop">
+  <form class="dropzone w-[50dvw] items-center justify-center flex flex-col" id="file-drop">
     <div
       on:click={() => dropzone.hiddenFileInput?.click()}
       on:keypress={() => dropzone.hiddenFileInput?.click()}

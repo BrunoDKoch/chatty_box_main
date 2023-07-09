@@ -59,7 +59,7 @@
   {/each}
   <section
     id="chats"
-    class="flex flex-col gap-4 even:bg-base-300 lg:overflow-y-auto max-lg:max-h-[57vh] lg:max-h-[65vh]"
+    class="flex flex-col gap-4 even:bg-base-300 lg:overflow-y-auto max-lg:max-h-[57dvh] lg:max-h-[65dvh]"
   >
     {#if $fetchingInitialCallInfo}
       {#each { length: 7 } as _}

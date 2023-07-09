@@ -7,7 +7,7 @@
 <Modal additionalClasses="min-w-fit" on:close>
   <div class="flex items-center justify-center">
     <img
-      class="max-h-[70vh] max-w-[70vw]"
+      class="max-h-[70dvh] max-w-[70dvw]"
       src={link.startsWith('static/images') ? `${PUBLIC_IMAGES_URL}/${link}?width=600` : link}
       alt=""
     />
