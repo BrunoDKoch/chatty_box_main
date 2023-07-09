@@ -7,7 +7,7 @@
   import { toKebabCase } from '$lib/useCaseConversion';
   import Button from '../Custom/Button.svelte';
   import { createEventDispatcher } from 'svelte';
-  import { PUBLIC_IMAGES_URL as baseURL } from '$env/static/public';
+  import { PUBLIC_IMAGES_URL_DEV as baseURL } from '$env/static/public';
   import { ofetch } from 'ofetch';
   export let link: string;
   const dispatch = createEventDispatcher();

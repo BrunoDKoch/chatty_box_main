@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { PUBLIC_IMAGES_URL } from '$env/static/public';
+  import { PUBLIC_IMAGES_URL_DEV } from '$env/static/public';
   import type { UserDetailedResponse, UserPartialResponse } from '$lib/types/partialTypes';
   import useUserModal, { updateUser } from '$lib/useUserModal';
   export let user: UserDetailedResponse | UserPartialResponse;
@@ -42,7 +42,7 @@
     class="w-[{rawSize}px] rounded-lg bg-blue-600 dark:bg-blue-800 font-bold text-white text-center text-{textSize}"
   >
     {#if user.avatar}
-      <img src="{PUBLIC_IMAGES_URL}/{user.avatar}?width={rawSize}" alt="{user.userName} avatar" />
+      <img src="{PUBLIC_IMAGES_URL_DEV}/{user.avatar}?width={rawSize}" alt="{user.userName} avatar" />
     {:else}
       <span class="">
         {user.userName[0]}

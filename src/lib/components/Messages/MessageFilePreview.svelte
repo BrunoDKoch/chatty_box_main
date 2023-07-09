@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { PUBLIC_IMAGES_URL } from '$env/static/public';
+  import { PUBLIC_IMAGES_URL_DEV } from '$env/static/public';
   import { t } from 'svelte-i18n';
   import useFileInfo from '$lib/useFileInfo';
   import { createEventDispatcher } from 'svelte';
@@ -9,7 +9,7 @@
   const { fileName, icon } = useFileInfo(link);
 </script>
 
-<a class="max-w-fit" on:click|preventDefault={() => dispatch('fileClick', link)} href="{PUBLIC_IMAGES_URL}/{link}">
+<a class="max-w-fit" on:click|preventDefault={() => dispatch('fileClick', link)} href="{PUBLIC_IMAGES_URL_DEV}/{link}">
   <div class="items-center w-fit hover:link p-4 grid grid-cols-5">
     <iconify-icon class="text-3xl lg:text-4xl grayscale" {icon} />
     <div class="flex col-span-4 flex-col">
