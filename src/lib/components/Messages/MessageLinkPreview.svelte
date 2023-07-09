@@ -1,60 +1,26 @@
 <script lang="ts">
-  import { PUBLIC_IMAGES_URL } from '$env/static/public';
   import { getLinkType } from '$lib/useLinkCheck';
-  import Button from '$lib/components/Custom/Button.svelte';
-  import { createEventDispatcher } from 'svelte';
   import MessageFilePreview from './MessageFilePreview.svelte';
+  import VideoMessage from './LinkTypes/VideoMessage.svelte';
+  import AudioMessage from './LinkTypes/AudioMessage.svelte';
+  import ImageMessage from './LinkTypes/ImageMessage.svelte';
+  import ExternalLinkMessage from './LinkTypes/ExternalLinkMessage.svelte';
+  import YouTubeMessage from './LinkTypes/YouTubeMessage.svelte';
   export let link: string;
-
-  const dispatch = createEventDispatcher();
 
   $: linkType = getLinkType(link);
 </script>
 
 {#if linkType === 'YouTube'}
-  <iframe
-    src={link.replace('watch?v=', 'embed/')}
-    frameborder="0"
-    class="lg:w-[560px] lg:h-[315px] max-lg:w-[100%] max-lg:h-[100%]"
-    title="YouTube video player"
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-  />
+  <YouTubeMessage {link} />
 {:else if linkType === 'image'}
-  <Button
-    id={link}
-    format="ghost"
-    additionalClasses="h-52"
-    on:click={() => dispatch('showImage', link)}
-  >
-    <img
-      class="max-w-52 max-h-52"
-      src={link.startsWith('static/images') ? `${PUBLIC_IMAGES_URL}/${link}?width=200` : link}
-      alt=""
-    />
-  </Button>
+  <ImageMessage {link} on:showImage />
 {:else if linkType === 'video'}
-  <video controls>
-    <track kind="captions" />
-    <source
-      src={link.startsWith('static/video') ? `${PUBLIC_IMAGES_URL}/${link}` : link}
-      type="video/{link.split('.').pop()}"
-    />
-  </video>
+  <VideoMessage {link} />
 {:else if linkType === 'audio'}
-  <audio
-    class="relative max-lg:w-52"
-    controls
-    src={link.startsWith('static/audio') ? `${PUBLIC_IMAGES_URL}/${link}` : link}
-  />
+  <AudioMessage {link} />
 {:else if linkType === 'file'}
-  <MessageFilePreview on:fileClick {link} />
+  <MessageFilePreview {link} on:fileClick />
 {:else}
-  <a
-    on:click|preventDefault={() => dispatch('showExternalLink', link)}
-    class="link"
-    rel="external"
-    href={link}
-  >
-    {link}
-  </a>
+  <ExternalLinkMessage {link} on:showExternalLink />
 {/if}
