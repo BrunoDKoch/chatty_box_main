@@ -11,6 +11,9 @@
   import Button from '$lib/components/Custom/Button.svelte';
   import { fade, fly } from 'svelte/transition';
   import { page } from '$app/stores';
+  import MessageBottomInfo from './MessageSubComponents/MessageBottomInfo.svelte';
+  import MessageBubble from './MessageSubComponents/MessageBubble.svelte';
+  import MessageEdit from './MessageSubComponents/MessageEdit.svelte';
   export let message: MessageResponse;
   export let focusOn = false;
   export let hideBottomInfo = false;
@@ -67,15 +70,6 @@
     });
   });
 
-  // Handling links
-  $: links = messageContainsLink();
-  function messageContainsLink() {
-    return message.text.match(urlRegex)?.length
-      ? message.text.match(urlRegex)
-      : message.text.match(hostedFilesRegex);
-  }
-  $: message, (links = messageContainsLink()); // Sadly necessary to avoid the wrong link showing
-
   // Handling editing
   let isEditing = false;
   async function handleEditSubmission() {
@@ -104,10 +98,7 @@
     show = true;
     observer.observe(thisElement);
     if (focusOn) {
-      setTimeout(
-        () => thisElement.scrollIntoView(scrollOptions),
-        10,
-      );
+      setTimeout(() => thisElement.scrollIntoView(scrollOptions), 10);
       focusOn = false;
     }
     if (message.isFromCaller || $chat.userIsAdmin)
@@ -188,68 +179,22 @@
           {message.user.userName}
         </div>
         {#if isEditing}
-          <form
-            on:submit|preventDefault={async () => await handleEditSubmission()}
-            class="join w-full"
-            action=""
-          >
-            <input
-              type="text"
-              class="input w-full join-item"
-              name="edit"
-              bind:value={message.text}
-            />
-            <Button id="send-message" joinItem>
-              <iconify-icon icon="mdi:send" />
-            </Button>
-          </form>
+          <MessageEdit
+            bind:text={message.text}
+            on:handleEditSubmission={async () => await handleEditSubmission()}
+          />
         {:else}
-          <div
-            class="chat-bubble {message.text === 'messageFlagged'
-              ? 'opacity-50 italic'
-              : 'opacity-100'} {message.isFromCaller ? 'chat-bubble-success' : 'chat-bubble-info'}
-            {msgError ? 'chat-bubble-error' : ''}"
-          >
-            {#if message.text === 'messageFlagged'}
-              {$t(message.text)}
-            {:else if links && links.length}
-              {#each links as link}
-                <MessageLinkPreview on:fileClick on:showImage on:showExternalLink bind:link />
-              {/each}
-            {:else}
-              {message.text}
-            {/if}
-          </div>
+          <MessageBubble
+            on:fileClick
+            on:showImage
+            on:showExternalLink
+            bind:msgError
+            isFromCaller={message.isFromCaller}
+            text={message.text}
+          />
         {/if}
         {#if !hideBottomInfo && !displayOnly}
-          <div class="chat-footer flex gap-1 opacity-50">
-            <div class="flex-col flex">
-              <p class={message.editedAt ? 'line-through' : ''}>
-                {$date(new Date(`${message.sentAt}Z`), {
-                  dateStyle: 'medium',
-                  timeStyle: 'short',
-                })}
-              </p>
-              {#if message.editedAt}
-                <time>
-                  {$date(new Date(`${message.editedAt}Z`), {
-                    dateStyle: 'medium',
-                    timeStyle: 'short',
-                  })}
-                </time>
-              {/if}
-            </div>
-            {#if message.isFromCaller && message.readBy.length}
-              <button on:click={() => dispatch('showReadByModal', message)}>
-                <iconify-icon
-                  icon="mdi:check-all"
-                  class={message.readBy.filter((r) => r.id !== message.user.id).length
-                    ? 'text-success'
-                    : ''}
-                />
-              </button>
-            {/if}
-          </div>
+          <MessageBottomInfo bind:message on:showReadByModal />
         {/if}
       </div>
     {/if}

@@ -15,6 +15,7 @@
   import UserModal from '$lib/components/Modals/UserModal.svelte';
   import Button from '$lib/components/Custom/Button.svelte';
   import MainHeader from '$lib/components/Header/MainHeader.svelte';
+  import { messageFiles } from '$lib/useMessageFiles';
 
   $: title = 'ChattyBox';
   $: {
@@ -27,6 +28,8 @@
     userName: string;
     action?: string;
   }[];
+
+  messageFiles.init();
 
   // Handle a new message
   connection.on('newMessage', async (data: MessageResponse) => {

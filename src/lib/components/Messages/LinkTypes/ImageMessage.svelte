@@ -11,7 +11,7 @@
 <Button
   id={link}
   format="ghost"
-  additionalClasses="h-52"
+  additionalClasses="h-fit w-fit"
   on:click={() => dispatch('showImage', link)}
 >
   <img

@@ -175,6 +175,7 @@
         <div
           on:dragenter
           on:dragleave
+          role="form"
           class="rounded-lg flex flex-col gap-2 bg-base-300 items-center p-40"
         >
           <iconify-icon class="text-9xl" icon="mdi:upload" />

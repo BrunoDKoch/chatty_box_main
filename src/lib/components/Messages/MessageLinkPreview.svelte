@@ -1,6 +1,6 @@
 <script lang="ts">
   import { getLinkType } from '$lib/useLinkCheck';
-  import MessageFilePreview from './MessageFilePreview.svelte';
+  import FileMessage from './LinkTypes/FileMessage.svelte';
   import VideoMessage from './LinkTypes/VideoMessage.svelte';
   import AudioMessage from './LinkTypes/AudioMessage.svelte';
   import ImageMessage from './LinkTypes/ImageMessage.svelte';
@@ -20,7 +20,7 @@
 {:else if linkType === 'audio'}
   <AudioMessage {link} />
 {:else if linkType === 'file'}
-  <MessageFilePreview {link} on:fileClick />
+  <FileMessage {link} on:fileClick />
 {:else}
   <ExternalLinkMessage {link} on:showExternalLink />
 {/if}

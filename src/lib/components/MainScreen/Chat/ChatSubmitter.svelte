@@ -6,6 +6,8 @@
   import CloseButton from '$lib/components/Custom/CloseButton.svelte';
   import Button from '$lib/components/Custom/Button.svelte';
   import { createEventDispatcher } from 'svelte';
+  import { messageFiles } from '$lib/useMessageFiles';
+  import MessageFilesWrapper from '$lib/components/Messages/MessageSubComponents/FileHandling/MessageFilesWrapper.svelte';
   export let loading = true;
   export let replyTo: MessageResponse | undefined = undefined;
 
@@ -63,6 +65,9 @@
     }
     otherUsers = otherUsers;
   });
+
+  // File handling
+  $: files = $messageFiles.find((m) => m.chatId === $chatId && m.files.length)?.files;
 
   // Because there's no other way to know if one should use "e" or "y"
   function getSpanishAnd(userName: string) {
@@ -130,23 +135,39 @@
     }
   }
 
+  function checkForFilesInMessage() {
+    let finalMessage = newMessage;
+    if (files && files.length) {
+      for (const file of files) {
+        finalMessage = `${file}\n${finalMessage}`.trim();
+      }
+      messageFiles.clearChat($chatId);
+    }
+    return finalMessage.trim();
+  }
+
   // Message logic
   async function sendMessage() {
     if (newMessage.length > 1000) return;
-    if (!newMessage.trim()) {
+
+    // Checking for files
+    let finalMessage = checkForFilesInMessage();
+
+    if (!finalMessage.trim()) {
       messageError = $t('message.empty');
       return;
     }
+
     // Checking for 'messageFlagged' because that's how messages flagged by admins are returned
-    if (!newMessage || newMessage === 'messageFlagged') return;
-    dispatch('sendingMessage', newMessage);
+    if (!finalMessage || finalMessage === 'messageFlagged') return;
+    dispatch('sendingMessage', finalMessage);
     submitting = true;
     await connection.invoke('StopTyping', $chat.id);
 
     const success = await connection.invoke(
       'SendMessage',
       $chat.id,
-      newMessage,
+      finalMessage,
       replyTo?.id ?? undefined,
     );
     if (success) {
@@ -176,8 +197,16 @@
       {/if}
     </label>
   {/if}
+  {#if files && files.length}
+    <MessageFilesWrapper bind:files />
+  {/if}
   <div class="box-border bg-base-300 px-4 relative">
-    <Button id="file-input-toggle" buttonType="button" format="ghost" additionalClasses="text-2xl z-50 absolute bottom-0">
+    <Button
+      id="file-input-toggle"
+      buttonType="button"
+      format="ghost"
+      additionalClasses="text-2xl z-50 absolute bottom-0"
+    >
       <iconify-icon icon="mdi:attachment" />
     </Button>
     <textarea
@@ -192,7 +221,12 @@
         : 'textarea-bordered'} {disabled ? 'textarea-disabled' : ''} w-full box-border"
       {disabled}
     />
-    <Button id="chat-submit" format="ghost" {disabled} additionalClasses="text-2xl absolute right-4 bottom-0">
+    <Button
+      id="chat-submit"
+      format="ghost"
+      {disabled}
+      additionalClasses="text-2xl absolute right-4 bottom-0"
+    >
       <iconify-icon icon={submitting ? 'svg-spinners:6-dots-scale' : 'mdi:send'} />
     </Button>
   </div>
