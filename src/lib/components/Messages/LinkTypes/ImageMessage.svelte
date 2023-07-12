@@ -15,7 +15,7 @@
   on:click={() => dispatch('showImage', link)}
 >
   <img
-    class="max-w-52 max-h-52"
+    width="200"
     src={link.startsWith('static/images') ? `${PUBLIC_IMAGES_URL_DEV}/${link}?width=200` : link}
     alt=""
   />

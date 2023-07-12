@@ -10,11 +10,10 @@
 </script>
 
 <a
-  class="border-dotted border-base-100 border-2 w-52 h-28"
   on:click|preventDefault={() => dispatch('fileClick', link)}
   href="{PUBLIC_IMAGES_URL_DEV}/{link}"
 >
-  <div class="items-center place-items-center h-full w-fit hover:link p-4 grid grid-cols-5">
+  <div class="flex flex-col items-center">
     <iconify-icon class="text-3xl lg:text-4xl grayscale" {icon} />
     <div class="flex col-span-4 flex-col">
       <span class="italic font-bold">{fileName}</span>

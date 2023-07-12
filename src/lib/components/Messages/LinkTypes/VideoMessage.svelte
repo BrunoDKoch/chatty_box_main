@@ -4,7 +4,7 @@
   export let link: string;
 </script>
 
-<video class="max-lg:w-52 w-96" controls>
+<video controls>
   <track kind="captions" />
   <source
     src={link.startsWith('static/video') ? `${PUBLIC_IMAGES_URL_DEV}/${link}` : link}

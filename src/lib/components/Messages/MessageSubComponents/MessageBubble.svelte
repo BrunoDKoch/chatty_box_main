@@ -30,11 +30,20 @@
     {#if text === 'messageFlagged'}
       {$t(text)}
     {:else if links && links.length}
-    <div class="grid grid-flow-row grid-cols-[minmax(50%,_1fr)_auto] grid-rows-[minmax(50%,_1fr)_auto] rounded-lg place-items-center items-center justify-center">
-      {#each links as link}
-        <MessageLinkPreview on:fileClick on:showImage on:showExternalLink bind:link />
-      {/each}
-    </div>
+      <div
+        class="grid grid-flow-row grid-cols-2 grid-rows-2 rounded-lg w-96 max-w-96"
+      >
+        {#each links as link (links.indexOf(link))}
+          <MessageLinkPreview
+            total={links.length}
+            index={links.indexOf(link) + 1}
+            on:fileClick
+            on:showImage
+            on:showExternalLink
+            bind:link
+          />
+        {/each}
+      </div>
       {#if text}
         <div class="divider before:bg-black after:bg-black" />
       {/if}
