@@ -135,7 +135,7 @@
 </script>
 
 <div
-  class="relative"
+  class="relative box-border"
   class:hover:bg-base-300={displayOnly}
   id={message.id}
   role="dialog"

@@ -283,7 +283,7 @@
       "text": "plain text file",
       "pdf": "PDF",
       "compressed": "compressed or zipped file",
-      "code": "code file. It cannot be executed without ",
+      "code": "code file",
       "unknown": "file of unknown type"
     },
     "compressedWarning": "files of this type often cannot be checked for malware before extraction, and may contain malicious code",
