@@ -18,7 +18,9 @@ function getTheme(cookies: Cookies) {
 function getLanguage(data: { cookies: Cookies; request: Request }): string {
   const { cookies, request } = data;
   if (cookies.get('lang')) return cookies.get('lang') as string;
-  const lang = request.headers.get('accept-language')!.split(',')[0];
+  const acceptLanguageHeader = request.headers.get('accept-language');
+  if (!acceptLanguageHeader) return 'en';
+  const lang = acceptLanguageHeader.split(',')[0];
   const existingLocale = get(locales).find((l) => lang.startsWith(l));
   cookies.set('lang', existingLocale ?? 'en', {
     path: '/',
@@ -28,7 +30,7 @@ function getLanguage(data: { cookies: Cookies; request: Request }): string {
   return lang ?? 'en';
 }
 
-export const load = (async ({ cookies, request, url, locals, fetch }) => {
+export const load = (async ({ cookies, request, locals }) => {
   const theme = getTheme(cookies);
   const lang = getLanguage({ cookies, request });
   await waitLocale(lang);
