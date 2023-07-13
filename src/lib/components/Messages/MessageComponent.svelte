@@ -29,6 +29,7 @@
   $: show = false;
 
   let thisElement: HTMLElement;
+  let bottomElement: HTMLElement;
   const dispatch = createEventDispatcher();
 
   // Hover options
@@ -98,7 +99,7 @@
     show = true;
     observer.observe(thisElement);
     if (focusOn) {
-      setTimeout(() => thisElement.scrollIntoView(scrollOptions), 10);
+      setTimeout(() => bottomElement.scrollIntoView(scrollOptions), 10);
       focusOn = false;
     }
     if (message.isFromCaller || $chat.userIsAdmin)
@@ -193,9 +194,11 @@
             text={message.text}
           />
         {/if}
-        {#if !hideBottomInfo && !displayOnly}
-          <MessageBottomInfo bind:message on:showReadByModal />
-        {/if}
+        <div class="chat-footer flex gap-1 opacity-50" bind:this={bottomElement}>
+          {#if !hideBottomInfo && !displayOnly}
+            <MessageBottomInfo bind:message on:showReadByModal />
+          {/if}
+        </div>
       </div>
     {/if}
   </div>

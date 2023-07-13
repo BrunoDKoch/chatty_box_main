@@ -21,7 +21,7 @@
 </script>
 
 <div
-  class="chat-bubble {text === 'messageFlagged' ? 'opacity-50 italic' : 'opacity-100'} {isFromCaller
+  class="chat-bubble container {text === 'messageFlagged' ? 'opacity-50 italic' : 'opacity-100'} {isFromCaller
     ? 'chat-bubble-success'
     : 'chat-bubble-info'}"
   class:chat-bubble-error={msgError}
@@ -31,7 +31,7 @@
       {$t(text)}
     {:else if links && links.length}
       <div
-        class="grid grid-flow-row grid-cols-2 grid-rows-2 rounded-lg w-96 max-w-96"
+        class="grid grid-flow-row lg:grid-cols-2 max-lg:grid-rows-[{links.length}] lg:grid-rows-2 rounded-lg w-52 max-w-52 lg:w-96 lg:max-w-96"
       >
         {#each links as link (links.indexOf(link))}
           <MessageLinkPreview

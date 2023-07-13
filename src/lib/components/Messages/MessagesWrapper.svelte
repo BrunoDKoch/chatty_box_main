@@ -25,7 +25,7 @@
   $: scrollOptions = {} as ScrollIntoViewOptions;
   $: {
     if (messages.length < 30) {
-      scrollOptions = { behavior: 'smooth', block: 'center', inline: 'center' };
+      scrollOptions = { behavior: 'smooth', block: 'end', inline: 'end' };
     } else {
       scrollOptions = { behavior: 'instant', block: 'center', inline: 'start' };
     }

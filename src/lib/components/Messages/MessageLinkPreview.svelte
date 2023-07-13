@@ -15,18 +15,18 @@
   function getGridSpan() {
     switch (total) {
       case 1:
-        return 'col-span-2 row-span-2';
+        return 'lg:col-span-2 row-span-4 lg:row-span-2';
       case 2:
         return 'row-span-2';
       case 3:
-        if (index === 3) return 'col-span-2';
+        if (index === 3) return 'lg:col-span-2';
       default:
         return '';
     }
   }
 </script>
 
-<div class="{getGridSpan()} flex items-center justify-center border-dotted" class:border-2={linkType === 'file'}>
+<div class="{getGridSpan()} flex items-center max-lg:w-48 justify-center border-dotted" class:border-2={linkType === 'file'}>
   {#if linkType === 'YouTube'}
     <YouTubeMessage {link} />
   {:else if linkType === 'image'}
