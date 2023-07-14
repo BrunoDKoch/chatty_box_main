@@ -18,3 +18,4 @@ sounds/
 # Sentry
 .sentryclirc
 sentry.properties
+.eslintrc.cjs
