@@ -11,6 +11,7 @@
   import Button from '../Custom/Button.svelte';
   import useFormValidation from '$lib/useFormValidation';
   import EmailOtpModal from './EmailOTPModal.svelte';
+  import { page } from '$app/stores';
   export let pending = false;
   const dispatch = createEventDispatcher();
   let showMFACodeModal = false;
@@ -65,8 +66,9 @@
     try {
       await logIn(body);
       showMFACodeModal = false;
+      const redirectTo = $page.url.searchParams.get('redirectTo') ?? '/';
       await getUser();
-      await goto('/');
+      await goto(redirectTo);
     } catch (err) {
       if ((err as { status: number; message: string; cause: number }).status === 400) {
         (err as { message: string }).message.includes('emailNotConfirmed')
@@ -76,9 +78,9 @@
       }
       console.error(err);
       $useError = {
-        status: (err as any).status,
+        status: (err as any).status ?? 500,
         message: (err as any).message,
-        cause: $t(`error.cause.${(err as any).status}`),
+        cause: $t(`error.cause.${(err as any).status ?? 500}`),
       };
       pending = false;
     } finally {

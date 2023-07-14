@@ -1,4 +1,4 @@
-import type { Handle, HandleServerError } from '@sveltejs/kit';
+import { redirect, type Handle, type HandleServerError } from '@sveltejs/kit';
 import { PUBLIC_AUTH_URL_DEV as baseURL, PUBLIC_SENTRY_URL_DEV } from '$env/static/public';
 import * as Sentry from '@sentry/sveltekit';
 
@@ -9,7 +9,7 @@ Sentry.init({
 
 export const handleError = (async ({ error, event }) => {
   const errorId = crypto.randomUUID();
-  Sentry.captureException(error, { extra: { event, errorId } });
+  Sentry.captureException(error, { extra: { ...event, errorId } });
   return error as App.Error;
 }) satisfies HandleServerError;
 
@@ -21,7 +21,11 @@ export const handle = (async ({ event, resolve }) => {
       mode: 'cors',
       credentials: 'include',
     });
-    if (userRequest.ok) locals.user = await userRequest.json();
+    if (!userRequest.ok) {
+      const fromUrl = event.url.pathname + event.url.search;
+      throw redirect(303, `/auth/login?redirectTo=${fromUrl}`);
+    }
+    locals.user = await userRequest.json();
   }
   return await resolve(event);
 }) satisfies Handle;

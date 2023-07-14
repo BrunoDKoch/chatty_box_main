@@ -15,15 +15,6 @@ const fetchedSuspensions = writable({ users: [], total: 0 }) as Writable<{
   total: number;
 }>;
 
-async function checkIfAdmin() {
-  return await ofetch<boolean>('/admin/isAdmin', {
-    baseURL,
-    method: 'GET',
-    mode: 'cors',
-    credentials: 'include',
-  });
-}
-
 async function postAdminAction(body: AdminActionRequest) {
   return await ofetch('/admin/action', {
     baseURL,
@@ -90,8 +81,6 @@ async function getAdminData(
   return await fetchSuspensions({ skip, take });
 }
 
-const isAdmin = writable(await checkIfAdmin());
-
 const reports = writable([]) as Writable<UserReportResponse[]>;
 
 const totalReports = writable(0);
@@ -99,12 +88,11 @@ const totalReports = writable(0);
 const activeAdminPage = writable(1);
 
 export {
-  checkIfAdmin,
+
   postAdminAction,
   lockUserOut,
   fetchReports,
   getAdminData,
-  isAdmin,
   reports,
   totalReports,
   activeAdminPage,

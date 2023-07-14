@@ -9,8 +9,8 @@ import type { UserConnectionCallInfo } from './types/partialTypes';
 async function logIn(body: LogInInfo) {
   return await ofetch(`/user/login`, {
     body,
-    mode: 'cors',
     method: 'POST',
+    mode: 'cors',
     baseURL,
     credentials: 'include',
     async onResponse({ response }) {
