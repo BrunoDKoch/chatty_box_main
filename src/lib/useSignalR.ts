@@ -7,7 +7,7 @@ import type {
 } from '$lib/types/partialTypes';
 import { logOut } from '$lib/useAuth';
 import { HubConnectionBuilder, HubConnectionState } from '@microsoft/signalr';
-import type { Message, UserNotificationSettings } from '@prisma/client';
+import type { UserNotificationSettings } from '@prisma/client';
 import { get, writable, type Writable } from 'svelte/store';
 import type { CompleteChat, MessageResponse, SystemMessagePartial } from './types/combinationTypes';
 import { chat, chatId, chatNotificationSettings } from './useActiveChat';
@@ -40,7 +40,7 @@ chatId.subscribe(async (cId) => {
 connection.on('connectionSuccessful', () => fetchingInitialCallInfo.set(false));
 
 connection.on('unread', (data) => {
-  data.forEach((n: Message) => messagesCount.set(get(messagesCount) + 1));
+  data.forEach(() => messagesCount.set(get(messagesCount) + 1));
 });
 
 connection.on('read', (data: { id: string; readBy: UserPartialResponse & { readAt: Date } }) => {
@@ -49,9 +49,10 @@ connection.on('read', (data: { id: string; readBy: UserPartialResponse & { readA
     return m - 1;
   });
   chat.update((c) => {
-    if (!c.messages.find((m) => m.id === data.id)) return c;
+    const foundMessage = c.messages.find((m) => m.id === data.id);
+    if (!foundMessage) return c;
     if (!data.readBy.userName) return c;
-    c.messages.find((m) => m.id === data.id)!.readBy.push({ ...data.readBy });
+    foundMessage.readBy.push({ ...data.readBy });
     return c;
   });
 });
@@ -79,8 +80,9 @@ connection.on('friends', (data: FriendResponse[]) => {
   online.set(true);
   friends.update((f) => {
     data.forEach((user) => {
-      if (!f.find((u) => u.userName === user.userName)) f.push(user);
-      else f.find((u) => u.userName === user.userName)!.isOnline = user.isOnline;
+      const foundUser = f.find((u) => u.userName === user.userName);
+      if (!foundUser) f.push(user);
+      else foundUser.isOnline = user.isOnline;
     });
     return f;
   });
@@ -130,7 +132,10 @@ connection.on('updateStatus', (data: { id: string; online: boolean; status?: str
 
 // New chat created (by user or another member)
 connection.on('newChat', (data: ChatPreview) => {
-  const { playSound, showOSNotification } = get(useUserNotificationSettings)!;
+  const { playSound, showOSNotification } = get(useUserNotificationSettings) ?? {
+    playSound: true,
+    showOSNotification: true,
+  };
   const { id, createdAt, chatName, users } = data;
   chatNotificationSettings.update((cn) => {
     cn.push({
@@ -190,7 +195,8 @@ connection.on('systemMessage', (data: SystemMessagePartial) => {
 connection.on('editedMessage', (data: MessageResponse) => {
   chat.update((ch) => {
     if (ch.id !== data.chatId || !ch.messages.map((m) => m.id).includes(data.id)) return ch;
-    const message = ch.messages.find((m) => m.id === data.id)!;
+    const message = ch.messages.find((m) => m.id === data.id);
+    if (!message) return ch;
     message.text = data.text;
     message.editedAt = data.editedAt;
     return ch;
@@ -211,7 +217,13 @@ connection.on('messageDeleted', (data: string) => {
 connection.on('addedAsAdmin', (data: string) => {
   if (get(chatId) === data) {
     chat.update((c) => {
-      c.admins.push(c.users.find((u) => u.id === c.systemMessages.at(-1)!.affectedUser!.id)!);
+      const lastSystemMessage = c.systemMessages.at(-1);
+      if (!lastSystemMessage) return c;
+      const { affectedUser } = lastSystemMessage;
+      if (!affectedUser) return c;
+      const user = c.users.find((u) => u.id === affectedUser.id);
+      if (!user) return c;
+      c.admins.push(user);
       c.userIsAdmin = true;
       return c;
     });

@@ -39,11 +39,15 @@
   $: hasMore, setUpObserver();
 
   function setUpObserver() {
-    if (!hasMore) {
-      observer.disconnect();
+    try {
+      if (!hasMore) {
+        observer.disconnect();
+        return;
+      }
+      return setTimeout(() => observer.observe(thisElement), 1500);
+    } catch {
       return;
     }
-    return setTimeout(() => observer.observe(thisElement), 1500);
   }
   async function getChatMessages() {
     dispatch('fetching');

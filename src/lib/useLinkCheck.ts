@@ -1,4 +1,5 @@
 const urlRegex = /((?:https?|ftp):\/\/[^\s/$.?#].[^\s]*)+/gi;
+const urlWithFileRegex = /(((?:https?|ftp):\/\/[^\s/$.?#].[^\s]*)+.\w{1,4})+/gi;
 const hostedFilesRegex =
   /(static\/(images|audio|video|files)\/[(\w+)+-]+\/[(\w+)+-]+\/[(\w+\s+?)+-]+.\w{1,4})+/gi;
 
@@ -36,4 +37,4 @@ function getLinkType(link: string): 'image' | 'video' | 'audio' | 'YouTube' | 'f
   return null;
 }
 
-export { urlRegex, hostedFilesRegex, getLinkType };
+export { urlRegex, urlWithFileRegex, hostedFilesRegex, getLinkType };

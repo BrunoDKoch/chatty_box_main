@@ -26,18 +26,23 @@
   }
 </script>
 
-<div class="{getGridSpan()} flex items-center max-lg:w-48 justify-center border-dotted" class:border-2={linkType === 'file'}>
-  {#if linkType === 'YouTube'}
-    <YouTubeMessage {link} />
-  {:else if linkType === 'image'}
-    <ImageMessage {link} on:showImage />
-  {:else if linkType === 'video'}
-    <VideoMessage {link} />
-  {:else if linkType === 'audio'}
-    <AudioMessage {link} />
-  {:else if linkType === 'file'}
-    <FileMessage {link} on:fileClick />
-  {:else}
-    <ExternalLinkMessage {link} on:showExternalLink />
-  {/if}
-</div>
+{#if linkType}
+  <div
+    class="{getGridSpan()} flex items-center max-lg:w-48 justify-center border-dotted"
+    class:border-2={linkType === 'file'}
+  >
+    {#if linkType === 'YouTube'}
+      <YouTubeMessage {link} />
+    {:else if linkType === 'image'}
+      <ImageMessage {link} on:showImage />
+    {:else if linkType === 'video'}
+      <VideoMessage {link} />
+    {:else if linkType === 'audio'}
+      <AudioMessage {link} />
+    {:else if linkType === 'file'}
+      <FileMessage {link} on:fileClick />
+    {/if}
+  </div>
+{:else}
+  <ExternalLinkMessage {link} on:showExternalLink />
+{/if}

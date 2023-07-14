@@ -9,7 +9,7 @@
   import SkeletonPreview from './SkeletonPreview.svelte';
   import AsideLink from './AsideLink.svelte';
   import { onMount } from 'svelte';
-  import { isAdmin } from '$lib/useAdminFetch';
+  import { page } from '$app/stores';
   let showNewChatModal = false;
   let buttonLinks = [
     {
@@ -38,7 +38,7 @@
     link?: string;
   }[];
   async function runAdminCheck() {
-    if (!$isAdmin) return;
+    if (!$page.data.user || !$page.data.user.isAdmin) return;
     buttonLinks.push({
       icon: 'mdi:shield',
       text: $t('admin.title'),

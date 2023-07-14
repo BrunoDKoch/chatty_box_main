@@ -15,19 +15,28 @@
   export let activePage = 1;
   export let replyTo: undefined | MessageResponse;
   export let isSearch = false;
+
+  let wrapperElement: HTMLElement;
+
   $: combinedMessages = [...messages, ...systemMessages];
   $: combinedMessages,
     combinedMessages.sort((a, b) => Number(new Date(getDate(a))) - Number(new Date(getDate(b))));
 
   // For handling focus on fetched messages
   $: oldLength = 0;
+  $: hasScrolledDown = false;
   $: focusOn = messages.length - oldLength - 1;
-  $: scrollOptions = {} as ScrollIntoViewOptions;
+  const scrollOptions = {
+    behavior: 'instant',
+    block: 'center',
+    inline: 'start',
+  } as ScrollIntoViewOptions;
+
   $: {
-    if (messages.length < 30) {
-      scrollOptions = { behavior: 'smooth', block: 'end', inline: 'end' };
-    } else {
-      scrollOptions = { behavior: 'instant', block: 'center', inline: 'start' };
+    if (wrapperElement && combinedMessages.length && !hasScrolledDown && !isSearch) {
+      console.log(wrapperElement.scrollHeight);
+      setTimeout(() => wrapperElement.scrollTo(0, wrapperElement.scrollHeight), 75);
+      hasScrolledDown = true;
     }
   }
 
@@ -56,13 +65,17 @@
     );
   }
   function shouldFocusOnElement(message: MessageResponse | SystemMessagePartial) {
+    if (!hasScrolledDown) return;
     if ('firedAt' in message) return;
     return messages.indexOf(message) === focusOn;
   }
-  onMount(() => initialMessages.push(...combinedMessages));
+  onMount(() => {
+    initialMessages.push(...combinedMessages);
+  });
 </script>
 
 <div
+  bind:this={wrapperElement}
   class="overflow-y-auto {isSearch
     ? 'lg:border-l-2 col-span-1'
     : ''} overflow-x-hidden max-lg:md:h-[50dvh] h-[80dvh] max-h-[80dvh] box-border"
@@ -99,7 +112,7 @@
           on:fileClick
           on:showReadByModal
           bind:message
-          bind:scrollOptions
+          {scrollOptions}
           animate={!initialMessages.includes(message)}
           hideBottomInfo={checkUserAndTime(message)}
           focusOn={shouldFocusOnElement(message)}

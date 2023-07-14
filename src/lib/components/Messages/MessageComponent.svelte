@@ -99,7 +99,7 @@
     show = true;
     observer.observe(thisElement);
     if (focusOn) {
-      setTimeout(() => bottomElement.scrollIntoView(scrollOptions), 10);
+      setTimeout(() => bottomElement.scrollIntoView(scrollOptions), 75);
       focusOn = false;
     }
     if (message.isFromCaller || $chat.userIsAdmin)
