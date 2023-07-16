@@ -7,7 +7,7 @@
   import useUserNotificationSettings from '$lib/useUserNotificationSettings';
   import { previews } from '$lib/useSignalR';
   let activePreview = $previews.find((p) => p.id === $chat.id);
-  async function handleChange(change: 'playSound' | 'showOSNotification') {
+  async function handleChange() {
     if (!$chat || !$previews) return;
     if (!activePreview) return;
 
@@ -35,7 +35,7 @@
         <label for="sound" class="label uppercase">
           <span class="label-text">{$t('common.sound')}</span>
           <input
-            on:change={async () => await handleChange('playSound')}
+            on:change={async () => await handleChange()}
             class="toggle"
             bind:checked={activePreview.playSound}
             type="checkbox"
@@ -46,7 +46,7 @@
         <label for="osNotification" class="label uppercase">
           <span class="label-text">{$t('common.osNotification')}</span>
           <input
-            on:change={async () => await handleChange('showOSNotification')}
+            on:change={async () => await handleChange()}
             class="toggle"
             bind:checked={activePreview.showOSNotification}
             type="checkbox"

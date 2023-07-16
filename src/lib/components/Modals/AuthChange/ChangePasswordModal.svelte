@@ -45,24 +45,14 @@
       },
     ],
   };
-  function validate() {
-    for (const val of Object.values(rules)) {
-      const checkRules = useFormValidation(val);
-      if (!checkRules) {
-        valid = false;
-        return;
-      }
-    }
-    valid = true;
-  }
   async function handleSubmit() {
     try {
       await changePassword({ currentPassword, newPassword });
       success = true;
     } catch (err) {
       $useError = {
-        status: (err as any).status,
-        cause: $t(`error.cause.${(err as any).status}`),
+        status: (err as App.Error).status,
+        cause: $t(`error.cause.${(err as App.Error).status}`),
         message: err as string,
       };
     } finally {

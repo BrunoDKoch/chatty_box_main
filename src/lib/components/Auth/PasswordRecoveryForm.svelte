@@ -69,9 +69,9 @@
       console.log(res);
     } catch (err) {
       $useError = {
-        status: (err as any).status,
-        message: (err as any).error.message,
-        cause: $t(`error.cause.${(err as any).status}`),
+        status: (err as App.Error).status,
+        message: (err as App.Error).error.message,
+        cause: $t(`error.cause.${(err as App.Error).status}`),
       };
     }
   }

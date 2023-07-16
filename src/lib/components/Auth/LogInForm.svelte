@@ -78,9 +78,9 @@
       }
       console.error(err);
       $useError = {
-        status: (err as any).status ?? 500,
-        message: (err as any).message,
-        cause: $t(`error.cause.${(err as any).status ?? 500}`),
+        status: (err as App.Error).status ?? 500,
+        message: (err as App.Error).message,
+        cause: $t(`error.cause.${(err as App.Error).status ?? 500}`),
       };
       pending = false;
     } finally {

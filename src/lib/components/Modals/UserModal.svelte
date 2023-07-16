@@ -75,7 +75,7 @@
       }
       $blockedUsers = $blockedUsers.filter((b) => b.id !== userResponse.id);
     } catch (err) {
-      throw error((err as any).status, err as any);
+      throw error((err as App.Error).status, err as App.Error);
     } finally {
       setTimeout(async () => await updateUser(user), 100);
     }
