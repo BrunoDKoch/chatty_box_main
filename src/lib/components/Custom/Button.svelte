@@ -1,7 +1,6 @@
 <script lang="ts">
   import type { ButtonFormat, UiSize, UiType, ButtonType } from '$lib/types/daisyUiTypes';
   import { btnBackground, btnFormat, sizeClasses } from '$lib/types/daisyUiTypes';
-  import { createEventDispatcher } from 'svelte';
   export let buttonType: ButtonType = 'submit';
   export let buttonUIType: UiType = 'neutral';
   export let format: ButtonFormat = 'regular';

@@ -4,7 +4,7 @@
   import CloseButton from '../Custom/CloseButton.svelte';
 
   export let modalType: 'base' | 'error' | 'warning' = 'base';
-  export let additionalClasses: string = '';
+  export let additionalClasses = '';
   let show = false;
   let modalElement: HTMLDialogElement;
   let bgClass = getBgClass();

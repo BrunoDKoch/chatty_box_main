@@ -4,7 +4,7 @@
   export let src: string;
   export let alt: string;
   export let width: number | undefined = undefined;
-  export let additionalClasses: string = '';
+  export let additionalClasses = '';
 
   let imageStatus: 'error' | 'loading' | 'ok' = 'loading';
 

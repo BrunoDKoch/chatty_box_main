@@ -3,7 +3,7 @@
   import CloseButton from '$lib/components/Custom/CloseButton.svelte';
   import useFileInfo, { type FileType } from '$lib/useFileInfo';
   import { getLinkType } from '$lib/useLinkCheck';
-  import { createEventDispatcher, onMount } from 'svelte';
+  import { createEventDispatcher } from 'svelte';
   import { fly } from 'svelte/transition';
 
   export let file: string;

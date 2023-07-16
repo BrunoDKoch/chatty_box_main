@@ -1,7 +1,8 @@
 import type { RequestHandler } from './$types';
 
 export const GET = (async ({ url, cookies }) => {
-  const theme = url.searchParams.get('theme')!;
+  const theme = url.searchParams.get('theme');
+  if (!theme) return new Response();
   const now = new Date(Date.now());
   cookies.set('theme', theme, {
     path: '/',

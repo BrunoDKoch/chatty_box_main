@@ -3,10 +3,10 @@
   import { locale, locales } from 'svelte-i18n';
   import Select from '../Custom/Select.svelte';
 
-  $: languageNameParser = new Intl.DisplayNames([$locale!], { type: 'language' });
+  $: languageNameParser = new Intl.DisplayNames([$locale as string], { type: 'language' });
   $: languageNames = $locales.map((l) => {
     return {
-      name: languageNameParser.of(l)!,
+      name: languageNameParser.of(l) as string,
       value: l,
     };
   });

@@ -239,6 +239,7 @@ connection.on('addedToChat', (data: ChatPreview) => {
 
 connection.on('removedFromChat', (data: string) => {
   if (get(useActiveScreen) === 'chat' && get(chatId) === data) {
+    // eslint-disable-next-line unused-imports/no-unused-vars, @typescript-eslint/no-unused-vars
     useActiveScreen.update((screen) => (screen = 'friends'));
   }
   previews.update((p) => (p = p.filter((c) => c.id !== data)));

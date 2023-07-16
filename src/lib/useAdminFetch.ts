@@ -74,6 +74,7 @@ async function getAdminData(
       break;
     default:
       const suspensions = await fetchSuspensions({ skip, take });
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars, unused-imports/no-unused-vars
       fetchedSuspensions.update((f) => (f = suspensions));
   }
 

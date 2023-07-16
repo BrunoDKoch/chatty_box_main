@@ -1,7 +1,5 @@
 <script lang="ts">
   import { t } from 'svelte-i18n';
-  import { connection } from '$lib/useSignalR';
-  import { onMount } from 'svelte';
   import MainSettings from './MainSettings.svelte';
   import LanguageSettings from './LanguageSettings.svelte';
   import { fly } from 'svelte/transition';

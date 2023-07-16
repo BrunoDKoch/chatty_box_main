@@ -4,7 +4,7 @@
   import ConnectingComponent from '$lib/components/ConnectingComponent.svelte';
   import { theme } from '$lib/theme';
   import useError from '$lib/useError';
-  import { connection, online, previews } from '$lib/useSignalR';
+  import { connection, online } from '$lib/useSignalR';
   import { HubConnectionState } from '@microsoft/signalr';
   import 'iconify-icon';
   import { ofetch } from 'ofetch';
@@ -91,8 +91,12 @@
 
 <title>ChattyBox</title>
 
-{#if $online || $page.url.pathname.includes('auth')}
-  <slot />
-{:else}
+{#await data}
   <ConnectingComponent />
-{/if}
+{:then _}
+  {#if $online || $page.url.pathname.includes('auth')}
+    <slot />
+  {:else}
+    <ConnectingComponent />
+  {/if}
+{/await}

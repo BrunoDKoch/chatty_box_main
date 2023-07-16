@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { page } from '$app/stores';
   import { PUBLIC_IMAGES_URL_DEV } from '$env/static/public';
   import StatusIndicator from '$lib/components/Status/StatusIndicator.svelte';
   import { connection } from '$lib/useSignalR';

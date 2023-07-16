@@ -4,10 +4,8 @@
   import { chat } from '$lib/useActiveChat';
   import { connection, previews } from '$lib/useSignalR';
   import { createEventDispatcher, onDestroy, onMount } from 'svelte';
-  import { date, t } from 'svelte-i18n';
-  import MessageLinkPreview from './MessageLinkPreview.svelte';
+  import { t } from 'svelte-i18n';
   import MessageRepliedTo from './MessageRepliedTo.svelte';
-  import { hostedFilesRegex, urlRegex } from '$lib/useLinkCheck';
   import Button from '$lib/components/Custom/Button.svelte';
   import { fade, fly } from 'svelte/transition';
   import { page } from '$app/stores';

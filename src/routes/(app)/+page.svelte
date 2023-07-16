@@ -6,14 +6,12 @@
   import type { MessageResponse } from '$lib/types/combinationTypes';
   import { locale, t } from 'svelte-i18n';
   import useUserNotificationSettings from '$lib/useUserNotificationSettings';
-  import useActiveScreen from '$lib/useActiveScreen';
   import { chat } from '$lib/useActiveChat';
   import type { UserPartialResponse } from '$lib/types/partialTypes';
   import NotificationsContainer from '$lib/components/Notification/NotificationsContainer.svelte';
   import useError from '$lib/useError';
   import useUserModal from '$lib/useUserModal';
   import UserModal from '$lib/components/Modals/UserModal.svelte';
-  import Button from '$lib/components/Custom/Button.svelte';
   import MainHeader from '$lib/components/Header/MainHeader.svelte';
   import { messageFiles } from '$lib/useMessageFiles';
 
