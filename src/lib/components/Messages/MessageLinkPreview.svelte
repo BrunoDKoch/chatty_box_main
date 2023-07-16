@@ -28,7 +28,7 @@
 
 {#if linkType}
   <div
-    class="{getGridSpan()} flex items-center max-lg:w-48 justify-center border-dotted"
+    class="{getGridSpan()} flex items-center max-w-52 justify-center border-dotted"
     class:border-2={linkType === 'file'}
   >
     {#if linkType === 'YouTube'}

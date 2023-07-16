@@ -10,6 +10,7 @@
 </script>
 
 <a
+  class="w-52"
   on:click|preventDefault={() => dispatch('fileClick', link)}
   href="{PUBLIC_IMAGES_URL_DEV}/{link}"
 >

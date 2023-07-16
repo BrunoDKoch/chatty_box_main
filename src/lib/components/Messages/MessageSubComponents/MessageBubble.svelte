@@ -38,7 +38,7 @@
       {$t(text)}
     {:else if fileLinks && fileLinks.length}
       <div
-        class="grid grid-flow-row lg:grid-cols-2 max-lg:grid-rows-{fileLinks.length} lg:grid-rows-2 rounded-lg w-52 max-w-52 lg:w-96 lg:max-w-96"
+        class="grid grid-flow-row lg:grid-cols-2 max-lg:grid-rows-{fileLinks.length} lg:grid-rows-2 rounded-lg max-w-52"
       >
         {#each fileLinks as link (fileLinks.indexOf(link))}
           <MessageLinkPreview
