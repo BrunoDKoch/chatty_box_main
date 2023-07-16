@@ -33,7 +33,7 @@
     {#if chat.lastMessage}
       <div class="grid grid-cols-8 w-80">
         <div class="col-span-1">
-          <UserAvatar user={chat.lastMessage.from} size={25} />
+          <UserAvatar disableModal user={chat.lastMessage.from} size={25} />
         </div>
         <div class="col-span-7">
           {#if chat.lastMessage.text.match(urlRegex) || chat.lastMessage.text.match(hostedFilesRegex)}
