@@ -1,7 +1,7 @@
 const urlRegex = /((?:https?|ftp):\/\/[^\s/$.?#].[^\s]*)+/gi;
-const urlWithFileRegex = /(((?:https?|ftp):\/\/[^\s/$.?#].[^\s]*)+.\w{1,4})+/gi;
+const urlWithFileRegex = /(((?:https?|ftp):\/\/[^\s/$.?#].[^\s]*)+(.\w{1,4})+)+/gi;
 const hostedFilesRegex =
-  /(static\/(images|audio|video|files)\/[(\w+)+-]+\/[(\w+)+-]+\/[(\w+\s+?)+-]+.\w{1,4})+/gi;
+  /(static\/(images|audio|video|files)\/[(\w+)+-]+\/[(\w+)+-]+\/[(\w+\s+?)+-]+(.\w{1,4})+)+/gi;
 
 function isFileLink(link: string) {
   return !!link.match(hostedFilesRegex);

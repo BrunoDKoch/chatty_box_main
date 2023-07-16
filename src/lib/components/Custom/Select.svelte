@@ -14,7 +14,6 @@
   export let required = false;
   export let disabled = false;
   export let name: string | undefined;
-  $: errorClass = '';
   $: ruleText = '';
   $: value, checkRules();
   function checkRules() {
@@ -22,10 +21,8 @@
     const brokenRule = rules.find((r) => !r.condition);
     if (brokenRule) {
       ruleText = brokenRule.text;
-      errorClass = '';
     } else {
       ruleText = '';
-      errorClass = '';
     }
     rules = rules;
   }
@@ -39,7 +36,15 @@
       </span>
     </label>
   {/if}
-  <select on:change on:input bind:value {disabled} class="select capitalize select-bordered" {name}>
+  <select
+    class:border-error={ruleText}
+    on:change
+    on:input
+    bind:value
+    {disabled}
+    class="select capitalize select-bordered"
+    {name}
+  >
     {#each options as { value, name }}
       <option class="first-letter:capitalize" {value}>
         {name.replace(name[0], name[0].toUpperCase())}

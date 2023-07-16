@@ -1,15 +1,12 @@
 <script lang="ts">
   import type { UserPartialResponse } from '$lib/types/partialTypes';
   import { connection } from '$lib/useSignalR';
-  import { createEventDispatcher } from 'svelte';
   import { t } from 'svelte-i18n';
   import UserAvatarAndName from './UserAvatarAndName.svelte';
   import Button from './Custom/Button.svelte';
   import TextInput from './Custom/TextInput.svelte';
   export let selection: null | UserPartialResponse;
   export let chatId: string | null = null;
-
-  const dispatch = createEventDispatcher();
 
   // These handle the search
   let search = '';

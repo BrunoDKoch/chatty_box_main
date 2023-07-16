@@ -3,6 +3,7 @@
   import MessageSendFilePreview from './MessageSendFilePreview.svelte';
   import { chatId } from '$lib/useActiveChat';
   import { ofetch } from 'ofetch';
+  import { messageFiles } from '$lib/useMessageFiles';
 
   export let files: string[];
 
@@ -14,6 +15,10 @@
       mode: 'cors',
       credentials: 'include',
       body: { filePath },
+      onResponse({ response }) {
+        if (!response.ok) return;
+        messageFiles.removeFile({ chatId: $chatId, filePath });
+      },
     });
   }
 </script>

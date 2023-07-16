@@ -40,10 +40,10 @@
 </script>
 
 <div transition:fly={{ y: 1000, duration: 200, opacity: 0 }} class="w-52 flex flex-col relative items-center">
-  <div class="w-full absolute">
+  <div class="w-full absolute z-50">
     <CloseButton on:close={() => dispatch('removeFile', file)} id="remove-file-{index + 1}" />
   </div>
-  <figure>
+  <figure class="z-0">
     {#if fileInfo.fileType === 'image'}
       <img
         on:error={(e) => console.error(e)}
@@ -56,7 +56,7 @@
     {:else}
       <div class="flex bg-base-100 items-center justify-center flex-col h-52 w-52 rounded-xl px-10">
         <iconify-icon class="text-5xl" icon={fileInfo.icon} />
-        <p>{fileInfo.fileName}</p>
+        <p class="break-words overflow-hidden w-52 px-1 box-border italic font-semibold">{fileInfo.fileName}</p>
       </div>
     {/if}
   </figure>

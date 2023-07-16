@@ -41,6 +41,7 @@
   </button>
 {:else}
   <a
+    role="button"
     href={link}
     on:click
     on:contextmenu
