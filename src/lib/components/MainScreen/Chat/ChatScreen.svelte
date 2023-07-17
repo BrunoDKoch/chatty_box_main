@@ -16,12 +16,11 @@
   import FileModal from '$lib/components/Modals/FileModal.svelte';
   import ReadByModal from '$lib/components/Modals/ReadByModal.svelte';
 
-  let loading = true;
+  $: loading = $chat.id !== $chatId;
   let searchResults: { messages: MessageResponse[]; messageCount: number } = {
     messages: [],
     messageCount: 0,
   };
-  $: $chatId, (loading = $chat.id !== $chatId);
   $: activeSearchPage = 1;
   $: messageToDelete = null as MessageResponse | null;
   $: search = '';
