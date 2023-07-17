@@ -19,7 +19,7 @@
       icon: 'material-symbols:person',
       text: $t('friends.friend', { values: { count: 2 } }),
       condition: !!($friendRequests && $friendRequests.length),
-      extraText: $friendRequests.length.toString(),
+      extraText: $friendRequests?.length.toString() ?? 0,
     },
     {
       action() {
@@ -59,7 +59,7 @@
   {/each}
   <section
     id="chats"
-    class="flex flex-col gap-4 even:bg-base-300 lg:overflow-y-auto max-lg:max-h-[57dvh] lg:max-h-[65dvh]"
+    class="flex flex-col gap-4 even:bg-base-300 lg:overflow-y-auto max-lg:max-h-[57dvh] lg:max-h-[min(100%,_62dvh)]"
   >
     {#if $fetchingInitialCallInfo}
       {#each { length: 7 } as _}
