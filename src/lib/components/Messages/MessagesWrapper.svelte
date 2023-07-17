@@ -21,6 +21,7 @@
   $: combinedMessages = [...messages, ...systemMessages];
   $: combinedMessages,
     combinedMessages.sort((a, b) => Number(new Date(getDate(a))) - Number(new Date(getDate(b))));
+  let currentMessageCount = combinedMessages?.length ?? 15;
 
   // For handling focus on fetched messages
   $: oldLength = 0;
@@ -34,13 +35,43 @@
 
   $: {
     if (wrapperElement && combinedMessages.length && !hasScrolledDown && !isSearch) {
-      console.log(wrapperElement.scrollHeight);
       setTimeout(() => wrapperElement.scrollTo(0, wrapperElement.scrollHeight), 75);
       hasScrolledDown = true;
     }
   }
 
+  $: combinedMessages, checkScroll();
+
   const initialMessages = [] as typeof combinedMessages;
+
+  function checkScroll() {
+    if (!combinedMessages || !wrapperElement) return;
+    if (!(combinedMessages.length - currentMessageCount)) return;
+    let scrollToOptions: ScrollToOptions;
+    if (combinedMessages.length - currentMessageCount === 1) {
+      scrollToOptions = {
+        top: wrapperElement.scrollHeight,
+        behavior: 'smooth',
+      };
+    } else if ($chat.hasMore) {
+      scrollToOptions = {
+        top: Math.ceil(
+          wrapperElement.scrollHeight /
+            (Math.ceil(combinedMessages.length / currentMessageCount) + 1),
+        ),
+        behavior: 'instant',
+      };
+    } else {
+      scrollToOptions = {
+        top: 0,
+        behavior: 'instant',
+      };
+    }
+    setTimeout(() => {
+      wrapperElement.scrollTo(scrollToOptions);
+      currentMessageCount = combinedMessages.length;
+    }, 75);
+  }
 
   function getDate(message: MessageResponse | SystemMessagePartial) {
     if ('sentAt' in message) return message.sentAt;
@@ -71,12 +102,13 @@
   }
   onMount(() => {
     initialMessages.push(...combinedMessages);
+    currentMessageCount = combinedMessages.length;
   });
 </script>
 
 <div
   bind:this={wrapperElement}
-  class="overflow-y-auto {isSearch
+  class="overflow-y-auto lg:max-w-[75dvw] {isSearch
     ? 'lg:border-l-2 col-span-1'
     : ''} overflow-x-hidden max-lg:md:h-[50dvh] h-[80dvh] max-h-[80dvh] box-border"
 >
@@ -93,7 +125,7 @@
       <CloseButton id="search-close" on:close />
     </div>
   {/if}
-  {#if combinedMessages.length}
+  {#if combinedMessages.length && initialMessages.length}
     {#each combinedMessages as message (message.id)}
       {#if 'sentAt' in message}
         {#if combinedMessages.indexOf(message) !== 0 && isFromPreviousDate(message, messages[messages.indexOf(message) - 1])}
@@ -115,7 +147,7 @@
           {scrollOptions}
           animate={!initialMessages.includes(message)}
           hideBottomInfo={checkUserAndTime(message)}
-          focusOn={shouldFocusOnElement(message)}
+          focusOn={false}
         />
       {:else}
         <SystemMessageComponent {message} />

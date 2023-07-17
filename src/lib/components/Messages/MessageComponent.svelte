@@ -12,6 +12,7 @@
   import MessageBottomInfo from './MessageSubComponents/MessageBottomInfo.svelte';
   import MessageBubble from './MessageSubComponents/MessageBubble.svelte';
   import MessageEdit from './MessageSubComponents/MessageEdit.svelte';
+  import { quintIn } from 'svelte/easing';
   export let message: MessageResponse;
   export let focusOn = false;
   export let hideBottomInfo = false;
@@ -162,11 +163,14 @@
     {/if}
     {#if show}
       <div
-        in:fly={{ x: message.isFromCaller ? 1000 : -1000, duration: animate ? 300 : 0 }}
+        in:fly={{
+          x: message.isFromCaller ? 1000 : -1000,
+          duration: animate ? 400 : 0,
+        }}
         out:fade={{ duration: 0 }}
-        class="chat transition-all px-4 {message.isFromCaller
-          ? 'chat-end'
-          : 'chat-start'} {beingSent ? 'opacity-70' : 'opacity-100'}"
+        class="chat px-4 {message.isFromCaller ? 'chat-end' : 'chat-start'} {beingSent
+          ? 'opacity-70'
+          : 'opacity-100'}"
       >
         <UserAvatar
           disableModal={message.isFromCaller || displayOnly}

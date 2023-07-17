@@ -64,11 +64,11 @@
 </script>
 
 {#if loading}
-  <div class="grid w-full h-full place-items-center text-8xl">
+  <div class="grid w-full h-full place-items-center text-8xl relative">
     <iconify-icon icon="svg-spinners:6-dots-scale" />
   </div>
 {:else}
-  <div class="overflow-hidden max-h-screen lg:h-screen">
+  <div class="overflow-hidden max-h-screen lg:h-screen fixed">
     <ChatNameComponent
       bind:activeSearchPage
       bind:searchResults
@@ -80,7 +80,7 @@
       on:openAddAdminModal={() => (showAddAdminModal = !showAddAdminModal)}
     />
     <div
-      class="grid h-[90dvh] max-lg:h-[85dvh] z-[1] overflow-hidden {searchResults.messages &&
+      class="grid h-[90dvh] max-lg:h-[85dvh] z-[1] relative overflow-hidden {searchResults.messages &&
       searchResults.messages.length
         ? 'lg:grid-cols-3'
         : 'grid-cols-1'}"
