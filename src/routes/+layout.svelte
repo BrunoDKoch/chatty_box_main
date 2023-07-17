@@ -91,12 +91,8 @@
 
 <title>ChattyBox</title>
 
-{#await data}
+{#if $online || $page.url.pathname.includes('auth')}
+  <slot />
+{:else}
   <ConnectingComponent />
-{:then _}
-  {#if $online || $page.url.pathname.includes('auth')}
-    <slot />
-  {:else}
-    <ConnectingComponent />
-  {/if}
-{/await}
+{/if}

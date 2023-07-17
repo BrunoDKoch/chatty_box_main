@@ -53,7 +53,7 @@ interface ClientConnectionPartialInfo {
   isCurrentSession: boolean;
 }
 
-interface UserConnectionCallInfo {
+interface UserPersonalInfo {
   id: string;
   avatar?: string;
   userName: string;
@@ -62,6 +62,8 @@ interface UserConnectionCallInfo {
   friendRequests: { userAdding: UserPartialResponse }[];
   blocks: UserPartialResponse[];
   previews: ChatPreview[];
+  isAdmin: boolean;
+  status: '' | 'busy' | 'away';
 }
 
 interface LockoutInfo {
@@ -98,7 +100,7 @@ export type {
   FriendResponse,
   LockoutInfo,
   MessagePreview,
-  UserConnectionCallInfo,
+  UserPersonalInfo,
   UserDetailedResponse,
   UserPartialResponse,
   ReadMessagePartialResponse,

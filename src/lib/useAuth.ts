@@ -4,7 +4,8 @@ import { ofetch } from 'ofetch';
 import { goto } from '$app/navigation';
 import { connection } from './useSignalR';
 import useUserInfo from '$lib/useUserInfo';
-import type { UserConnectionCallInfo } from './types/partialTypes';
+import type { UserPersonalInfo } from './types/partialTypes';
+import { redirect } from '@sveltejs/kit';
 
 async function logIn(body: LogInInfo) {
   return await ofetch(`/user/login`, {
@@ -47,19 +48,19 @@ async function signUp(body: SignUpInfo) {
 async function logOut() {
   const { data, error } = await ofetch('/user/logout', {
     baseURL,
-    method: 'HEAD',
+    method: 'POST',
     mode: 'cors',
     credentials: 'include',
     async onResponse() {
       await connection.stop();
-      return await goto('/auth/login');
+      throw redirect(303, '/auth/login');
     },
   });
   return { data, error };
 }
 
 async function getUser() {
-  await ofetch<UserConnectionCallInfo>('/user', {
+  await ofetch<UserPersonalInfo>('/user', {
     baseURL,
     method: 'GET',
     mode: 'cors',

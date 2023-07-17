@@ -32,9 +32,18 @@ function getLanguage(data: { cookies: Cookies; request: Request }): string {
 
 export const load = (async ({ cookies, request, locals }) => {
   const theme = getTheme(cookies);
-  const lang = getLanguage({ cookies, request });
-  await waitLocale(lang);
-  locals.language = getLanguage({ cookies, request });
   const { user } = locals;
-  return { theme, lang, user };
+  let lang;
+  if (locals.language) {
+    lang = locals.language;
+  } else {
+    lang = getLanguage({ cookies, request });
+    await waitLocale(lang);
+    locals.language = getLanguage({ cookies, request });
+  }
+  return {
+    theme,
+    user,
+    lang,
+  };
 }) satisfies LayoutServerLoad;

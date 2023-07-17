@@ -67,7 +67,6 @@
       await logIn(body);
       showMFACodeModal = false;
       const redirectTo = $page.url.searchParams.get('redirectTo') ?? '/';
-      await getUser();
       await goto(redirectTo);
     } catch (err) {
       if ((err as { status: number; message: string; cause: number }).status === 400) {
