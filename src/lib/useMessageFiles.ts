@@ -40,6 +40,7 @@ function createMessageFiles() {
         const existingChatData = m.find((info) => info.chatId === data.chatId);
         if (!existingChatData) return m;
         existingChatData.files = existingChatData.files.filter((f) => f !== data.filePath);
+        if (!existingChatData.files.length) this.clearChat(existingChatData.chatId);
         return m;
       });
     },
