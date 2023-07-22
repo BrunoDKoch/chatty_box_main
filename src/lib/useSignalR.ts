@@ -363,6 +363,10 @@ connection.on('newUserName', (data: { userId: string; userName: string }) => {
 
 export const online = writable(connection.state === HubConnectionState.Connected);
 connection.onreconnected(() => online.set(true));
-connection.onreconnecting(() => online.set(false));
+connection.onreconnecting(() =>
+  setTimeout(() => {
+    if (connection.state !== HubConnectionState.Connected) online.set(false), 2000;
+  }),
+);
 
 connection.onclose(() => online.set(false));
