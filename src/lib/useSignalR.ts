@@ -14,6 +14,7 @@ import { chat, chatId, chatNotificationSettings } from './useActiveChat';
 import useActiveScreen from './useActiveScreen';
 import { reports } from './useAdminFetch';
 import useUserNotificationSettings from './useUserNotificationSettings';
+import canFetchChat from './canFetchChat';
 
 export const messagesCount = writable(0);
 export const previews = writable([]) as Writable<ChatPreview[]>;
@@ -33,6 +34,7 @@ export const connection = new HubConnectionBuilder()
 
 chatId.subscribe(async (cId) => {
   if (!connection || connection.state !== HubConnectionState.Connected) return;
+  canFetchChat.set(false);
   await connection.invoke('GetChat', cId, 0);
 });
 

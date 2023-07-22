@@ -98,6 +98,7 @@
     show = true;
     observer.observe(thisElement);
     if (focusOn) {
+      if (!bottomElement) return;
       setTimeout(() => bottomElement.scrollIntoView(scrollOptions), 75);
       focusOn = false;
     }
@@ -196,7 +197,7 @@
             text={message.text}
           />
         {/if}
-        <div class="chat-footer flex gap-1 opacity-50" bind:this={bottomElement}>
+        <div class="chat-footer flex gap-1 opacity-50">
           {#if !hideBottomInfo && !displayOnly}
             <MessageBottomInfo bind:message on:showReadByModal />
           {/if}
@@ -204,4 +205,5 @@
       </div>
     {/if}
   </div>
+  <span bind:this={bottomElement} />
 </div>

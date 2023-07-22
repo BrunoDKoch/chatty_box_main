@@ -16,7 +16,8 @@
   import FileModal from '$lib/components/Modals/FileModal.svelte';
   import ReadByModal from '$lib/components/Modals/ReadByModal.svelte';
 
-  $: loading = $chat.id !== $chatId;
+  let loading = $chat.id !== $chatId;
+  $: $chatId, setTimeout(() => (loading = $chat.id !== $chatId), 500);
   let searchResults: { messages: MessageResponse[]; messageCount: number } = {
     messages: [],
     messageCount: 0,

@@ -10,6 +10,13 @@
 
   let reportingMessage: MessageResponse;
   $: showReportingModal = false;
+  $: showLoadingSpinner = false;
+
+  $: loading,
+    setTimeout(() => {
+      if (!loading) return;
+      showLoadingSpinner = true;
+    }, 1000);
 
   let uploading = false;
   let uploadSuccessful = false;
@@ -27,7 +34,6 @@
   bind:uploading
   bind:uploadSuccessful
 >
-  {#if $chat && $chat.id === $chatId}
     <div
       class="grid grid-cols-1 grid-rows-6 w-full lg:w-[75dvw] overflow-hidden h-[90dvh] max-h-[90dvh] max-lg:h-[85dvh] max-lg:max-h-[85dvh]"
     >
@@ -51,11 +57,7 @@
 
       <ChatSubmitter bind:loading bind:replyTo />
     </div>
-  {:else}
-    <div class="text-9xl flex w-full h-full items-center justify-center">
-      <iconify-icon icon="svg-spinners:6-dots-scale" />
-    </div>
-  {/if}
+
 </DragNDropWrapper>
 
 {#if showReportingModal}

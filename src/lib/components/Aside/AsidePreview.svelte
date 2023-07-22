@@ -8,18 +8,25 @@
   import UserAvatar from '../UserAvatar.svelte';
   import { hostedFilesRegex, urlRegex } from '$lib/useLinkCheck';
   import AsidePreviewLink from './AsidePreviewLink.svelte';
+  import canFetchChat from '$lib/canFetchChat';
   export let chat: ChatPreview;
 </script>
 
 <a
   href="/"
-  class="custom-hover {$chatId === chat.id
-    ? 'bg-gray-400 dark:bg-gray-600'
-    : ''} cursor-pointer pl-2 indicator w-full"
+  aria-disabled={!$canFetchChat}
+  class:disabled={!$canFetchChat}
+  class:custom-hover={$canFetchChat}
+  class:cursor-pointer={$canFetchChat}
+  class:cursor-default={!$canFetchChat}
+  class=" {$chatId === chat.id ? 'bg-gray-400 dark:bg-gray-600' : ''} pl-2 indicator w-full"
   id={chat.id}
   on:click|preventDefault={() => {
+    if (!$canFetchChat) return;
+    if ($chatId === chat.id) return;
     $chatId = chat.id;
     $useActiveScreen = 'chat';
+    setTimeout(() => ($canFetchChat = true), 100);
   }}
 >
   {#if chat.lastMessage && !chat.lastMessage.read}
@@ -33,7 +40,12 @@
     {#if chat.lastMessage}
       <div class="grid grid-cols-8 w-80">
         <div class="col-span-1">
-          <UserAvatar disableModal user={chat.lastMessage.from} size={25} />
+          <UserAvatar
+            lowerOpacity={!$canFetchChat}
+            disableModal
+            user={chat.lastMessage.from}
+            size={25}
+          />
         </div>
         <div class="col-span-7">
           {#if chat.lastMessage.text.match(urlRegex) || chat.lastMessage.text.match(hostedFilesRegex)}

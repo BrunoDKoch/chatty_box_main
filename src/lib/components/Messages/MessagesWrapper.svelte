@@ -6,7 +6,7 @@
   import Pagination from '$lib/components/Pagination/Pagination.svelte';
   import SystemMessageComponent from './SystemMessageComponent.svelte';
   import CloseButton from '$lib/components/Custom/CloseButton.svelte';
-  import { chat } from '$lib/useActiveChat';
+  import { chat, chatId } from '$lib/useActiveChat';
   import { onMount } from 'svelte';
   export let pagination = false;
   export let total: number;
@@ -26,52 +26,16 @@
   // For handling focus on fetched messages
   $: oldLength = 0;
   $: hasScrolledDown = false;
-  $: focusOn = messages.length - oldLength - 1;
-  const scrollOptions = {
+  $: focusOn = getIdToFocusOn();
+  let scrollOptions = {
     behavior: 'instant',
     block: 'center',
     inline: 'start',
   } as ScrollIntoViewOptions;
 
-  $: {
-    if (wrapperElement && combinedMessages.length && !hasScrolledDown && !isSearch) {
-      setTimeout(() => wrapperElement.scrollTo(0, wrapperElement.scrollHeight), 75);
-      hasScrolledDown = true;
-    }
-  }
-
-  $: combinedMessages, checkScroll();
+  $: combinedMessages, focusOn = getIdToFocusOn();
 
   const initialMessages = [] as typeof combinedMessages;
-
-  function checkScroll() {
-    if (!combinedMessages || !wrapperElement) return;
-    if (!(combinedMessages.length - currentMessageCount)) return;
-    let scrollToOptions: ScrollToOptions;
-    if (combinedMessages.length - currentMessageCount === 1) {
-      scrollToOptions = {
-        top: wrapperElement.scrollHeight,
-        behavior: 'smooth',
-      };
-    } else if ($chat.hasMore) {
-      scrollToOptions = {
-        top: Math.ceil(
-          wrapperElement.scrollHeight /
-            (Math.ceil(combinedMessages.length / currentMessageCount) + 1),
-        ),
-        behavior: 'instant',
-      };
-    } else {
-      scrollToOptions = {
-        top: 0,
-        behavior: 'instant',
-      };
-    }
-    setTimeout(() => {
-      wrapperElement.scrollTo(scrollToOptions);
-      currentMessageCount = combinedMessages.length;
-    }, 75);
-  }
 
   function getDate(message: MessageResponse | SystemMessagePartial) {
     if ('sentAt' in message) return message.sentAt;
@@ -95,10 +59,11 @@
       resultingDate.getTime() < 10 * 60 * 1000
     );
   }
-  function shouldFocusOnElement(message: MessageResponse | SystemMessagePartial) {
-    if (!hasScrolledDown) return;
-    if ('firedAt' in message) return;
-    return messages.indexOf(message) === focusOn;
+  function getIdToFocusOn() {
+    if (!messages) return;
+    const relevantMessage = messages[messages.length - oldLength - 1];
+    if (!relevantMessage) return;
+    return relevantMessage.id;
   }
   onMount(() => {
     initialMessages.push(...combinedMessages);
@@ -144,10 +109,10 @@
           on:fileClick
           on:showReadByModal
           bind:message
-          {scrollOptions}
+          bind:scrollOptions
           animate={!initialMessages.includes(message)}
           hideBottomInfo={checkUserAndTime(message)}
-          focusOn={false}
+          focusOn={message.id === focusOn}
         />
       {:else}
         <SystemMessageComponent {message} />
