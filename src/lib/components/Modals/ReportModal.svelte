@@ -35,7 +35,7 @@
       await connection.invoke('ReportUser', {
         reportedUserId: message.user.id,
         messageId: message.id,
-        chatId: message.chatId,
+        activeChatId: message.chatId,
         reportReason: value === 'report.other' ? other : value,
       });
       success = true;

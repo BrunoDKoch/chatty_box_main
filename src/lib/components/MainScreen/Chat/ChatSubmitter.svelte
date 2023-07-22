@@ -1,6 +1,6 @@
 <script lang="ts">
   import { connection } from '$lib/useSignalR';
-  import { chat, chatId } from '$lib/useActiveChat';
+  import { chat, activeChatId } from '$lib/useActiveChat';
   import { t } from 'svelte-i18n';
   import type { MessageResponse } from '$lib/types/combinationTypes';
   import CloseButton from '$lib/components/Custom/CloseButton.svelte';
@@ -55,8 +55,8 @@
       messageComposer.disabled = true;
     }
   }
-  connection.on('typing', (data: { from: string; isTyping: boolean; chatId: string }) => {
-    if (data.chatId !== $chatId) return;
+  connection.on('typing', (data: { from: string; isTyping: boolean; activeChatId: string }) => {
+    if (data.chatId !== $activeChatId) return;
     const { from: userName, isTyping } = data;
     if (otherUsers.find((u) => u.userName === userName)) {
       otherUsers.find((u) => u.userName === userName)!.isTyping = isTyping;
@@ -67,7 +67,7 @@
   });
 
   // File handling
-  $: files = $messageFiles.find((m) => m.chatId === $chatId && m.files.length)?.files;
+  $: files = $messageFiles.find((m) => m.chatId === $activeChatId && m.files.length)?.files;
 
   // Because there's no other way to know if one should use "e" or "y"
   function getSpanishAnd(userName: string) {
@@ -141,7 +141,7 @@
       for (const file of files) {
         finalMessage = `${file}\n${finalMessage}`.trim();
       }
-      messageFiles.clearChat($chatId);
+      messageFiles.clearChat($activeChatId);
     }
     return finalMessage.trim();
   }

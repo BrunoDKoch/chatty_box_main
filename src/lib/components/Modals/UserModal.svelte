@@ -8,7 +8,7 @@
   import { error } from '@sveltejs/kit';
   import useBlockToggle from '$lib/useBlockToggle';
   import useActiveScreen from '$lib/useActiveScreen';
-  import { chatId } from '$lib/useActiveChat';
+  import { activeChatId } from '$lib/useActiveChat';
   import { updateUser } from '$lib/useUserModal';
   import type { ActionButton } from '$lib/types/otherTypes';
   import Button from '../Custom/Button.svelte';
@@ -127,7 +127,7 @@
               href="/"
               on:click|preventDefault={() => {
                 $useActiveScreen = 'chat';
-                $chatId = chat.id;
+                $activeChatId = chat.id;
                 dispatch('close');
               }}>{chat.chatName}</a
             >

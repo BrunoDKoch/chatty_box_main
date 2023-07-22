@@ -4,7 +4,7 @@
   import Modal from './Modal.svelte';
   import UserSearch from '../UserSearch.svelte';
   import { connection } from '$lib/useSignalR';
-  import { chatId } from '$lib/useActiveChat';
+  import { activeChatId } from '$lib/useActiveChat';
   import { createEventDispatcher } from 'svelte';
   import UserAvatarAndName from '../UserAvatarAndName.svelte';
   import Button from '../Custom/Button.svelte';
@@ -12,7 +12,7 @@
   const dispatch = createEventDispatcher();
   async function handleSubmit() {
     if (!selection) return;
-    await connection.invoke('AddUserToChat', selection.id, $chatId);
+    await connection.invoke('AddUserToChat', selection.id, $activeChatId);
     dispatch('close');
   }
 </script>
@@ -28,7 +28,7 @@
       {$t('common.add', { values: { item: 'chatter' } })}
     </h1>
     {#if !selection}
-      <UserSearch chatId={$chatId} bind:selection />
+      <UserSearch activeChatId={$activeChatId} bind:selection />
     {:else}
       <UserAvatarAndName user={selection} size="half" />
     {/if}

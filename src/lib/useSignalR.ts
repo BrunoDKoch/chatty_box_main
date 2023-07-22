@@ -10,7 +10,7 @@ import { HubConnectionBuilder, HubConnectionState } from '@microsoft/signalr';
 import type { UserNotificationSettings } from '@prisma/client';
 import { get, writable, type Writable } from 'svelte/store';
 import type { CompleteChat, MessageResponse, SystemMessagePartial } from './types/combinationTypes';
-import { chat, chatId, chatNotificationSettings } from './useActiveChat';
+import { chat, activeChatId, chatNotificationSettings } from './useActiveChat';
 import useActiveScreen from './useActiveScreen';
 import { reports } from './useAdminFetch';
 import useUserNotificationSettings from './useUserNotificationSettings';
@@ -32,7 +32,7 @@ export const connection = new HubConnectionBuilder()
   .withAutomaticReconnect()
   .build();
 
-chatId.subscribe(async (cId) => {
+activeChatId.subscribe(async (cId) => {
   if (!connection || connection.state !== HubConnectionState.Connected) return;
   canFetchChat.set(false);
   await connection.invoke('GetChat', cId, 0);
@@ -62,11 +62,11 @@ connection.on('previews', (data: ChatPreview[]) => {
   previews.set(data);
   chatNotificationSettings.update((cn) => {
     cn = data.map((preview) => {
-      const { showOSNotification, playSound, id: chatId } = preview;
+      const { showOSNotification, playSound, id: activeChatId } = preview;
       return {
         showOSNotification,
         playSound,
-        chatId,
+        activeChatId,
       };
     });
     return cn;
@@ -141,7 +141,7 @@ connection.on('newChat', (data: ChatPreview) => {
   const { id, createdAt, chatName, users } = data;
   chatNotificationSettings.update((cn) => {
     cn.push({
-      chatId: id,
+      activeChatId: id,
       playSound,
       showOSNotification,
     });
@@ -167,7 +167,7 @@ connection.on('chat', (data: CompleteChat) => {
     if (!ch.messages || !ch.messages.length) {
       ch = { ...data, hasFetched: false, hasMore: false };
     } else if (ch.id !== data.id) {
-      chatId.set(data.id);
+      activeChatId.set(data.id);
       ch = { ...data, hasFetched: false, hasMore: false };
     } else {
       // This loop is not super efficient (O(n)?), but it prevents duplicates
@@ -217,7 +217,7 @@ connection.on('messageDeleted', (data: string) => {
 
 // Handling chat members
 connection.on('addedAsAdmin', (data: string) => {
-  if (get(chatId) === data) {
+  if (get(activeChatId) === data) {
     chat.update((c) => {
       const lastSystemMessage = c.systemMessages.at(-1);
       if (!lastSystemMessage) return c;
@@ -240,7 +240,7 @@ connection.on('addedToChat', (data: ChatPreview) => {
 });
 
 connection.on('removedFromChat', (data: string) => {
-  if (get(useActiveScreen) === 'chat' && get(chatId) === data) {
+  if (get(useActiveScreen) === 'chat' && get(activeChatId) === data) {
     // eslint-disable-next-line unused-imports/no-unused-vars, @typescript-eslint/no-unused-vars
     useActiveScreen.update((screen) => (screen = 'friends'));
   }

@@ -3,7 +3,7 @@
   import { t } from 'svelte-i18n';
   import { connection } from '$lib/useSignalR';
   import useActiveScreen from '$lib/useActiveScreen';
-  import { chat, chatId } from '$lib/useActiveChat';
+  import { chat, activeChatId } from '$lib/useActiveChat';
   import UserAvatarAndName from '$lib/components/UserAvatarAndName.svelte';
   import { createEventDispatcher } from 'svelte';
   import StatusIndicator from '$lib/components/Status/StatusIndicator.svelte';
@@ -36,7 +36,7 @@
   async function handleNewChat() {
     await connection.invoke('CreateNewChat', [friend.id], undefined, undefined);
     $useActiveScreen = 'chat';
-    $chatId = $chat.id;
+    $activeChatId = $chat.id;
   }
 </script>
 

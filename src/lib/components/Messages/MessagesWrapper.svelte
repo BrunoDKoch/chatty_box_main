@@ -6,7 +6,7 @@
   import Pagination from '$lib/components/Pagination/Pagination.svelte';
   import SystemMessageComponent from './SystemMessageComponent.svelte';
   import CloseButton from '$lib/components/Custom/CloseButton.svelte';
-  import { chat, chatId } from '$lib/useActiveChat';
+  import { chat, activeChatId } from '$lib/useActiveChat';
   import { onMount } from 'svelte';
   export let pagination = false;
   export let total: number;

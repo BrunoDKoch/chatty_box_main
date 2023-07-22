@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { ChatPreview } from '$lib/types/partialTypes';
   import { date, t } from 'svelte-i18n';
-  import { chatId } from '$lib/useActiveChat';
+  import { activeChatId } from '$lib/useActiveChat';
   import useActiveScreen from '$lib/useActiveScreen';
   import { scale } from 'svelte/transition';
   import { quintInOut } from 'svelte/easing';
@@ -19,12 +19,12 @@
   class:custom-hover={$canFetchChat}
   class:cursor-pointer={$canFetchChat}
   class:cursor-default={!$canFetchChat}
-  class=" {$chatId === chat.id ? 'bg-gray-400 dark:bg-gray-600' : ''} pl-2 indicator w-full"
+  class=" {$activeChatId === chat.id ? 'bg-gray-400 dark:bg-gray-600' : ''} pl-2 indicator w-full"
   id={chat.id}
   on:click|preventDefault={() => {
     if (!$canFetchChat) return;
-    if ($chatId === chat.id) return;
-    $chatId = chat.id;
+    if ($activeChatId === chat.id) return;
+    $activeChatId = chat.id;
     $useActiveScreen = 'chat';
     setTimeout(() => ($canFetchChat = true), 100);
   }}

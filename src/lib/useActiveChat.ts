@@ -2,7 +2,7 @@ import { writable, type Writable } from 'svelte/store';
 import type { CompleteChat, MessageResponse } from './types/combinationTypes';
 import type { UserPartialResponse } from './types/partialTypes';
 
-export const chatId = writable('');
+export const activeChatId = writable('');
 
 export const chat = writable({
   messages: [] as MessageResponse[],
@@ -19,7 +19,7 @@ export const chat = writable({
 
 export const chatNotificationSettings = writable([]) as Writable<
   {
-    chatId: string;
+    activeChatId: string;
     showOSNotification: boolean | null;
     playSound: boolean | null;
   }[]

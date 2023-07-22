@@ -9,7 +9,7 @@
   import useActiveScreen from '$lib/useActiveScreen';
   import TextInput from '../Custom/TextInput.svelte';
   import Button from '../Custom/Button.svelte';
-  import { chat, chatId } from '$lib/useActiveChat';
+  import { chat, activeChatId } from '$lib/useActiveChat';
   import type { CompleteChat } from '$lib/types/combinationTypes';
   import useUserNotificationSettings from '$lib/useUserNotificationSettings';
   const dispatch = createEventDispatcher();
@@ -35,11 +35,11 @@
     );
     $chat.hasFetched = false;
     $chat.hasMore = false;
-    $chatId = $chat.id;
+    $activeChatId = $chat.id;
     $useActiveScreen = 'chat';
     $previews.push({
       users: $chat.users,
-      id: $chatId,
+      id: $activeChatId,
       showOSNotification: $useUserNotificationSettings?.showOSNotification ?? null,
       playSound: $useUserNotificationSettings?.playSound ?? null,
       createdAt: $chat.createdAt,

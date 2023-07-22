@@ -1,7 +1,7 @@
 <script lang="ts">
   import ReportModal from '$lib/components/Modals/ReportModal.svelte';
   import type { MessageResponse } from '$lib/types/combinationTypes';
-  import { chat, chatId } from '$lib/useActiveChat';
+  import { chat, activeChatId } from '$lib/useActiveChat';
   import ChatSubmitter from './ChatSubmitter.svelte';
   import MessagesWrapper from '$lib/components/Messages/MessagesWrapper.svelte';
   import DragNDropWrapper from '$lib/components/Custom/DragNDropWrapper.svelte';

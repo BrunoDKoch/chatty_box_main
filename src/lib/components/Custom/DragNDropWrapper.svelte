@@ -1,6 +1,6 @@
 <script lang="ts">
   import { PUBLIC_AUTH_URL_DEV } from '$env/static/public';
-  import { chatId } from '$lib/useActiveChat';
+  import { activeChatId } from '$lib/useActiveChat';
   import useError from '$lib/useError';
   import Dropzone from 'dropzone';
   import { createEventDispatcher, onMount } from 'svelte';
@@ -20,7 +20,7 @@
   }
 
   const parallelUploads = 4;
-  const url = `${PUBLIC_AUTH_URL_DEV}/User/Upload/${$chatId}`;
+  const url = `${PUBLIC_AUTH_URL_DEV}/User/Upload/${$activeChatId}`;
 
   // HTML Elements
   let preview: HTMLImageElement;

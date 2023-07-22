@@ -1,7 +1,7 @@
 <script lang="ts">
   import { PUBLIC_IMAGES_URL_DEV as baseURL } from '$env/static/public';
   import MessageSendFilePreview from './MessageSendFilePreview.svelte';
-  import { chatId } from '$lib/useActiveChat';
+  import { activeChatId } from '$lib/useActiveChat';
   import { ofetch } from 'ofetch';
   import { messageFiles } from '$lib/useMessageFiles';
 
@@ -9,7 +9,7 @@
 
   async function removeFile(data: CustomEvent<string>) {
     const { detail: filePath } = data;
-    await ofetch(`/user/upload/${$chatId}`, {
+    await ofetch(`/user/upload/${$activeChatId}`, {
       baseURL,
       method: 'DELETE',
       mode: 'cors',
@@ -17,7 +17,7 @@
       body: { filePath },
       onResponse({ response }) {
         if (!response.ok) return;
-        messageFiles.removeFile({ chatId: $chatId, filePath });
+        messageFiles.removeFile({ chatId: $activeChatId, filePath });
       },
     });
   }

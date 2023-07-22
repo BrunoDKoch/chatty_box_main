@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { MessageResponse } from '$lib/types/combinationTypes';
-  import { chat, chatId } from '$lib/useActiveChat';
+  import { chat, activeChatId } from '$lib/useActiveChat';
   import ChatNameComponent from './ChatNameComponent.svelte';
   import MessagesWrapper from '$lib/components/Messages/MessagesWrapper.svelte';
   import MainChatWrapper from './MainChatWrapper.svelte';
@@ -16,8 +16,8 @@
   import FileModal from '$lib/components/Modals/FileModal.svelte';
   import ReadByModal from '$lib/components/Modals/ReadByModal.svelte';
 
-  let loading = $chat.id !== $chatId;
-  $: $chatId, setTimeout(() => (loading = $chat.id !== $chatId), 500);
+  let loading = $chat.id !== $activeChatId;
+  $: $activeChatId, setTimeout(() => (loading = $chat.id !== $activeChatId), 500);
   let searchResults: { messages: MessageResponse[]; messageCount: number } = {
     messages: [],
     messageCount: 0,
@@ -43,9 +43,9 @@
   let showReadByModal: MessageResponse | null = null;
 
   async function handleLeaveChat() {
-    await connection.invoke('LeaveChat', $chatId);
+    await connection.invoke('LeaveChat', $activeChatId);
     $useActiveScreen = 'friends';
-    $previews = $previews.filter((p) => p.id !== $chatId);
+    $previews = $previews.filter((p) => p.id !== $activeChatId);
     $previews = $previews;
   }
   async function handleMessageDeletion(message: MessageResponse | null) {

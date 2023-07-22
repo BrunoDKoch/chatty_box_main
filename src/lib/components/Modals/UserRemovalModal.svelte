@@ -2,7 +2,7 @@
   import { t } from 'svelte-i18n';
   import Modal from './Modal.svelte';
   import { connection } from '$lib/useSignalR';
-  import { chat, chatId } from '$lib/useActiveChat';
+  import { chat, activeChatId } from '$lib/useActiveChat';
   import { createEventDispatcher } from 'svelte';
   import Select from '../Custom/Select.svelte';
   import ConfirmationModal from './ConfirmationModal.svelte';
@@ -18,7 +18,7 @@
   });
   async function handleSubmit() {
     if (!selection) return;
-    await connection.invoke('RemoveUserFromChat', selection, $chatId);
+    await connection.invoke('RemoveUserFromChat', selection, $activeChatId);
     dispatch('close');
   }
 </script>

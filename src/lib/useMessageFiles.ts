@@ -44,8 +44,8 @@ function createMessageFiles() {
         return m;
       });
     },
-    clearChat(chatId: string) {
-      this.update((m) => m.filter((item) => item.chatId !== chatId));
+    clearChat(activeChatId: string) {
+      this.update((m) => m.filter((item) => item.chatId !== activeChatId));
     },
   };
 }

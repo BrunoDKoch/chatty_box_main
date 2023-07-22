@@ -1,6 +1,6 @@
 <script lang="ts">
   import friendsTab from '$lib/friendsTab';
-  import { chatId } from '$lib/useActiveChat';
+  import { activeChatId } from '$lib/useActiveChat';
   import useActiveScreen from '$lib/useActiveScreen';
   import { createEventDispatcher, onDestroy } from 'svelte';
 
@@ -20,7 +20,7 @@
   }, 1000);
   function handleClick() {
     if (action) {
-      if ($chatId !== action) $chatId = action;
+      if ($activeChatId !== action) $activeChatId = action;
       $useActiveScreen = 'chat';
       return;
     }

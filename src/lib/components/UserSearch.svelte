@@ -6,7 +6,7 @@
   import Button from './Custom/Button.svelte';
   import TextInput from './Custom/TextInput.svelte';
   export let selection: null | UserPartialResponse;
-  export let chatId: string | null = null;
+  export let activeChatId: string | null = null;
 
   // These handle the search
   let search = '';
@@ -36,7 +36,7 @@
     setTimeout(async () => {
       results = await connection.invoke<UserPartialResponse[]>('SearchUser', {
         userName: search,
-        chatId,
+        activeChatId,
       });
       fetching = false;
       timerHasStarted = false;
