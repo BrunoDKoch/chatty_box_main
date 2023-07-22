@@ -42,6 +42,7 @@
       class:text-6xl={!width || width > 75}
       class:text-4xl={width && width <= 75 && width > 25}
       class:text-xl={width && width <= 25}
+      class="text-white"
       icon={imageStatus === 'loading' ? 'mdi:image' : 'material-symbols:error'}
     />
   </div>
