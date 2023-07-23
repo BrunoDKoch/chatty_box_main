@@ -32,7 +32,9 @@
     "rememberMultiFactor": "do not ask for code in this device",
     "recovery": "recovery",
     "letsRecover": "let's recover your account",
-    "emailNotConfirmed": "your email address has not yet been confirmed"
+    "emailNotConfirmed": "your email address has not yet been confirmed",
+    "agreeWithTos": "I have read and agree with the Terms of Service",
+    "agreeWithPrivacyPolicy": "I have read and agree with the privacy policy"
   },
   "common": {
     "is": {

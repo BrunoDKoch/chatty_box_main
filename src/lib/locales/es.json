@@ -28,7 +28,9 @@
     "rememberMultiFactor": "no solicitar el código en este dispositivo",
     "recovery": "recuperación",
     "letsRecover": "vamos a recuperar su cuenta",
-    "emailNotConfirmed": "su dirección de correo electrónico aún no ha sido confirmada"
+    "emailNotConfirmed": "su dirección de correo electrónico aún no ha sido confirmada",
+    "agreeWithTos": "He leído y de acuerdo con los términos de servicio.",
+    "agreeWithPrivacyPolicy": "He leído y de acuerdo con la Política de privacidad"
   },
   "common": {
     "is": {

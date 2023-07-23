@@ -22,6 +22,7 @@
   $: confirmPassword = '';
   $: hasAgreedToTos = false;
   $: hasAgreedToPrivacyPolicy = false;
+
   $: rules = {
     emailRules: [
       {
@@ -209,14 +210,14 @@
       on:click={() => dispatch('showPolicyModal', 'tos')}
       name="tos"
       bind:checked={hasAgreedToTos}
-      labelText="TOS (FILL IN LATER)"
+      labelText={$t('auth.agreeWithTos')}
       labelIsClickable={true}
     />
     <Checkbox
       on:click={() => dispatch('showPolicyModal', 'privacy')}
       name="privacy"
       bind:checked={hasAgreedToPrivacyPolicy}
-      labelText="Privacy Policy (FILL IN LATER)"
+      labelText={$t('auth.agreeWithPrivacyPolicy')}
       labelIsClickable={true}
     />
   </div>
