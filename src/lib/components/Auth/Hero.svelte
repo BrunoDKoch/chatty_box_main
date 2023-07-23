@@ -1,6 +1,7 @@
 <script lang="ts">
   import { page } from '$app/stores';
   import useError from '$lib/useError';
+  import PolicyModal from '../Modals/PolicyModal.svelte';
   import LogInForm from './LogInForm.svelte';
   import PasswordRecoveryForm from './PasswordRecoveryForm.svelte';
   import SignUpForm from './SignUpForm.svelte';
@@ -9,6 +10,7 @@
   export let token = '';
   $: pending = false;
   $: showSpinner = false;
+  $: showPolicyModal = null as 'tos' | 'privacy' | null;
   $: {
     if ($useError) {
       pending = false;
@@ -38,6 +40,7 @@
         {#if $page.url.pathname.includes('signup')}
           <SignUpForm
             bind:pending
+            on:showPolicyModal={({ detail }) => (showPolicyModal = detail)}
             on:error={() => (showSpinner = false)}
             on:success={() => (showSpinner = true)}
             on:showQR={() => (showSpinner = false)}
@@ -58,6 +61,10 @@
     <iconify-icon class="text-7xl" icon="svg-spinners:6-dots-scale-middle" />
   {/if}
 </div>
+
+{#if showPolicyModal}
+  <PolicyModal on:close={() => (showPolicyModal = null)} policy={showPolicyModal} />
+{/if}
 
 <style>
   .custom-shadow {

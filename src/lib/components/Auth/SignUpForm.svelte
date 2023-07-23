@@ -7,7 +7,8 @@
   import useError from '$lib/useError';
   import Button from '../Custom/Button.svelte';
   import useFormValidation from '$lib/useFormValidation';
-    import { goto } from '$app/navigation';
+  import { goto } from '$app/navigation';
+  import Checkbox from '../Custom/Checkbox.svelte';
   export let pending = false;
   const dispatch = createEventDispatcher();
   let qrCode: { content: string; height: number; width: number } | null = null;
@@ -19,6 +20,8 @@
   $: userName = '';
   $: confirmEmail = '';
   $: confirmPassword = '';
+  $: hasAgreedToTos = false;
+  $: hasAgreedToPrivacyPolicy = false;
   $: rules = {
     emailRules: [
       {
@@ -113,6 +116,10 @@
   };
   $: email, password, confirmEmail, confirmPassword, userName, checkIfValid();
   function checkIfValid() {
+    if (!hasAgreedToPrivacyPolicy || !hasAgreedToTos) {
+      valid = false;
+      return;
+    }
     for (const val of Object.values(rules)) {
       const checkRules = useFormValidation(val);
       if (!checkRules) {
@@ -196,6 +203,22 @@
       <span>{$t('common.already')} {$t('auth.have')} {$t('auth.anAccount')}?</span>
       <span class="capitalize">{$t('common.clickHere')}!</span>
     </a>
+  </div>
+  <div class="flex flex-col col-span-2">
+    <Checkbox
+      on:click={() => dispatch('showPolicyModal', 'tos')}
+      name="tos"
+      bind:checked={hasAgreedToTos}
+      labelText="TOS (FILL IN LATER)"
+      labelIsClickable={true}
+    />
+    <Checkbox
+      on:click={() => dispatch('showPolicyModal', 'privacy')}
+      name="privacy"
+      bind:checked={hasAgreedToPrivacyPolicy}
+      labelText="Privacy Policy (FILL IN LATER)"
+      labelIsClickable={true}
+    />
   </div>
 </form>
 

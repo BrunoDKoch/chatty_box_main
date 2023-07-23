@@ -15,6 +15,7 @@ svelte.config.js
 *.sql
 sounds/
 .eslintrc.cjs
+static/*/
 # Sentry
 .sentryclirc
 sentry.properties
