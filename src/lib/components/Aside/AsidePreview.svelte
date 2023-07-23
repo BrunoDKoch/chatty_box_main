@@ -23,10 +23,10 @@
   id={chat.id}
   on:click|preventDefault={() => {
     if (!$canFetchChat) return;
-    if ($activeChatId === chat.id) return;
-    $activeChatId = chat.id;
-    $useActiveScreen = 'chat';
-    setTimeout(() => ($canFetchChat = true), 100);
+    if ($activeChatId !== chat.id) {
+      $activeChatId = chat.id;
+      $useActiveScreen = 'chat';
+    }
   }}
 >
   {#if chat.lastMessage && !chat.lastMessage.read}

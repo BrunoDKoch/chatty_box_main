@@ -1,7 +1,9 @@
+import { PUBLIC_BUCKET_ENTRYPOINT as entryPoint } from "$env/static/public";
+
 const urlRegex = /((?:https?|ftp):\/\/[^\s/$.?#].[^\s]*)+/gi;
 const urlWithFileRegex = /(((?:https?|ftp):\/\/[^\s/$.?#].[^\s]*)+(.\w{1,4})+)+/gi;
 const hostedFilesRegex =
-  /(static\/(images|audio|video|files)\/[(\w+)+-]+\/[(\w+)+-]+\/[(\w+\s+?)+-]+(.\w{1,4})+)+/gi;
+  new RegExp(`(${entryPoint}\\/)?(static\\/(images|audio|video|files)\\/[(\\w+)+-]+\\/[(\\w+)+-]+\\/[(\\w+\\s+?)+-]+(.\\w{1,4})+)+`, 'gi');
 
 function isFileLink(link: string) {
   return !!link.match(hostedFilesRegex);

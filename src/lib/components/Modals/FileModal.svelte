@@ -5,8 +5,15 @@
   import useFileInfo from '../../useFileInfo';
   import Button from '../Custom/Button.svelte';
   import { createEventDispatcher } from 'svelte';
-  import { PUBLIC_IMAGES_URL_DEV as baseURL } from '$env/static/public';
+  import {
+    PUBLIC_IMAGES_URL_DEV as baseURL,
+    PUBLIC_AUTH_URL_DEV as authURL,
+    PUBLIC_BUCKET_ENTRYPOINT as entryPoint,
+  } from '$env/static/public';
   export let link: string;
+
+  link = link.startsWith(entryPoint) ? link.replace(entryPoint, authURL + '/user') : baseURL + link;
+
   const dispatch = createEventDispatcher();
   const { fileType, icon, fileName } = useFileInfo(link);
   const vowels = ['a', 'e', 'i', 'o', 'u'];
@@ -58,11 +65,12 @@
     <div class="modal-action">
       <div class="join">
         <Button
-          link="{baseURL}/{link}"
+          {link}
           on:click={() => dispatch('close')}
           buttonUIType={showWarning ? 'warning' : 'info'}
           joinItem
           id="yes"
+          target="_blank"
         >
           {$t('common.yes')}
         </Button>

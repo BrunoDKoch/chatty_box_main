@@ -19,13 +19,18 @@
   export let hideOptions = false;
   export let displayOnly = false;
   export let animate = false;
-  export let scrollOptions: ScrollIntoViewOptions;
 
   // Handle message being sent
   export let beingSent = false;
   export let msgError = false;
 
   $: show = false;
+
+  const scrollOptions = {
+    behavior: 'instant',
+    block: 'center',
+    inline: 'start',
+  } as ScrollIntoViewOptions;
 
   let thisElement: HTMLElement;
   let bottomElement: HTMLElement;

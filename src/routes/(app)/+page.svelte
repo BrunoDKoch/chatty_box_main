@@ -6,7 +6,7 @@
   import type { MessageResponse } from '$lib/types/combinationTypes';
   import { locale, t } from 'svelte-i18n';
   import useUserNotificationSettings from '$lib/useUserNotificationSettings';
-  import { chat } from '$lib/useActiveChat';
+  import { chat, activeChatId } from '$lib/useActiveChat';
   import type { UserPartialResponse } from '$lib/types/partialTypes';
   import NotificationsContainer from '$lib/components/Notification/NotificationsContainer.svelte';
   import useError from '$lib/useError';
@@ -14,6 +14,8 @@
   import UserModal from '$lib/components/Modals/UserModal.svelte';
   import MainHeader from '$lib/components/Header/MainHeader.svelte';
   import { messageFiles } from '$lib/useMessageFiles';
+  import canFetchChat from '$lib/canFetchChat';
+  import { HubConnectionState } from '@microsoft/signalr';
 
   $: title = 'ChattyBox';
   $: {
@@ -28,6 +30,15 @@
   }[];
 
   messageFiles.init();
+
+  activeChatId.subscribe(async (id) => {
+    if (!id) return;
+    if (!connection || connection.state !== HubConnectionState.Connected) return;
+    canFetchChat.set(false);
+    await connection.invoke('GetChat', id, 0);
+    if (!localStorage) return;
+    localStorage.setItem('activeChatId', id);
+  });
 
   // Handle a new message
   connection.on('newMessage', async (data: MessageResponse) => {

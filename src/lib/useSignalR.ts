@@ -32,11 +32,6 @@ export const connection = new HubConnectionBuilder()
   .withAutomaticReconnect()
   .build();
 
-activeChatId.subscribe(async (cId) => {
-  if (!connection || connection.state !== HubConnectionState.Connected) return;
-  canFetchChat.set(false);
-  await connection.invoke('GetChat', cId, 0);
-});
 
 // Set connection as ok
 connection.on('connectionSuccessful', () => fetchingInitialCallInfo.set(false));
@@ -182,6 +177,10 @@ connection.on('chat', (data: CompleteChat) => {
     ch.messages.sort((a, b) => Number(new Date(a.sentAt)) - Number(new Date(b.sentAt)));
     return ch;
   });
+  setTimeout(() => {
+    if (get(canFetchChat)) return;
+    canFetchChat.set(true);
+  }, 100);
 });
 
 // Add system message to chat

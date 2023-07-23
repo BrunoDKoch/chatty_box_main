@@ -27,11 +27,7 @@
   $: oldLength = 0;
   $: hasScrolledDown = false;
   $: focusOn = getIdToFocusOn();
-  let scrollOptions = {
-    behavior: 'instant',
-    block: 'center',
-    inline: 'start',
-  } as ScrollIntoViewOptions;
+  
 
   $: combinedMessages, focusOn = getIdToFocusOn();
 
@@ -109,7 +105,6 @@
           on:fileClick
           on:showReadByModal
           bind:message
-          bind:scrollOptions
           animate={!initialMessages.includes(message)}
           hideBottomInfo={checkUserAndTime(message)}
           focusOn={message.id === focusOn}
